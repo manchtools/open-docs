@@ -1,40 +1,106 @@
 import adapter from 'svelte-adapter-bun';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { markdoc } from 'svelte-markdoc-preprocess';
+import GithubSlugger from 'github-slugger';
+import { deriveFrameSrc } from './scripts/derive-frame-src.js';
+import { buildTokenMap, applyTokens } from './scripts/tokens.js';
 
 // Generic build-time token replacer. Authors can write `{{MY_TOKEN}}`
 // in their markdown and we'll substitute it at build time with the
 // value of `process.env.PUBLIC_TOKEN_MY_TOKEN` (PUBLIC_TOKEN_ prefix
 // so it doesn't clash with other env vars and stays Vite-compatible).
-//
-// Pure string replace; no AST work, so it can't break Markdoc syntax
-// downstream as long as the value injected doesn't contain Markdoc-
-// significant characters (URLs and most config strings don't).
-const tokens = Object.fromEntries(
-	Object.entries(process.env)
-		.filter(([k]) => k.startsWith('PUBLIC_TOKEN_'))
-		.map(([k, v]) => [`{{${k.slice('PUBLIC_TOKEN_'.length)}}}`, v ?? ''])
-);
+// The substitution lives in scripts/tokens.js so the CSP frame-src
+// derivation can resolve {{TOKEN}} embed URLs identically.
+const tokens = buildTokenMap();
 
 const tokenReplacer = {
 	name: 'open-docs-token-replacer',
 	markup({ content, filename }) {
 		if (!filename || !/\.(md|markdoc)$/.test(filename)) return;
 		if (Object.keys(tokens).length === 0) return;
-		let out = content;
-		for (const [token, value] of Object.entries(tokens)) {
-			if (out.includes(token)) {
-				out = out.split(token).join(value);
-			}
-		}
+		const out = applyTokens(content, tokens);
 		return out === content ? undefined : { code: out };
 	}
 };
 
+// Heading anchors. Markdoc's default heading node carries only the
+// level, so without help every <h2>/<h3> renders id-less and the
+// on-page TOC (which queries `h2[id]`) stays empty. We inject a Markdoc
+// id annotation (`{% #slug %}`) onto each heading at build time,
+// slugging the text with github-slugger (GitHub-compatible, deduped per
+// file). The id lands in the prerendered HTML, so anchor links and the
+// TOC work without any client JS.
+//
+// Runs before the markdoc preprocessor (which consumes the annotation)
+// and skips anything inside fenced code blocks, so `# comment` lines in
+// examples are left alone. An author can still pin a custom id by
+// writing their own `{% #my-id %}` — we never overwrite one.
+const headingAnchors = {
+	name: 'open-docs-heading-anchors',
+	markup({ content, filename }) {
+		if (!filename || !/\.(md|markdoc)$/.test(filename)) return;
+
+		const slugger = new GithubSlugger();
+		const lines = content.split('\n');
+		let fenceChar = ''; // '`' or '~' of the open fence; '' when outside
+		let fenceLen = 0; // open-fence length, so nested fences don't mis-close
+		let changed = false;
+
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
+
+			// Track fenced code. A fence closes only on the same character
+			// and an equal-or-longer run, which keeps a 3-backtick block
+			// nested inside a 4-backtick block from closing it early.
+			const fence = /^\s*(`{3,}|~{3,})/.exec(line);
+			if (fence) {
+				const char = fence[1][0];
+				const len = fence[1].length;
+				if (!fenceChar) {
+					fenceChar = char;
+					fenceLen = len;
+				} else if (char === fenceChar && len >= fenceLen) {
+					fenceChar = '';
+					fenceLen = 0;
+				}
+				continue;
+			}
+			if (fenceChar) continue;
+
+			const heading = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
+			if (!heading) continue;
+
+			const [, hashes, rawText] = heading;
+			// Leave author-pinned ids (or any existing annotation) alone.
+			if (rawText.includes('{%')) continue;
+
+			// Drop ATX closing hashes, then strip inline markdown so the
+			// slug reads from the visible words (`code`, **bold**, [links]).
+			const text = rawText.replace(/\s+#+\s*$/, '');
+			const plain = text
+				.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+				.replace(/[`*_~]/g, '')
+				.trim();
+
+			lines[i] = `${hashes} ${text} {% #${slugger.slug(plain)} %}`;
+			changed = true;
+		}
+
+		return changed ? { code: lines.join('\n') } : undefined;
+	}
+};
+
+// CSP frame-src is derived from the {% embed %} blocks in the content
+// (see scripts/derive-frame-src.js). It has to be computed here, at
+// config-load time, because SvelteKit stamps the CSP into the prerendered
+// HTML during the build — the pipeline can't edit it afterwards.
+const frameSrc = deriveFrameSrc();
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Three preprocessors, in order: token replacer rewrites
+	// Four preprocessors, in order: token replacer rewrites
 	// `{{TOKEN}}` in .md/.markdoc sources from PUBLIC_TOKEN_* env vars;
+	// headingAnchors injects `{% #slug %}` id annotations onto headings;
 	// vitePreprocess handles <style lang="postcss"> etc. in .svelte
 	// files; markdoc turns the (now-substituted) .md/.markdoc content
 	// into a Svelte component.
@@ -46,6 +112,7 @@ const config = {
 	// those. See src/lib/markdoc/tags.svelte + nodes.svelte.
 	preprocess: [
 		tokenReplacer,
+		headingAnchors,
 		vitePreprocess(),
 		markdoc({
 			tags: './src/lib/markdoc/tags.svelte',
@@ -99,6 +166,10 @@ const config = {
 				'connect-src': ['self'],
 				'img-src': ['self', 'data:'],
 				'font-src': ['self'],
+				// frame-src is derived from the {% embed %} blocks in your
+				// content (see frameSrc above); omitted entirely when there
+				// are no embeds, so default-src 'self' governs frames.
+				...(frameSrc.length > 0 ? { 'frame-src': frameSrc } : {}),
 				'frame-ancestors': ['none']
 			}
 		},

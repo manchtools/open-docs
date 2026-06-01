@@ -1,0 +1,100 @@
+---
+title: Folder-derived navigation
+label: Folder-derived nav
+---
+
+# Folder-derived navigation
+
+The sidebar is built entirely from your content folder. There is
+**no nav config file** to write or keep in sync — move a file, and
+the navigation follows.
+
+## How the tree maps to the sidebar
+
+{% filetree %}
+- content/
+  - 01-getting-started/
+    - 01-introduction.md
+    - 02-quick-start.md
+  - 02-authoring/
+    - index.md
+    - 01-callouts.md
+{% /filetree %}
+
+```mermaid
+flowchart TD
+  root["content/"] --> g1["01-getting-started/ → group 'Getting started'"]
+  root --> g2["02-authoring/ → group 'Authoring'"]
+  g1 --> i1["introduction → item"]
+  g1 --> i2["quick-start → item"]
+  g2 --> i3["index.md → 'Overview' item at /authoring"]
+  g2 --> i4["callouts → item"]
+```
+
+- **First-level folders** become sidebar **groups**, titled after the
+  folder name.
+- **Files in a folder** become that group's **items**.
+- **Top-level files** (directly in the content root) appear above the
+  groups, ungrouped.
+- **A folder's `index.md`** becomes a reachable "Overview" item for that
+  section, served at the folder's URL.
+
+## Nesting
+
+Folders can nest, and so does the sidebar — **up to three levels deep**
+(level 1 is a top-level folder, level 3 is a folder three deep):
+
+{% filetree %}
+- content/
+  - reference/ — level 1, section heading
+    - api/ — level 2, collapsible sub-section
+      - auth.md
+      - webhooks/ — level 3, collapsible sub-section
+        - events.md
+{% /filetree %}
+
+Levels 2 and 3 render as **collapsible** sub-sections; the branch
+containing the page you're on opens automatically. Anything nested
+deeper than three levels flattens into the third-level section — the
+page keeps its full URL, the sidebar just stops indenting.
+
+{% callout type="info" title="You're looking at level 1" %}
+Every group in this sidebar is a top-level folder. Add a subfolder and
+it becomes a collapsible sub-section beneath its parent.
+{% /callout %}
+
+## Titles
+
+By default a title is derived from the filename: `quick-start.md`
+becomes "Quick start". Override it per page with frontmatter — see
+[Ordering & titles](/navigation/ordering-and-titles).
+
+## The home page
+
+The site root (`/`) is a generated hero listing your sections as cards;
+it is not a content file. Lead your first group with an introduction
+page, the way these docs open with
+[Introduction](/getting-started/introduction).
+
+### Section icons
+
+Each card shows a default glyph unless the section's `index.md` sets an
+`icon:` in its frontmatter. It stays on that one page — no separate
+asset folder — and accepts three forms:
+
+```markdown
+---
+icon: "🚀"                              # an emoji
+# icon: '<svg viewBox="0 0 24 24">…</svg>'   # inline SVG (one line)
+# icon: /icons/rocket.svg               # a file under static/
+---
+```
+
+The cards in this site's home page are all driven this way — every
+top-level section here sets an emoji icon in its `index.md`.
+
+{% callout type="info" title="Out-of-sync is a 404, not a crash" %}
+Links are validated against the filesystem when the site is built, so a
+stale link surfaces as a clear 404 during the build rather than a
+broken page in production.
+{% /callout %}

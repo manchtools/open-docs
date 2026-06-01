@@ -16,4 +16,14 @@
 	export { default as Tabs } from './components/Tabs.svelte';
 	export { default as Tab } from './components/Tab.svelte';
 	export { default as Screenshot } from './components/Screenshot.svelte';
+	export { default as Steps } from './components/Steps.svelte';
+	export { default as Step } from './components/Step.svelte';
+	export { default as Cards } from './components/Cards.svelte';
+	export { default as Card } from './components/Card.svelte';
+	export { default as Accordions } from './components/AccordionGroup.svelte';
+	export { default as Accordion } from './components/Accordion.svelte';
+	export { default as FileTree } from './components/FileTree.svelte';
+	export { default as Badge } from './components/Badge.svelte';
+	export { default as Embed } from './components/Embed.svelte';
+	export { default as Code } from './components/Code.svelte';
 </script>

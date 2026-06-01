@@ -25,7 +25,7 @@ if [ -d "$CONTENT_SRC" ] && [ -n "$(ls -A "$CONTENT_SRC" 2>/dev/null || true)" ]
     mkdir -p /app/src/content
     cp -r "$CONTENT_SRC/." /app/src/content/
 else
-    echo "[open-docs] no content mounted at $CONTENT_SRC — using the welcome placeholder"
+    echo "[open-docs] no content mounted at $CONTENT_SRC — serving the bundled open-docs documentation"
 fi
 
 if [ -d "$STATIC_SRC" ] && [ -n "$(ls -A "$STATIC_SRC" 2>/dev/null || true)" ]; then

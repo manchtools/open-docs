@@ -17,8 +17,9 @@
 #     ghcr.io/manchtools/open-docs:latest
 #
 # `/content` → src/content (your .md / .markdoc files + optional
-#                          nav.json). Read-only mount is fine; the
+#                          theme.css). Read-only mount is fine; the
 #                          entrypoint copies it into the image tree.
+#                          The sidebar is derived from the folder tree.
 # `/static`  → static/      (favicons, og.png, screenshots, etc.).
 #
 # Environment variables (all PUBLIC_* are baked into the build):
@@ -47,21 +48,17 @@ RUN bun install --no-frozen-lockfile
 FROM oven/bun:alpine
 WORKDIR /app
 
-# Source tree + the already-installed node_modules. Anything under
-# /app/src/content and /app/static gets overwritten by the entrypoint
-# at container start with whatever the operator mounted in.
+# Source tree + the already-installed node_modules. The bundled
+# `src/content` is the full open-docs documentation; it ships as the
+# default and is what a no-mount `docker run` serves. When the operator
+# mounts content at /content, the entrypoint copies it over src/content
+# instead.
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Default no-op content so a `docker run` with no mounts still boots
-# and prints a useful "drop your markdown here" page.
-RUN mkdir -p /content && \
-    if [ ! -f /app/examples/content/welcome.md ]; then \
-      echo "# open-docs\n\nMount your markdown at /content to begin." \
-        > /content/welcome.md; \
-    else \
-      cp -r /app/examples/content/. /content/; \
-    fi
+# The mount point exists but is intentionally empty: with nothing
+# mounted there, the entrypoint falls back to the baked-in docs above.
+RUN mkdir -p /content
 
 EXPOSE 3000
 ENV NODE_ENV=production

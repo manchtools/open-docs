@@ -3,38 +3,28 @@
 	import { base } from '$app/paths';
 	import { nav } from '$lib/nav';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
-	import { cn } from '$lib/utils';
+	import NavNode from './nav-node.svelte';
 
-	// Sidebar — left-side navigation. Groups from $lib/nav are rendered
-	// in editorial order; each item is highlighted if the current
-	// pathname matches. Wrapped in a ScrollArea so a long nav doesn't
-	// blow out the viewport on small heights.
+	// Sidebar — left-side navigation, built from the nav tree in
+	// $lib/nav. This component owns the top level: each first-level
+	// section is a prominent uppercase eyebrow heading, with its pages
+	// (and any collapsible sub-sections) indented beneath a faint
+	// vertical guide line, so it's immediately clear which entries are
+	// section headings and which are pages. The recursive NavNode
+	// component handles everything below a heading — pages and the
+	// collapsible sub-sections at levels 2 and 3.
 	//
-	// Active-link matching strips the BASE_PATH prefix so deployments
-	// at /docs or similar paths still highlight the right item.
+	// The empty-title top node, if present, holds ungrouped root pages
+	// and renders flush, with no heading or guide.
 
 	const pathname = $derived(page.url.pathname.replace(base, '') || '/');
 
-	// Exact match only. Every nav entry is its own concrete page, so
-	// there's no "parent lights up when a child is active" case to
-	// support — and using a prefix match here would highlight the
-	// Action-reference Overview entry whenever any /action-reference/*
-	// child page was open.
-	function isActive(href: string): boolean {
-		return pathname === href;
-	}
-
-	// Auto-scroll the active link into view when the route changes.
-	// Without this, clicking a link in a long sidebar can land on a
-	// page whose nav entry is below the fold — the highlight is
-	// invisible until the user scrolls the sidebar manually. The
-	// nearest scrollable ancestor is the bits-ui ScrollArea viewport,
-	// which scrollIntoView resolves correctly. `block: 'nearest'`
-	// only scrolls when the element is actually out of view, so
-	// already-visible entries don't get re-positioned needlessly.
+	// Auto-scroll the active link into view when the route changes. The
+	// active branch is expanded by NavNode, so its link is in the DOM by
+	// the time this runs. `block: 'nearest'` only scrolls when the entry
+	// is actually out of view, so visible ones aren't re-positioned.
 	let navEl = $state<HTMLElement | null>(null);
 	$effect(() => {
-		// Track pathname so the effect re-runs on every route change.
 		pathname;
 		if (!navEl) return;
 		const active = navEl.querySelector<HTMLElement>('[data-active="true"]');
@@ -46,27 +36,24 @@
 	<nav bind:this={navEl} class="space-y-6 px-4 text-sm">
 		{#each nav as group (group.title)}
 			<div>
-				<h3 class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-					{group.title}
-				</h3>
-				<ul class="space-y-0.5">
-					{#each group.items as item (item.href)}
-						<li>
-							<a
-								href={base + item.href}
-								data-active={isActive(item.href)}
-								class={cn(
-									'block rounded-md px-2 py-1.5 transition-colors',
-									isActive(item.href)
-										? 'bg-sidebar-accent text-sidebar-accent-foreground font-medium'
-										: 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground'
-								)}
-							>
-								{item.label ?? item.title}
-							</a>
-						</li>
-					{/each}
-				</ul>
+				{#if group.title}
+					<h3
+						class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-foreground"
+					>
+						{group.title}
+					</h3>
+					<ul class="ml-2 space-y-0.5 border-l border-sidebar-border pl-2">
+						{#each group.items ?? [] as child (child.href ?? child.title)}
+							<NavNode node={child} depth={1} />
+						{/each}
+					</ul>
+				{:else}
+					<ul class="space-y-0.5">
+						{#each group.items ?? [] as child (child.href ?? child.title)}
+							<NavNode node={child} depth={1} />
+						{/each}
+					</ul>
+				{/if}
 			</div>
 		{/each}
 	</nav>

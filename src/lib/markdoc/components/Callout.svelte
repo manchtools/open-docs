@@ -44,7 +44,7 @@
 	);
 </script>
 
-<Alert.Root class={cn('not-prose my-6 border-l-4 px-4 py-3', variantClasses[type])}>
+<Alert.Root class={cn('my-6 border-l-4 px-4 py-3', variantClasses[type])}>
 	<Icon />
 	{#if title}
 		<Alert.Title class="font-semibold">{title}</Alert.Title>

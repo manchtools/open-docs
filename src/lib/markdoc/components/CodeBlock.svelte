@@ -48,6 +48,15 @@
 		void (async () => {
 			try {
 				const { codeToHtml } = await import('shiki');
+				// Notation transformers read comments *inside* the code
+				// (`// [!code highlight]`, `// [!code ++]` / `--`) and tag
+				// the affected lines with `.highlighted` / `.diff.add` /
+				// `.diff.remove`, stripping the marker comment. This is how
+				// line-highlight and diff work without fence meta (which
+				// Markdoc discards). Styled by the rules below.
+				const { transformerNotationHighlight, transformerNotationDiff } = await import(
+					'@shikijs/transformers'
+				);
 				// Dual-theme per the official Shiki guide:
 				// https://shiki.style/guide/dual-themes
 				// Light theme renders as direct inline `color:` and
@@ -59,7 +68,8 @@
 				// plugin's .prose pre color/background.
 				highlighted = await codeToHtml(content.trimEnd(), {
 					lang: language,
-					themes: { light: 'github-light', dark: 'github-dark' }
+					themes: { light: 'github-light', dark: 'github-dark' },
+					transformers: [transformerNotationHighlight(), transformerNotationDiff()]
 				});
 			} catch (err) {
 				// Surface the failure to the rendered DOM so silent
@@ -220,10 +230,12 @@
 		{/if}
 	</figure>
 {:else}
-	<!-- Bare wrapper: the typography plugin's .prose pre rule supplies
-	     the border / padding / background / margin. We add nothing
-	     beyond positioning the absolute copy button. -->
-	<div class="group relative">
+	<!-- `code-block` carries self-contained padding/radius (see <style>)
+	     so the block looks right in ANY container — including inside a
+	     `not-prose` block like a step or callout, where the typography
+	     plugin's `.prose pre` rule (which we used to lean on) is
+	     suppressed. The wrapper also positions the absolute copy button. -->
+	<div class="code-block group relative">
 		<Button
 			variant="ghost"
 			size="icon-sm"
@@ -307,5 +319,42 @@
 	:global(html.dark .shiki),
 	:global(html.dark .shiki span) {
 		color: var(--shiki-dark) !important;
+	}
+
+	/* Self-contained code-block chrome. Code blocks used to get their
+	   padding/radius/font-size from the typography plugin's `.prose pre`
+	   rule, which a `not-prose` ancestor (a step, callout, card, the
+	   {% code %} wrapper, …) suppresses — leaving the code flush and
+	   unpadded. We set those here instead, so a block renders identically
+	   in any container. Values mirror the prose defaults, and these
+	   selectors out-specify `.prose :where(pre)` (zero specificity), so
+	   blocks already in flowing prose are unchanged. Vertical margin is
+	   deliberately left to the context. */
+	:global(.code-block pre) {
+		padding: 0.857em 1.143em;
+		border-radius: 0.375rem;
+		overflow-x: auto;
+		font-size: 0.875em;
+		line-height: 1.7;
+		background-color: var(--muted);
+	}
+
+	/* Line highlighting + diff, applied by the Shiki notation transformers.
+	   Affected lines stretch to the full code width so the tint reads as a
+	   band; diff add/remove are green/red, highlight uses the brand tint. */
+	:global(.shiki .line.highlighted),
+	:global(.shiki .line.diff) {
+		display: inline-block;
+		width: 100%;
+	}
+	:global(.shiki .line.highlighted) {
+		background-color: color-mix(in oklab, var(--primary) 14%, transparent);
+	}
+	:global(.shiki .line.diff.add) {
+		background-color: color-mix(in oklab, #22c55e 18%, transparent);
+	}
+	:global(.shiki .line.diff.remove) {
+		background-color: color-mix(in oklab, #ef4444 18%, transparent);
+		opacity: 0.75;
 	}
 </style>

@@ -5,23 +5,49 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import BookOpen from '@lucide/svelte/icons/book-open';
 	import { siteConfig } from '$lib/config';
-	import { nav } from '$lib/nav';
+	import { nav, type NavNode } from '$lib/nav';
 
-	// Landing page. If the operator authored `src/content/index.md`
-	// (or `introduction.md`) we let the [...slug] route render that;
-	// this hero only renders for first-time visitors when no
-	// landing-markdown exists yet.
-	//
-	// The card grid below is built from the first item of each nav
-	// group, so it stays in sync with the sidebar without a second
-	// hand-curated list.
+	// Landing page hero. The card grid is built from each top-level nav
+	// section, so it stays in sync with the sidebar without a second
+	// hand-curated list. Since a section can now nest sub-sections, we
+	// count leaf pages and link to the first page in the subtree rather
+	// than assuming a flat list of pages.
+	function countPages(nodes: NavNode[] = []): number {
+		return nodes.reduce((n, x) => n + (x.href ? 1 : 0) + countPages(x.items), 0);
+	}
+	function firstHref(nodes: NavNode[] = []): string | undefined {
+		for (const x of nodes) {
+			if (x.href) return x.href;
+			const nested = firstHref(x.items);
+			if (nested) return nested;
+		}
+		return undefined;
+	}
+
 	const groupCards = nav
-		.filter((g) => g.title && g.items.length > 0)
-		.map((g) => ({
-			title: g.title,
-			description: `${g.items.length} ${g.items.length === 1 ? 'page' : 'pages'}`,
-			href: g.items[0].href
-		}));
+		.filter((g) => g.title && (g.items?.length ?? 0) > 0)
+		.map((g) => {
+			const pages = countPages(g.items);
+			return {
+				title: g.title,
+				description: `${pages} ${pages === 1 ? 'page' : 'pages'}`,
+				href: firstHref(g.items) ?? '/',
+				icon: g.icon
+			};
+		});
+
+	// A section icon (from its index.md `icon:` frontmatter) can be an
+	// emoji, an inline `<svg>…</svg>`, or a path under static/. Classify
+	// it so the card renders the right element; no icon falls back to the
+	// default book glyph. Inline SVG is author-controlled (same trust
+	// level as the rest of their content), so rendering it raw is fine.
+	function iconKind(icon?: string): 'svg' | 'img' | 'emoji' | 'none' {
+		const t = icon?.trim();
+		if (!t) return 'none';
+		if (t.startsWith('<svg')) return 'svg';
+		if (t.startsWith('/') || t.startsWith('http')) return 'img';
+		return 'emoji';
+	}
 </script>
 
 <svelte:head>
@@ -58,7 +84,20 @@
 				<a href={base + g.href} class="block transition-transform hover:-translate-y-0.5">
 					<Card class="h-full">
 						<CardHeader>
-							<BookOpen class="size-6 text-primary" />
+							{#if iconKind(g.icon) === 'svg'}
+								<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+								<span class="block size-6 text-primary [&>svg]:size-6">{@html g.icon}</span>
+							{:else if iconKind(g.icon) === 'img'}
+								<img
+									src={g.icon?.startsWith('/') ? base + g.icon : g.icon}
+									alt=""
+									class="size-6 object-contain"
+								/>
+							{:else if iconKind(g.icon) === 'emoji'}
+								<span class="text-2xl leading-none" aria-hidden="true">{g.icon}</span>
+							{:else}
+								<BookOpen class="size-6 text-primary" />
+							{/if}
 							<CardTitle class="mt-2 text-base">{g.title}</CardTitle>
 							<CardDescription>{g.description}</CardDescription>
 						</CardHeader>

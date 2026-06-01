@@ -1,0 +1,98 @@
+# Build and publish the open-docs container image to GitHub Container
+# Registry (ghcr.io) on every release tag (e.g. `v1.2.3`).
+#
+# The image is tagged with the full version, the major.minor, the major,
+# and `latest` (for non-prerelease tags), and built for amd64 + arm64.
+#
+# To cut a release:
+#   git tag v1.2.3 && git push origin v1.2.3
+#
+# Pull it:
+#   docker run --rm -p 3000:3000 -v ./content:/content:ro \
+#     ghcr.io/<owner>/open-docs:1.2.3
+
+name: Release container
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # Allow re-publishing a tag manually (run this workflow against a tag).
+  workflow_dispatch:
+
+# Read-only by default; the publish job opts into packages:write.
+permissions:
+  contents: read
+
+jobs:
+  # Gate: don't publish an image whose site can't build.
+  check:
+    name: Type-check & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Type-check
+        run: bun run check
+
+      - name: Build the site (validates the runtime build pipeline)
+        run: bun run build
+
+  publish:
+    name: Build & push image
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # ghcr image names must be lowercase; github.repository may not be.
+      - name: Resolve image name
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
+      # QEMU + Buildx enable the multi-architecture build below.
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata (tags & labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+          # `latest` only for the newest non-prerelease tag.
+          flavor: |
+            latest=auto
+
+      - name: Build & push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Speed up repeat builds with the GitHub Actions layer cache.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

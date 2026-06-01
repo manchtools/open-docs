@@ -9,6 +9,14 @@ Built with SvelteKit 2 + Svelte 5, Tailwind CSS 4,
 [shadcn-svelte](https://shadcn-svelte.com), Markdoc, Shiki, and
 [Pagefind](https://pagefind.app) for static search.
 
+## Documentation
+
+open-docs ships its own documentation as content. Run the container
+with **nothing mounted** (or `make dev`) and the site you get *is* the
+full docs — a live, clickable demo. The source for those pages lives in
+[`src/content/`](./src/content/); mount your own `/content` to replace
+them.
+
 ## Quick start
 
 ### Docker (recommended)
@@ -38,45 +46,53 @@ hot-reloads on save.
 
 ## Content layout
 
+The sidebar is derived **entirely from the folder structure** — there
+is no nav config file to maintain.
+
 ```
 src/content/
-  introduction.md            ← landing page (also: index.md)
-  get-started/
-    install.md
-    quickstart.md
-  reference/
+  introduction.md              ← landing page (also: index.md)
+  01-get-started/
+    01-install.md
+    02-quickstart.md
+  02-reference/
     api.md
     cli.md
-  nav.json                   ← optional, see below
+  theme.css                    ← optional, custom styling (see Theming)
 ```
 
 - Top-level files become top-of-sidebar entries.
-- Subdirectories become sidebar groups.
+- First-level subdirectories become sidebar groups; the files inside
+  them become that group's items.
+- Subfolders nest as collapsible sub-sections, up to three levels deep;
+  anything deeper flattens into the third level.
 - Filenames are kebab-cased and become path segments
   (`get-started/install.md` → `/get-started/install`).
-- Either `src/content/nav.json` controls sidebar order explicitly, or
-  the sidebar auto-builds from the filesystem (alphabetical).
 
-### `nav.json` (optional, recommended for non-trivial docsets)
+### Ordering & titles
 
-```json
-[
-  {
-    "title": "Get started",
-    "items": [
-      { "title": "Introduction", "href": "/" },
-      { "title": "Install",      "href": "/get-started/install" }
-    ]
-  },
-  {
-    "title": "Reference",
-    "items": [
-      { "title": "API", "href": "/reference/api" },
-      { "title": "CLI", "href": "/reference/cli" }
-    ]
-  }
-]
-```
+By default items sort alphabetically and titles come from the filename.
+Two override mechanisms — both still derived from the content, no
+external nav file:
+
+1. **Numeric prefixes.** A leading `01-`, `02_`, `03.` on a file *or*
+   directory sets its sort position and is stripped from the URL and
+   the title. `01-get-started/02-install.md` →
+   group "Get started" (sorts 1st), item "Install" (sorts 2nd),
+   URL `/get-started/install`.
+
+2. **Frontmatter** (wins over the filename):
+
+   ```markdown
+   ---
+   title: Installing the CLI   # full page heading / browser title
+   label: Install              # short sidebar label (alias: sidebar_label)
+   order: 2                    # sort position within its group
+   ---
+   ```
+
+Mix freely — e.g. order the directories with `NN-` prefixes and set a
+shorter `label:` per page in frontmatter.
 
 ## Configuration
 
@@ -131,13 +147,42 @@ keep working if you only override a subset.
 
 ## Theming
 
-`src/app.css` ships with the standard shadcn token set; override the
-CSS variables in your own copy to rebrand. Light / dark mode is
-wired via [mode-watcher](https://github.com/svecosystem/mode-watcher);
-the theme toggle is in the top nav.
+Drop a **`theme.css`** into your content root (the same directory you
+mount at `/content`) and open-docs loads it automatically — after its
+own stylesheet, so your rules always win. No fork, no rebuild of the
+image.
 
-Deeper theming (component slot overrides, layout changes) is left as
-future work — for now, fork the repo or mount a custom `app.css`.
+```
+my-docs/
+  index.md
+  theme.css        ← your overrides
+  get-started/...
+```
+
+Two layers are overridable:
+
+- **Design tokens** — the shadcn CSS custom properties (`--primary`,
+  `--background`, `--sidebar`, `--radius`, `--font-sans`, …). Change a
+  few and the whole site re-themes coherently in both light and dark
+  mode. This is the recommended path.
+- **Component classes** — target any class the site renders
+  (`.prose`, the sidebar links, the top nav) for structural tweaks the
+  tokens don't reach.
+
+Copy [`theme.example.css`](./theme.example.css) to `theme.css` as a
+starting point. It's plain CSS — light/dark is handled by the `.dark`
+class that [mode-watcher](https://github.com/svecosystem/mode-watcher)
+toggles on `<html>` (the theme toggle lives in the top nav).
+
+In Docker, the file rides along with your content mount; nothing extra
+to configure:
+
+```sh
+docker run --rm -p 3000:3000 \
+  -v ./content:/content:ro \
+  ghcr.io/manchtools/open-docs:latest
+# where ./content/theme.css holds your overrides
+```
 
 ## Building locally
 

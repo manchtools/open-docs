@@ -1,0 +1,88 @@
+/*
+ * open-docs custom theme — example / starting point.
+ *
+ * Copy this file to your content root as `theme.css` (it ships in the
+ * same place as your markdown — i.e. the directory you mount at
+ * `/content` in Docker) and open-docs will load it automatically,
+ * after its own stylesheet, so anything you set here wins.
+ *
+ *   my-docs/
+ *     index.md
+ *     theme.css        ← this file, renamed
+ *     get-started/...
+ *
+ * You can override two layers:
+ *
+ *   1. DESIGN TOKENS — the shadcn CSS custom properties below. This is
+ *      the easy, recommended path: change a handful of colors and the
+ *      whole site (nav, buttons, prose, search) re-themes coherently in
+ *      both light and dark mode. Plain CSS, no build step.
+ *
+ *   2. COMPONENT CLASSES — target any class the site renders, e.g.
+ *      `.prose`, the sidebar links, the top nav. Use this for
+ *      structural tweaks the tokens don't reach.
+ *
+ * Colors use the oklch() color space to match the stock theme, but any
+ * valid CSS color works (hex, rgb, hsl, …).
+ */
+
+/* ----------------------------------------------------------------- *
+ * 1. Design tokens — light mode (the :root defaults).
+ * ----------------------------------------------------------------- */
+:root {
+	/* Corner radius used across cards, buttons, inputs, code chips. */
+	--radius: 0.625rem;
+
+	/* Brand accent. `--primary` drives buttons, links, and active nav. */
+	--primary: oklch(0.55 0.21 264); /* indigo-ish */
+	--primary-foreground: oklch(0.985 0 0);
+
+	/* Page surfaces. */
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+
+	/* Sidebar surfaces (left nav). */
+	--sidebar: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.95 0.02 264);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+
+	/* Muted / borders — affects code chips, rules, secondary text. */
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--border: oklch(0.922 0 0);
+}
+
+/* ----------------------------------------------------------------- *
+ * 2. Design tokens — dark mode. open-docs toggles `.dark` on <html>.
+ * ----------------------------------------------------------------- */
+.dark {
+	--primary: oklch(0.7 0.16 264);
+	--primary-foreground: oklch(0.205 0 0);
+
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+
+	--sidebar: oklch(0.205 0 0);
+	--sidebar-accent: oklch(0.3 0.04 264);
+}
+
+/* ----------------------------------------------------------------- *
+ * 3. Optional: swap the body font. open-docs ships Inter; point
+ *    --font-sans at any font you've made available (e.g. via a
+ *    @font-face below, or a <link> in static/).
+ * ----------------------------------------------------------------- */
+/* :root { --font-sans: 'Your Font', system-ui, sans-serif; } */
+
+/* ----------------------------------------------------------------- *
+ * 4. Optional: component-class overrides for things tokens can't do.
+ *    These are plain CSS rules; because this file loads last, they
+ *    beat the defaults at equal specificity.
+ * ----------------------------------------------------------------- */
+/*
+.prose h1 {
+	letter-spacing: -0.02em;
+}
+.prose a {
+	text-decoration-thickness: 2px;
+}
+*/

@@ -23,16 +23,27 @@ docker run --rm -p 3000:3000 \
 ```
 my-docs/
   index.md                  # landing page (or introduction.md)
-  get-started/
-    install.md
-    quickstart.md
+  theme.css                 # optional custom styling
+  01-get-started/
+    01-install.md
+    02-quickstart.md
   reference/
     api.md
-  nav.json                  # optional sidebar ordering
 ```
 
-Top-level files become top-of-sidebar entries. Subdirectories become
-sidebar groups. Filenames are kebab-cased and become path segments.
+The sidebar is built entirely from this folder tree — no nav file to
+maintain. Top-level files become top-of-sidebar entries; subdirectories
+become sidebar groups; filenames are kebab-cased into path segments.
+
+Control order without an external file: prefix a file or folder with
+`01-`, `02-` (stripped from the URL and title), or set `title:`,
+`label:`, and `order:` in a page's frontmatter.
+
+## Custom theme
+
+Drop a `theme.css` next to your markdown to restyle the site — override
+the CSS design tokens (`--primary`, `--background`, `--radius`, …) or
+target classes directly. It loads after the defaults so your rules win.
 
 ## Tokens in markdown
 
