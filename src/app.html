@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="%open-docs.siteDescription%" />
+
+		<!-- Favicons. Drop your own files into static/ to override.
+		     SVG is preferred by modern browsers; PNG fallbacks cover
+		     Safari + legacy. apple-touch-icon is iOS home-screen. -->
+		<link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
+		<link rel="icon" href="%sveltekit.assets%/favicon-32.png" type="image/png" sizes="32x32" />
+		<link rel="icon" href="%sveltekit.assets%/favicon-16.png" type="image/png" sizes="16x16" />
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
+
+		<!-- Open Graph / social cards. og.png lives under static/. -->
+		<meta property="og:title" content="%open-docs.siteTitle%" />
+		<meta property="og:description" content="%open-docs.siteDescription%" />
+		<meta property="og:image" content="%sveltekit.assets%/og.png" />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:image" content="%sveltekit.assets%/og.png" />
+
+		<meta name="theme-color" content="%open-docs.themeColor%" />
+
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover" class="bg-background text-foreground">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
