@@ -234,4 +234,10 @@
   .prose :where(td, th) :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     @apply whitespace-nowrap;
   }
+  /* Search-term highlights. After following a result, Pagefind's
+     highlighter wraps matches in <mark class="pagefind-highlight"> on the
+     destination page; theme them to match the in-palette excerpt marks. */
+  mark.pagefind-highlight {
+    @apply rounded bg-yellow-200 px-0.5 text-foreground dark:bg-yellow-700/40;
+  }
 }

@@ -132,7 +132,16 @@
 
 	function pick(url: string) {
 		open = false;
-		void goto(url);
+		const term = query.trim();
+		if (!term) {
+			void goto(url);
+			return;
+		}
+		// Carry the search term to the destination so it can be highlighted
+		// there (handled by the afterNavigate hook in +layout.svelte).
+		const [path, hash] = url.split('#');
+		const sep = path.includes('?') ? '&' : '?';
+		void goto(`${path}${sep}highlight=${encodeURIComponent(term)}${hash ? `#${hash}` : ''}`);
 	}
 </script>
 
