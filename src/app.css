@@ -21,9 +21,17 @@
    Drop this line once shadcn-svelte un-comments theirs upstream. */
 @custom-variant data-selected (&[data-selected]);
 
-/* Theme tokens mirrored from web/src/app.css so the docs site and
-   the product UI feel visually identical. Keep them in lock-step —
-   if the product palette shifts, mirror the change here. */
+/* Theme tokens mirrored from web/src/app.css so the docs site and the
+   product UI feel visually identical. Keep them in lock-step.
+
+   These defaults live in @layer base so an operator's theme.css — which
+   is unlayered — always overrides them, regardless of which order Vite
+   emits the two CSS chunks. Unlayered rules beat layered ones in the
+   cascade, so the "your theme.css always wins" contract holds without
+   depending on source order. (The glob-discovered theme chunk often
+   lands *before* this one, which would otherwise flip the cascade and
+   let our defaults clobber the override.) */
+@layer base {
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -91,6 +99,7 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
+}
 }
 
 @theme inline {
