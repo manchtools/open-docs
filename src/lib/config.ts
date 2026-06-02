@@ -35,10 +35,7 @@ export const siteConfig = {
 	 * Repository URL the "Edit on GitHub" footer link points at.
 	 * Set to empty string to hide the link.
 	 */
-	repoUrl: import.meta.env.PUBLIC_REPO_URL ?? '',
-
-	/** Theme accent color hex used for the theme-color meta tag. */
-	themeColor: import.meta.env.PUBLIC_THEME_COLOR ?? '#6366F1'
+	repoUrl: import.meta.env.PUBLIC_REPO_URL ?? ''
 } as const;
 
 export type SiteConfig = typeof siteConfig;

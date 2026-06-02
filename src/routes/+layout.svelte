@@ -12,6 +12,7 @@
 
 	import { ModeWatcher } from 'mode-watcher';
 	import { afterNavigate } from '$app/navigation';
+	import ThemeColor from '$lib/components/theme-color.svelte';
 	import TopNav from '$lib/components/top-nav.svelte';
 	import Sidebar from '$lib/components/sidebar.svelte';
 	import { siteConfig } from '$lib/config';
@@ -45,6 +46,7 @@
 </script>
 
 <ModeWatcher />
+<ThemeColor />
 
 <!-- Fixed-viewport layout. Outer container is exactly the viewport
      height; the middle row owns the remaining vertical space

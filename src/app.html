@@ -21,7 +21,10 @@
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:image" content="%sveltekit.assets%/og.png" />
 
-		<meta name="theme-color" content="%open-docs.themeColor%" />
+		<!-- Mobile browser chrome tint. Only a pre-hydration fallback (the
+		     default light --primary); theme-color.svelte then syncs it to
+		     the live --primary token and keeps it in step with dark mode. -->
+		<meta name="theme-color" content="#171717" />
 
 		%sveltekit.head%
 	</head>

@@ -215,9 +215,10 @@ are the main lever. Reach for `{% boost %}` only as a last resort.
   design tokens (colors, fonts, radius). No source edits.
 - **Branding by env var** (read at build time): `PUBLIC_BRAND_NAME`,
   `PUBLIC_BRAND_TAGLINE`, `PUBLIC_LOGO_SRC`, `PUBLIC_SITE_TITLE`,
-  `PUBLIC_SITE_DESCRIPTION`, `PUBLIC_REPO_URL`, `PUBLIC_THEME_COLOR`,
-  plus `BASE_PATH` and `PORT`. `PUBLIC_*` is **not** secret — it's compiled
-  into the client bundle.
+  `PUBLIC_SITE_DESCRIPTION`, `PUBLIC_REPO_URL`, plus `BASE_PATH` and
+  `PORT`. `PUBLIC_*` is **not** secret — it's compiled into the client
+  bundle. (The mobile `theme-color` follows the `--primary` token, so
+  there's no env flag for it.)
 - **Content tokens:** `PUBLIC_TOKEN_<NAME>` exposes `{{<NAME>}}` as a
   build-time placeholder you can drop into prose.
 

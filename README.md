@@ -115,8 +115,10 @@ file, or in your shell.
 | `PUBLIC_SITE_TITLE` | `open-docs` | `<title>` + `og:title` |
 | `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Meta description |
 | `PUBLIC_REPO_URL` | _(empty)_ | If set, shows GitHub link in nav + footer |
-| `PUBLIC_THEME_COLOR` | `#6366F1` | `<meta name="theme-color">` |
 | `BASE_PATH` | _(empty)_ | Sub-path deploy, e.g. `/docs` |
+
+The mobile browser `theme-color` follows your `--primary` token
+automatically, so there is no separate flag for it.
 
 ### Content tokens
 

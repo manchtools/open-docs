@@ -15,8 +15,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		transformPageChunk: ({ html }) => {
 			return html
 				.replaceAll('%open-docs.siteTitle%', escapeHtml(siteConfig.siteTitle))
-				.replaceAll('%open-docs.siteDescription%', escapeHtml(siteConfig.siteDescription))
-				.replaceAll('%open-docs.themeColor%', escapeHtml(siteConfig.themeColor));
+				.replaceAll('%open-docs.siteDescription%', escapeHtml(siteConfig.siteDescription));
 		}
 	});
 

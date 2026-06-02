@@ -44,6 +44,10 @@ Common tokens: `--primary`, `--background`, `--foreground`,
 and `--font-sans`. Colors use `oklch()` to match the stock theme, but
 any valid CSS color works.
 
+The mobile browser chrome (the `<meta name="theme-color">` tint) tracks
+`--primary` automatically, so it matches your accent in both modes —
+there is no separate colour to set.
+
 ### Component classes
 
 For structural tweaks the tokens do not reach, target classes directly

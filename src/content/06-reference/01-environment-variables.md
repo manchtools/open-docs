@@ -18,7 +18,10 @@ Every variable is read at build time. In Docker, set them with `-e` on
 | `PUBLIC_SITE_TITLE` | `open-docs` | Browser title and `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Meta and `og:description`. |
 | `PUBLIC_REPO_URL` | _(empty)_ | Shows a GitHub link in nav + footer when set. |
-| `PUBLIC_THEME_COLOR` | `#6366F1` | `<meta name="theme-color">`. |
+
+The mobile browser `theme-color` (the chrome tint) isn't set here — it
+follows your `--primary` token automatically, in both light and dark
+mode. See [Theming](/customizing/theming).
 
 ## Content tokens
 

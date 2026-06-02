@@ -29,7 +29,6 @@
 #   PUBLIC_SITE_TITLE           <title> + og:title
 #   PUBLIC_SITE_DESCRIPTION     meta description + og:description
 #   PUBLIC_REPO_URL             If set, shows a GitHub link in the nav
-#   PUBLIC_THEME_COLOR          Hex; populates <meta name="theme-color">
 #   PUBLIC_TOKEN_*              Any token usable as `{{NAME}}` in .md.
 #                               PUBLIC_TOKEN_WEB_UI_URL → `{{WEB_UI_URL}}`
 #   BASE_PATH                   Sub-path deploy, e.g. `/docs`
