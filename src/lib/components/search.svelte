@@ -55,7 +55,22 @@
 			// resolves to /pagefind/pagefind.js (built into
 			// build/client/pagefind by the package.json build script).
 			const m = await import(/* @vite-ignore */ `${base}/pagefind/pagefind.js`);
-			await m.options({ baseUrl: base + '/' });
+			await m.options({
+				baseUrl: base + '/',
+				// Ranking tuned for docs. All are Pagefind's BM25-style knobs;
+				// tweak to taste. https://pagefind.app/docs/ranking/
+				ranking: {
+					// Favour pages that contain the exact search terms over
+					// fuzzy/compound matches — docs searches are usually precise.
+					termSimilarity: 1.4,
+					// Reduce the bias toward very short pages so a thorough page
+					// isn't out-ranked by a stub that mentions the term once.
+					pageLength: 0.6,
+					// Defaults for the rest.
+					termFrequency: 1.0,
+					termSaturation: 1.4
+				}
+			});
 			mod = m;
 		} catch (err) {
 			loadError =

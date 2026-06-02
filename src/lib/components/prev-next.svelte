@@ -32,7 +32,11 @@
 </script>
 
 {#if prev || next}
+	<!-- data-pagefind-ignore: this is navigational chrome that repeats the
+	     neighbouring pages' titles. Without it, searching a page's title
+	     also matches its neighbours via their prev/next links. -->
 	<nav
+		data-pagefind-ignore
 		class="not-prose mt-12 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:justify-between"
 		aria-label="Previous / next page"
 	>

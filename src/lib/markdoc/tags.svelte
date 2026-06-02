@@ -24,6 +24,7 @@
 	export { default as Accordion } from './components/Accordion.svelte';
 	export { default as FileTree } from './components/FileTree.svelte';
 	export { default as Badge } from './components/Badge.svelte';
+	export { default as Boost } from './components/Boost.svelte';
 	export { default as Embed } from './components/Embed.svelte';
 	export { default as Code } from './components/Code.svelte';
 </script>

@@ -4,11 +4,13 @@ title: Introduction
 
 # open-docs
 
+{% boost weight=8 %}
 **open-docs** is a reusable, container-shippable documentation site.
 Drop your Markdown (or [Markdoc](https://markdoc.dev/)) files into a
 directory, point a container at it, and you have a searchable,
 dark-mode-friendly, syntax-highlighted docs site — no build step to
 configure, no framework to learn.
+{% /boost %}
 
 The site you are reading right now *is* open-docs rendering its own
 documentation. Everything here ships inside the default container
@@ -34,7 +36,8 @@ That makes it a good fit when you want to:
   directory tree — there is no nav file to keep in sync. See
   [Navigation](/navigation/folder-derived-nav).
 - **Full-text search**, prebuilt at deploy time with
-  [Pagefind](https://pagefind.app).
+  [Pagefind](https://pagefind.app) — tuned for docs; see
+  [Search](/customizing/search).
 - **Light / dark mode** with a toggle in the top bar.
 - **Syntax highlighting** via [Shiki](https://shiki.style) and
   **diagrams** via [Mermaid](https://mermaid.js.org). See

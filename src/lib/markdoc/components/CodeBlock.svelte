@@ -208,7 +208,10 @@
 </script>
 
 {#if isMermaid}
-	<figure class="not-prose my-8">
+	<!-- data-pagefind-ignore: the diagram renders client-side; the static
+	     HTML only holds the "Rendering diagram…" placeholder, which is index
+	     noise. -->
+	<figure data-pagefind-ignore class="not-prose my-8">
 		{#if mermaidError}
 			<div
 				class="rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive"

@@ -135,6 +135,19 @@ const x = 1;
 Adds a filename header to a fenced code block (Markdoc drops fence meta,
 so the filename rides on this wrapper).
 
+### boost
+
+```markdown
+{% boost weight=8 %}
+This passage is pushed harder in the search index.
+{% /boost %}
+```
+
+Invisible **search-ranking** hint — renders the content unchanged but
+weights it in Pagefind. Body text is weight `1` and headings are `10`/`5`/`3`,
+so `weight` (default `5`) lifts a key passage above ordinary prose. Use it
+only when the built-in heading weights aren't enough to surface something.
+
 ## Enhanced Markdown
 
 These need no special syntax — plain Markdown gets the behavior

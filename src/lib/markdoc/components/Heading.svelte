@@ -22,6 +22,11 @@
 	// is noise. Link everything from h2 down that has an id.
 	const anchored = $derived(!!id && level >= 2);
 
+	// Pagefind search weight: body text is weight 1, so lifting headings
+	// makes a term in a title/heading outrank the same term buried in prose.
+	// h4–h6 stay at the default. Tunable.
+	const searchWeight = $derived(level === 1 ? 10 : level === 2 ? 5 : level === 3 ? 3 : undefined);
+
 	let copied = $state(false);
 	let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -45,7 +50,12 @@
 	}
 </script>
 
-<svelte:element this={tag} {id} class={anchored ? 'group/anchor' : undefined}>
+<svelte:element
+	this={tag}
+	{id}
+	data-pagefind-weight={searchWeight}
+	class={anchored ? 'group/anchor' : undefined}
+>
 	{@render children?.()}{#if anchored}<a
 			href={`#${id}`}
 			onclick={copyLink}

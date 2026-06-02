@@ -18,4 +18,7 @@ Restyle everything with your own `theme.css`.
 {% card title="Content tokens" href="/customizing/content-tokens" icon="🧩" %}
 Inject build-time values into prose.
 {% /card %}
+{% card title="Search" href="/customizing/search" icon="🔎" %}
+How results are ranked, and how to push a passage higher.
+{% /card %}
 {% /cards %}
