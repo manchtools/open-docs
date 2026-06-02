@@ -225,4 +225,13 @@
   .prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     @apply text-primary underline-offset-4 hover:text-primary/80;
   }
+  /* Inline code in table cells must stay whole. A hyphen (e.g. in a
+     flag like `-server-url` or a path like `data/open-secret.db`) is a
+     natural line-break opportunity the browser will use in a narrow
+     column, so an identifier wraps mid-word and reads like a typo.
+     Keep each code span on one line; the table scrolls if it must.
+     Scoped to cells so long inline code in body prose can still wrap. */
+  .prose :where(td, th) :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    @apply whitespace-nowrap;
+  }
 }
