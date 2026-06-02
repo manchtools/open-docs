@@ -138,10 +138,18 @@
 			return;
 		}
 		// Carry the search term to the destination so it can be highlighted
-		// there (handled by the afterNavigate hook in +layout.svelte).
+		// there (handled by the afterNavigate hook in +layout.svelte). Each
+		// word gets its own `highlight` param — Pagefind's highlighter reads
+		// them with getAll() and marks each word, whereas a single
+		// space-joined value only matches the literal phrase.
+		const params = term
+			.split(/\s+/)
+			.filter(Boolean)
+			.map((word) => `highlight=${encodeURIComponent(word)}`)
+			.join('&');
 		const [path, hash] = url.split('#');
 		const sep = path.includes('?') ? '&' : '?';
-		void goto(`${path}${sep}highlight=${encodeURIComponent(term)}${hash ? `#${hash}` : ''}`);
+		void goto(`${path}${sep}${params}${hash ? `#${hash}` : ''}`);
 	}
 </script>
 
