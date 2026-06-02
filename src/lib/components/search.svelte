@@ -39,6 +39,12 @@
 	let loadError = $state<string | null>(null);
 	let mod = $state<PagefindModule | null>(null);
 
+	// Ref to the search field. bits-ui focuses the dialog *container* on
+	// open, not the input — so on touch devices the first tap only opens
+	// the palette and a second tap is needed to place the cursor (and raise
+	// the keyboard). We focus the input ourselves once it mounts.
+	let searchInput = $state<HTMLInputElement | null>(null);
+
 	const isMac = $derived(
 		browser &&
 			typeof navigator !== 'undefined' &&
@@ -93,6 +99,15 @@
 	});
 
 	$effect(() => {
+		// Once the dialog is open and the field has mounted, move focus to it
+		// on the next frame (after bits-ui has run its own open-focus), so a
+		// single tap is enough to start typing.
+		if (!open) return;
+		const el = searchInput;
+		if (el) requestAnimationFrame(() => el.focus());
+	});
+
+	$effect(() => {
 		if (!mod || !query.trim()) {
 			results = [];
 			return;
@@ -142,7 +157,7 @@
 </Button>
 
 <Command.Dialog bind:open shouldFilter={false}>
-	<Command.Input placeholder="Search the docs…" bind:value={query} />
+	<Command.Input bind:ref={searchInput} placeholder="Search the docs…" bind:value={query} />
 	<Command.List class="max-h-[60vh]">
 		{#if loadError}
 			<div class="p-4 text-sm text-muted-foreground">{loadError}</div>
