@@ -62,45 +62,71 @@
 			<Sidebar />
 		</aside>
 
-		<main bind:this={mainEl} class="min-w-0 flex-1 overflow-y-auto" data-pagefind-body>
-			{@render children?.()}
+		<main
+			bind:this={mainEl}
+			class="flex min-w-0 flex-1 flex-col overflow-y-auto"
+			data-pagefind-body
+		>
+			<div class="min-w-0 flex-1">
+				{@render children?.()}
+			</div>
+
+			<!-- Mobile footer: lives inside the scroll area so it slides away
+			     with the content instead of pinning to the bottom of the small
+			     viewport. flex-1 above pushes it to the bottom on short pages.
+			     Hidden at md+, where the pinned footer below takes over.
+			     data-pagefind-ignore keeps the colophon out of the search
+			     index (the page body is the indexed surface). -->
+			<footer
+				class="border-t border-border py-4 text-xs leading-tight text-muted-foreground md:hidden"
+				data-pagefind-ignore
+			>
+				{@render footerInner()}
+			</footer>
 		</main>
 	</div>
 
-	<footer class="border-t border-border py-6 text-sm text-muted-foreground">
-		<div
-			class="container mx-auto flex max-w-screen-2xl flex-col gap-x-6 gap-y-2 px-4 sm:flex-row sm:items-center sm:justify-between lg:px-6"
-		>
-			<p>
-				{siteConfig.brandName}
-				{#if siteConfig.brandTagline}{siteConfig.brandTagline}{/if},
-				built with <a
-					class="underline underline-offset-4 hover:text-foreground"
-					href="https://github.com/manchtools/open-docs">open-docs</a>.
-				{#if siteConfig.repoUrl}
-					<a
-						class="underline underline-offset-4 hover:text-foreground"
-						href={siteConfig.repoUrl}
-					>
-						Edit on GitHub
-					</a>
-				{/if}
-			</p>
-
-			<!-- Colophon: the stack open-docs is built on. Hardcoded into
-			     the shell on purpose — there is no env flag to hide it, so
-			     it travels with every deployment. Removing it means forking. -->
-			<p class="text-xs text-muted-foreground/80 sm:shrink-0 sm:text-right">
-				Powered by{#each techStack as tech, i (tech.href)}{i === 0
-						? ' '
-						: i === techStack.length - 1
-							? ', and '
-							: ', '}<a
-						class="underline-offset-4 hover:text-foreground hover:underline"
-						href={tech.href}
-						target="_blank"
-						rel="noopener noreferrer">{tech.name}</a>{/each}.
-			</p>
-		</div>
+	<!-- Desktop footer: pinned to the bottom of the fixed-height shell. -->
+	<footer class="hidden border-t border-border py-6 text-sm text-muted-foreground md:block">
+		{@render footerInner()}
 	</footer>
 </div>
+
+{#snippet footerInner()}
+	<div
+		class="container mx-auto flex max-w-screen-2xl flex-col gap-x-6 gap-y-1 px-4 sm:flex-row sm:items-center sm:justify-between sm:gap-y-2 lg:px-6"
+	>
+		<p>
+			{siteConfig.brandName}
+			{#if siteConfig.brandTagline}{siteConfig.brandTagline}{/if},
+			built with <a
+				class="underline underline-offset-4 hover:text-foreground"
+				href="https://github.com/manchtools/open-docs">open-docs</a>.
+			{#if siteConfig.repoUrl}
+				<a
+					class="underline underline-offset-4 hover:text-foreground"
+					href={siteConfig.repoUrl}
+				>
+					Edit on GitHub
+				</a>
+			{/if}
+		</p>
+
+		<!-- Colophon: the stack open-docs is built on. Hardcoded into the
+		     shell on purpose — there is no env flag to hide it, so it travels
+		     with every deployment. Removing it means forking. -->
+		<p
+			class="text-[0.7rem] text-muted-foreground/70 sm:shrink-0 sm:text-right sm:text-xs sm:text-muted-foreground/80"
+		>
+			Powered by{#each techStack as tech, i (tech.href)}{i === 0
+					? ' '
+					: i === techStack.length - 1
+						? ', and '
+						: ', '}<a
+					class="underline-offset-4 hover:text-foreground hover:underline"
+					href={tech.href}
+					target="_blank"
+					rel="noopener noreferrer">{tech.name}</a>{/each}.
+		</p>
+	</div>
+{/snippet}
