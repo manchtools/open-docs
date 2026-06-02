@@ -1,5 +1,10 @@
 # open-docs
 
+> **Writing docs with an AI agent?** Point it at
+> [`AGENTS.md`](AGENTS.md) — a self-contained spec of the content model,
+> every Markdoc tag, and the gotchas, so it can author correct pages
+> without reading this README or the source.
+
 A reusable, container-shippable documentation site. Drop your markdown
 (or [Markdoc](https://markdoc.dev/)) files into a directory, point the
 container at it, and you have a searchable, dark-mode-friendly,
