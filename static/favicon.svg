@@ -1,3 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Adaptive favicon: indigo on a light tab strip, a lighter indigo on a
+       dark one, so it stays legible in both. Browsers that support SVG
+       favicons re-render this when the OS color scheme changes, so it
+       switches live rather than only on refresh. -->
+  <style>
+    path { stroke: #6366f1; }
+    @media (prefers-color-scheme: dark) {
+      path { stroke: #a5b4fc; }
+    }
+  </style>
+  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
 </svg>
