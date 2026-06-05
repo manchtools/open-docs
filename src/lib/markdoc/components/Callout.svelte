@@ -49,7 +49,7 @@
 	{#if title}
 		<Alert.Title class="font-semibold">{title}</Alert.Title>
 	{/if}
-	<Alert.Description class="text-current [&_p]:my-1 [&_p:last-child]:mb-0">
+	<Alert.Description class="min-w-0 text-current [&_p]:my-1 [&_p:last-child]:mb-0">
 		{@render children?.()}
 	</Alert.Description>
 </Alert.Root>
