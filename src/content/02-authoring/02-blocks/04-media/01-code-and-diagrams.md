@@ -29,7 +29,7 @@ export function greet(name: string): string {
 ```
 
 Highlighting runs in the browser after load, so the first paint of a
-block may flash unstyled briefly — acceptable for docs, and it keeps
+block may flash unstyled briefly. This is acceptable for docs, and it keeps
 the highlighter out of the initial bundle.
 
 ## Filenames
@@ -52,12 +52,12 @@ export const greet = (name) => `Hello, ${name}!`;
 
 ## Highlighting & diffs
 
-Mark lines by adding a comment **inside** the code — the marker comment
+Mark lines by adding a comment inside the code. The marker comment
 is stripped from the rendered output:
 
-- `// [!code highlight]` — tint the line
-- `// [!code ++]` — mark it as added (green)
-- `// [!code --]` — mark it as removed (red)
+- `// [!code highlight]`: tint the line
+- `// [!code ++]`: mark it as added — green, with a `+` in the gutter
+- `// [!code --]`: mark it as removed — red, with a `-` in the gutter
 
 So this source renders with the markers applied and removed:
 
@@ -75,8 +75,8 @@ fence's language.
 
 A fence tagged `mermaid` is rendered as a diagram instead of code. The
 diagram picks up the site's theme colors, so it stays legible in both
-light and dark mode. **Click a diagram to enlarge it** in a dialog —
-handy when one gets detailed.
+light and dark mode. Click a diagram to enlarge it in a dialog, which
+helps when one gets detailed.
 
 ````markdown
 ```mermaid

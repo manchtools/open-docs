@@ -5,9 +5,9 @@ label: Folder-derived nav
 
 # Folder-derived navigation
 
-The sidebar is built entirely from your content folder. There is
-**no nav config file** to write or keep in sync — move a file, and
-the navigation follows.
+The sidebar is built from your content folder. There is **no nav config
+file** to write or keep in sync. Move a file, and the navigation
+follows.
 
 ## How the tree maps to the sidebar
 
@@ -36,13 +36,13 @@ flowchart TD
 - **Files in a folder** become that group's **items**.
 - **Top-level files** (directly in the content root) appear above the
   groups, ungrouped.
-- **A folder's `index.md`** makes that section's **heading itself the
-  link** to its page (served at the folder's URL) — there's no separate
-  "Overview" entry; click the section title to open it.
+- **A folder's `index.md`** makes that section's heading the link to its
+  page (served at the folder's URL). There's no separate "Overview"
+  entry; click the section title to open it.
 
 ## Nesting
 
-Folders can nest, and so does the sidebar — **up to three levels deep**
+Folders can nest, and so does the sidebar, up to three levels deep
 (level 1 is a top-level folder, level 3 is a folder three deep):
 
 {% filetree %}
@@ -54,10 +54,10 @@ Folders can nest, and so does the sidebar — **up to three levels deep**
         - events.md
 {% /filetree %}
 
-Levels 2 and 3 render as **collapsible** sub-sections; the branch
+Levels 2 and 3 render as collapsible sub-sections; the branch
 containing the page you're on opens automatically. Anything nested
-deeper than three levels flattens into the third-level section — the
-page keeps its full URL, the sidebar just stops indenting.
+deeper than three levels flattens into the third-level section. The
+page keeps its full URL, and the sidebar stops indenting.
 
 {% callout type="info" title="You're looking at level 1" %}
 Every group in this sidebar is a top-level folder. Add a subfolder and
@@ -67,7 +67,7 @@ it becomes a collapsible sub-section beneath its parent.
 ## Titles
 
 By default a title is derived from the filename: `quick-start.md`
-becomes "Quick start". Override it per page with frontmatter — see
+becomes "Quick start". Override it per page with frontmatter. See
 [Ordering & titles](/navigation/ordering-and-titles).
 
 ## The home page
@@ -80,8 +80,8 @@ page, the way these docs open with
 ### Section icons
 
 Each card shows a default glyph unless the section's `index.md` sets an
-`icon:` in its frontmatter. It stays on that one page — no separate
-asset folder — and accepts three forms:
+`icon:` in its frontmatter. It stays on that one page, with no separate
+asset folder, and accepts three forms:
 
 ```markdown
 ---
@@ -91,7 +91,7 @@ icon: "🚀"                              # an emoji
 ---
 ```
 
-The cards in this site's home page are all driven this way — every
+The cards on this site's home page are all driven this way: every
 top-level section here sets an emoji icon in its `index.md`.
 
 {% callout type="info" title="Out-of-sync is a 404, not a crash" %}

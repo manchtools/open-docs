@@ -93,11 +93,15 @@ external nav file:
    title: Installing the CLI   # full page heading / browser title
    label: Install              # short sidebar label (alias: sidebar_label)
    order: 2                    # sort position within its group
+   description: Install the…   # meta description (else the first paragraph)
    ---
    ```
 
 Mix freely — e.g. order the directories with `NN-` prefixes and set a
 shorter `label:` per page in frontmatter.
+
+A page with `meta: true` is kept out of the sidebar and listed in the
+footer instead — handy for an imprint, privacy policy, or other legal page.
 
 ## Configuration
 
@@ -113,7 +117,8 @@ file, or in your shell.
 | `PUBLIC_BRAND_TAGLINE` | `docs` | Subtitle next to the brand |
 | `PUBLIC_LOGO_SRC` | `/favicon.svg` | Path under `static/` |
 | `PUBLIC_SITE_TITLE` | `open-docs` | `<title>` + `og:title` |
-| `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Meta description |
+| `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Default meta description |
+| `PUBLIC_SITE_URL` | _(empty)_ | Full base URL; enables canonical links, `sitemap.xml`, `robots.txt`, `llms.txt` |
 | `PUBLIC_REPO_URL` | _(empty)_ | If set, shows GitHub link in nav + footer |
 | `BASE_PATH` | _(empty)_ | Sub-path deploy, e.g. `/docs` |
 
@@ -151,6 +156,23 @@ static/
 In Docker, mount your `static/` directory at `/static`. It's merged
 into the image's `static/` rather than replacing it, so the defaults
 keep working if you only override a subset.
+
+## Discoverability (SEO & AI)
+
+Every page is pre-rendered to static HTML, so search engines and AI
+crawlers see the full content without running JavaScript. On top of that:
+
+- **Per-page metadata** — each page emits its own `<title>`,
+  `<meta name="description">`, canonical link, and Open Graph / Twitter
+  tags. The description comes from the page's `description` frontmatter,
+  falling back to its first paragraph.
+- **`sitemap.xml`**, **`robots.txt`**, and an
+  **[`llms.txt`](https://llmstxt.org)** index for AI assistants — all
+  generated from your content, so they never drift.
+
+Set `PUBLIC_SITE_URL` to your site's full base URL to turn on absolute
+canonical/sitemap links. See the [SEO & AI search](./src/content/04-customizing/05-seo.md)
+docs page for details.
 
 ## Theming
 

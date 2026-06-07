@@ -5,8 +5,8 @@ icon: "🚀"
 
 # Getting started
 
-New here? This section gets open-docs running and explains how your
-files turn into a site.
+This section gets open-docs running and explains how your files turn
+into a site.
 
 {% cards %}
 {% card title="Introduction" href="/getting-started/introduction" icon="📖" %}

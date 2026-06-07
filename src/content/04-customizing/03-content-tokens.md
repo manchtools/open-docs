@@ -38,12 +38,12 @@ The `PUBLIC_TOKEN_` prefix is dropped to form the placeholder name:
 {% callout type="info" title="Plain string substitution" %}
 Replacement happens before Markdoc parses the page, as a literal string
 swap. It is safe as long as the injected value does not itself contain
-Markdoc-significant characters — ordinary URLs and config strings are
+Markdoc-significant characters. Ordinary URLs and config strings are
 fine.
 {% /callout %}
 
 ## Unset tokens
 
 If no matching variable is set, the `{{NAME}}` text is left untouched.
-That is why this very page can show `{{API_URL}}` literally — no such
+That is why this page can show `{{API_URL}}` literally: no such
 token is defined in the demo build.

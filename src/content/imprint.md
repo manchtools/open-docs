@@ -7,7 +7,7 @@ meta: true
 
 {% callout type="info" title="This is an example" %}
 This page exists to demonstrate a **meta page**. Replace it with your own
-operator details — some regions (the EU/Germany, for instance) legally
+operator details; some regions (the EU/Germany, for instance) legally
 require an imprint. Delete it if you don't need one.
 {% /callout %}
 
@@ -30,5 +30,5 @@ meta: true
 ```
 
 That keeps it **out of the sidebar and prev/next navigation** and lists
-it in the **footer** instead — handy for legal pages like an imprint or
-privacy policy. See [Ordering & titles](/navigation/ordering-and-titles).
+it in the **footer** instead, which is useful for legal pages like an
+imprint or privacy policy. See [Ordering & titles](/navigation/ordering-and-titles).

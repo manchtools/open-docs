@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import { listSlugs, loadContent } from '$lib/content';
+import { pageMeta } from '$lib/nav';
 
 // Pre-render every content slug we know about. `entries` returns the
 // list of `params` SvelteKit should crawl during the build. Adding a
@@ -12,8 +13,17 @@ export const entries = () => {
 export const load: PageLoad = async ({ params }) => {
 	const slug = params.slug;
 	const mod = await loadContent(slug);
+	const meta = pageMeta[slug];
 	return {
 		component: mod.default,
-		currentHref: '/' + slug
+		currentHref: '/' + slug,
+		// Per-page document head (title/description/canonical/OG). The title
+		// and description come from the page's frontmatter, with the
+		// description falling back to its first paragraph (see pageMeta).
+		seo: {
+			title: meta?.title,
+			description: meta?.description,
+			path: '/' + slug
+		}
 	};
 };

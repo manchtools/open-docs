@@ -6,21 +6,21 @@ title: More blocks
 
 ## Accordion
 
-Collapsible disclosure for FAQs and optional detail, with smooth
-animation and full keyboard support. Wrap several in `{% accordions %}`
-to make a **group** where opening one closes the others, like tabs — the
-default. Add `exclusive=false` to let several stay open at once.
+Collapsible disclosure for FAQs and optional detail, with animation
+and keyboard support. Wrap several in `{% accordions %}`
+to make a group where opening one closes the others, like tabs. That is
+the default; add `exclusive=false` to let several stay open at once.
 
 {% accordions %}
 {% accordion title="Does open-docs need a database?" %}
 No. Every page is prerendered to static HTML at build time.
 {% /accordion %}
 {% accordion title="Can I self-host it?" %}
-Yes — run the container anywhere, or build from source and serve the
+Yes. Run the container anywhere, or build from source and serve the
 output like any static site.
 {% /accordion %}
 {% accordion title="Does it support nested folders?" %}
-Up to three levels deep — see
+Up to three levels deep. See
 [folder-derived navigation](/navigation/folder-derived-nav).
 {% /accordion %}
 {% /accordions %}
@@ -53,8 +53,8 @@ Variants: `default`, `info`, `success`, `warning`, `danger`.
 
 ## File tree
 
-Render a directory tree from a plain nested list — folders (items that
-nest a list) and files are detected for you, no special markup.
+Render a directory tree from a nested list. Folders (items that
+nest a list) and files are detected for you, with no special markup.
 
 {% filetree %}
 - content/
@@ -88,13 +88,13 @@ privacy-friendly embed form automatically.
 ```
 
 The CSP iframe allow-list is derived automatically from the
-`{% embed %}` blocks in your content — including URLs supplied through a
-`{{TOKEN}}` — so there is nothing to configure.
+`{% embed %}` blocks in your content (including URLs supplied through a
+`{{TOKEN}}`), so there is nothing to configure.
 
 ## Columns
 
-Lay content out side by side. Columns are capped at **three across** and
-stack on mobile — two fill 50/50, three fill in thirds, a fourth wraps.
+Lay content out side by side. Columns are capped at three across and
+stack on mobile: two fill 50/50, three fill in thirds, a fourth wraps.
 
 {% columns %}
 {% column %}

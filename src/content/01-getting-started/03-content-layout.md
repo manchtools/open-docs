@@ -6,7 +6,7 @@ title: Content layout
 
 Everything the site shows comes from one directory of Markdown. In
 Docker that directory is whatever you mount at `/content`; from source
-it is `src/content/`. The rest — routes, sidebar, search — is derived
+it is `src/content/`. The rest (routes, sidebar, search) is derived
 from it.
 
 ## A typical tree
@@ -44,7 +44,7 @@ This produces:
 
 {% callout type="info" title="The landing page" %}
 The site's home page (`/`) is a generated hero that lists your sections
-as cards — it is not a Markdown file. Put your first real page inside a
+as cards; it is not a Markdown file. Put your first real page inside a
 group, as this site does with
 [Introduction](/getting-started/introduction).
 {% /callout %}
@@ -53,7 +53,7 @@ group, as this site does with
 
 Only `.md` and `.markdoc` files under the content directory become
 pages. A `theme.css` is picked up for [styling](/customizing/theming);
-anything else (drafts, notes, `.txt` files) is simply ignored, so you
+anything else (drafts, notes, `.txt` files) is ignored, so you
 can keep working files alongside your docs.
 
 If you reference an image, put it under `static/` and link it from

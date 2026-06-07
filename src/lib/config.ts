@@ -35,7 +35,16 @@ export const siteConfig = {
 	 * Repository URL the "Edit on GitHub" footer link points at.
 	 * Set to empty string to hide the link.
 	 */
-	repoUrl: import.meta.env.PUBLIC_REPO_URL ?? ''
+	repoUrl: import.meta.env.PUBLIC_REPO_URL ?? '',
+
+	/**
+	 * Absolute site origin, e.g. `https://docs.example.com` (no trailing
+	 * slash). Powers canonical URLs, Open Graph `og:url`, `sitemap.xml`,
+	 * `robots.txt`, and the `llms.txt` AI index. Leave empty to omit
+	 * absolute URLs (canonical and og:url are then skipped; the sitemap
+	 * and llms.txt still build but with path-only, non-absolute links).
+	 */
+	siteUrl: (import.meta.env.PUBLIC_SITE_URL ?? '').replace(/\/+$/, '')
 } as const;
 
 export type SiteConfig = typeof siteConfig;

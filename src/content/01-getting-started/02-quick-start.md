@@ -20,7 +20,7 @@ docker run --rm -p 3000:3000 \
 ```
 
 Visit `http://localhost:3000`. The container builds the site at start
-with your content baked in, then serves it. Run with **no** mount and
+with your content baked in, then serves it. Run with no mount and
 you get these docs as a live demo.
 
 {% /tab %}

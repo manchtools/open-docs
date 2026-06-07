@@ -4,8 +4,8 @@ title: Callouts & tabs
 
 # Callouts & tabs
 
-Two Markdoc blocks cover most "more than prose" needs: **callouts** to
-draw the eye, and **tabs** to group alternative instructions.
+Two Markdoc blocks cover most needs beyond plain prose: **callouts** to
+highlight notes, and **tabs** to group alternative instructions.
 
 ## Callouts
 
@@ -36,8 +36,8 @@ Use `success` to confirm a happy path or a completed step.
 
 ## Tabs
 
-Group equivalent instructions — package managers, operating systems,
-languages — so readers see only the variant they care about.
+Group equivalent instructions (package managers, operating systems,
+languages) so readers see only the variant they care about.
 
 ````markdown
 {% tabs labels="apt, dnf, brew" initial="apt" %}

@@ -6,7 +6,7 @@ title: Steps & cards
 
 ## Steps
 
-Walk a reader through an ordered procedure — the numbers are generated
+Walk a reader through an ordered procedure. The numbers are generated
 automatically, so you can reorder freely.
 
 {% steps %}
@@ -18,7 +18,7 @@ bun install
 ```
 {% /step %}
 {% step title="Add a page" %}
-Drop a Markdown file into your content folder — the route and sidebar
+Drop a Markdown file into your content folder. The route and sidebar
 entry appear on their own.
 {% /step %}
 {% step title="Run it" %}

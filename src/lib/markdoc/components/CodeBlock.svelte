@@ -367,4 +367,30 @@
 		background-color: color-mix(in oklab, #ef4444 18%, transparent);
 		opacity: 0.75;
 	}
+
+	/* GitHub-style +/- gutter. When a block contains any diff line, reserve a
+	   left gutter on every line (so the code stays aligned) and render a + or
+	   - sign in it for added/removed lines, so the change reads even without
+	   colour. The marker is a CSS ::before, so it isn't part of the copied
+	   text (copy uses the raw source, not the DOM). */
+	:global(.shiki:has(.line.diff) .line) {
+		display: inline-block;
+		width: 100%;
+		box-sizing: border-box;
+		padding-left: 1.6em;
+		position: relative;
+	}
+	:global(.shiki .line.diff::before) {
+		position: absolute;
+		left: 0.5em;
+		font-weight: 600;
+	}
+	:global(.shiki .line.diff.add::before) {
+		content: '+';
+		color: #16a34a;
+	}
+	:global(.shiki .line.diff.remove::before) {
+		content: '-';
+		color: #dc2626;
+	}
 </style>

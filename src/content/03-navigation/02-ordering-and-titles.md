@@ -4,10 +4,9 @@ title: Ordering & titles
 
 # Ordering & titles
 
-Plain alphabetical order rarely matches reading order — "Advanced"
-should not come before "Install". open-docs gives you two ways to take
-control, both derived from the content itself. No external nav file is
-involved.
+Alphabetical order rarely matches reading order: "Advanced" would come
+before "Install". open-docs gives you two ways to set the order, both
+derived from the content itself. No external nav file is involved.
 
 ## Number prefixes
 
@@ -45,16 +44,16 @@ order: 2
 | `title` | Full title (sidebar + prev/next). |
 | `label` | Short sidebar label when the title is long. Alias `sidebar_label`. |
 | `order` | Sort position; overrides a number prefix. |
-| `meta` | `true` keeps the page out of the sidebar and prev/next and lists it in the footer instead — for a legal/imprint page some regions require. |
+| `meta` | `true` keeps the page out of the sidebar and prev/next and lists it in the footer instead, for a legal/imprint page some regions require. |
 
 ## Mixing the two
 
-A common, tidy pattern: use number prefixes on **folders** to order the
-groups, and let files sort by their own prefixes — reaching for
-frontmatter `label` only when a title is too long for the sidebar.
+A common pattern: use number prefixes on **folders** to order the
+groups, and let files sort by their own prefixes. Reach for frontmatter
+`label` only when a title is too long for the sidebar.
 
 {% callout type="success" title="This site does exactly that" %}
 Every group you see in the sidebar is a `NN-`prefixed folder, and each
-group **heading is the link to that section's `index.md`** — click
+group **heading is the link to that section's `index.md`**. Click
 "Authoring" to land on its overview page.
 {% /callout %}

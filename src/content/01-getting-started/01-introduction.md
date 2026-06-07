@@ -5,11 +5,11 @@ title: Introduction
 # open-docs
 
 {% boost weight=8 %}
-**open-docs** is a reusable, container-shippable documentation site.
+**open-docs** is a container-shippable documentation site.
 Drop your Markdown (or [Markdoc](https://markdoc.dev/)) files into a
 directory, point a container at it, and you have a searchable,
-dark-mode-friendly, syntax-highlighted docs site — no build step to
-configure, no framework to learn.
+dark-mode-friendly, syntax-highlighted docs site with no build step to
+configure and no framework to learn.
 {% /boost %}
 
 The site you are reading right now *is* open-docs rendering its own
@@ -22,7 +22,8 @@ pages.
 Most documentation generators are a dependency you add to a repository
 and build yourself. open-docs is the opposite: a
 **generic image you mount content into**. The same published image
-serves any docset — you bring the Markdown, it brings the chrome.
+serves any docset. You provide the Markdown; the image provides the
+theme, rendering, and search.
 
 That makes it a good fit when you want to:
 
@@ -33,21 +34,21 @@ That makes it a good fit when you want to:
 ## What you get
 
 - **Folder-derived navigation.** The sidebar is built from your
-  directory tree — there is no nav file to keep in sync. See
+  directory tree, so there is no nav file to keep in sync. See
   [Navigation](/navigation/folder-derived-nav).
 - **Full-text search**, prebuilt at deploy time with
-  [Pagefind](https://pagefind.app) — tuned for docs; see
+  [Pagefind](https://pagefind.app) and tuned for docs. See
   [Search](/customizing/search).
 - **Light / dark mode** with a toggle in the top bar.
 - **Syntax highlighting** via [Shiki](https://shiki.style) and
   **diagrams** via [Mermaid](https://mermaid.js.org). See
   [Code & diagrams](/authoring/blocks/media/code-and-diagrams).
-- **Custom theming** from a single `theme.css` you drop next to your
+- **Theming** from a single `theme.css` you drop next to your
   content. See [Theming](/customizing/theming).
-- **Rebranding by environment variable** — name, logo, colors, repo
-  link — so one image serves many sites. See
+- **Rebranding by environment variable** (name, logo, colors, repo
+  link) so one image serves many sites. See
   [Configuration](/customizing/configuration).
-- **Rich content blocks** — callouts, tabs, screenshots — on top of
+- **Content blocks** (callouts, tabs, screenshots) on top of
   plain Markdown. See [Callouts & tabs](/authoring/blocks/callouts-and-tabs).
 
 ## Next steps

@@ -5,8 +5,8 @@ icon: "🎨"
 
 # Customizing
 
-Make open-docs yours — branding, theming, and build-time content values,
-all without touching the source.
+Set your branding, theming, and build-time content values without
+touching the source.
 
 {% cards %}
 {% card title="Configuration" href="/customizing/configuration" icon="⚙️" %}
@@ -20,5 +20,8 @@ Inject build-time values into prose.
 {% /card %}
 {% card title="Search" href="/customizing/search" icon="🔎" %}
 How results are ranked, and how to push a passage higher.
+{% /card %}
+{% card title="SEO & AI search" href="/customizing/seo" icon="🌐" %}
+Per-page metadata, sitemap.xml, robots.txt, and llms.txt.
 {% /card %}
 {% /cards %}

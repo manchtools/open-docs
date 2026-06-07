@@ -243,6 +243,67 @@ export const metaPages: NavItem[] = metaRaw
 	.sort((a, b) => (a.order !== b.order ? a.order - b.order : a.title.localeCompare(b.title)))
 	.map(({ title, href, label }) => ({ title, href, label }));
 
+// First prose paragraph of a file, cleaned of Markdown/Markdoc syntax and
+// trimmed to ~155 chars — a meta-description fallback when frontmatter has
+// no `description:`. Skips the frontmatter, headings, block tags, lists,
+// tables, blockquotes, and fenced code.
+function firstParagraph(raw: string): string | undefined {
+	const body = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+	let para = '';
+	let inFence = false;
+	for (const line of body.split(/\r?\n/)) {
+		const t = line.trim();
+		if (t.startsWith('```')) {
+			inFence = !inFence;
+			continue;
+		}
+		if (inFence) continue;
+		if (!t) {
+			if (para) break;
+			continue;
+		}
+		if (t.startsWith('#') || t.startsWith('{%') || t.startsWith('|') || t.startsWith('>')) continue;
+		if (/^([-*+]|\d+\.)\s/.test(t)) continue;
+		para += (para ? ' ' : '') + t;
+	}
+	const clean = para
+		.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+		.replace(/\{%[^%]*%\}/g, '')
+		.replace(/[`*_~]/g, '')
+		.replace(/\s+/g, ' ')
+		.trim();
+	if (!clean) return undefined;
+	return clean.length > 155 ? clean.slice(0, 152).replace(/\s+\S*$/, '') + '…' : clean;
+}
+
+/**
+ * Per-page SEO metadata (title + description) keyed by clean slug. Consumed
+ * by the [...slug] route's <Seo> head, sitemap.xml, and llms.txt. Covers
+ * every routed page including `meta: true` legal pages; the landing page
+ * ('') is excluded — it uses siteConfig. Description prefers frontmatter
+ * `description:`, falling back to the first prose paragraph.
+ */
+export const pageMeta: Record<string, { title: string; description?: string }> = (() => {
+	const out: Record<string, { title: string; description?: string }> = {};
+	for (const [path, raw] of Object.entries(sources)) {
+		const slug = cleanSlug(path);
+		if (slug === '') continue;
+		const fm = frontmatter(raw);
+		const segments = path
+			.replace(/^\/src\/content\//, '')
+			.replace(/\.(md|markdoc)$/, '')
+			.split('/');
+		const file = segments[segments.length - 1];
+		const isIndex = stripPrefix(file).rest.toLowerCase() === 'index';
+		const titleSeg = isIndex ? (segments[segments.length - 2] ?? file) : file;
+		out[slug] = {
+			title: fm.title ?? titleFromSegment(titleSeg),
+			description: fm.description || firstParagraph(raw)
+		};
+	}
+	return out;
+})();
+
 // Depth-first flatten of the tree, in sidebar order, for prev/next
 // navigation at the bottom of each page. Sections contribute no link
 // themselves; only their leaf pages do.

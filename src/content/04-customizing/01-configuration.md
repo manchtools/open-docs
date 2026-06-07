@@ -6,7 +6,7 @@ title: Configuration
 
 All configuration is done with **environment variables**, read at build
 time and baked into the site. Set them on the `docker run` command, in
-a `.env` file, or in your shell. Nothing here requires editing source.
+a `.env` file, or in your shell. None of this requires editing source.
 
 ## Site chrome
 
@@ -51,12 +51,12 @@ Favicons, social-card images, and screenshots live under `static/`:
 Only `favicon.svg` is required; the PNG fallbacks and `og.png` are
 optional and skipped if absent. In Docker, mount your `static/`
 directory at `/static`. It is **merged** into the image's defaults
-rather than replacing them, so overriding one file keeps the rest
-working.
+rather than replacing them, so overriding one file leaves the rest in
+place.
 
 ## Theming and tokens
 
-- To restyle the site, drop in a `theme.css` — see
+- To restyle the site, add a `theme.css`. See
   [Theming](/customizing/theming).
-- To inject build-time values into prose, use content tokens — see
+- To inject build-time values into prose, use content tokens. See
   [Content tokens](/customizing/content-tokens).

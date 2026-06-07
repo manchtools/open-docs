@@ -6,7 +6,7 @@ title: Screenshots
 
 The `screenshot` block renders an image with optional browser-frame
 chrome, a caption, and a separate dark-mode variant. Images are
-resolved from `static/screenshots/`. **Click any image to enlarge it**
+resolved from `static/screenshots/`. Click any image to enlarge it
 in a dialog (this also applies to plain Markdown `![]()` images).
 
 ```markdown
@@ -30,7 +30,7 @@ in a dialog (this also applies to plain Markdown `![]()` images).
 | `variant` | no | `frame` (faux-browser chrome, default) or `flat` (bordered image). |
 | `width` | no | Max width, e.g. `720px`. Defaults to the content column width. |
 
-## Putting images in place
+## Adding the image files
 
 Drop the files into your static directory:
 
@@ -41,7 +41,7 @@ Drop the files into your static directory:
     - dashboard-dark.png
 {% /filetree %}
 
-In Docker, mount your assets at `/static` — they are merged into the
+In Docker, mount your assets at `/static`. They are merged into the
 image's `static/`, so you only override what you provide. See
 [Static assets](/customizing/configuration#static-assets).
 

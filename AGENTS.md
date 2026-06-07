@@ -60,13 +60,18 @@ filename:
 title: Installing the command-line tool   # full title (sidebar + prev/next + search weight)
 label: Install                             # short sidebar label (alias: sidebar_label)
 order: 2                                    # overrides the NN- prefix
+description: Install the CLI on macOS…     # meta description + llms.txt (else first paragraph)
 icon: "🚀"                                  # section index.md only: hero-card icon (emoji, inline <svg>, or /static path)
 ---
 ```
 
-Common tidy pattern: `NN-` prefixes on **folders** to order groups, files
-sort by their own prefixes, reach for `label` only when a title is too
-long for the sidebar.
+Common pattern: `NN-` prefixes on **folders** to order groups, files sort
+by their own prefixes, reach for `label` only when a title is too long for
+the sidebar.
+
+**Meta pages.** A page with `meta: true` in its frontmatter is kept out of
+the sidebar and prev/next and listed in the **footer** instead — for legal
+pages such as an imprint or privacy policy that some regions require.
 
 ### Links
 
@@ -183,6 +188,28 @@ const x = 1;
 {% /code %}
 ````
 
+### columns / column — side-by-side layout
+````markdown
+{% columns %}
+  {% column %} … {% /column %}
+  {% column %} … {% /column %}
+{% /columns %}
+````
+Lays cells side by side on wider screens (**at most three across**) and
+stacks them to one column on mobile. Put any blocks inside a `{% column %}`
+(callouts, images, prose).
+
+### grid — responsive grid
+````markdown
+{% grid cols=3 %}
+  {% column %} … {% /column %}
+  {% column span=2 %} a wider cell {% /column %}
+{% /grid %}
+````
+`cols` sets the column count on wider screens (1–3, default 2); cells stack
+to one column on mobile. A `column` can set `span` (a number) to cover
+several columns. Same `{% column %}` cell as `{% columns %}`.
+
 ### boost — push a passage in search (rare)
 ```markdown
 {% boost weight=8 %}
@@ -196,7 +223,10 @@ heading weights aren't enough.
 ### Code enhancements (plain fences, no tag)
 - ```` ```mermaid ```` fences render as themed diagrams.
 - Line notations as trailing comments:
-  `// [!code highlight]`, `// [!code ++]` (added), `// [!code --]` (removed).
+  `// [!code highlight]`, `// [!code ++]` (added, green with a `+` gutter),
+  `// [!code --]` (removed, red with a `-` gutter).
+- Images and Mermaid diagrams enlarge in a lightbox when clicked — no
+  markup needed.
 
 ---
 
@@ -221,6 +251,12 @@ are the main lever. Reach for `{% boost %}` only as a last resort.
   there's no env flag for it.)
 - **Content tokens:** `PUBLIC_TOKEN_<NAME>` exposes `{{<NAME>}}` as a
   build-time placeholder you can drop into prose.
+- **SEO & AI search:** every page gets its own `<title>`, meta
+  description (frontmatter `description`, else its first paragraph),
+  canonical, and Open Graph tags. The site also generates `/sitemap.xml`,
+  `/robots.txt`, and a `/llms.txt` index for AI crawlers. Set
+  `PUBLIC_SITE_URL` (the full base URL) to enable absolute/canonical
+  links.
 
 ---
 

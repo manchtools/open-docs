@@ -7,10 +7,10 @@ label: Markdown
 
 Write pages in plain Markdown. Standard elements all work:
 
-- **Headings** (`#` … `######`) — each gets an anchor id and feeds the
+- **Headings** (`#` … `######`). Each gets an anchor id and feeds the
   on-page table of contents on the right.
 - **Lists**, ordered and unordered, with nesting.
-- **Links** — internal (`/getting-started/quick-start`) and external.
+- **Links**, internal (`/getting-started/quick-start`) and external.
   External links automatically open in a new tab with safe `rel`
   attributes.
 - **Emphasis**, `inline code`, blockquotes, tables, and horizontal
@@ -43,12 +43,13 @@ order: 2
 | `title` | Full title used for the sidebar and prev/next links. |
 | `label` | Shorter sidebar label, when the title is long. Alias: `sidebar_label`. |
 | `order` | Sort position within the group. Overrides any filename number prefix. |
+| `description` | Meta description for search engines and the `llms.txt` index. Falls back to the page's first paragraph. See [SEO & AI search](/customizing/seo). |
 
 A section's `index.md` understands one more key, `icon`, which sets
-that section's icon on the home-page card — see
+that section's icon on the home-page card. See
 [Section icons](/navigation/folder-derived-nav#section-icons).
 
-Frontmatter is optional — without it, the title is derived from the
+Frontmatter is optional. Without it, the title is derived from the
 filename and pages sort alphabetically (or by their number prefix). See
 [Ordering & titles](/navigation/ordering-and-titles) for the full
 ordering model.

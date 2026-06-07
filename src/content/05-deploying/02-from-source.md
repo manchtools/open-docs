@@ -48,6 +48,6 @@ A `Makefile` wraps the common commands:
 
 ## Hosting the output
 
-The build produces a static site plus a small Bun server. Pre-rendered
-HTML means it also hosts cleanly on static/CDN platforms — point your
+The build produces a static site plus a small Bun server. Because the
+HTML is pre-rendered, it also hosts on static/CDN platforms: point your
 host at the build output and serve it like any static site.

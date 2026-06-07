@@ -3,7 +3,11 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="%open-docs.siteDescription%" />
+
+		<!-- Title, description, canonical, and Open Graph / Twitter tags are
+		     emitted per-page by the <Seo> component (src/lib/components/seo.svelte)
+		     so every route carries its own metadata. Only page-independent
+		     tags live here. -->
 
 		<!-- Favicons. Drop your own files into static/ to override.
 		     SVG is preferred by modern browsers; PNG fallbacks cover
@@ -12,14 +16,6 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon-32.png" type="image/png" sizes="32x32" />
 		<link rel="icon" href="%sveltekit.assets%/favicon-16.png" type="image/png" sizes="16x16" />
 		<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
-
-		<!-- Open Graph / social cards. og.png lives under static/. -->
-		<meta property="og:title" content="%open-docs.siteTitle%" />
-		<meta property="og:description" content="%open-docs.siteDescription%" />
-		<meta property="og:image" content="%sveltekit.assets%/og.png" />
-		<meta property="og:type" content="website" />
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:image" content="%sveltekit.assets%/og.png" />
 
 		<!-- Mobile browser chrome tint. Only a pre-hydration fallback (the
 		     default light --primary); theme-color.svelte then syncs it to

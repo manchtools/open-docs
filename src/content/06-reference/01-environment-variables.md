@@ -16,10 +16,11 @@ Every variable is read at build time. In Docker, set them with `-e` on
 | `PUBLIC_BRAND_TAGLINE` | `docs` | Subtitle next to the brand. Empty hides it. |
 | `PUBLIC_LOGO_SRC` | `/favicon.svg` | Logo path under `static/`. |
 | `PUBLIC_SITE_TITLE` | `open-docs` | Browser title and `og:title`. |
-| `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Meta and `og:description`. |
+| `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Default meta and `og:description`. |
+| `PUBLIC_SITE_URL` | _(empty)_ | Full base URL, e.g. `https://docs.example.com`. Enables canonical URLs, `sitemap.xml`, `robots.txt`, and `llms.txt`. See [SEO & AI search](/customizing/seo). |
 | `PUBLIC_REPO_URL` | _(empty)_ | Shows a GitHub link in nav + footer when set. |
 
-The mobile browser `theme-color` (the chrome tint) isn't set here — it
+The mobile browser `theme-color` (the chrome tint) isn't set here. It
 follows your `--primary` token automatically, in both light and dark
 mode. See [Theming](/customizing/theming).
 
@@ -39,7 +40,7 @@ mode. See [Theming](/customizing/theming).
 ## Container mounts
 
 These only apply to the Docker image and point the entrypoint at
-alternate source directories — most users never change them.
+alternate source directories. Most users never change them.
 
 | Variable | Default | Effect |
 |---|---|---|

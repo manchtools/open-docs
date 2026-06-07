@@ -4,7 +4,7 @@ label: Overview
 
 # Blocks
 
-The rich content blocks open-docs adds on top of Markdown, implemented
+The content blocks open-docs adds on top of Markdown, implemented
 as [Markdoc](https://markdoc.dev/) tags. Use them when prose and plain
 fences aren't enough.
 
@@ -26,6 +26,6 @@ Framed images with light/dark variants.
 {% /card %}
 {% /cards %}
 
-The last two live in a nested **Media** sub-section — this page and its
+The last two live in a nested **Media** sub-section. This page and its
 children are how these docs demonstrate the sidebar's
 [multi-level nesting](/navigation/folder-derived-nav#nesting).

@@ -6,6 +6,7 @@
 	import BookOpen from '@lucide/svelte/icons/book-open';
 	import { siteConfig } from '$lib/config';
 	import { nav, type NavNode } from '$lib/nav';
+	import Seo from '$lib/components/seo.svelte';
 
 	// Landing page hero. The card grid is built from each top-level nav
 	// section, so it stays in sync with the sidebar without a second
@@ -50,9 +51,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{siteConfig.siteTitle}</title>
-</svelte:head>
+<Seo path="/" type="website" />
 
 <div class="px-6 py-12 lg:py-16 xl:px-12">
 	<section class="max-w-3xl">

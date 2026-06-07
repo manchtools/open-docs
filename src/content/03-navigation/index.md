@@ -6,7 +6,7 @@ icon: "🧭"
 # Navigation
 
 How the sidebar is assembled from your folders, and how to control the
-order and titles of what appears in it.
+order and titles of its entries.
 
 {% cards %}
 {% card title="Folder-derived navigation" href="/navigation/folder-derived-nav" icon="🌳" %}

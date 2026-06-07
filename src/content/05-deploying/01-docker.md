@@ -6,7 +6,7 @@ label: Docker
 # Deploying with Docker
 
 The recommended way to run open-docs is the published container. One
-generic image serves any docset — you provide the content at run time.
+generic image serves any docset; you provide the content at run time.
 
 ```sh
 docker run --rm -p 3000:3000 \
@@ -32,13 +32,13 @@ the entrypoint copies it into the image tree before building.
 
 {% callout type="info" title="Run with nothing mounted" %}
 With no `/content` mount, the image serves the open-docs documentation
-itself — a live demo you can click through before adding your own
+itself, a live demo you can click through before adding your own
 content.
 {% /callout %}
 
 ## How a build happens
 
-The image defers the site build to **container start**, so the same
+The image defers the site build to container start, so the same
 published image works for any content:
 
 ```mermaid
@@ -49,8 +49,8 @@ flowchart LR
   D --> E[Serve on :3000]
 ```
 
-The cost is a short build at startup; the benefit is one generic,
-tiny published image instead of a per-docset image.
+This adds a short build at startup, in exchange for one generic, small
+published image instead of a separate image per docset.
 
 ## Sub-path deploys
 
