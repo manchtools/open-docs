@@ -82,7 +82,19 @@ const headingAnchors = {
 				.replace(/[`*_~]/g, '')
 				.trim();
 
-			lines[i] = `${hashes} ${text} {% #${slugger.slug(plain)} %}`;
+			// ASCII-fold before slugging. A Markdoc `{% #id %}` annotation only
+			// accepts an ASCII identifier, so an accented heading (e.g. German
+			// "Nächste Schritte" or French "Référence") would otherwise inject a
+			// non-ASCII id and fail the build. Decompose + strip diacritics
+			// (ä→a, é→e, ñ→n), expand ß→ss, then drop anything still non-ASCII.
+			const ascii =
+				plain
+					.normalize('NFKD')
+					.replace(/[̀-ͯ]/g, '')
+					.replace(/ß/g, 'ss')
+					.replace(/[^\x00-\x7F]/g, '') || 'section';
+
+			lines[i] = `${hashes} ${text} {% #${slugger.slug(ascii)} %}`;
 			changed = true;
 		}
 
@@ -147,6 +159,24 @@ const config = {
 					return;
 				}
 				throw new Error(`404 ${path}`);
+			},
+			// Cross-language anchor links. A translated page can keep an anchor
+			// that targets the original heading slug, but translated headings
+			// get translated ids — so `/de/x#english-anchor` may not exist. The
+			// link still lands on the right page (just not the exact section),
+			// so tolerate it on `/<lang>/` paths (a 2-letter first segment) and
+			// stay strict for the default language, where a missing id is a
+			// genuine broken link.
+			handleMissingId: ({ path, id, referrers }) => {
+				const seg = path.split('/')[1];
+				if (seg && seg.length === 2) {
+					console.warn(
+						`[open-docs] cross-language anchor #${id} not found on ${path}` +
+							(referrers?.length ? ` (from ${referrers[0]})` : '')
+					);
+					return;
+				}
+				throw new Error(`Missing id "#${id}" on ${path}`);
 			}
 		},
 		csp: {
