@@ -20,6 +20,7 @@
 	import { siteConfig } from '$lib/config';
 	import { metaPagesFor } from '$lib/nav';
 	import { defaultLang } from '$lib/i18n';
+	import { t } from '$lib/ui-strings';
 
 	type Props = { children?: import('svelte').Snippet; data: { lang: string } };
 	const { children, data }: Props = $props();
@@ -152,7 +153,8 @@
 			<p>
 				{siteConfig.brandName}
 				{#if siteConfig.brandTagline}{siteConfig.brandTagline}{/if},
-				built with <a
+				{t(lang, 'builtWith')}
+				<a
 					class="underline underline-offset-4 hover:text-foreground"
 					href="https://github.com/manchtools/open-docs">open-docs</a>.
 				{#if siteConfig.repoUrl}
@@ -160,7 +162,7 @@
 						class="underline underline-offset-4 hover:text-foreground"
 						href={siteConfig.repoUrl}
 					>
-						Edit on GitHub
+						{t(lang, 'editOnGithub')}
 					</a>
 				{/if}
 			</p>
@@ -187,10 +189,10 @@
 		<p
 			class="text-[0.7rem] text-muted-foreground/70 sm:shrink-0 sm:text-right sm:text-xs sm:text-muted-foreground/80"
 		>
-			Powered by{#each techStack as tech, i (tech.href)}{i === 0
+			{t(lang, 'poweredBy')}{#each techStack as tech, i (tech.href)}{i === 0
 					? ' '
 					: i === techStack.length - 1
-						? ', and '
+						? `, ${t(lang, 'listAnd')} `
 						: ', '}<a
 					class="underline-offset-4 hover:text-foreground hover:underline"
 					href={tech.href}

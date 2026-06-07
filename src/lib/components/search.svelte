@@ -2,10 +2,15 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
 	import * as Command from '$lib/components/ui/command';
 	import { cn } from '$lib/utils';
+	import { t } from '$lib/ui-strings';
+	import { defaultLang } from '$lib/i18n';
 	import Search from '@lucide/svelte/icons/search';
+
+	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
 
 	// Static-site search built on shadcn-svelte's Command palette,
 	// powered by a Pagefind index baked at build time. The trigger
@@ -158,14 +163,14 @@
 <Button
 	variant="outline"
 	onclick={() => (open = true)}
-	aria-label="Search docs"
+	aria-label={t(lang, 'searchDocs')}
 	class={cn(
 		'h-9 w-full max-w-xs justify-start gap-2 bg-muted/40 text-sm text-muted-foreground',
 		'hover:bg-muted hover:text-foreground md:w-64'
 	)}
 >
 	<Search class="size-4 shrink-0" />
-	<span class="flex-1 text-left">Search docs…</span>
+	<span class="flex-1 text-left">{t(lang, 'searchDocs')}</span>
 	<kbd
 		class="hidden items-center gap-0.5 rounded border border-border bg-background px-1.5 font-mono text-[10px] font-medium md:inline-flex"
 	>
@@ -174,16 +179,16 @@
 </Button>
 
 <Command.Dialog bind:open shouldFilter={false}>
-	<Command.Input bind:ref={searchInput} placeholder="Search the docs…" bind:value={query} />
+	<Command.Input bind:ref={searchInput} placeholder={t(lang, 'searchPlaceholder')} bind:value={query} />
 	<Command.List class="max-h-[60vh]">
 		{#if loadError}
 			<div class="p-4 text-sm text-muted-foreground">{loadError}</div>
 		{:else if loading && !mod}
-			<Command.Loading>Loading search index…</Command.Loading>
+			<Command.Loading>{t(lang, 'searchLoading')}</Command.Loading>
 		{:else if !query.trim()}
-			<Command.Empty>Start typing to search.</Command.Empty>
+			<Command.Empty>{t(lang, 'searchStart')}</Command.Empty>
 		{:else if results.length === 0}
-			<Command.Empty>No results for "{query}".</Command.Empty>
+			<Command.Empty>{t(lang, 'searchNoResults')} "{query}"</Command.Empty>
 		{:else}
 			<Command.Group>
 				{#each results as result (result.url)}

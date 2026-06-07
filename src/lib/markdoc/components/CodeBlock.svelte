@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { mode } from 'mode-watcher';
+	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Check from '@lucide/svelte/icons/check';
 	import { cn } from '$lib/utils';
+	import { t } from '$lib/ui-strings';
+	import { defaultLang } from '$lib/i18n';
+
+	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
 
 	// Fenced code block. Two branches:
 	//
@@ -235,7 +240,7 @@
 			</div>
 		{:else}
 			<div class="flex h-32 items-center justify-center text-sm text-muted-foreground">
-				Rendering diagram…
+				{t(lang, 'renderingDiagram')}
 			</div>
 		{/if}
 	</figure>
@@ -250,7 +255,7 @@
 			variant="ghost"
 			size="icon-sm"
 			onclick={copy}
-			aria-label={copied ? 'Copied' : 'Copy code'}
+			aria-label={t(lang, copied ? 'copied' : 'copyCode')}
 			class={cn(
 				'absolute right-2 top-2 z-10 bg-muted/80 backdrop-blur',
 				'opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100'

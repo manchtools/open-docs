@@ -3,6 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { flatNavFor } from '$lib/nav';
 	import { defaultLang } from '$lib/i18n';
+	import { t } from '$lib/ui-strings';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 
@@ -55,7 +56,7 @@
 				/>
 				<span class="flex flex-col items-start">
 					<span class="text-xs font-normal uppercase tracking-wide text-muted-foreground">
-						Previous
+						{t(lang, 'previous')}
 					</span>
 					<span class="font-medium">{prev.title}</span>
 				</span>
@@ -72,7 +73,7 @@
 			>
 				<span class="flex flex-col items-end">
 					<span class="text-xs font-normal uppercase tracking-wide text-muted-foreground">
-						Next
+						{t(lang, 'next')}
 					</span>
 					<span class="font-medium">{next.title}</span>
 				</span>

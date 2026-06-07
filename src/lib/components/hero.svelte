@@ -6,6 +6,7 @@
 	import BookOpen from '@lucide/svelte/icons/book-open';
 	import { siteConfig } from '$lib/config';
 	import { navByLang, type NavNode } from '$lib/nav';
+	import { t } from '$lib/ui-strings';
 
 	// Landing-page hero, rendered at `/` (default language) and at the bare
 	// language path `/<lang>` for each other language. The card grid is
@@ -33,7 +34,7 @@
 				const pages = countPages(g.items);
 				return {
 					title: g.title,
-					description: `${pages} ${pages === 1 ? 'page' : 'pages'}`,
+					description: `${pages} ${t(lang, pages === 1 ? 'page' : 'pages')}`,
 					href: firstHref(g.items) ?? '/',
 					icon: g.icon
 				};
@@ -68,11 +69,11 @@
 		{#if groupCards.length > 0}
 			<div class="mt-8 flex flex-wrap gap-3">
 				<Button href={base + groupCards[0].href}>
-					Get started
+					{t(lang, 'getStarted')}
 					<ArrowRight class="ml-2 size-4" />
 				</Button>
 				{#if siteConfig.repoUrl}
-					<Button variant="outline" href={siteConfig.repoUrl}>View source</Button>
+					<Button variant="outline" href={siteConfig.repoUrl}>{t(lang, 'viewSource')}</Button>
 				{/if}
 			</div>
 		{/if}

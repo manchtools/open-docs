@@ -6,6 +6,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { languages, i18nActive, defaultLang, switchLangPath, langName } from '$lib/i18n';
+	import { t } from '$lib/ui-strings';
 	import Check from '@lucide/svelte/icons/check';
 
 	// Top-nav language picker (shadcn dropdown). Only rendered when the
@@ -25,7 +26,7 @@
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			{#snippet child({ props })}
-				<Button {...props} variant="ghost" size="sm" class="gap-1.5 px-2" aria-label="Language">
+				<Button {...props} variant="ghost" size="sm" class="gap-1.5 px-2" aria-label={t(current, 'language')}>
 					<svg
 						viewBox="0 0 24 24"
 						fill="none"

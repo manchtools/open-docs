@@ -2,6 +2,10 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
+	import { t } from '$lib/ui-strings';
+	import { defaultLang } from '$lib/i18n';
+
+	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
 
 	// Right-side "On this page" TOC. Auto-built from the rendered DOM
 	// rather than from frontmatter — that means the TOC always matches
@@ -105,7 +109,7 @@
 {#if headings.length > 1}
 	<aside class="hidden xl:block w-56 shrink-0 py-6">
 		<div class="sticky top-6 max-h-[calc(100%-3rem)] overflow-auto pr-2 text-sm">
-			<p class="mb-2 font-semibold text-foreground/90">On this page</p>
+			<p class="mb-2 font-semibold text-foreground/90">{t(lang, 'onThisPage')}</p>
 			<ul class="space-y-1 border-l border-border">
 				{#each headings as h (h.id)}
 					<li>
