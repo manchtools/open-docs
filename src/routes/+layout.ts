@@ -1,3 +1,17 @@
+import { base } from '$app/paths';
+import { splitRequestSlug } from '$lib/i18n';
+import type { LayoutLoad } from './$types';
+
+// Resolve the current language from the URL once, here, so every part of
+// the chrome (the <html lang>, the sidebar, the footer, the language
+// switcher) reads the same value via page.data.lang. The default language
+// is unprefixed, so an unprefixed path resolves to it. See $lib/i18n.
+export const load: LayoutLoad = ({ url }) => {
+	const path = url.pathname.slice(base.length).replace(/^\//, '');
+	const { lang } = splitRequestSlug(path);
+	return { lang };
+};
+
 // Force pre-rendering of every page in the site. The docs are
 // static — there's no per-request server state — and pre-rendering
 // gives us:

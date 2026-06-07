@@ -18,10 +18,25 @@
 	import TopNav from '$lib/components/top-nav.svelte';
 	import Sidebar from '$lib/components/sidebar.svelte';
 	import { siteConfig } from '$lib/config';
-	import { metaPages } from '$lib/nav';
+	import { metaPagesFor } from '$lib/nav';
+	import { defaultLang } from '$lib/i18n';
 
-	type Props = { children?: import('svelte').Snippet };
-	const { children }: Props = $props();
+	type Props = { children?: import('svelte').Snippet; data: { lang: string } };
+	const { children, data }: Props = $props();
+
+	// Current language (resolved in +layout.ts from the URL). Drives the
+	// document language and the localized footer/legal links.
+	const lang = $derived(data?.lang ?? defaultLang);
+	const metaPages = $derived(metaPagesFor(lang));
+
+	// Keep <html lang> in sync on client-side navigation. The server hook
+	// sets it for the initial/prerendered response (which Pagefind reads to
+	// segment search); SPA navigations don't re-run that hook, so a stale
+	// lang would otherwise make search use the wrong language index. $effect
+	// runs only in the browser, so there's no SSR guard needed.
+	$effect(() => {
+		document.documentElement.lang = lang;
+	});
 
 	// The stack open-docs is built on, shown in the footer colophon.
 	// Intentionally hardcoded (no config flag) so the credit ships with

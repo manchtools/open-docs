@@ -73,6 +73,23 @@ the sidebar.
 the sidebar and prev/next and listed in the **footer** instead — for legal
 pages such as an imprint or privacy policy that some regions require.
 
+### Translations (multi-language)
+
+Translate a page by adding a language suffix to its filename, after any
+`NN-` prefix and before the extension: `01-intro-de.md` is the German
+`01-intro.md`. Use ISO 639-1 codes (`de`, `fr`, `ja`, …). Rules:
+
+- The **default language is unprefixed** (`/intro`); other languages get a
+  `/<lang>` prefix (`/de/intro`). The default is `en`, overridable with
+  `PUBLIC_DEFAULT_LANG`.
+- The set of pages is the **default language's** files. A page you don't
+  translate **falls back** to the default content at the same slug, so
+  every page exists in every language.
+- Keep a translation's slug identical to the original (only the language
+  suffix differs) so they pair up. Translate the frontmatter `title` /
+  `description` too. Internal links inside a translated page should point
+  at the same-language URLs (`/de/…`).
+
 ### Links
 
 Internal links are **absolute site paths** — no `.md`, no `NN-` prefix,

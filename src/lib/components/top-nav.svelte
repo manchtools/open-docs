@@ -1,10 +1,17 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
 	import { siteConfig } from '$lib/config';
+	import { localizedHref, defaultLang } from '$lib/i18n';
 	import ThemeToggle from './theme-toggle.svelte';
 	import Search from './search.svelte';
 	import MobileNav from './mobile-nav.svelte';
+	import LanguageSwitcher from './language-switcher.svelte';
+
+	// The brand links to the current language's home (the default language's
+	// is just '/'), so clicking it on a /<lang> page keeps you in-language.
+	const homeHref = $derived(base + localizedHref((page.data.lang as string) ?? defaultLang, ''));
 
 	// Top nav bar: mobile hamburger + site brand + search + optional
 	// GitHub link + theme toggle. Hamburger renders only at md:hidden;
@@ -24,7 +31,7 @@
 	<div class="flex h-14 items-center gap-2 px-4 sm:gap-4 lg:px-6">
 		<MobileNav />
 		<a
-			href={base + '/'}
+			href={homeHref}
 			class="flex shrink-0 items-center gap-2 font-semibold tracking-tight"
 			aria-label={`${siteConfig.brandName} home`}
 		>
@@ -48,6 +55,7 @@
 		</div>
 
 		<div class="flex shrink-0 items-center gap-1">
+			<LanguageSwitcher />
 			{#if siteConfig.repoUrl}
 				<Button
 					variant="ghost"

@@ -119,6 +119,7 @@ file, or in your shell.
 | `PUBLIC_SITE_TITLE` | `open-docs` | `<title>` + `og:title` |
 | `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Default meta description |
 | `PUBLIC_SITE_URL` | _(empty)_ | Full base URL; enables canonical links, `sitemap.xml`, `robots.txt`, `llms.txt` |
+| `PUBLIC_DEFAULT_LANG` | `en` | Default language for unprefixed URLs (see Multi-language) |
 | `PUBLIC_REPO_URL` | _(empty)_ | If set, shows GitHub link in nav + footer |
 | `BASE_PATH` | _(empty)_ | Sub-path deploy, e.g. `/docs` |
 
@@ -156,6 +157,23 @@ static/
 In Docker, mount your `static/` directory at `/static`. It's merged
 into the image's `static/` rather than replacing it, so the defaults
 keep working if you only override a subset.
+
+## Multi-language
+
+Translate a page by adding a language suffix to its filename:
+`introduction-de.md` is the German version of `introduction.md`. Languages
+are discovered from the suffixes at build time — no config file.
+
+- The **default language stays unprefixed** (`/getting-started/intro`);
+  other languages get a `/<lang>` prefix (`/de/getting-started/intro`). A
+  single-language site has no prefixes at all.
+- Untranslated pages **fall back** to the default-language content at the
+  same slug, so nothing 404s. Translate as much or as little as you want.
+- You get a top-bar language switcher, a localized sidebar / prev-next,
+  per-language search, and `hreflang` alternates.
+
+Set the default with `PUBLIC_DEFAULT_LANG` (defaults to `en`). See the
+[Multi-language](./src/content/02-authoring/03-multi-language.md) docs page.
 
 ## Discoverability (SEO & AI)
 

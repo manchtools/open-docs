@@ -2,7 +2,8 @@
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
 	import { cn } from '$lib/utils';
-	import { nav } from '$lib/nav';
+	import { navByLang } from '$lib/nav';
+	import { defaultLang } from '$lib/i18n';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import NavNode from './nav-node.svelte';
 
@@ -20,6 +21,12 @@
 
 	const pathname = $derived(page.url.pathname.replace(base, '') || '/');
 
+	// The nav tree for the current language (localized titles + prefixed
+	// hrefs). Resolved from page.data.lang so it tracks the route, including
+	// inside the mobile sheet, without prop-threading.
+	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
+	const groups = $derived(navByLang(lang));
+
 	// Auto-scroll the active link into view when the route changes. The
 	// active branch is expanded by NavNode, so its link is in the DOM by
 	// the time this runs. `block: 'nearest'` only scrolls when the entry
@@ -35,7 +42,7 @@
 
 <ScrollArea class="h-full py-6 pr-2">
 	<nav bind:this={navEl} class="space-y-6 px-4 text-sm">
-		{#each nav as group (group.title)}
+		{#each groups as group (group.title)}
 			<div>
 				{#if group.title}
 					{#if group.href}

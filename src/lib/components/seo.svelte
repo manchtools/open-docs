@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { siteConfig } from '$lib/config';
+	import { i18nActive, languages, defaultLang, localizedHref } from '$lib/i18n';
 
 	// Per-page document head: title, meta description, canonical, Open Graph,
-	// and Twitter card. One component owns all of it so there are no
-	// duplicate tags (app.html intentionally carries none of these). The
-	// landing page passes no title/description and falls back to siteConfig.
+	// Twitter card, and (when multilingual) hreflang alternates. One
+	// component owns all of it so there are no duplicate tags (app.html
+	// intentionally carries none of these). The landing page passes no
+	// title/description and falls back to siteConfig.
 	//
 	// JSON-LD is deliberately omitted: the production CSP emits a per-page
 	// nonce, which makes the browser ignore 'unsafe-inline', so an inline
@@ -19,8 +21,12 @@
 		/** Public route path, e.g. '/guides/intro' or '/'. */
 		path?: string;
 		type?: 'website' | 'article';
+		/** Current language (for hreflang). */
+		lang?: string;
+		/** Language-agnostic slug (for hreflang alternates). '' is the landing. */
+		slug?: string;
 	};
-	let { title, description, path = '/', type = 'article' }: Props = $props();
+	let { title, description, path = '/', type = 'article', slug }: Props = $props();
 
 	const fullTitle = $derived(
 		title && title !== siteConfig.siteTitle
@@ -35,6 +41,21 @@
 	// relative string ('..') under SvelteKit's default paths.relative.
 	const canonical = $derived(
 		siteConfig.siteUrl ? siteConfig.siteUrl + (path === '/' ? '' : path) : undefined
+	);
+
+	// hreflang alternates: one per language plus x-default, pointing at the
+	// same slug in each. Needs an absolute origin and >1 language. Every
+	// slug exists in every language (translated or default-fallback), so
+	// every alternate resolves.
+	const alternates = $derived(
+		i18nActive && siteConfig.siteUrl && slug != null
+			? languages.map((l) => ({ lang: l, href: siteConfig.siteUrl + localizedHref(l, slug) }))
+			: []
+	);
+	const xDefault = $derived(
+		i18nActive && siteConfig.siteUrl && slug != null
+			? siteConfig.siteUrl + localizedHref(defaultLang, slug)
+			: undefined
 	);
 </script>
 
@@ -57,4 +78,10 @@
 	<meta name="twitter:title" content={fullTitle} />
 	<meta name="twitter:description" content={desc} />
 	{#if siteConfig.siteUrl}<meta name="twitter:image" content={`${siteConfig.siteUrl}/og.png`} />{/if}
+
+	<!-- hreflang alternates (multilingual sites with a configured origin). -->
+	{#each alternates as a (a.lang)}
+		<link rel="alternate" hreflang={a.lang} href={a.href} />
+	{/each}
+	{#if xDefault}<link rel="alternate" hreflang="x-default" href={xDefault} />{/if}
 </svelte:head>

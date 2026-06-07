@@ -22,6 +22,9 @@ The basics, and the frontmatter keys that control the sidebar.
 {% card title="Blocks" href="/authoring/blocks" icon="🧱" %}
 The content blocks: callouts, tabs, steps, cards, and more.
 {% /card %}
+{% card title="Multi-language" href="/authoring/multi-language" icon="🌐" %}
+Translate pages with a filename suffix; the default language stays unprefixed.
+{% /card %}
 {% /cards %}
 
 {% callout type="info" title="This page is also a live demo" %}

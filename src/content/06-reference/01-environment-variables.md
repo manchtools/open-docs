@@ -18,6 +18,7 @@ Every variable is read at build time. In Docker, set them with `-e` on
 | `PUBLIC_SITE_TITLE` | `open-docs` | Browser title and `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Default meta and `og:description`. |
 | `PUBLIC_SITE_URL` | _(empty)_ | Full base URL, e.g. `https://docs.example.com`. Enables canonical URLs, `sitemap.xml`, `robots.txt`, and `llms.txt`. See [SEO & AI search](/customizing/seo). |
+| `PUBLIC_DEFAULT_LANG` | `en` | Default language for unprefixed URLs. See [Multi-language](/authoring/multi-language). |
 | `PUBLIC_REPO_URL` | _(empty)_ | Shows a GitHub link in nav + footer when set. |
 
 The mobile browser `theme-color` (the chrome tint) isn't set here. It

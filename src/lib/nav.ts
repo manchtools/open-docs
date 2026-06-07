@@ -34,6 +34,7 @@
 // surfaces as a 404 rather than a broken render.
 
 import { cleanSlug, stripPrefix, titleFromSegment } from './slug';
+import { defaultLang, localizedHref, parsePath } from './i18n';
 
 /** A leaf link in the sidebar / prev-next list. */
 export type NavItem = {
@@ -135,6 +136,12 @@ function buildTree(): NavNode[] {
 	const root: BuildNode = { title: '', order: FALLBACK, children: new Map() };
 
 	for (const [path, raw] of Object.entries(sources)) {
+		// Translations (`-<lang>` files) don't shape the tree — the structure,
+		// ordering, and default titles all come from the default-language
+		// files. navByLang() overlays translated titles afterwards (see the
+		// translations map below). This also means a `-<lang>` file never
+		// shows up as its own bogus page.
+		if (parsePath(path).lang !== defaultLang) continue;
 		const fm = frontmatter(raw);
 		const slug = cleanSlug(path);
 		const href = '/' + slug;
@@ -276,33 +283,100 @@ function firstParagraph(raw: string): string | undefined {
 	return clean.length > 155 ? clean.slice(0, 152).replace(/\s+\S*$/, '') + '…' : clean;
 }
 
-/**
- * Per-page SEO metadata (title + description) keyed by clean slug. Consumed
- * by the [...slug] route's <Seo> head, sitemap.xml, and llms.txt. Covers
- * every routed page including `meta: true` legal pages; the landing page
- * ('') is excluded — it uses siteConfig. Description prefers frontmatter
- * `description:`, falling back to the first prose paragraph.
- */
-export const pageMeta: Record<string, { title: string; description?: string }> = (() => {
-	const out: Record<string, { title: string; description?: string }> = {};
-	for (const [path, raw] of Object.entries(sources)) {
-		const slug = cleanSlug(path);
-		if (slug === '') continue;
-		const fm = frontmatter(raw);
-		const segments = path
-			.replace(/^\/src\/content\//, '')
-			.replace(/\.(md|markdoc)$/, '')
-			.split('/');
-		const file = segments[segments.length - 1];
-		const isIndex = stripPrefix(file).rest.toLowerCase() === 'index';
-		const titleSeg = isIndex ? (segments[segments.length - 2] ?? file) : file;
-		out[slug] = {
-			title: fm.title ?? titleFromSegment(titleSeg),
+// --- i18n overlays -------------------------------------------------------
+//
+// The tree, ordering, and default titles above are derived from the
+// default-language files only. Translations (`-<lang>` files) contribute
+// localized titles/labels/icons/descriptions, keyed by the same
+// language-agnostic slug. navByLang() / pageMetaFor() / metaPagesFor()
+// overlay them; an untranslated page keeps the default text (and, via
+// content.ts, the default body).
+
+type Meta = { title: string; description?: string };
+type Trans = { title?: string; label?: string; icon?: string; description?: string };
+
+// SEO title for a file: frontmatter `title`, else the (folder for an
+// index, else file) segment as a sentence.
+function metaTitle(path: string, fm: Record<string, string>): string {
+	const segments = path
+		.replace(/^\/src\/content\//, '')
+		.replace(/\.(md|markdoc)$/, '')
+		.split('/');
+	const file = segments[segments.length - 1];
+	const isIndex = stripPrefix(file).rest.toLowerCase() === 'index';
+	const titleSeg = isIndex ? (segments[segments.length - 2] ?? file) : file;
+	return fm.title ?? titleFromSegment(titleSeg);
+}
+
+const defaultMeta: Record<string, Meta> = {};
+const transByLang: Record<string, Record<string, Trans>> = {};
+for (const [path, raw] of Object.entries(sources)) {
+	const { lang, slug } = parsePath(path);
+	if (slug === '') continue; // landing uses siteConfig, not pageMeta
+	const fm = frontmatter(raw);
+	if (lang === defaultLang) {
+		defaultMeta[slug] = {
+			title: metaTitle(path, fm),
+			description: fm.description || firstParagraph(raw)
+		};
+	} else {
+		(transByLang[lang] ??= {})[slug] = {
+			title: fm.title,
+			label: fm.label ?? fm.sidebar_label,
+			icon: fm.icon,
 			description: fm.description || firstParagraph(raw)
 		};
 	}
-	return out;
-})();
+}
+
+/**
+ * Per-page SEO metadata (title + description) for the default language,
+ * keyed by slug. Consumed by the [...slug] head, sitemap.xml, and llms.txt.
+ * Excludes the landing page ('') — it uses siteConfig.
+ */
+export const pageMeta: Record<string, Meta> = defaultMeta;
+
+/** Per-page SEO metadata for a language: the translation when present,
+ *  otherwise the default-language values. */
+export function pageMetaFor(lang: string, slug: string): Meta {
+	const base = defaultMeta[slug];
+	const t = lang !== defaultLang ? transByLang[lang]?.[slug] : undefined;
+	return { title: t?.title ?? base?.title ?? '', description: t?.description ?? base?.description };
+}
+
+// Localize a default-language node into another language: prefix its href
+// and overlay any translated title/label/icon (keyed by its slug).
+function localizeNode(n: NavNode, lang: string): NavNode {
+	const slug = n.href != null ? n.href.replace(/^\//, '') : undefined;
+	const t = slug != null ? transByLang[lang]?.[slug] : undefined;
+	return {
+		title: t?.title ?? n.title,
+		label: t?.label ?? n.label,
+		icon: t?.icon ?? n.icon,
+		href: slug != null ? localizedHref(lang, slug) : undefined,
+		items: n.items?.map((c) => localizeNode(c, lang))
+	};
+}
+
+/** The sidebar tree for a language. The default language returns the tree
+ *  as built; others get prefixed hrefs and translated titles. */
+export function navByLang(lang: string): NavNode[] {
+	return lang === defaultLang ? nav : nav.map((n) => localizeNode(n, lang));
+}
+
+/** Footer/legal pages for a language (localized href + title). */
+export function metaPagesFor(lang: string): NavItem[] {
+	if (lang === defaultLang) return metaPages;
+	return metaPages.map((m) => {
+		const slug = m.href.replace(/^\//, '');
+		const t = transByLang[lang]?.[slug];
+		return {
+			title: t?.title ?? m.title,
+			href: localizedHref(lang, slug),
+			label: t?.label ?? m.label
+		};
+	});
+}
 
 // Depth-first flatten of the tree, in sidebar order, for prev/next
 // navigation at the bottom of each page. Sections contribute no link
@@ -317,6 +391,11 @@ function flatten(nodes: NavNode[]): NavItem[] {
 }
 
 export const flatNav: NavItem[] = flatten(nav);
+
+/** Depth-first prev/next list for a language (localized hrefs + titles). */
+export function flatNavFor(lang: string): NavItem[] {
+	return lang === defaultLang ? flatNav : flatten(navByLang(lang));
+}
 
 /** Does any page in this subtree match `href`? Used to auto-open the
  *  active branch of a collapsible section. */
