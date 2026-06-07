@@ -20,7 +20,22 @@
 			{title}
 		</div>
 	{/if}
-	<div class="[&_.shiki]:rounded-none [&_pre]:my-0 [&_pre]:rounded-none [&_pre]:border-0">
+	<div class="mdoc-code-title">
 		{@render children?.()}
 	</div>
 </div>
+
+<style>
+	/* The inner code block self-styles its radius/margin/border in
+	   CodeBlock.svelte with unlayered component rules that out-rank Tailwind
+	   utilities (unlayered beats @layer), so the earlier `[&_pre]:rounded-none`
+	   utilities lost and the code kept its rounded top — a notch under the
+	   bar. Flatten it here so the code merges seamlessly under the filename
+	   bar. Fully-:global() because the <pre> arrives via a snippet (not in
+	   this component's template) and a scoped rule would be pruned. */
+	:global(.mdoc-code-title pre) {
+		margin: 0 !important;
+		border: 0 !important;
+		border-radius: 0 !important;
+	}
+</style>

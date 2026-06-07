@@ -43,10 +43,10 @@
 							href={`${base}${group.href}`}
 							data-active={pathname === group.href}
 							class={cn(
-								'mb-2 block px-2 text-xs font-semibold uppercase tracking-wider transition-colors',
+								'mb-2 block rounded-md px-2 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors',
 								pathname === group.href
-									? 'text-primary'
-									: 'text-foreground hover:text-primary'
+									? 'bg-sidebar-accent text-sidebar-accent-foreground'
+									: 'text-foreground hover:bg-sidebar-accent/50'
 							)}
 						>
 							{group.title}

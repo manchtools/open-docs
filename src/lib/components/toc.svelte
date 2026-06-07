@@ -9,11 +9,13 @@
 	// separate index. Re-built on every navigation.
 	//
 	// Active-heading detection is scroll-based: the active heading is the
-	// last one whose top has scrolled above a threshold line just below
-	// the sticky nav. Crucially, when the scroll container is at the
-	// bottom the *last* heading wins — a short final section can never
-	// scroll its heading up to the threshold, which is why an
-	// intersection-band approach left the last few entries un-highlighted.
+	// last one whose top has scrolled above a reading line. The line sits
+	// just under the sticky nav for most of the page, but across the final
+	// viewport of scroll it descends toward the bottom of the screen. That
+	// way the trailing headings — which can never scroll all the way up to
+	// the top line because the page bottom stops them — each get their own
+	// stretch of scroll instead of being skipped (the active jumping
+	// straight to the last heading, never lighting up the ones before it).
 
 	type Heading = { id: string; text: string; level: number };
 
@@ -24,7 +26,7 @@
 
 	// px below the viewport top where a heading counts as "current" — a
 	// little under the sticky top nav so the switch feels right.
-	const THRESHOLD = 100;
+	const TOP_LINE = 100;
 
 	function computeActive() {
 		ticking = false;
@@ -33,19 +35,31 @@
 			.filter((el): el is HTMLElement => !!el);
 		if (!els.length) return;
 
-		// At the bottom of the scroll area the last heading always wins —
-		// otherwise a short trailing section never reaches the threshold and
-		// the last entries never light up.
-		if (scrollEl && scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - 2) {
-			activeId = els[els.length - 1].id;
-			return;
+		const sc = scrollEl;
+		const viewport = sc ? sc.clientHeight : window.innerHeight;
+		const maxScroll = sc ? sc.scrollHeight - sc.clientHeight : 0;
+		const scrollTop = sc ? sc.scrollTop : 0;
+
+		// The reading line. On a page long enough to have a distinct final
+		// viewport, it descends from TOP_LINE toward the bottom of the screen
+		// across that last screenful of scroll, so trailing headings that
+		// can't reach the top line are still activated one after another.
+		let line = TOP_LINE;
+		if (maxScroll >= viewport) {
+			const into = (scrollTop - (maxScroll - viewport)) / viewport;
+			line = TOP_LINE + (window.innerHeight - TOP_LINE) * Math.min(1, Math.max(0, into));
 		}
 
+		// Heading tops increase down the page, so the last one above the line
+		// is the current section. (`break` is safe — once one is below the
+		// line, every later one is too.)
 		let current = els[0].id;
 		for (const el of els) {
-			if (el.getBoundingClientRect().top <= THRESHOLD) current = el.id;
+			if (el.getBoundingClientRect().top <= line) current = el.id;
 			else break;
 		}
+		// At the very bottom the last heading always wins.
+		if (sc && maxScroll > 0 && scrollTop >= maxScroll - 2) current = els[els.length - 1].id;
 		activeId = current;
 	}
 

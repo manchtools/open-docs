@@ -17,6 +17,7 @@
 	export { default as Heading } from './components/Heading.svelte';
 	export { default as Link } from './components/Link.svelte';
 	export { default as Fence } from './components/CodeBlock.svelte';
+	export { default as Paragraph } from './components/Paragraph.svelte';
 
 	export { default as Table } from './components/Table.svelte';
 	export { default as Thead } from './components/Thead.svelte';
