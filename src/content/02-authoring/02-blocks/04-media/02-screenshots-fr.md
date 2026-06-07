@@ -14,9 +14,9 @@ s'adaptent au système d'exploitation du lecteur (macOS, Windows ou Linux).
 Voici la page d'accueil d'open-docs, rendue par ce bloc même :
 
 {% screenshot
-   src="open-docs-home.png"
+   src="open-docs-home-fr.png"
    alt="La page d'accueil d'open-docs"
-   dark="open-docs-home-dark.png"
+   dark="open-docs-home-fr-dark.png"
    caption="La page d'accueil d'open-docs. Les contrôles de fenêtre ci-dessus correspondent à votre système." /%}
 
 ```markdown

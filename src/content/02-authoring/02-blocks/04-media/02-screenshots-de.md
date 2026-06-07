@@ -14,9 +14,9 @@ des Lesers an (macOS, Windows oder Linux).
 Hier ist die open-docs-Startseite, gerendert von genau diesem Block:
 
 {% screenshot
-   src="open-docs-home.png"
+   src="open-docs-home-de.png"
    alt="Die open-docs-Startseite"
-   dark="open-docs-home-dark.png"
+   dark="open-docs-home-de-dark.png"
    caption="Die open-docs-Startseite. Die Fenstersteuerung oben passt sich Ihrem Betriebssystem an." /%}
 
 ```markdown

@@ -14,9 +14,9 @@ controles de ventana del marco se adaptan al sistema operativo del lector
 Esta es la página de inicio de open-docs, renderizada por este mismo bloque:
 
 {% screenshot
-   src="open-docs-home.png"
+   src="open-docs-home-es.png"
    alt="La página de inicio de open-docs"
-   dark="open-docs-home-dark.png"
+   dark="open-docs-home-es-dark.png"
    caption="La página de inicio de open-docs. Los controles de ventana de arriba coinciden con tu sistema." /%}
 
 ```markdown
