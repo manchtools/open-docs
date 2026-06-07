@@ -308,6 +308,16 @@ function metaTitle(path: string, fm: Record<string, string>): string {
 	return fm.title ?? titleFromSegment(titleSeg);
 }
 
+// First `#` H1 of a file, cleaned of inline markdown — a title fallback for
+// translated section index files, whose section name is the H1 (e.g.
+// `# Referencia`) rather than a frontmatter `title:`. Lets navByLang() show
+// translated section/group headings, not the default folder name.
+function firstH1(raw: string): string | undefined {
+	const body = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+	const m = /^#\s+(.+?)\s*$/m.exec(body);
+	return m ? m[1].replace(/[`*_]/g, '').trim() : undefined;
+}
+
 const defaultMeta: Record<string, Meta> = {};
 const transByLang: Record<string, Record<string, Trans>> = {};
 for (const [path, raw] of Object.entries(sources)) {
@@ -321,7 +331,7 @@ for (const [path, raw] of Object.entries(sources)) {
 		};
 	} else {
 		(transByLang[lang] ??= {})[slug] = {
-			title: fm.title,
+			title: fm.title ?? firstH1(raw),
 			label: fm.label ?? fm.sidebar_label,
 			icon: fm.icon,
 			description: fm.description || firstParagraph(raw)

@@ -1,0 +1,59 @@
+---
+title: Estructura del contenido
+---
+
+# Estructura del contenido
+
+Todo lo que muestra el sitio proviene de un único directorio de Markdown. En
+Docker ese directorio es lo que montes en `/content`; desde el código fuente
+es `src/content/`. El resto (rutas, barra lateral, búsqueda) se deriva de él.
+
+## Un árbol típico
+
+{% filetree %}
+- content/
+  - theme.css — estilos personalizados opcionales
+  - 01-getting-started/
+    - 01-introduction.md
+    - 02-quick-start.md
+  - 02-reference/
+    - index.md — la página de inicio de la sección
+    - api.md
+{% /filetree %}
+
+Esto produce:
+
+- Una **barra lateral** con dos grupos, "Primeros pasos" y "Referencia".
+- Rutas en `/getting-started/introduction`, `/getting-started/quick-start`,
+  `/reference` (el índice de la sección) y `/reference/api`.
+- Un **índice de búsqueda** que cubre todas las páginas.
+
+## Las reglas
+
+- **Los archivos se convierten en páginas.** `reference/api.md` → `/reference/api`.
+- **Las carpetas de primer nivel se convierten en grupos de la barra lateral.**
+  Los archivos que contienen se convierten en los elementos de ese grupo.
+- **Los nombres de archivo se convierten en URLs**, en formato kebab: `quick-start.md` →
+  `/…/quick-start`.
+- **El `index.md` de una carpeta** es la página de inicio de esa sección,
+  servida en la URL de la carpeta (`reference/index.md` → `/reference`).
+- **Los prefijos numéricos iniciales** como `01-` establecen el orden y se
+  eliminan de la URL y del título. Consulta
+  [Orden y títulos](/es/navigation/ordering-and-titles).
+
+{% callout type="info" title="La página de inicio" %}
+La página principal del sitio (`/`) es un hero generado que lista tus secciones
+como tarjetas; no es un archivo Markdown. Coloca tu primera página real dentro
+de un grupo, como hace este sitio con
+[Introducción](/es/getting-started/introduction).
+{% /callout %}
+
+## Qué se ignora
+
+Solo los archivos `.md` y `.markdoc` dentro del directorio de contenido se
+convierten en páginas. Un `theme.css` se toma para los [estilos](/es/customizing/theming);
+cualquier otra cosa (borradores, notas, archivos `.txt`) se ignora, así que
+puedes mantener archivos de trabajo junto a tu documentación.
+
+Si referencias una imagen, colócala dentro de `static/` y enlázala desde
+`/screenshots/…`; consulta [Capturas](/es/authoring/blocks/media/screenshots).
