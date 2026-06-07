@@ -8,7 +8,16 @@ Der `screenshot`-Block rendert ein Bild mit optionalem Browser-Rahmen, einer
 Bildunterschrift und einer separaten Variante für den Dunkelmodus. Bilder
 werden aus `static/screenshots/` aufgelöst. Ein Klick auf ein beliebiges Bild
 vergrößert es in einem Dialog (das gilt auch für normale Markdown-Bilder
-`![]()`).
+`![]()`). Die Fenstersteuerung des Rahmens passt sich dem Betriebssystem
+des Lesers an (macOS, Windows oder Linux).
+
+Hier ist die open-docs-Startseite, gerendert von genau diesem Block:
+
+{% screenshot
+   src="open-docs-home.png"
+   alt="Die open-docs-Startseite"
+   dark="open-docs-home-dark.png"
+   caption="Die open-docs-Startseite. Die Fenstersteuerung oben passt sich Ihrem Betriebssystem an." /%}
 
 ```markdown
 {% screenshot

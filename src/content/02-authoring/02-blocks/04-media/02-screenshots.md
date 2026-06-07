@@ -5,9 +5,21 @@ title: Screenshots
 # Screenshots
 
 The `screenshot` block renders an image with optional browser-frame
-chrome, a caption, and a separate dark-mode variant. Images are
-resolved from `static/screenshots/`. Click any image to enlarge it
-in a dialog (this also applies to plain Markdown `![]()` images).
+chrome, a caption, and a separate dark-mode variant. The faux window
+controls match the reader's own operating system (macOS, Windows, or
+Linux). Images are resolved from `static/screenshots/`. Click any image
+to enlarge it in a dialog (this also applies to plain Markdown `![]()`
+images).
+
+Here is the open-docs landing page, rendered by this very block:
+
+{% screenshot
+   src="open-docs-home.png"
+   alt="The open-docs landing page"
+   dark="open-docs-home-dark.png"
+   caption="The open-docs landing page. The window controls above match your OS." /%}
+
+The syntax:
 
 ```markdown
 {% screenshot

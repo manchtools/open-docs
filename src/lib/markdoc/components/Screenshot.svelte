@@ -1,5 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
+	import { viewerOS, detectViewerOS } from '$lib/viewer-os.svelte';
+
+	// The faux-browser chrome mirrors the reader's own OS (detected on
+	// mount; macOS until then). See $lib/viewer-os.
+	onMount(detectViewerOS);
+	const os = $derived(viewerOS.os);
 
 	// {% screenshot src="dashboard.png" alt="..." caption="..." dark="dashboard-dark.png" /%}
 	//
@@ -41,12 +48,44 @@
 <figure class="not-prose my-8" style={width ? `max-width: ${width}; margin-inline: auto;` : ''}>
 	{#if variant === 'frame'}
 		<div class="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-			<!-- Faux-browser title bar. Three traffic-light dots; no
-			     fake URL bar because that ages badly. -->
-			<div class="flex items-center gap-1.5 border-b border-border bg-muted/40 px-3 py-2">
-				<span class="size-3 rounded-full bg-muted-foreground/30"></span>
-				<span class="size-3 rounded-full bg-muted-foreground/30"></span>
-				<span class="size-3 rounded-full bg-muted-foreground/30"></span>
+			<!-- Faux-browser title bar with OS-accurate window controls (no
+			     fake URL bar — those age badly). -->
+			<div
+				class="flex items-center border-b border-border bg-muted/40 px-3 py-2"
+				class:justify-end={os !== 'mac'}
+			>
+				{#if os === 'mac'}
+					<!-- macOS: traffic lights on the left. -->
+					<div class="flex items-center gap-2">
+						<span class="size-3 rounded-full bg-[#ff5f57]"></span>
+						<span class="size-3 rounded-full bg-[#febc2e]"></span>
+						<span class="size-3 rounded-full bg-[#28c840]"></span>
+					</div>
+				{:else if os === 'windows'}
+					<!-- Windows: flat minimize / maximize / close on the right. -->
+					<div class="flex items-center gap-4 text-muted-foreground/70">
+						<span class="block h-px w-3 bg-current"></span>
+						<span class="block size-2.5 rounded-[1px] border border-current"></span>
+						<svg viewBox="0 0 10 10" class="size-2.5" aria-hidden="true">
+							<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.2" fill="none" />
+						</svg>
+					</div>
+				{:else}
+					<!-- Linux (GNOME-ish): circular buttons on the right. -->
+					<div class="flex items-center gap-2 text-muted-foreground/80">
+						<span class="flex size-3.5 items-center justify-center rounded-full bg-muted-foreground/15">
+							<span class="block h-px w-1.5 bg-current"></span>
+						</span>
+						<span class="flex size-3.5 items-center justify-center rounded-full bg-muted-foreground/15">
+							<span class="block size-1.5 rounded-[1px] border border-current"></span>
+						</span>
+						<span class="flex size-3.5 items-center justify-center rounded-full bg-muted-foreground/15">
+							<svg viewBox="0 0 10 10" class="size-2" aria-hidden="true">
+								<path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.4" fill="none" />
+							</svg>
+						</span>
+					</div>
+				{/if}
 			</div>
 			<picture>
 				{#if dark}

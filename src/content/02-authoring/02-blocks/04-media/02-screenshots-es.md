@@ -7,7 +7,17 @@ title: Capturas de pantalla
 El bloque `screenshot` renderiza una imagen con marco de navegador opcional,
 un pie y una variante separada para modo oscuro. Las imágenes se resuelven
 desde `static/screenshots/`. Haz clic en cualquier imagen para ampliarla en un
-diálogo (esto también se aplica a las imágenes `![]()` de Markdown plano).
+diálogo (esto también se aplica a las imágenes `![]()` de Markdown plano). Los
+controles de ventana del marco se adaptan al sistema operativo del lector
+(macOS, Windows o Linux).
+
+Esta es la página de inicio de open-docs, renderizada por este mismo bloque:
+
+{% screenshot
+   src="open-docs-home.png"
+   alt="La página de inicio de open-docs"
+   dark="open-docs-home-dark.png"
+   caption="La página de inicio de open-docs. Los controles de ventana de arriba coinciden con tu sistema." /%}
 
 ```markdown
 {% screenshot

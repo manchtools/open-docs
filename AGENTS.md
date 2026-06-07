@@ -193,7 +193,8 @@ YouTube/Vimeo URLs are normalised; the CSP allow-list is derived for you.
 {% screenshot src="ui.png" alt="The UI" caption="…" dark="ui-dark.png" variant="frame" width="720px" /%}
 ```
 `src` (under `static/screenshots/`) and `alt` required; `caption`, `dark`,
-`variant` (`frame`|`flat`), `width` optional.
+`variant` (`frame`|`flat`), `width` optional. The `frame` window controls
+match the reader's own OS (macOS / Windows / Linux) automatically.
 
 ### code — add a filename header to a fence
 Markdoc drops the fence's `info` string, so a filename rides on a wrapper:

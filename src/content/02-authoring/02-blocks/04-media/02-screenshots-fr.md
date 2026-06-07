@@ -8,7 +8,16 @@ Le bloc `screenshot` affiche une image avec, en option, un habillage façon
 fenêtre de navigateur, une légende et une variante distincte pour le mode
 sombre. Les images sont résolues depuis `static/screenshots/`. Cliquez sur une
 image pour l'agrandir dans une boîte de dialogue (cela vaut aussi pour les
-images Markdown classiques `![]()`).
+images Markdown classiques `![]()`). Les contrôles de fenêtre de l'habillage
+s'adaptent au système d'exploitation du lecteur (macOS, Windows ou Linux).
+
+Voici la page d'accueil d'open-docs, rendue par ce bloc même :
+
+{% screenshot
+   src="open-docs-home.png"
+   alt="La page d'accueil d'open-docs"
+   dark="open-docs-home-dark.png"
+   caption="La page d'accueil d'open-docs. Les contrôles de fenêtre ci-dessus correspondent à votre système." /%}
 
 ```markdown
 {% screenshot
