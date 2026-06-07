@@ -46,6 +46,16 @@ const headingAnchors = {
 		let fenceLen = 0; // open-fence length, so nested fences don't mis-close
 		let changed = false;
 
+		// Stable djb2 hash → short base36 id. Slug fallback for headings that
+		// fold to nothing under ASCII (Cyrillic, CJK, …), so the id is always a
+		// unique, valid ASCII identifier and the build never breaks on a
+		// non-Latin script.
+		const hashSlug = (s) => {
+			let h = 5381;
+			for (let k = 0; k < s.length; k++) h = ((h << 5) + h + s.charCodeAt(k)) >>> 0;
+			return 'h' + h.toString(36);
+		};
+
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i];
 
@@ -87,14 +97,14 @@ const headingAnchors = {
 			// "Nächste Schritte" or French "Référence") would otherwise inject a
 			// non-ASCII id and fail the build. Decompose + strip diacritics
 			// (ä→a, é→e, ñ→n), expand ß→ss, then drop anything still non-ASCII.
-			const ascii =
-				plain
-					.normalize('NFKD')
-					.replace(/[̀-ͯ]/g, '')
-					.replace(/ß/g, 'ss')
-					.replace(/[^\x00-\x7F]/g, '') || 'section';
+			const ascii = plain
+				.normalize('NFKD')
+				.replace(/[̀-ͯ]/g, '')
+				.replace(/ß/g, 'ss')
+				.replace(/[^\x00-\x7F]/g, '')
+				.trim();
 
-			lines[i] = `${hashes} ${text} {% #${slugger.slug(ascii)} %}`;
+			lines[i] = `${hashes} ${text} {% #${slugger.slug(ascii || hashSlug(plain))} %}`;
 			changed = true;
 		}
 

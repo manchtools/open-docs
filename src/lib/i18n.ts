@@ -114,11 +114,16 @@ export function switchTo(
 	return hrefFor(lang, slug, fallback, languages.length > 1);
 }
 
-/** Display name for a language code (in its own language), falling back
- *  to the upper-cased code. */
+/** Display name for a language code, in its own language, with the first
+ *  letter capitalized for menu consistency — `Intl.DisplayNames` follows
+ *  each language's own orthography ("English", "Deutsch", but "español",
+ *  "français"), which reads as inconsistent in a switcher. Falls back to
+ *  the upper-cased code. */
 export function langName(code: string): string {
 	try {
-		return new Intl.DisplayNames([code], { type: 'language' }).of(code) ?? code.toUpperCase();
+		const name = new Intl.DisplayNames([code], { type: 'language' }).of(code);
+		if (!name) return code.toUpperCase();
+		return name.charAt(0).toLocaleUpperCase(code) + name.slice(1);
 	} catch {
 		return code.toUpperCase();
 	}
