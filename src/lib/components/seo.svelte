@@ -48,8 +48,13 @@
 	<meta property="og:type" content={type} />
 	<meta property="og:site_name" content={siteConfig.brandName} />
 	{#if canonical}<meta property="og:url" content={canonical} />{/if}
+	<!-- Social-card image. Absolute URL (needs siteUrl); points at the
+	     operator's optional static/og.png. Omitted without a site URL —
+	     a relative og:image doesn't work for off-site scrapers. -->
+	{#if siteConfig.siteUrl}<meta property="og:image" content={`${siteConfig.siteUrl}/og.png`} />{/if}
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content={fullTitle} />
 	<meta name="twitter:description" content={desc} />
+	{#if siteConfig.siteUrl}<meta name="twitter:image" content={`${siteConfig.siteUrl}/og.png`} />{/if}
 </svelte:head>
