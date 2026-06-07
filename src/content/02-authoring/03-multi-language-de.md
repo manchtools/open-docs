@@ -79,8 +79,9 @@ der Dateiendung. Verwenden Sie
 (wie `setup-ci.md`), wird als gewöhnlicher Dateiname behandelt, nicht als
 Sprache.
 
-{% callout type="info" title="Inhalt, nicht Rahmen" %}
-Seiteninhalt, Titel und Navigation werden lokalisiert. Die
-Oberflächentexte selbst (zum Beispiel „Zurück"/„Weiter" und „Docs
-durchsuchen…") bleiben derzeit in der Standardsprache.
+{% callout type="info" title="Was in der Standardsprache bleibt" %}
+Fast alles wird lokalisiert: Seiteninhalt, Navigation und die
+Oberflächentexte. Die Ausnahme sind **Markentitel und -beschreibung** –
+sie stammen aus `PUBLIC_SITE_TITLE` und `PUBLIC_SITE_DESCRIPTION` und sind
+in allen Sprachen gleich.
 {% /callout %}

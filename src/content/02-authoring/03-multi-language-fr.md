@@ -75,8 +75,9 @@ l'extension. Utilisez les codes [ISO 639-1](https://en.wikipedia.org/wiki/List_o
 code (comme `setup-ci.md`) est traitée comme un nom de fichier ordinaire, pas
 comme une langue.
 
-{% callout type="info" title="Le contenu, pas l'habillage" %}
-Le contenu des pages, les titres et la navigation sont localisés. Les libellés
-de l'interface eux-mêmes (par exemple « Previous »/« Next » et « Search docs… »)
-restent pour l'instant dans la langue par défaut.
+{% callout type="info" title="Ce qui reste dans la langue par défaut" %}
+Presque tout est localisé : le contenu des pages, la navigation et
+l'habillage de l'interface. L'exception est le **titre et la description du
+site** : ils proviennent de `PUBLIC_SITE_TITLE` et `PUBLIC_SITE_DESCRIPTION`,
+identiques dans toutes les langues.
 {% /callout %}

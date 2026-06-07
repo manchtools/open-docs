@@ -73,8 +73,9 @@ extensión. Usa códigos [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_6
 (`de`, `fr`, `ja`, …); una terminación de dos letras que no sea un código real
 (como `setup-ci.md`) se trata como un nombre de archivo normal, no como un idioma.
 
-{% callout type="info" title="Contenido, no la interfaz" %}
-El contenido de las páginas, los títulos y la navegación se localizan. Las
-etiquetas de la interfaz en sí (por ejemplo "Previous"/"Next" y "Search docs…")
-por ahora se mantienen en el idioma por defecto.
+{% callout type="info" title="Qué se mantiene en el idioma por defecto" %}
+Casi todo se localiza: el contenido de las páginas, la navegación y la
+interfaz. La excepción es el **título y la descripción del sitio**, que
+provienen de `PUBLIC_SITE_TITLE` y `PUBLIC_SITE_DESCRIPTION` y son iguales
+en todos los idiomas.
 {% /callout %}

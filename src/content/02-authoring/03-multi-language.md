@@ -52,6 +52,10 @@ as many pages as you like and fill in the rest over time.
   language exists). It keeps you on the same page when you switch.
 - A **localized sidebar and prev/next** — translated titles where a
   translation exists, default titles otherwise.
+- **Localized interface chrome.** The labels open-docs ships — the "On
+  this page" heading, prev/next, the search prompt, the footer — are
+  translated into dozens of languages, falling back to English for any
+  label a language hasn't covered.
 - **Per-language search.** The search index is segmented by language, so
   searching from a `/de` page returns German results.
 - **`hreflang` alternates** and a multi-language `sitemap.xml`, so search
@@ -73,8 +77,9 @@ extension. Use [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639_languag
 codes (`de`, `fr`, `ja`, …); a two-letter ending that isn't a real code
 (like `setup-ci.md`) is treated as an ordinary filename, not a language.
 
-{% callout type="info" title="Content, not chrome" %}
-Page content, titles, and navigation are localized. The interface labels
-themselves (for example "Previous"/"Next" and "Search docs…") currently
-stay in the default language.
+{% callout type="info" title="What stays in the default language" %}
+Almost everything localizes: page content, navigation, and the interface
+chrome. The exception is your **brand title and description** — they come
+from `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_DESCRIPTION`, which are the same
+across every language.
 {% /callout %}

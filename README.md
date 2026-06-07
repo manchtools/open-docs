@@ -170,7 +170,8 @@ are discovered from the suffixes at build time — no config file.
 - Untranslated pages **fall back** to the default-language content at the
   same slug, so nothing 404s. Translate as much or as little as you want.
 - You get a top-bar language switcher, a localized sidebar / prev-next,
-  per-language search, and `hreflang` alternates.
+  localized interface labels (the chrome is translated into dozens of
+  languages), per-language search, and `hreflang` alternates.
 
 Set the default with `PUBLIC_DEFAULT_LANG` (defaults to `en`). See the
 [Multi-language](./src/content/02-authoring/03-multi-language.md) docs page.
