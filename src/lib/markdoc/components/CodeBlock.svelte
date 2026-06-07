@@ -153,19 +153,26 @@
 						'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
 					themeVariables: {
 						background: 'transparent',
-						primaryColor: token('--primary'),
-						primaryTextColor: token('--primary-foreground'),
+						// Nodes use a neutral, subtle fill paired with a
+						// guaranteed-contrast text colour (the secondary pair), and
+						// take --primary only as a *border* accent. Filling nodes
+						// with --primary itself washed labels out on saturated brand
+						// colours; this keeps every label legible whatever palette
+						// the operator's theme.css sets, while the brand still reads
+						// through on the node outlines and is the diagram's accent.
+						primaryColor: token('--secondary'),
+						primaryTextColor: token('--secondary-foreground'),
 						primaryBorderColor: token('--primary'),
-						secondaryColor: token('--secondary'),
-						secondaryTextColor: token('--secondary-foreground'),
+						mainBkg: token('--secondary'),
+						nodeBorder: token('--primary'),
+						secondaryColor: token('--muted'),
+						secondaryTextColor: token('--foreground'),
 						secondaryBorderColor: token('--border'),
-						tertiaryColor: token('--muted'),
-						tertiaryTextColor: token('--muted-foreground'),
+						tertiaryColor: token('--accent'),
+						tertiaryTextColor: token('--accent-foreground'),
 						tertiaryBorderColor: token('--border'),
-						mainBkg: token('--primary'),
 						lineColor: token('--foreground'),
 						textColor: token('--foreground'),
-						nodeBorder: token('--border'),
 						clusterBkg: token('--muted'),
 						clusterBorder: token('--border'),
 						edgeLabelBackground: token('--background'),

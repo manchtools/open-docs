@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
+	import { cn } from '$lib/utils';
 	import { nav } from '$lib/nav';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import NavNode from './nav-node.svelte';
@@ -37,11 +38,26 @@
 		{#each nav as group (group.title)}
 			<div>
 				{#if group.title}
-					<h3
-						class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-foreground"
-					>
-						{group.title}
-					</h3>
+					{#if group.href}
+						<a
+							href={`${base}${group.href}`}
+							data-active={pathname === group.href}
+							class={cn(
+								'mb-2 block px-2 text-xs font-semibold uppercase tracking-wider transition-colors',
+								pathname === group.href
+									? 'text-primary'
+									: 'text-foreground hover:text-primary'
+							)}
+						>
+							{group.title}
+						</a>
+					{:else}
+						<h3
+							class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-foreground"
+						>
+							{group.title}
+						</h3>
+					{/if}
 					<ul class="ml-2 space-y-0.5 border-l border-sidebar-border pl-2">
 						{#each group.items ?? [] as child (child.href ?? child.title)}
 							<NavNode node={child} depth={1} />

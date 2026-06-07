@@ -14,9 +14,11 @@
 	import { afterNavigate } from '$app/navigation';
 	import { base } from '$app/paths';
 	import ThemeColor from '$lib/components/theme-color.svelte';
+	import Lightbox from '$lib/components/lightbox.svelte';
 	import TopNav from '$lib/components/top-nav.svelte';
 	import Sidebar from '$lib/components/sidebar.svelte';
 	import { siteConfig } from '$lib/config';
+	import { metaPages } from '$lib/nav';
 
 	type Props = { children?: import('svelte').Snippet };
 	const { children }: Props = $props();
@@ -81,6 +83,7 @@
 
 <ModeWatcher />
 <ThemeColor />
+<Lightbox />
 
 <!-- Fixed-viewport layout. Outer container is exactly the viewport
      height; the middle row owns the remaining vertical space
@@ -130,21 +133,38 @@
 	<div
 		class="container mx-auto flex max-w-screen-2xl flex-col gap-x-6 gap-y-1 px-4 sm:flex-row sm:items-center sm:justify-between sm:gap-y-2 lg:px-6"
 	>
-		<p>
-			{siteConfig.brandName}
-			{#if siteConfig.brandTagline}{siteConfig.brandTagline}{/if},
-			built with <a
-				class="underline underline-offset-4 hover:text-foreground"
-				href="https://github.com/manchtools/open-docs">open-docs</a>.
-			{#if siteConfig.repoUrl}
-				<a
+		<div class="space-y-1">
+			<p>
+				{siteConfig.brandName}
+				{#if siteConfig.brandTagline}{siteConfig.brandTagline}{/if},
+				built with <a
 					class="underline underline-offset-4 hover:text-foreground"
-					href={siteConfig.repoUrl}
-				>
-					Edit on GitHub
-				</a>
+					href="https://github.com/manchtools/open-docs">open-docs</a>.
+				{#if siteConfig.repoUrl}
+					<a
+						class="underline underline-offset-4 hover:text-foreground"
+						href={siteConfig.repoUrl}
+					>
+						Edit on GitHub
+					</a>
+				{/if}
+			</p>
+
+			<!-- Legal / meta pages (frontmatter `meta: true`), e.g. an imprint
+			     that some regions require. Kept out of the sidebar nav. -->
+			{#if metaPages.length}
+				<nav class="flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-muted-foreground/80">
+					{#each metaPages as m (m.href)}
+						<a
+							href={`${base}${m.href}`}
+							class="underline-offset-4 hover:text-foreground hover:underline"
+						>
+							{m.label ?? m.title}
+						</a>
+					{/each}
+				</nav>
 			{/if}
-		</p>
+		</div>
 
 		<!-- Colophon: the stack open-docs is built on. Hardcoded into the
 		     shell on purpose — there is no env flag to hide it, so it travels

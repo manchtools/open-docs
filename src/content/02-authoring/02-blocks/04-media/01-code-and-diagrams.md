@@ -75,7 +75,8 @@ fence's language.
 
 A fence tagged `mermaid` is rendered as a diagram instead of code. The
 diagram picks up the site's theme colors, so it stays legible in both
-light and dark mode.
+light and dark mode. **Click a diagram to enlarge it** in a dialog —
+handy when one gets detailed.
 
 ````markdown
 ```mermaid

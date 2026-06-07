@@ -27,4 +27,10 @@
 	export { default as Boost } from './components/Boost.svelte';
 	export { default as Embed } from './components/Embed.svelte';
 	export { default as Code } from './components/Code.svelte';
+
+	// Layout blocks: side-by-side columns (capped at 3 wide) and a
+	// responsive grid; both use {% column %} cells.
+	export { default as Columns } from './components/Columns.svelte';
+	export { default as Column } from './components/Column.svelte';
+	export { default as Grid } from './components/Grid.svelte';
 </script>

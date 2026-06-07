@@ -38,11 +38,16 @@
 		{/snippet}
 	</Sheet.Trigger>
 
-	<Sheet.Content side="left" class="w-72 max-w-[85vw] gap-0 p-0">
-		<Sheet.Header class="h-14 border-b border-border px-4">
+	<Sheet.Content side="left" class="flex w-72 max-w-[85vw] flex-col gap-0 p-0">
+		<Sheet.Header class="h-14 shrink-0 border-b border-border px-4">
 			<Sheet.Title class="text-base">Menu</Sheet.Title>
 			<Sheet.Description class="sr-only">Documentation navigation</Sheet.Description>
 		</Sheet.Header>
-		<Sidebar />
+		<!-- Give the nav the *remaining* height (not h-full of the whole
+		     sheet) so it scrolls inside the drawer; otherwise it overflows
+		     past the bottom and the last links can't be reached/tapped. -->
+		<div class="min-h-0 flex-1">
+			<Sidebar />
+		</div>
 	</Sheet.Content>
 </Sheet.Root>

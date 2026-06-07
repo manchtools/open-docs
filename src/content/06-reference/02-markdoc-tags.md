@@ -148,6 +148,32 @@ weights it in Pagefind. Body text is weight `1` and headings are `10`/`5`/`3`,
 so `weight` (default `5`) lifts a key passage above ordinary prose. Use it
 only when the built-in heading weights aren't enough to surface something.
 
+### columns / column
+
+Side-by-side columns that stack on mobile, capped at **three across** — a
+fourth wraps to the next row. Two columns fill 50/50, three fill in thirds.
+
+````markdown
+{% columns %}
+  {% column %} … {% /column %}
+  {% column %} … {% /column %}
+{% /columns %}
+````
+
+### grid
+
+A responsive grid for laying content out in shapes other than a single
+top-to-bottom column. `cols` (1–3, default 2) sets the track count on
+larger screens; cells stack to one column on mobile. A cell can span
+tracks with `{% column span=2 %}`.
+
+````markdown
+{% grid cols=3 %}
+  {% column %} … {% /column %}
+  {% column span=2 %} a wider cell {% /column %}
+{% /grid %}
+````
+
 ## Enhanced Markdown
 
 These need no special syntax — plain Markdown gets the behavior

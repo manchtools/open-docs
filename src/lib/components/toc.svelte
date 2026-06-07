@@ -4,47 +4,72 @@
 	import { cn } from '$lib/utils';
 
 	// Right-side "On this page" TOC. Auto-built from the rendered DOM
-	// rather than from frontmatter — that means the TOC always
-	// matches what's actually on the page even if the author forgets
-	// to update a separate index. Re-built on every navigation.
+	// rather than from frontmatter — that means the TOC always matches
+	// what's actually on the page even if the author forgets to update a
+	// separate index. Re-built on every navigation.
 	//
-	// Active-heading detection uses IntersectionObserver: whatever
-	// heading is closest to the top of the viewport gets the
-	// "current" highlight. A 25% rootMargin from the top makes the
-	// switch feel right for normal scrolling.
+	// Active-heading detection is scroll-based: the active heading is the
+	// last one whose top has scrolled above a threshold line just below
+	// the sticky nav. Crucially, when the scroll container is at the
+	// bottom the *last* heading wins — a short final section can never
+	// scroll its heading up to the threshold, which is why an
+	// intersection-band approach left the last few entries un-highlighted.
 
 	type Heading = { id: string; text: string; level: number };
 
 	let headings = $state<Heading[]>([]);
 	let activeId = $state<string | null>(null);
-	let observer: IntersectionObserver | null = null;
+	let scrollEl: HTMLElement | null = null;
+	let ticking = false;
+
+	// px below the viewport top where a heading counts as "current" — a
+	// little under the sticky top nav so the switch feels right.
+	const THRESHOLD = 100;
+
+	function computeActive() {
+		ticking = false;
+		const els = headings
+			.map((h) => document.getElementById(h.id))
+			.filter((el): el is HTMLElement => !!el);
+		if (!els.length) return;
+
+		// At the bottom of the scroll area the last heading always wins —
+		// otherwise a short trailing section never reaches the threshold and
+		// the last entries never light up.
+		if (scrollEl && scrollEl.scrollTop + scrollEl.clientHeight >= scrollEl.scrollHeight - 2) {
+			activeId = els[els.length - 1].id;
+			return;
+		}
+
+		let current = els[0].id;
+		for (const el of els) {
+			if (el.getBoundingClientRect().top <= THRESHOLD) current = el.id;
+			else break;
+		}
+		activeId = current;
+	}
+
+	function onScroll() {
+		if (ticking) return;
+		ticking = true;
+		requestAnimationFrame(computeActive);
+	}
 
 	function collect() {
-		const selectors = 'main h2[id], main h3[id]';
-		const els = Array.from(document.querySelectorAll<HTMLElement>(selectors));
+		const els = Array.from(document.querySelectorAll<HTMLElement>('main h2[id], main h3[id]'));
 		headings = els.map((el) => ({
 			id: el.id,
 			text: el.textContent ?? '',
 			level: Number(el.tagName.slice(1))
 		}));
-		// (Re)wire the observer
-		observer?.disconnect();
-		observer = new IntersectionObserver(
-			(entries) => {
-				for (const e of entries) {
-					if (e.isIntersecting) {
-						activeId = (e.target as HTMLElement).id;
-						break;
-					}
-				}
-			},
-			{ rootMargin: '0px 0px -75% 0px', threshold: 0 }
-		);
-		for (const el of els) observer.observe(el);
-		if (!activeId && els.length) activeId = els[0].id;
+		computeActive();
 	}
 
 	onMount(() => {
+		// Content scrolls inside <main>, not the window.
+		scrollEl = document.querySelector('main');
+		scrollEl?.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', onScroll, { passive: true });
 		collect();
 	});
 
@@ -56,7 +81,11 @@
 		queueMicrotask(collect);
 	});
 
-	onDestroy(() => observer?.disconnect());
+	onDestroy(() => {
+		// onDestroy also fires during SSR teardown, where there's no window.
+		scrollEl?.removeEventListener('scroll', onScroll);
+		if (typeof window !== 'undefined') window.removeEventListener('resize', onScroll);
+	});
 </script>
 
 {#if headings.length > 1}

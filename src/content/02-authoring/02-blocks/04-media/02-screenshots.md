@@ -6,7 +6,8 @@ title: Screenshots
 
 The `screenshot` block renders an image with optional browser-frame
 chrome, a caption, and a separate dark-mode variant. Images are
-resolved from `static/screenshots/`.
+resolved from `static/screenshots/`. **Click any image to enlarge it**
+in a dialog (this also applies to plain Markdown `![]()` images).
 
 ```markdown
 {% screenshot

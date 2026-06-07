@@ -9,8 +9,8 @@
 //     levels deep (level 1 = a top folder, level 3 = a folder three
 //     deep). Anything deeper flattens into the third-level section — the
 //     URL keeps its full path, but the sidebar stops nesting.
-//   - A folder's `index.md` / `introduction.md` is that section's
-//     landing page; it appears as an "Overview" entry inside the section.
+//   - A folder's `index.md` is that section's landing page; the section
+//     heading itself links to it (there is no separate "Overview" entry).
 //
 // Titles default to the filename, kebab/snake-case converted to
 // "Sentence case". Order defaults to alphabetical. Both are overridable
@@ -126,6 +126,11 @@ function byOrderThenTitle(a: BuildNode, b: BuildNode): number {
 	return a.title.localeCompare(b.title);
 }
 
+// Meta pages (frontmatter `meta: true`): legal/imprint pages that get a
+// route but are kept out of the sidebar + prev/next and shown in the
+// footer instead. Collected during the tree walk below.
+const metaRaw: { title: string; href: string; label?: string; order: number }[] = [];
+
 function buildTree(): NavNode[] {
 	const root: BuildNode = { title: '', order: FALLBACK, children: new Map() };
 
@@ -142,6 +147,18 @@ function buildTree(): NavNode[] {
 		const dirSegments = rawSegments.slice(0, -1);
 		const isIndex = stripPrefix(fileSegment).rest.toLowerCase() === 'index';
 		const label = fm.label ?? fm.sidebar_label;
+
+		// Meta pages opt out of the nav (and prev/next) and surface in the
+		// footer — for the legal/imprint page a region may require.
+		if (fm.meta?.toLowerCase() === 'true') {
+			metaRaw.push({
+				title: fm.title ?? titleFromSegment(fileSegment),
+				href,
+				label,
+				order: orderOf(fm, fileSegment) ?? FALLBACK
+			});
+			continue;
+		}
 
 		// Landing page (root index.md / introduction.md): ungrouped, and
 		// pinned to the very top of the sidebar.
@@ -191,9 +208,14 @@ function buildTree(): NavNode[] {
 }
 
 function toNavNode(n: BuildNode): NavNode {
-	return isSection(n)
-		? { title: n.title, label: n.label, icon: n.icon, items: toNodes(n) }
-		: { title: n.title, label: n.label, href: n.href };
+	if (!isSection(n)) return { title: n.title, label: n.label, href: n.href };
+	// A section's index.md *is* the section: the heading links straight to
+	// it (a clickable section title) instead of the index showing up as a
+	// separate "Overview" child. So the title you see and the page it leads
+	// to are one entry, not two.
+	const indexHref = n.children.get('pg:index')?.href;
+	const items = toNodes(n).filter((c) => c.items || c.href !== indexHref);
+	return { title: n.title, label: n.label, icon: n.icon, href: indexHref, items };
 }
 
 // Convert a section's children to NavNode[]. At the top level we keep
@@ -215,6 +237,11 @@ function toNodes(section: BuildNode, top = false): NavNode[] {
 }
 
 export const nav: NavNode[] = buildTree();
+
+// Footer/legal pages (frontmatter `meta: true`), sorted like the nav.
+export const metaPages: NavItem[] = metaRaw
+	.sort((a, b) => (a.order !== b.order ? a.order - b.order : a.title.localeCompare(b.title)))
+	.map(({ title, href, label }) => ({ title, href, label }));
 
 // Depth-first flatten of the tree, in sidebar order, for prev/next
 // navigation at the bottom of each page. Sections contribute no link

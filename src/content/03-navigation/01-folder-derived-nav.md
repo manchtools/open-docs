@@ -27,7 +27,7 @@ flowchart TD
   root --> g2["02-authoring/ → group 'Authoring'"]
   g1 --> i1["introduction → item"]
   g1 --> i2["quick-start → item"]
-  g2 --> i3["index.md → 'Overview' item at /authoring"]
+  g2 -.->|index.md| u2["the 'Authoring' heading links to /authoring"]
   g2 --> i4["callouts → item"]
 ```
 
@@ -36,8 +36,9 @@ flowchart TD
 - **Files in a folder** become that group's **items**.
 - **Top-level files** (directly in the content root) appear above the
   groups, ungrouped.
-- **A folder's `index.md`** becomes a reachable "Overview" item for that
-  section, served at the folder's URL.
+- **A folder's `index.md`** makes that section's **heading itself the
+  link** to its page (served at the folder's URL) — there's no separate
+  "Overview" entry; click the section title to open it.
 
 ## Nesting
 

@@ -90,3 +90,46 @@ privacy-friendly embed form automatically.
 The CSP iframe allow-list is derived automatically from the
 `{% embed %}` blocks in your content — including URLs supplied through a
 `{{TOKEN}}` — so there is nothing to configure.
+
+## Columns
+
+Lay content out side by side. Columns are capped at **three across** and
+stack on mobile — two fill 50/50, three fill in thirds, a fourth wraps.
+
+{% columns %}
+{% column %}
+{% callout type="info" title="Left" %}First column of content.{% /callout %}
+{% /column %}
+{% column %}
+{% callout type="success" title="Right" %}Second column.{% /callout %}
+{% /column %}
+{% /columns %}
+
+````markdown
+{% columns %}
+  {% column %} … {% /column %}
+  {% column %} … {% /column %}
+{% /columns %}
+````
+
+## Grid
+
+For layouts beyond a single column, a responsive grid. `cols` (1–3,
+default 2) sets the column count on larger screens; cells stack on
+mobile. A cell can span tracks with `{% column span=2 %}`.
+
+{% grid cols=3 %}
+{% column %}
+{% callout type="info" title="a" %}One cell.{% /callout %}
+{% /column %}
+{% column span=2 %}
+{% callout type="success" title="b — spans 2" %}A wider cell.{% /callout %}
+{% /column %}
+{% /grid %}
+
+````markdown
+{% grid cols=3 %}
+  {% column %} … {% /column %}
+  {% column span=2 %} a wider cell {% /column %}
+{% /grid %}
+````
