@@ -57,7 +57,6 @@ lang ist.
 
 {% callout type="success" title="Diese Website macht genau das" %}
 Jede Gruppe, die Sie in der Seitenleiste sehen, ist ein mit `NN-` versehener
-Ordner, und jede **Gruppenüberschrift ist der Link auf die `index.md` dieses
-Abschnitts**. Klicken Sie auf „Authoring", um auf der Übersichtsseite zu
+Ordner, und jede **Gruppenüberschrift ist der Link auf die `index.md` dieses Abschnitts**. Klicken Sie auf „Authoring", um auf der Übersichtsseite zu
 landen.
 {% /callout %}

@@ -5,8 +5,7 @@ label: Folder-derived nav
 
 # Folder-derived navigation
 
-The sidebar is built from your content folder. There is **no nav config
-file** to write or keep in sync. Move a file, and the navigation
+The sidebar is built from your content folder. There is **no nav config file** to write or keep in sync. Move a file, and the navigation
 follows.
 
 ## How the tree maps to the sidebar

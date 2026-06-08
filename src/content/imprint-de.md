@@ -30,7 +30,6 @@ meta: true
 ---
 ```
 
-Das hält sie **aus der Seitenleiste und der Zurück-/Weiter-Navigation
-heraus** und listet sie stattdessen im **Footer** auf, was für rechtliche
+Das hält sie **aus der Seitenleiste und der Zurück-/Weiter-Navigation heraus** und listet sie stattdessen im **Footer** auf, was für rechtliche
 Seiten wie Impressum oder Datenschutzerklärung nützlich ist. Siehe
 [Reihenfolge & Titel](/de/navigation/ordering-and-titles).

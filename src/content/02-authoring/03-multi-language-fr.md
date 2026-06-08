@@ -77,7 +77,6 @@ comme une langue.
 
 {% callout type="info" title="Ce qui reste dans la langue par défaut" %}
 Presque tout est localisé : le contenu des pages, la navigation et
-l'habillage de l'interface. L'exception est le **titre et la description du
-site** : ils proviennent de `PUBLIC_SITE_TITLE` et `PUBLIC_SITE_DESCRIPTION`,
+l'habillage de l'interface. L'exception est le **titre et la description du site** : ils proviennent de `PUBLIC_SITE_TITLE` et `PUBLIC_SITE_DESCRIPTION`,
 identiques dans toutes les langues.
 {% /callout %}

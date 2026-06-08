@@ -57,7 +57,6 @@ titre est trop long pour la barre latérale.
 
 {% callout type="success" title="Ce site fait exactement cela" %}
 Chaque groupe que vous voyez dans la barre latérale est un dossier préfixé
-par `NN-`, et chaque **titre de groupe est le lien vers le fichier
-`index.md` de cette section**. Cliquez sur « Authoring » pour arriver sur
+par `NN-`, et chaque **titre de groupe est le lien vers le fichier `index.md` de cette section**. Cliquez sur « Authoring » pour arriver sur
 sa page d'aperçu.
 {% /callout %}

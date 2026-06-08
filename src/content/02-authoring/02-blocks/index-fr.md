@@ -27,5 +27,4 @@ Images encadrées avec variantes claire et sombre.
 {% /cards %}
 
 Les deux dernières se trouvent dans une sous-section **Média** imbriquée. Cette
-page et ses enfants illustrent, dans cette documentation, l'[imbrication
-multi-niveaux](/fr/navigation/folder-derived-nav#nesting) de la barre latérale.
+page et ses enfants illustrent, dans cette documentation, l'[imbrication multi-niveaux](/fr/navigation/folder-derived-nav#nesting) de la barre latérale.

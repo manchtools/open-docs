@@ -56,6 +56,5 @@ demasiado largo para la barra lateral.
 
 {% callout type="success" title="Este sitio hace exactamente eso" %}
 Cada grupo que ves en la barra lateral es una carpeta con prefijo `NN-`,
-y el **encabezado de cada grupo es el enlace al `index.md` de esa
-sección**. Haz clic en "Authoring" para llegar a su página de resumen.
+y el **encabezado de cada grupo es el enlace al `index.md` de esa sección**. Haz clic en "Authoring" para llegar a su página de resumen.
 {% /callout %}

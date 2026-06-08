@@ -5,8 +5,7 @@ label: Ordner-Navigation
 
 # Aus Ordnern abgeleitete Navigation
 
-Die Seitenleiste wird aus Ihrem Inhaltsordner erzeugt. Es gibt **keine
-Navigationskonfigurationsdatei**, die Sie schreiben oder pflegen müssen.
+Die Seitenleiste wird aus Ihrem Inhaltsordner erzeugt. Es gibt **keine Navigationskonfigurationsdatei**, die Sie schreiben oder pflegen müssen.
 Verschieben Sie eine Datei, und die Navigation zieht mit.
 
 ## Wie der Baum auf die Seitenleiste abbildet

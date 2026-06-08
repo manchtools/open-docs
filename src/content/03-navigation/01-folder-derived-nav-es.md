@@ -5,8 +5,7 @@ label: Navegación por carpetas
 
 # Navegación derivada de carpetas
 
-La barra lateral se construye a partir de tu carpeta de contenido. **No
-hay ningún archivo de configuración de navegación** que escribir ni
+La barra lateral se construye a partir de tu carpeta de contenido. **No hay ningún archivo de configuración de navegación** que escribir ni
 mantener sincronizado. Mueve un archivo y la navegación lo sigue.
 
 ## Cómo se traduce el árbol a la barra lateral

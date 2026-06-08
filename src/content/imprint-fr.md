@@ -30,7 +30,6 @@ meta: true
 ---
 ```
 
-Cela la garde **hors de la barre latérale et de la navigation
-précédent/suivant** et la liste plutôt dans le **pied de page**, ce qui
+Cela la garde **hors de la barre latérale et de la navigation précédent/suivant** et la liste plutôt dans le **pied de page**, ce qui
 est utile pour les pages légales comme des mentions légales ou une
 politique de confidentialité. Voir [Ordre et titres](/fr/navigation/ordering-and-titles).
