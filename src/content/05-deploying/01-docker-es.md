@@ -39,20 +39,38 @@ contenido.
 
 ## Cómo se produce una compilación
 
-La imagen pospone la compilación del sitio al arranque del contenedor, de modo
-que la misma imagen publicada funciona para cualquier contenido:
+La imagen incluye la documentación por defecto **ya compilada**, de modo
+que un `docker run` normal (sin montajes ni variables de entorno) la sirve
+de inmediato usando casi nada de memoria. Solo se recompila al arrancar
+cuando personalizas: montas contenido o static, o defines `PUBLIC_*` /
+`BASE_PATH`:
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B[Copy /content and /static in]
-  B --> C[bun run build]
-  C --> D[Pagefind indexes the pages]
-  D --> E[Serve on :3000]
+  A[Container starts] --> B{Customized?}
+  B -- no --> S[Serve the pre-built site]
+  B -- yes --> C[Copy /content + /static in]
+  C --> D[bun run build]
+  D --> E[Pagefind indexes the pages]
+  E --> S
 ```
 
-Esto añade una compilación breve al arrancar, a cambio de una única imagen
-publicada genérica y pequeña en lugar de una imagen distinta por cada conjunto
-de documentos.
+La compilación es el paso pesado: agrupa Vite, Mermaid y Shiki y alcanza
+unos 2 GB de memoria, sin importar cuántas páginas tengas. Ejecutarla una
+vez al construir la imagen mantiene ligero un `docker run` normal.
+
+Para servir documentos **propios** en un host con poca memoria, hornéalos
+en una imagen pequeña en tu máquina de compilación en lugar de recompilar
+al arrancar:
+
+```dockerfile
+FROM ghcr.io/manchtools/open-docs:latest
+COPY ./content/ /app/src/content/
+RUN bun run build
+```
+
+Ejecuta esa imagen sin montaje `/content` y servirá tu sitio precompilado,
+sin compilación (ni 2 GB) en tiempo de ejecución.
 
 ## Despliegues bajo subruta
 

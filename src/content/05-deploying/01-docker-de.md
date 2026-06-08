@@ -39,19 +39,38 @@ Inhalte hinzufügen.
 
 ## Wie ein Build abläuft
 
-Das Image verschiebt den Site-Build auf den Containerstart, damit
-dasselbe veröffentlichte Image für beliebige Inhalte funktioniert:
+Das Image bringt die Standard-Dokumentation **bereits gebaut** mit, sodass
+ein einfaches `docker run` (ohne Mounts, ohne Env-Überschreibungen) sie
+sofort ausliefert und kaum Speicher braucht. Neu gebaut wird beim
+Containerstart nur, wenn Sie anpassen – Inhalte oder Static einhängen oder
+`PUBLIC_*` / `BASE_PATH` setzen:
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B[Copy /content and /static in]
-  B --> C[bun run build]
-  C --> D[Pagefind indexes the pages]
-  D --> E[Serve on :3000]
+  A[Container starts] --> B{Customized?}
+  B -- no --> S[Serve the pre-built site]
+  B -- yes --> C[Copy /content + /static in]
+  C --> D[bun run build]
+  D --> E[Pagefind indexes the pages]
+  E --> S
 ```
 
-Das bedeutet einen kurzen Build beim Start, dafür gibt es ein einziges
-generisches, kleines Image statt eines separaten Images pro Doku.
+Der Build ist der schwere Schritt – er bündelt Vite, Mermaid und Shiki und
+benötigt rund 2 GB Speicher, unabhängig von der Seitenzahl. Einmal beim
+Image-Build ausgeführt, bleibt ein einfaches `docker run` leicht.
+
+Um **eigene** Dokumente auf einem speicherarmen Host auszuliefern, backen
+Sie sie auf Ihrer Build-Maschine in ein kleines Image, statt beim Start neu
+zu bauen:
+
+```dockerfile
+FROM ghcr.io/manchtools/open-docs:latest
+COPY ./content/ /app/src/content/
+RUN bun run build
+```
+
+Starten Sie dieses Image ohne `/content`-Mount, liefert es Ihre vorgebaute
+Site aus – ohne Build (und ohne 2 GB) zur Laufzeit.
 
 ## Deployments unter einem Unterpfad
 

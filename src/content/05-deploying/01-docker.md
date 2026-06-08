@@ -38,19 +38,36 @@ content.
 
 ## How a build happens
 
-The image defers the site build to container start, so the same
-published image works for any content:
+The image ships with the default documentation **already built**, so a
+plain `docker run` (no mounts, no env overrides) serves it immediately and
+uses almost no memory. It only rebuilds at container start when you
+customize — mount content or static, or set `PUBLIC_*` / `BASE_PATH`:
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B[Copy /content and /static in]
-  B --> C[bun run build]
-  C --> D[Pagefind indexes the pages]
-  D --> E[Serve on :3000]
+  A[Container starts] --> B{Customized?}
+  B -- no --> S[Serve the pre-built site]
+  B -- yes --> C[Copy /content + /static in]
+  C --> D[bun run build]
+  D --> E[Pagefind indexes the pages]
+  E --> S
 ```
 
-This adds a short build at startup, in exchange for one generic, small
-published image instead of a separate image per docset.
+The build is the heavy step — it bundles Vite, Mermaid, and Shiki and peaks
+around 2 GB of memory, regardless of how many pages you have. Running it
+once at image-build keeps a plain `docker run` light.
+
+To serve **custom** docs on a low-memory host, bake them into a small image
+on your build machine instead of rebuilding at container start:
+
+```dockerfile
+FROM ghcr.io/manchtools/open-docs:latest
+COPY ./content/ /app/src/content/
+RUN bun run build
+```
+
+Run that image with no `/content` mount and it serves your pre-built site,
+no build (and no 2 GB) at runtime.
 
 ## Sub-path deploys
 

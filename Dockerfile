@@ -3,9 +3,12 @@
 # Two stages:
 #   1. `deps`   — installs node_modules once; cached unless package.json
 #                 or bun.lock changes.
-#   2. runtime  — copies the source tree + node_modules, then defers
-#                 the actual `bun run build` step to container start so
-#                 the user's mounted content/static assets are baked in.
+#   2. runtime  — copies the source tree + node_modules, then PRE-BUILDS
+#                 the default docs at image-build time. The entrypoint
+#                 serves that as-is and only rebuilds at container start
+#                 when you actually customize (mount content/static or set
+#                 PUBLIC_*/BASE_PATH). So a plain `docker run` does no build
+#                 and needs almost no memory.
 #
 # Usage:
 #   docker run --rm -p 3000:3000 \
@@ -33,11 +36,15 @@
 #                               PUBLIC_TOKEN_WEB_UI_URL → `{{WEB_UI_URL}}`
 #   BASE_PATH                   Sub-path deploy, e.g. `/docs`
 #
-# Build at image-publish time (not container-start):
-#   docker build -t my-docs --build-arg BAKE_CONTENT=1 \
-#     -v ./content:/build-content ...
-# (left as future work; the current default is build-at-start, which
-#  keeps the image generic and the published artifact tiny.)
+# Bake YOUR content into a custom image, so a low-RAM host never builds at
+# runtime — the heavy bundling happens once on your build machine:
+#
+#   FROM ghcr.io/manchtools/open-docs:latest
+#   COPY ./my-content/ /app/src/content/
+#   RUN bun run build
+#
+# Run that image with no /content mount; the entrypoint serves the
+# pre-built site directly (no build, near-zero memory).
 
 FROM oven/bun:alpine AS deps
 WORKDIR /app
@@ -58,6 +65,13 @@ COPY . .
 # The mount point exists but is intentionally empty: with nothing
 # mounted there, the entrypoint falls back to the baked-in docs above.
 RUN mkdir -p /content
+
+# Pre-build the default documentation here, on the build host, so a plain
+# `docker run` (no mounts, no env overrides) serves a ready-made site with
+# near-zero memory. The heavy bundling (Vite + Mermaid + Shiki, ~2 GB) runs
+# once at image-build instead of on every container start. The entrypoint
+# rebuilds only when you customize.
+RUN bun run build
 
 EXPOSE 3000
 ENV NODE_ENV=production

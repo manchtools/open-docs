@@ -40,20 +40,38 @@ votre propre contenu.
 
 ## Comment un build se déroule
 
-L'image diffère le build du site au démarrage du conteneur, si bien que
-la même image publiée fonctionne pour n'importe quel contenu :
+L'image embarque la documentation par défaut **déjà construite**, si bien
+qu'un simple `docker run` (sans montage, sans variable d'environnement)
+la sert immédiatement en n'utilisant presque pas de mémoire. Elle ne
+reconstruit au démarrage que lorsque vous personnalisez — montage de
+contenu ou de static, ou variables `PUBLIC_*` / `BASE_PATH` :
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B[Copy /content and /static in]
-  B --> C[bun run build]
-  C --> D[Pagefind indexes the pages]
-  D --> E[Serve on :3000]
+  A[Container starts] --> B{Customized?}
+  B -- no --> S[Serve the pre-built site]
+  B -- yes --> C[Copy /content + /static in]
+  C --> D[bun run build]
+  D --> E[Pagefind indexes the pages]
+  E --> S
 ```
 
-Cela ajoute un court build au démarrage, en échange d'une seule image
-publiée générique et légère, au lieu d'une image distincte par jeu de
-documentation.
+Le build est l'étape lourde : il regroupe Vite, Mermaid et Shiki et atteint
+environ 2 Go de mémoire, quel que soit le nombre de pages. L'exécuter une
+fois lors de la construction de l'image garde un simple `docker run` léger.
+
+Pour servir des documents **personnalisés** sur un hôte à faible mémoire,
+intégrez-les dans une petite image sur votre machine de build plutôt que de
+reconstruire au démarrage :
+
+```dockerfile
+FROM ghcr.io/manchtools/open-docs:latest
+COPY ./content/ /app/src/content/
+RUN bun run build
+```
+
+Lancez cette image sans montage `/content` et elle sert votre site
+pré-construit, sans build (ni 2 Go) à l'exécution.
 
 ## Déploiements sous un sous-chemin
 
