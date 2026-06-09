@@ -56,7 +56,6 @@ dossier `static/` de l'image, vous ne remplacez donc que ce que vous fournissez.
 Voir [Ressources statiques](/fr/customizing/configuration#static-assets).
 
 {% callout type="warn" title="Référencez des fichiers réels" %}
-Un `screenshot` pointant vers une image manquante fera échouer le build de
-production, puisque chaque page est prérendue. Ajoutez le fichier avant de le
-référencer.
+Un `screenshot` pointant vers une image manquante fait échouer la validation
+au démarrage du site. Ajoutez le fichier avant de le référencer.
 {% /callout %}

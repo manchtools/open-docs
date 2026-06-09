@@ -5,9 +5,10 @@ label: Environnement
 
 # Variables d'environnement
 
-Chaque variable est lue au moment du build. Avec Docker, définissez-les
-avec `-e` sur `docker run` ; depuis les sources, définissez-les dans votre
-shell ou dans un fichier `.env`.
+Chaque variable est lue à l'exécution, au démarrage du conteneur (seule
+`BASE_PATH` est compilée). Avec Docker, définissez-les avec `-e` sur
+`docker run` ; depuis les sources, définissez-les dans votre shell ou
+dans un fichier `.env`.
 
 ## Habillage du site
 

@@ -50,7 +50,6 @@ Un `Makefile` enveloppe les commandes courantes :
 
 ## Héberger la sortie
 
-Le build produit un site statique accompagné d'un petit serveur Bun.
-Comme le HTML est pré-rendu, il s'héberge aussi sur des plateformes
-statiques ou CDN : pointez votre hébergeur vers la sortie du build et
-servez-la comme n'importe quel site statique.
+Le build produit l'application accompagnée d'un petit serveur Bun qui
+analyse votre contenu au démarrage et rend les pages sur le serveur.
+Lancez-le partout où Bun fonctionne ; il consomme très peu de mémoire.

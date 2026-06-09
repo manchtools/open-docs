@@ -36,7 +36,7 @@ C'est donc un bon choix quand vous voulez :
   partir de votre arborescence de répertoires : il n'y a donc aucun fichier de
   navigation à maintenir à jour. Voir
   [Navigation](/fr/navigation/folder-derived-nav).
-- **Une recherche plein texte**, préconstruite au déploiement avec
+- **Une recherche plein texte**, indexée automatiquement au démarrage avec
   [Pagefind](https://pagefind.app) et réglée pour la documentation. Voir
   [Recherche](/fr/customizing/search).
 - **Un mode clair / sombre** avec une bascule dans la barre supérieure.

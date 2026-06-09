@@ -5,7 +5,7 @@ description: How open-docs makes the generated site discoverable by search engin
 
 # SEO & AI search
 
-Every page is pre-rendered to static HTML, so search engines and AI
+Every page is rendered on the server, so search engines and AI
 crawlers get the full content without running JavaScript. On top of that,
 open-docs generates per-page metadata and the standard discovery files.
 

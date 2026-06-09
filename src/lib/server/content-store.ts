@@ -10,7 +10,7 @@
 // tags, missing required attributes, and dead internal links collect into
 // `errors`, and the boot wiring refuses to serve when any exist.
 
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import Markdoc, { type RenderableTreeNode } from '@markdoc/markdoc';
 import { cleanSlug, stripPrefix, titleFromSegment } from '../slug';
@@ -47,6 +47,10 @@ type Options = {
 	defaultLang?: string;
 	schema?: RegistrySchema;
 	tokens?: Record<string, string>;
+	/** Directories that may hold static assets (checked for screenshot
+	 *  files, first hit wins). Defaults cover dev (static/) and the
+	 *  container (the merged build/client + the /static mount). */
+	staticDirs?: string[];
 };
 
 // ---------------------------------------------------------------------------
@@ -258,6 +262,14 @@ export function createContentStore(opts: Options): ContentStore {
 		const fm = frontmatter(original);
 		const raw = applyHeadingAnchors(applyTokens(original, tokens));
 		const ast = Markdoc.parse(raw);
+		// Fences are literal. Markdoc parses {% tags %} inside code fences
+		// into child nodes (process=true by default), which would validate
+		// and render documentation EXAMPLES as real tags. The docs promise
+		// fenced examples are shown verbatim — prune the children; fences
+		// render from their raw `content` attribute.
+		for (const node of ast.walk()) {
+			if (node.type === 'fence') node.children = [];
+		}
 		for (const v of Markdoc.validate(ast, config)) {
 			const entry = {
 				file: shortPath,
@@ -470,6 +482,8 @@ export function createContentStore(opts: Options): ContentStore {
 	{
 		const known = new Set(listPaths());
 		const linkRender = schema.nodes.link?.render ?? 'Link';
+		const screenshotRender = schema.tags.screenshot?.render ?? 'Screenshot';
+		const staticDirs = opts.staticDirs ?? ['static', 'build/client'];
 		for (const f of files) {
 			(function walk(n: unknown): void {
 				if (Array.isArray(n)) return n.forEach(walk);
@@ -479,6 +493,21 @@ export function createContentStore(opts: Options): ContentStore {
 					attributes?: Record<string, unknown>;
 					children?: unknown;
 				};
+					if (tag.name === screenshotRender) {
+					// The docs promise a screenshot pointing at a missing file
+					// fails validation (it used to fail the prerender crawl).
+					for (const attr of ['src', 'dark'] as const) {
+						const value = tag.attributes?.[attr];
+						if (typeof value !== 'string' || !value) continue;
+						const rel = 'screenshots/' + value.replace(/^\//, '');
+						if (!staticDirs.some((d) => existsSync(join(d, rel)))) {
+							errors.push({
+								file: f.shortPath,
+								message: `screenshot ${attr}="${value}" not found under static/screenshots/`
+							});
+						}
+					}
+				}
 				if (tag.name === linkRender) {
 					const href = String(tag.attributes?.href ?? '');
 					if (href.startsWith('/')) {

@@ -160,6 +160,10 @@ In Docker, mount your `static/` directory at `/static`. It's merged
 into the image's `static/` rather than replacing it, so the defaults
 keep working if you only override a subset.
 
+Ship a `-dark` variant next to any icon (`favicon-32-dark.png`,
+`apple-touch-icon-dark.png`, …) and the tab icon follows the site's
+dark-mode toggle automatically.
+
 ## Multi-language
 
 Translate a page by adding a language suffix to its filename:

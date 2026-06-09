@@ -23,8 +23,8 @@ PUBLIC_TOKEN_API_URL="https://api.example.com"
 Send requests to {{API_URL}}/v1/widgets.
 ```
 
-En tiempo de compilación, `{{API_URL}}` se reemplaza por el valor, así
-que la página renderizada dice "Send requests to
+Cuando se analiza el contenido, `{{API_URL}}` se reemplaza por el valor,
+así que la página renderizada dice "Send requests to
 https://api.example.com/v1/widgets."
 
 El prefijo `PUBLIC_TOKEN_` se elimina para formar el nombre del marcador:

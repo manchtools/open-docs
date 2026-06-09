@@ -22,7 +22,7 @@ PUBLIC_TOKEN_API_URL="https://api.example.com"
 Send requests to {{API_URL}}/v1/widgets.
 ```
 
-Zur Build-Zeit wird `{{API_URL}}` durch den Wert ersetzt, sodass die
+Beim Parsen des Inhalts wird `{{API_URL}}` durch den Wert ersetzt, sodass die
 gerenderte Seite „Send requests to https://api.example.com/v1/widgets." lautet.
 
 Das Präfix `PUBLIC_TOKEN_` entfällt, um den Platzhalternamen zu bilden:

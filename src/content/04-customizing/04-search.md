@@ -5,9 +5,9 @@ title: Search
 # Search
 
 Every open-docs site ships with **full-text search**, powered by
-[Pagefind](https://pagefind.app). The index is built from your pages at
-deploy time and served as static files, so there is no search server and
-it keeps working offline. Open it from the box in the top bar, or with
+[Pagefind](https://pagefind.app). The index is built from your pages
+when the container starts and served as static files, so there is no
+search server and it keeps working offline. Open it from the box in the top bar, or with
 **⌘K / Ctrl&nbsp;K**.
 
 ## What gets indexed
@@ -47,7 +47,7 @@ affects search.
 
 ```markdown
 {% boost weight=8 %}
-The container builds the site at start, so one image serves any docset.
+The container indexes your content at start, so one image serves any docset.
 {% /boost %}
 ```
 

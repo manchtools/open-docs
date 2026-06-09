@@ -14,11 +14,11 @@ abiertos a la vez.
 
 {% accordions %}
 {% accordion title="¿open-docs necesita una base de datos?" %}
-No. Cada página se prerenderiza a HTML estático en tiempo de compilación.
+No. Las páginas se renderizan directamente desde tu Markdown; no hay nada que instalar ni administrar.
 {% /accordion %}
 {% accordion title="¿Puedo alojarlo yo mismo?" %}
-Sí. Ejecuta el contenedor donde quieras, o compílalo desde el código fuente y
-sirve la salida como cualquier sitio estático.
+Sí. Ejecuta el contenedor donde quieras, o arranca el servidor directamente
+desde el código fuente.
 {% /accordion %}
 {% accordion title="¿Admite carpetas anidadas?" %}
 Hasta tres niveles de profundidad. Consulta la

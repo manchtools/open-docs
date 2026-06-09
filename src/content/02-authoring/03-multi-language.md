@@ -7,7 +7,7 @@ description: Translate pages by adding a language suffix to the filename. The de
 
 Translate a page by adding a language suffix to its filename. The German
 version of `01-introduction.md` is `01-introduction-de.md`. That is the
-whole setup — the languages are discovered from the suffixes at build time,
+whole setup — the languages are discovered from the suffixes when the content is parsed,
 so there is no language config file to maintain.
 
 This page itself has a German version

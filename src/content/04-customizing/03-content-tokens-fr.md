@@ -23,7 +23,7 @@ PUBLIC_TOKEN_API_URL="https://api.example.com"
 Send requests to {{API_URL}}/v1/widgets.
 ```
 
-À la construction, `{{API_URL}}` est remplacé par la valeur, de sorte que
+Lorsque le contenu est analysé, `{{API_URL}}` est remplacé par la valeur, de sorte que
 la page rendue affiche « Send requests to
 https://api.example.com/v1/widgets. »
 

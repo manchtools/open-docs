@@ -39,39 +39,27 @@ Inhalte hinzufügen.
 
 ## Wie ein Build abläuft
 
-Das Image bringt die Standard-Dokumentation **bereits gebaut** mit, sodass
-ein einfaches `docker run` (ohne Mounts, ohne Env-Überschreibungen) sie
-sofort ausliefert und kaum Speicher braucht. Neu gebaut wird beim
-Containerstart nur, wenn Sie anpassen – Inhalte oder Static einhängen oder
-`PUBLIC_*` / `BASE_PATH` setzen:
+Es gibt keinen Build-Schritt. Der Container parst und validiert Ihr
+Markdown beim Start (ein paar Sekunden, rund 100–150 MB Speicher – er
+läuft problemlos auf einem 256-MB-Host) und rendert die Seiten auf dem
+Server. Der Suchindex wird wenige Augenblicke nach dem Hochfahren des
+Servers erzeugt:
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B{Customized?}
-  B -- no --> S[Serve the pre-built site]
-  B -- yes --> C[Copy /content + /static in]
-  C --> D[bun run build]
-  D --> E[Pagefind indexes the pages]
-  E --> S
+  A[Container starts] --> B[Parse + validate /content]
+  B --> C[Serve on :3000]
+  C --> D[Pagefind indexes the pages]
 ```
 
-Der Build ist der schwere Schritt: das Bündeln der App benötigt knapp
-2 GB Speicher, unabhängig von der Seitenzahl (Mermaid und Shiki werden
-separat mit esbuild vorgebündelt, was den Spitzenwert zusätzlich senkt).
-Einmal beim Image-Build ausgeführt, bleibt ein einfaches `docker run` leicht.
+Die Validierung ist strikt: ein unbekannter Tag, ein fehlendes
+Pflichtattribut, ein toter interner Link oder ein Screenshot, der auf eine
+fehlende Datei zeigt, stoppt den Container mit einer Auflistung von Datei
+und Zeile – genauso, wie früher der Build fehlgeschlagen wäre. Korrigieren
+Sie den Inhalt und starten Sie ihn erneut.
 
-Um **eigene** Dokumente auf einem speicherarmen Host auszuliefern, backen
-Sie sie auf Ihrer Build-Maschine in ein kleines Image, statt beim Start neu
-zu bauen:
-
-```dockerfile
-FROM ghcr.io/manchtools/open-docs:latest
-COPY ./content/ /app/src/content/
-RUN bun run build
-```
-
-Starten Sie dieses Image ohne `/content`-Mount, liefert es Ihre vorgebaute
-Site aus – ohne Build (und ohne diesen Speicherbedarf) zur Laufzeit.
+Da nichts kompiliert wird, genügt für Änderungen an Inhalt, Branding
+(`PUBLIC_*`), Tokens oder `theme.css` ein Neustart des Containers.
 
 ## Deployments unter einem Unterpfad
 
@@ -82,12 +70,15 @@ Um unter einem Unterpfad zu hosten (zum Beispiel
 -e BASE_PATH=/docs
 ```
 
-Alle internen Links, Assets und der Suchindex werden mit diesem Präfix
-erzeugt.
+Alle internen Links, Assets und der Suchindex werden unter diesem Präfix
+ausgeliefert. Dies ist die einzige Einstellung, die die App beim Start noch
+neu baut (SvelteKit kompiliert den Basispfad fest ein), was etwa 1,5 GB
+Speicher benötigt – auf kleinen Hosts entfernen Sie das Präfix stattdessen
+besser am Reverse-Proxy.
 
 ## Umgebung
 
-Jede `PUBLIC_*`-Variable wird in den Build eingebacken. Siehe
+Jede `PUBLIC_*`-Variable wird beim Start des Containers gelesen. Siehe
 [Konfiguration](/de/customizing/configuration) für das Site-Chrome und
 [Umgebungsvariablen](/de/reference/environment-variables) für die
 vollständige Liste.

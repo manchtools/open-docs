@@ -5,7 +5,7 @@ description: "Cómo open-docs hace que el sitio generado sea descubrible por los
 
 # SEO y búsqueda con IA
 
-Cada página se prerrenderiza a HTML estático, así que los motores de
+Cada página se renderiza en el servidor, así que los motores de
 búsqueda y los rastreadores de IA obtienen el contenido completo sin
 ejecutar JavaScript. Además, open-docs genera metadatos por página y los
 archivos de descubrimiento estándar.

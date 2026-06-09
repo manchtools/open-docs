@@ -48,7 +48,6 @@ Ein `Makefile` kapselt die gängigen Befehle:
 
 ## Das Ergebnis hosten
 
-Der Build erzeugt eine statische Site plus einen kleinen Bun-Server. Da
-das HTML vorab gerendert ist, lässt es sich auch auf Static-/CDN-Plattformen
-hosten: Richten Sie Ihren Host auf das Build-Ergebnis und liefern Sie es
-wie jede andere statische Site aus.
+Der Build erzeugt die App plus einen kleinen Bun-Server, der Ihren Inhalt
+beim Start parst und die Seiten auf dem Server rendert. Er läuft überall,
+wo Bun läuft, und benötigt sehr wenig Speicher.

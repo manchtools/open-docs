@@ -123,3 +123,19 @@ describe('boot validation (fail closed, like the old build)', () => {
 		expect(messages).toMatch(/\/nowhere\/at-all/);
 	});
 });
+
+describe('screenshot asset validation', () => {
+	// The docs promise: a {% screenshot %} pointing at a missing image
+	// fails validation (it used to fail the prerender). The store checks
+	// src/dark against the static dirs.
+	it('rejects a screenshot whose file is missing, accepts one that exists', () => {
+		const s = createContentStore({
+			contentDir: 'src/lib/server/__fixtures__/content-badshot',
+			defaultLang: 'en',
+			staticDirs: ['src/lib/server/__fixtures__/static-ok']
+		});
+		const messages = s.errors.map((e) => e.message).join('\n');
+		expect(messages).toMatch(/missing\.png/);
+		expect(messages).not.toMatch(/exists\.png/);
+	});
+});

@@ -4,10 +4,10 @@ title: Konfiguration
 
 # Konfiguration
 
-Die gesamte Konfiguration erfolgt über **Umgebungsvariablen**, die zur
-Build-Zeit gelesen und fest in die Website eingebacken werden. Setzen Sie sie
-im `docker run`-Befehl, in einer `.env`-Datei oder in Ihrer Shell. Nichts
-davon erfordert das Bearbeiten des Quellcodes.
+Die gesamte Konfiguration erfolgt über **Umgebungsvariablen**, die beim
+Start des Containers gelesen werden – eine Änderung bedeutet einen Neustart,
+keinen Rebuild. Setzen Sie sie im `docker run`-Befehl, in einer `.env`-Datei
+oder in Ihrer Shell. Nichts davon erfordert das Bearbeiten des Quellcodes.
 
 ## Rahmen der Website
 
@@ -55,9 +55,13 @@ Verzeichnis `static/` unter `/static`. Es wird mit den Standardwerten des
 Images **zusammengeführt**, statt sie zu ersetzen, sodass das Überschreiben
 einer Datei den Rest unangetastet lässt.
 
+Legen Sie neben ein beliebiges Icon eine `-dark`-Variante
+(`favicon-32-dark.png`, `apple-touch-icon-dark.png`, …), folgt das Icon im
+Browser-Tab automatisch dem Dark-Mode-Umschalter der Website.
+
 ## Theming und Tokens
 
 - Um die Website umzugestalten, fügen Sie eine `theme.css` hinzu. Siehe
   [Theming](/de/customizing/theming).
-- Um Build-Zeit-Werte in den Fließtext einzufügen, verwenden Sie
+- Um Umgebungswerte in den Fließtext einzufügen, verwenden Sie
   Content-Tokens. Siehe [Content-Tokens](/de/customizing/content-tokens).

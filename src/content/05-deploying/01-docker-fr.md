@@ -40,40 +40,28 @@ votre propre contenu.
 
 ## Comment un build se déroule
 
-L'image embarque la documentation par défaut **déjà construite**, si bien
-qu'un simple `docker run` (sans montage, sans variable d'environnement)
-la sert immédiatement en n'utilisant presque pas de mémoire. Elle ne
-reconstruit au démarrage que lorsque vous personnalisez — montage de
-contenu ou de static, ou variables `PUBLIC_*` / `BASE_PATH` :
+Il n'y a pas d'étape de build. Le conteneur analyse et valide votre
+Markdown à son démarrage (quelques secondes, environ 100–150 Mo de
+mémoire — il tourne confortablement sur un hôte de 256 Mo) et rend les
+pages sur le serveur. L'index de recherche est construit quelques
+instants après la mise en route du serveur :
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B{Customized?}
-  B -- no --> S[Serve the pre-built site]
-  B -- yes --> C[Copy /content + /static in]
-  C --> D[bun run build]
-  D --> E[Pagefind indexes the pages]
-  E --> S
+  A[Container starts] --> B[Parse + validate /content]
+  B --> C[Serve on :3000]
+  C --> D[Pagefind indexes the pages]
 ```
 
-Le build est l'étape lourde : le bundling de l'application atteint un peu
-moins de 2 Go de mémoire, quel que soit le nombre de pages (Mermaid et
-Shiki sont pré-bundlés séparément avec esbuild, ce qui évite un pic encore
-plus haut). L'exécuter une fois lors de la construction de l'image garde un
-simple `docker run` léger.
+La validation est stricte : une balise inconnue, un attribut requis
+manquant, un lien interne mort ou une capture d'écran pointant vers un
+fichier manquant arrête le conteneur avec une liste fichier-et-ligne,
+exactement comme l'ancien build aurait échoué. Corrigez le contenu et
+relancez-le.
 
-Pour servir des documents **personnalisés** sur un hôte à faible mémoire,
-intégrez-les dans une petite image sur votre machine de build plutôt que de
-reconstruire au démarrage :
-
-```dockerfile
-FROM ghcr.io/manchtools/open-docs:latest
-COPY ./content/ /app/src/content/
-RUN bun run build
-```
-
-Lancez cette image sans montage `/content` et elle sert votre site
-pré-construit, sans build (ni cette mémoire) à l'exécution.
+Comme rien n'est compilé, changer le contenu, l'image de marque
+(`PUBLIC_*`), les jetons ou `theme.css` ne demande qu'un redémarrage du
+conteneur.
 
 ## Déploiements sous un sous-chemin
 
@@ -85,11 +73,14 @@ définissez `BASE_PATH` :
 ```
 
 Tous les liens internes, les ressources et l'index de recherche sont
-générés avec ce préfixe.
+servis sous ce préfixe. C'est le seul réglage qui reconstruit encore
+l'application au démarrage (SvelteKit compile le chemin de base), ce qui
+demande environ 1,5 Go de mémoire — sur les petits hôtes, préférez
+plutôt retirer le préfixe au niveau de votre reverse proxy.
 
 ## Environnement
 
-Chaque variable `PUBLIC_*` est intégrée au build. Voir
+Chaque variable `PUBLIC_*` est lue au démarrage du conteneur. Voir
 [Configuration](/fr/customizing/configuration) pour l'habillage du site et
 [Variables d'environnement](/fr/reference/environment-variables) pour la
 liste complète.

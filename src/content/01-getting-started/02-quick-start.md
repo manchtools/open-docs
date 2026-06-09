@@ -19,9 +19,10 @@ docker run --rm -p 3000:3000 \
   ghcr.io/manchtools/open-docs:latest
 ```
 
-Visit `http://localhost:3000`. The container builds the site at start
-with your content baked in, then serves it. Run with no mount and
-you get these docs as a live demo.
+Visit `http://localhost:3000`. The container parses your content at
+start — a couple of seconds — and renders pages on the fly; search
+comes online moments later. Run with no mount and you get these docs as
+a live demo.
 
 {% /tab %}
 {% tab label="From source" %}

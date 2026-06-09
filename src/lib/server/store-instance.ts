@@ -64,7 +64,13 @@ function build(dir: string): ContentStore {
 	const store = createContentStore({
 		contentDir: dir,
 		defaultLang: (env.PUBLIC_DEFAULT_LANG || 'en').trim().toLowerCase(),
-		schema: schemaJson as RegistrySchema
+		schema: schemaJson as RegistrySchema,
+		// Screenshot files may live in the repo's static/ (dev), the served
+		// client dir (container, after the entrypoint merge), or the raw
+		// /static mount.
+		staticDirs: [env.OPEN_DOCS_STATIC, 'static', 'build/client'].filter(
+			(d): d is string => !!d
+		)
 	});
 
 	if (store.errors.length > 0) {

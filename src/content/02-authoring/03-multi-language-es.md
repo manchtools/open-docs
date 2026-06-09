@@ -7,8 +7,9 @@ description: Traduce páginas añadiendo un sufijo de idioma al nombre de archiv
 
 Traduce una página añadiendo un sufijo de idioma a su nombre de archivo. La
 versión alemana de `01-introduction.md` es `01-introduction-de.md`. Esa es toda
-la configuración: los idiomas se descubren a partir de los sufijos en el momento
-del build, así que no hay ningún archivo de configuración de idiomas que mantener.
+la configuración: los idiomas se descubren a partir de los sufijos cuando se
+analiza el contenido, así que no hay ningún archivo de configuración de idiomas
+que mantener.
 
 Esta misma página tiene una versión alemana
 ([Inhaltsstruktur](/de/getting-started/content-layout) es otra), así que el

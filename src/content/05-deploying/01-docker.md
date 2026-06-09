@@ -38,37 +38,25 @@ content.
 
 ## How a build happens
 
-The image ships with the default documentation **already built**, so a
-plain `docker run` (no mounts, no env overrides) serves it immediately and
-uses almost no memory. It only rebuilds at container start when you
-customize — mount content or static, or set `PUBLIC_*` / `BASE_PATH`:
+There is no build step. The container parses and validates your Markdown
+when it starts (a couple of seconds, roughly 100–150 MB of memory — it
+runs comfortably on a 256 MB host) and renders pages on the server. The
+search index is built moments after the server is up:
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B{Customized?}
-  B -- no --> S[Serve the pre-built site]
-  B -- yes --> C[Copy /content + /static in]
-  C --> D[bun run build]
-  D --> E[Pagefind indexes the pages]
-  E --> S
+  A[Container starts] --> B[Parse + validate /content]
+  B --> C[Serve on :3000]
+  C --> D[Pagefind indexes the pages]
 ```
 
-The build is the heavy step: bundling the app peaks at just under 2 GB of
-memory, regardless of how many pages you have (Mermaid and Shiki are
-pre-bundled separately with esbuild, which keeps that peak from being even
-higher). Running it once at image-build keeps a plain `docker run` light.
+Validation is strict: an unknown tag, a missing required attribute, a
+dead internal link, or a screenshot pointing at a missing file stops the
+container with a file-and-line listing, the same way the old build would
+have failed. Fix the content and start it again.
 
-To serve **custom** docs on a low-memory host, bake them into a small image
-on your build machine instead of rebuilding at container start:
-
-```dockerfile
-FROM ghcr.io/manchtools/open-docs:latest
-COPY ./content/ /app/src/content/
-RUN bun run build
-```
-
-Run that image with no `/content` mount and it serves your pre-built site,
-no build (and none of that memory) at runtime.
+Because nothing is compiled, changing content, branding (`PUBLIC_*`),
+tokens, or `theme.css` only needs a container restart.
 
 ## Sub-path deploys
 
@@ -79,12 +67,15 @@ To host under a sub-path (for example `https://example.com/docs`), set
 -e BASE_PATH=/docs
 ```
 
-All internal links, assets, and the search index are generated against
-that prefix.
+All internal links, assets, and the search index are served under that
+prefix. This is the one setting that still rebuilds the app at start
+(SvelteKit compiles the base path in), which needs about 1.5 GB of
+memory — on small hosts, prefer stripping the prefix at your reverse
+proxy instead.
 
 ## Environment
 
-Every `PUBLIC_*` variable is baked into the build. See
+Every `PUBLIC_*` variable is read when the container starts. See
 [Configuration](/customizing/configuration) for site chrome and
 [Environment variables](/reference/environment-variables) for the
 complete list.

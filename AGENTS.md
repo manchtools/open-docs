@@ -25,12 +25,13 @@ framework, edit routes, or touch build config.**
 - **Keep an inline span on one line.** Don't let `**bold**`, `_em_`,
   `[text](url)`, or `` `code` `` straddle a source line break — the
   Markdoc parser rejects markers split across a newline.
-- **The build validates everything.** A dead internal link or an unknown
-  tag/attribute *fails* the build (`bun run build`). There is no silent
-  fallback — if it builds, the links and tags are valid.
+- **Validation runs at startup.** A dead internal link, an unknown
+  tag/attribute, or a missing screenshot file *fails* the boot with a
+  file:line listing (and shows in `bun run dev`). There is no silent
+  fallback — if it serves, the links and tags are valid.
 - **Only invent nothing.** Use the tags listed below verbatim. A tag's
   attributes are the props of the component behind it; unknown attributes
-  fail the build.
+  fail validation.
 
 ---
 
@@ -250,7 +251,7 @@ heading weights aren't enough.
 
 ## Search
 
-Full-text search (Pagefind) is prebuilt at deploy and needs no setup.
+Full-text search (Pagefind) is indexed automatically at start and needs no setup.
 Page bodies are indexed; chrome (sidebar, prev/next, TOC) is excluded.
 Headings outrank body text, so a descriptive H1 and clear `##` headings
 are the main lever. Reach for `{% boost %}` only as a last resort.
@@ -261,7 +262,7 @@ are the main lever. Reach for `{% boost %}` only as a last resort.
 
 - **Theming:** a `theme.css` dropped next to the content overrides the CSS
   design tokens (colors, fonts, radius). No source edits.
-- **Branding by env var** (read at build time): `PUBLIC_BRAND_NAME`,
+- **Branding by env var** (read at runtime — no rebuild): `PUBLIC_BRAND_NAME`,
   `PUBLIC_BRAND_TAGLINE`, `PUBLIC_LOGO_SRC`, `PUBLIC_SITE_TITLE`,
   `PUBLIC_SITE_DESCRIPTION`, `PUBLIC_REPO_URL`, plus `BASE_PATH` and
   `PORT`. `PUBLIC_*` is **not** secret — it's compiled into the client
@@ -292,9 +293,10 @@ are the main lever. Reach for `{% boost %}` only as a last resort.
   changes. Produce that Markdown from your source of truth in your pipeline
   and drop the file in — open-docs renders Markdown; it does not introspect
   your code.
-- **Validate before shipping:** `bun run build` (or `bun run check`) fails
-  on broken links, unknown tags, and bad attributes. A green build means
-  the content is structurally sound.
+- **Validate before shipping:** start the site (`bun run dev`, or boot
+  the container) — it fails on broken links, unknown tags, bad
+  attributes, and missing screenshot files, listing every error with
+  file and line. If it serves, the content is structurally sound.
 
 ### Don't
 

@@ -5,9 +5,10 @@ label: Umgebung
 
 # Umgebungsvariablen
 
-Jede Variable wird zur Build-Zeit gelesen. In Docker setzen Sie sie mit
-`-e` bei `docker run`; aus dem Quellcode setzen Sie sie in Ihrer Shell
-oder einer `.env`-Datei.
+Jede Variable wird zur Laufzeit gelesen, wenn der Container startet (nur
+`BASE_PATH` wird einkompiliert). In Docker setzen Sie sie mit `-e` bei
+`docker run`; aus dem Quellcode setzen Sie sie in Ihrer Shell oder einer
+`.env`-Datei.
 
 ## Site-Chrome
 

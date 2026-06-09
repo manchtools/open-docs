@@ -5,7 +5,8 @@ label: Entorno
 
 # Variables de entorno
 
-Cada variable se lee en tiempo de compilación. En Docker, defínelas con `-e` en
+Cada variable se lee en tiempo de ejecución, cuando arranca el contenedor
+(solo `BASE_PATH` se integra en la compilación). En Docker, defínelas con `-e` en
 `docker run`; desde el código fuente, defínelas en tu shell o en un archivo
 `.env`.
 

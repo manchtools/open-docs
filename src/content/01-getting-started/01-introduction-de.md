@@ -40,7 +40,7 @@ Das macht es zu einer guten Wahl, wenn Sie:
   Verzeichnisbaum aufgebaut, es gibt also keine Navigationsdatei, die Sie
   synchron halten müssten. Siehe
   [Navigation](/de/navigation/folder-derived-nav).
-- **Volltextsuche**, beim Deployment vorab erzeugt mit
+- **Volltextsuche**, beim Start automatisch indexiert mit
   [Pagefind](https://pagefind.app) und auf Dokumentation abgestimmt. Siehe
   [Suche](/de/customizing/search).
 - **Heller / dunkler Modus** mit einem Umschalter in der oberen Leiste.

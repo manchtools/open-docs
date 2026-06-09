@@ -5,9 +5,9 @@ title: Configuración
 # Configuración
 
 Toda la configuración se hace mediante **variables de entorno**, leídas
-en tiempo de compilación e integradas en el sitio. Defínelas en el
-comando `docker run`, en un archivo `.env` o en tu shell. Nada de esto
-requiere editar el código fuente.
+cuando arranca el contenedor: cambiar una supone un reinicio, no una
+recompilación. Defínelas en el comando `docker run`, en un archivo
+`.env` o en tu shell. Nada de esto requiere editar el código fuente.
 
 ## Elementos visuales del sitio
 
@@ -56,9 +56,14 @@ opcionales y se omiten si no están. En Docker, monta tu directorio
 imagen en lugar de reemplazarlos, así que sobrescribir un archivo deja
 los demás en su sitio.
 
+Incluye una variante `-dark` junto a cualquier icono
+(`favicon-32-dark.png`, `apple-touch-icon-dark.png`, …) y el icono de la
+pestaña del navegador seguirá automáticamente el selector de modo oscuro
+del sitio.
+
 ## Tema y tokens
 
 - Para reestilizar el sitio, añade un `theme.css`. Consulta
   [Personalización del tema](/es/customizing/theming).
-- Para inyectar valores de tiempo de compilación en el texto, usa tokens
-  de contenido. Consulta [Tokens de contenido](/es/customizing/content-tokens).
+- Para inyectar valores de entorno en el texto, usa tokens de
+  contenido. Consulta [Tokens de contenido](/es/customizing/content-tokens).

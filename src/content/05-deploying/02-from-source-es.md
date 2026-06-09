@@ -49,7 +49,6 @@ Un `Makefile` envuelve los comandos habituales:
 
 ## Alojar el resultado
 
-La compilación produce un sitio estático más un pequeño servidor Bun. Como el
-HTML está pre-renderizado, también se aloja en plataformas estáticas o CDN:
-apunta tu host al resultado de la compilación y sírvelo como cualquier sitio
-estático.
+La compilación produce la aplicación más un pequeño servidor Bun que analiza
+el contenido al arrancar y renderiza las páginas en el servidor. Ejecútalo en
+cualquier sitio donde funcione Bun; necesita muy poca memoria.

@@ -19,9 +19,10 @@ docker run --rm -p 3000:3000 \
   ghcr.io/manchtools/open-docs:latest
 ```
 
-Ouvrez `http://localhost:3000`. Le conteneur construit le site au démarrage
-avec votre contenu intégré, puis le sert. Lancez-le sans montage et vous
-obtenez cette documentation en démonstration en direct.
+Ouvrez `http://localhost:3000`. Le conteneur analyse votre contenu au
+démarrage — quelques secondes — et rend les pages à la volée ; la recherche
+arrive quelques instants plus tard. Lancez-le sans montage et vous obtenez
+cette documentation en démonstration en direct.
 
 {% /tab %}
 {% tab label="Depuis les sources" %}

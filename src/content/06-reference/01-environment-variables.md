@@ -5,7 +5,8 @@ label: Environment
 
 # Environment variables
 
-Every variable is read at build time. In Docker, set them with `-e` on
+Every variable is read at runtime when the container starts (only
+`BASE_PATH` is compiled in). In Docker, set them with `-e` on
 `docker run`; from source, set them in your shell or a `.env` file.
 
 ## Site chrome

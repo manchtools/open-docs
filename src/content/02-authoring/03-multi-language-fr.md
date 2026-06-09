@@ -8,8 +8,8 @@ description: Traduisez les pages en ajoutant un suffixe de langue au nom de fich
 Traduisez une page en ajoutant un suffixe de langue à son nom de fichier. La
 version allemande de `01-introduction.md` est `01-introduction-de.md`. C'est
 toute la configuration nécessaire — les langues sont découvertes à partir des
-suffixes au moment du build, il n'y a donc aucun fichier de configuration de
-langue à maintenir.
+suffixes lorsque le contenu est analysé, il n'y a donc aucun fichier de
+configuration de langue à maintenir.
 
 Cette page possède elle-même une version allemande
 ([Inhaltsstruktur](/de/getting-started/content-layout) en est une autre) : le

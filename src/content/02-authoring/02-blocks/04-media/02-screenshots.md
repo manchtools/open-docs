@@ -58,7 +58,6 @@ image's `static/`, so you only override what you provide. See
 [Static assets](/customizing/configuration#static-assets).
 
 {% callout type="warn" title="Reference real files" %}
-A `screenshot` pointing at a missing image will fail the production
-build, since every page is pre-rendered. Add the file before
-referencing it.
+A `screenshot` pointing at a missing image fails validation when the
+site starts. Add the file before referencing it.
 {% /callout %}

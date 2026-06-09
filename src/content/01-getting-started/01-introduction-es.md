@@ -39,7 +39,7 @@ Por eso encaja bien cuando quieres:
   del árbol de directorios, así que no hay ningún archivo de navegación que
   mantener sincronizado. Consulta
   [Navegación](/es/navigation/folder-derived-nav).
-- **Búsqueda de texto completo**, precompilada en el momento del despliegue con
+- **Búsqueda de texto completo**, indexada automáticamente al arrancar con
   [Pagefind](https://pagefind.app) y ajustada para documentación. Consulta
   [Búsqueda](/es/customizing/search).
 - **Modo claro / oscuro** con un selector en la barra superior.

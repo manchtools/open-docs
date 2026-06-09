@@ -48,6 +48,6 @@ A `Makefile` wraps the common commands:
 
 ## Hosting the output
 
-The build produces a static site plus a small Bun server. Because the
-HTML is pre-rendered, it also hosts on static/CDN platforms: point your
-host at the build output and serve it like any static site.
+The build produces the app plus a small Bun server that parses your
+content at start and renders pages on the server. Run it anywhere Bun
+runs; it needs very little memory.

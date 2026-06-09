@@ -5,9 +5,10 @@ title: Configuration
 # Configuration
 
 Toute la configuration se fait avec des **variables d'environnement**,
-lues à la construction et figées dans le site. Définissez-les sur la
-commande `docker run`, dans un fichier `.env` ou dans votre shell. Rien de
-tout cela ne nécessite de modifier le code source.
+lues au démarrage du conteneur — en modifier une demande un redémarrage,
+pas une reconstruction. Définissez-les sur la commande `docker run`, dans
+un fichier `.env` ou dans votre shell. Rien de tout cela ne nécessite de
+modifier le code source.
 
 ## Habillage du site
 
@@ -56,10 +57,15 @@ répertoire `static/` sur `/static`. Il est **fusionné** avec les valeurs
 par défaut de l'image plutôt que de les remplacer, de sorte que remplacer
 un fichier laisse les autres en place.
 
+Déposez une variante `-dark` à côté de n'importe quelle icône
+(`favicon-32-dark.png`, `apple-touch-icon-dark.png`, …) et l'icône de
+l'onglet du navigateur suit automatiquement la bascule du mode sombre du
+site.
+
 ## Thématisation et jetons
 
 - Pour restyliser le site, ajoutez un `theme.css`. Voir
   [Thématisation](/fr/customizing/theming).
-- Pour injecter des valeurs calculées à la construction dans le texte,
-  utilisez les jetons de contenu. Voir
+- Pour injecter des valeurs d'environnement dans le texte, utilisez les
+  jetons de contenu. Voir
   [Jetons de contenu](/fr/customizing/content-tokens).

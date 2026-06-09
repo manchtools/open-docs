@@ -39,40 +39,27 @@ contenido.
 
 ## Cómo se produce una compilación
 
-La imagen incluye la documentación por defecto **ya compilada**, de modo
-que un `docker run` normal (sin montajes ni variables de entorno) la sirve
-de inmediato usando casi nada de memoria. Solo se recompila al arrancar
-cuando personalizas: montas contenido o static, o defines `PUBLIC_*` /
-`BASE_PATH`:
+No hay ningún paso de compilación. El contenedor analiza y valida el
+Markdown al arrancar (un par de segundos, entre 100 y 150 MB de memoria
+aproximadamente: funciona con holgura en un host de 256 MB) y renderiza
+las páginas en el servidor. El índice de búsqueda se construye momentos
+después de que el servidor esté en marcha:
 
 ```mermaid
 flowchart LR
-  A[Container starts] --> B{Customized?}
-  B -- no --> S[Serve the pre-built site]
-  B -- yes --> C[Copy /content + /static in]
-  C --> D[bun run build]
-  D --> E[Pagefind indexes the pages]
-  E --> S
+  A[Container starts] --> B[Parse + validate /content]
+  B --> C[Serve on :3000]
+  C --> D[Pagefind indexes the pages]
 ```
 
-La compilación es el paso pesado: el bundling de la aplicación alcanza algo
-menos de 2 GB de memoria, sin importar cuántas páginas tengas (Mermaid y
-Shiki se pre-empaquetan aparte con esbuild, lo que evita un pico aún mayor).
-Ejecutarla una vez al construir la imagen mantiene ligero un `docker run`
-normal.
+La validación es estricta: una etiqueta desconocida, un atributo
+obligatorio ausente, un enlace interno roto o una captura de pantalla que
+apunte a un archivo inexistente detiene el contenedor con un listado de
+archivo y línea, igual que habría fallado la antigua compilación. Corrige
+el contenido y vuelve a arrancarlo.
 
-Para servir documentos **propios** en un host con poca memoria, hornéalos
-en una imagen pequeña en tu máquina de compilación en lugar de recompilar
-al arrancar:
-
-```dockerfile
-FROM ghcr.io/manchtools/open-docs:latest
-COPY ./content/ /app/src/content/
-RUN bun run build
-```
-
-Ejecuta esa imagen sin montaje `/content` y servirá tu sitio precompilado,
-sin compilación (ni esa memoria) en tiempo de ejecución.
+Como nada se compila, cambiar el contenido, la marca (`PUBLIC_*`), los
+tokens o `theme.css` solo requiere reiniciar el contenedor.
 
 ## Despliegues bajo subruta
 
@@ -83,12 +70,15 @@ Para alojar bajo una subruta (por ejemplo `https://example.com/docs`), define
 -e BASE_PATH=/docs
 ```
 
-Todos los enlaces internos, los recursos y el índice de búsqueda se generan con
-ese prefijo.
+Todos los enlaces internos, los recursos y el índice de búsqueda se sirven
+bajo ese prefijo. Es el único ajuste que todavía recompila la aplicación al
+arrancar (SvelteKit integra la ruta base en la compilación), lo que necesita
+alrededor de 1,5 GB de memoria; en hosts pequeños, es preferible eliminar el
+prefijo en el proxy inverso.
 
 ## Entorno
 
-Cada variable `PUBLIC_*` se integra en la compilación. Consulta
+Cada variable `PUBLIC_*` se lee cuando arranca el contenedor. Consulta
 [Configuración](/es/customizing/configuration) para los elementos del sitio y
 [Variables de entorno](/es/reference/environment-variables) para la lista
 completa.

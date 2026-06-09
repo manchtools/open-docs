@@ -57,7 +57,7 @@ selbst bereitstellen. Siehe
 [Statische Assets](/de/customizing/configuration#static-assets).
 
 {% callout type="warn" title="Auf echte Dateien verweisen" %}
-Ein `screenshot`, der auf ein fehlendes Bild zeigt, lässt den Production-Build
-fehlschlagen, da jede Seite vorgerendert wird. Fügen Sie die Datei hinzu, bevor
+Ein `screenshot`, der auf ein fehlendes Bild zeigt, schlägt bei der
+Validierung fehl, wenn die Website startet. Fügen Sie die Datei hinzu, bevor
 Sie darauf verweisen.
 {% /callout %}

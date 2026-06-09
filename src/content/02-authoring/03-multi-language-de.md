@@ -8,8 +8,8 @@ description: Übersetzen Sie Seiten, indem Sie dem Dateinamen ein Sprachsuffix h
 Übersetzen Sie eine Seite, indem Sie ihrem Dateinamen ein Sprachsuffix
 hinzufügen. Die deutsche Version von `01-introduction.md` ist
 `01-introduction-de.md`. Das ist die gesamte Einrichtung – die Sprachen
-werden zur Build-Zeit aus den Suffixen ermittelt, es gibt also keine
-Sprach-Konfigurationsdatei zu pflegen.
+werden beim Parsen des Inhalts aus den Suffixen ermittelt, es gibt also
+keine Sprach-Konfigurationsdatei zu pflegen.
 
 Diese Seite selbst hat eine deutsche Version
 ([Inhaltsstruktur](/de/getting-started/content-layout) ist ebenfalls eine),

@@ -56,7 +56,6 @@ imagen, así que solo sobrescribes lo que aportas. Consulta
 [Recursos estáticos](/es/customizing/configuration#static-assets).
 
 {% callout type="warn" title="Referencia archivos reales" %}
-Un `screenshot` que apunte a una imagen inexistente hará fallar la compilación
-de producción, ya que cada página se prerenderiza. Añade el archivo antes de
-referenciarlo.
+Un `screenshot` que apunte a una imagen inexistente hace fallar la validación
+cuando el sitio arranca. Añade el archivo antes de referenciarlo.
 {% /callout %}

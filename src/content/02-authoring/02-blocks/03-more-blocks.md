@@ -13,7 +13,7 @@ the default; add `exclusive=false` to let several stay open at once.
 
 {% accordions %}
 {% accordion title="Does open-docs need a database?" %}
-No. Every page is prerendered to static HTML at build time.
+No. Pages render straight from your Markdown; there is nothing to install or manage.
 {% /accordion %}
 {% accordion title="Can I self-host it?" %}
 Yes. Run the container anywhere, or build from source and serve the

@@ -5,7 +5,7 @@ description: "Wie open-docs die erzeugte Website für Suchmaschinen auffindbar u
 
 # SEO & KI-Suche
 
-Jede Seite wird vorab zu statischem HTML gerendert, sodass Suchmaschinen
+Jede Seite wird auf dem Server gerendert, sodass Suchmaschinen
 und KI-Crawler den vollständigen Inhalt erhalten, ohne JavaScript
 auszuführen. Darüber hinaus erzeugt open-docs Metadaten pro Seite sowie die
 üblichen Discovery-Dateien.

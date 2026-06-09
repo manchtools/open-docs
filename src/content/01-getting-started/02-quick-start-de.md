@@ -20,9 +20,10 @@ docker run --rm -p 3000:3000 \
   ghcr.io/manchtools/open-docs:latest
 ```
 
-Öffnen Sie `http://localhost:3000`. Der Container baut die Website beim
-Start mit Ihrem eingebetteten Inhalt und liefert sie dann aus. Starten Sie
-ihn ohne Mount, erhalten Sie diese Dokumentation als Live-Demo.
+Öffnen Sie `http://localhost:3000`. Der Container parst Ihren Inhalt beim
+Start – ein paar Sekunden – und rendert die Seiten direkt beim Aufruf; die
+Suche steht wenige Augenblicke später bereit. Starten Sie ihn ohne Mount,
+erhalten Sie diese Dokumentation als Live-Demo.
 
 {% /tab %}
 {% tab label="Aus dem Quellcode" %}

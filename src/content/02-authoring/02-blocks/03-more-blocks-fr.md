@@ -14,7 +14,7 @@ laisser plusieurs ouverts à la fois.
 
 {% accordions %}
 {% accordion title="open-docs a-t-il besoin d'une base de données ?" %}
-Non. Chaque page est prérendue en HTML statique au moment du build.
+Non. Les pages sont rendues directement depuis votre Markdown ; il n'y a rien à installer ni à administrer.
 {% /accordion %}
 {% accordion title="Puis-je l'héberger moi-même ?" %}
 Oui. Exécutez le conteneur n'importe où, ou compilez depuis les sources et

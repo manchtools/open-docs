@@ -22,7 +22,7 @@ PUBLIC_TOKEN_API_URL="https://api.example.com"
 Send requests to {{API_URL}}/v1/widgets.
 ```
 
-At build time `{{API_URL}}` is replaced with the value, so the rendered
+When the content is parsed, `{{API_URL}}` is replaced with the value, so the rendered
 page reads "Send requests to https://api.example.com/v1/widgets."
 
 The `PUBLIC_TOKEN_` prefix is dropped to form the placeholder name:

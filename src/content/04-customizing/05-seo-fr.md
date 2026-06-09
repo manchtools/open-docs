@@ -5,7 +5,7 @@ description: Comment open-docs rend le site généré repérable par les moteurs
 
 # SEO et recherche par IA
 
-Chaque page est pré-rendue en HTML statique, de sorte que les moteurs de
+Chaque page est rendue sur le serveur, de sorte que les moteurs de
 recherche et les robots d'IA obtiennent le contenu complet sans exécuter de
 JavaScript. En plus de cela, open-docs génère des métadonnées par page et les
 fichiers de découverte standard.

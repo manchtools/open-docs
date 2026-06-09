@@ -6,7 +6,7 @@ title: Recherche
 
 Chaque site open-docs est livré avec une **recherche plein texte**, propulsée
 par [Pagefind](https://pagefind.app). L'index est construit à partir de vos
-pages au moment du déploiement et servi sous forme de fichiers statiques ; il
+pages au démarrage du conteneur et servi sous forme de fichiers statiques ; il
 n'y a donc pas de serveur de recherche et la recherche continue de fonctionner
 hors ligne. Ouvrez-la depuis le champ de la barre supérieure, ou avec
 **⌘K / Ctrl&nbsp;K**.
@@ -50,7 +50,7 @@ inchangé et seule la recherche est affectée.
 
 ```markdown
 {% boost weight=8 %}
-The container builds the site at start, so one image serves any docset.
+The container indexes your content at start, so one image serves any docset.
 {% /boost %}
 ```
 

@@ -14,11 +14,11 @@ können mehrere gleichzeitig offen bleiben.
 
 {% accordions %}
 {% accordion title="Braucht open-docs eine Datenbank?" %}
-Nein. Jede Seite wird beim Build zu statischem HTML vorgerendert.
+Nein. Die Seiten werden direkt aus Ihrem Markdown gerendert; es gibt nichts zu installieren oder zu verwalten.
 {% /accordion %}
 {% accordion title="Kann ich es selbst hosten?" %}
-Ja. Betreiben Sie den Container wo immer Sie wollen, oder bauen Sie aus dem
-Quellcode und liefern Sie die Ausgabe wie jede andere statische Seite aus.
+Ja. Betreiben Sie den Container, wo immer Sie wollen, oder starten Sie den
+Server direkt aus dem Quellcode.
 {% /accordion %}
 {% accordion title="Werden verschachtelte Ordner unterstützt?" %}
 Bis zu drei Ebenen tief. Siehe

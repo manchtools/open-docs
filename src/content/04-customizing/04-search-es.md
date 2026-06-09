@@ -6,7 +6,7 @@ title: Búsqueda
 
 Cada sitio open-docs incluye **búsqueda de texto completo**, con
 [Pagefind](https://pagefind.app). El índice se construye a partir de tus
-páginas en el momento del despliegue y se sirve como archivos estáticos,
+páginas cuando arranca el contenedor y se sirve como archivos estáticos,
 así que no hay servidor de búsqueda y sigue funcionando sin conexión.
 Ábrela desde el cuadro de la barra superior o con
 **⌘K / Ctrl&nbsp;K**.
@@ -49,7 +49,7 @@ solo afecta a la búsqueda.
 
 ```markdown
 {% boost weight=8 %}
-The container builds the site at start, so one image serves any docset.
+The container indexes your content at start, so one image serves any docset.
 {% /boost %}
 ```
 

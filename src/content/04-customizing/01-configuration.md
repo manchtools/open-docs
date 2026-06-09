@@ -4,9 +4,10 @@ title: Configuration
 
 # Configuration
 
-All configuration is done with **environment variables**, read at build
-time and baked into the site. Set them on the `docker run` command, in
-a `.env` file, or in your shell. None of this requires editing source.
+All configuration is done with **environment variables**, read when the
+container starts — changing one is a restart, not a rebuild. Set them on
+the `docker run` command, in a `.env` file, or in your shell. None of
+this requires editing source.
 
 ## Site chrome
 
@@ -54,9 +55,13 @@ directory at `/static`. It is **merged** into the image's defaults
 rather than replacing them, so overriding one file leaves the rest in
 place.
 
+Ship a `-dark` variant next to any icon (`favicon-32-dark.png`,
+`apple-touch-icon-dark.png`, …) and the browser-tab icon follows the
+site's dark-mode toggle automatically.
+
 ## Theming and tokens
 
 - To restyle the site, add a `theme.css`. See
   [Theming](/customizing/theming).
-- To inject build-time values into prose, use content tokens. See
+- To inject environment values into prose, use content tokens. See
   [Content tokens](/customizing/content-tokens).

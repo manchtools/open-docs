@@ -36,7 +36,7 @@ That makes it a good fit when you want to:
 - **Folder-derived navigation.** The sidebar is built from your
   directory tree, so there is no nav file to keep in sync. See
   [Navigation](/navigation/folder-derived-nav).
-- **Full-text search**, prebuilt at deploy time with
+- **Full-text search**, indexed automatically at start with
   [Pagefind](https://pagefind.app) and tuned for docs. See
   [Search](/customizing/search).
 - **Light / dark mode** with a toggle in the top bar.

@@ -5,8 +5,8 @@ title: Suche
 # Suche
 
 Jede open-docs-Website bringt eine **Volltextsuche** mit, betrieben von
-[Pagefind](https://pagefind.app). Der Index wird beim Deployment aus Ihren
-Seiten erzeugt und als statische Dateien ausgeliefert. Es gibt also keinen
+[Pagefind](https://pagefind.app). Der Index wird beim Start des Containers
+aus Ihren Seiten erzeugt und als statische Dateien ausgeliefert. Es gibt also keinen
 Suchserver, und die Suche funktioniert auch offline. Öffnen Sie sie über das
 Feld in der oberen Leiste oder mit **⌘K / Strg&nbsp;K**.
 
@@ -48,7 +48,7 @@ unverändert dargestellt und wirkt sich nur auf die Suche aus.
 
 ```markdown
 {% boost weight=8 %}
-The container builds the site at start, so one image serves any docset.
+The container indexes your content at start, so one image serves any docset.
 {% /boost %}
 ```
 
