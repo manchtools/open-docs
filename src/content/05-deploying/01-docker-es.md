@@ -55,9 +55,11 @@ flowchart LR
   E --> S
 ```
 
-La compilación es el paso pesado: agrupa Vite, Mermaid y Shiki y alcanza
-unos 2 GB de memoria, sin importar cuántas páginas tengas. Ejecutarla una
-vez al construir la imagen mantiene ligero un `docker run` normal.
+La compilación es el paso pesado: el bundling de la aplicación alcanza algo
+menos de 2 GB de memoria, sin importar cuántas páginas tengas (Mermaid y
+Shiki se pre-empaquetan aparte con esbuild, lo que evita un pico aún mayor).
+Ejecutarla una vez al construir la imagen mantiene ligero un `docker run`
+normal.
 
 Para servir documentos **propios** en un host con poca memoria, hornéalos
 en una imagen pequeña en tu máquina de compilación en lugar de recompilar
@@ -70,7 +72,7 @@ RUN bun run build
 ```
 
 Ejecuta esa imagen sin montaje `/content` y servirá tu sitio precompilado,
-sin compilación (ni 2 GB) en tiempo de ejecución.
+sin compilación (ni esa memoria) en tiempo de ejecución.
 
 ## Despliegues bajo subruta
 

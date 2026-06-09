@@ -4,8 +4,8 @@
 # The image ships with the default documentation ALREADY BUILT at
 # image-build time (see the Dockerfile's `RUN bun run build`). So a plain
 # `docker run` — no mounts, no env overrides — serves that pre-built site
-# immediately, with almost no memory: the heavy bundling (Vite + Mermaid +
-# Shiki, ~2 GB) already happened on the build host, not here.
+# immediately, with almost no memory: the heavy bundling (Vite, just under
+# 2 GB at peak) already happened on the build host, not here.
 #
 # We only (re)build at container start when the operator actually
 # customizes the site:

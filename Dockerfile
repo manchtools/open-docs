@@ -68,7 +68,7 @@ RUN mkdir -p /content
 
 # Pre-build the default documentation here, on the build host, so a plain
 # `docker run` (no mounts, no env overrides) serves a ready-made site with
-# near-zero memory. The heavy bundling (Vite + Mermaid + Shiki, ~2 GB) runs
+# near-zero memory. The heavy bundling (Vite, just under ~2 GB) runs
 # once at image-build instead of on every container start. The entrypoint
 # rebuilds only when you customize.
 RUN bun run build

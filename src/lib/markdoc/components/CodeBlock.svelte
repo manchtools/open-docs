@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { mode } from 'mode-watcher';
 	import { page } from '$app/state';
+	import { base } from '$app/paths';
 	import { Button } from '$lib/components/ui/button';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Check from '@lucide/svelte/icons/check';
@@ -52,16 +53,24 @@
 		}
 		void (async () => {
 			try {
-				const { codeToHtml } = await import('shiki');
+				// Shiki is pre-bundled into static/vendor by esbuild (see
+				// scripts/vendor-client-deps.ts) and loaded from there at
+				// runtime, so the heavy grammar set never enters Vite's build
+				// graph — that keeps the site build's memory down. @vite-ignore
+				// stops Vite from trying to resolve/bundle the URL; the type
+				// casts keep TS checking without re-importing the module graph.
+				const { codeToHtml } = (await import(
+					/* @vite-ignore */ `${base}/vendor/shiki.mjs`
+				)) as typeof import('shiki');
 				// Notation transformers read comments *inside* the code
 				// (`// [!code highlight]`, `// [!code ++]` / `--`) and tag
 				// the affected lines with `.highlighted` / `.diff.add` /
 				// `.diff.remove`, stripping the marker comment. This is how
 				// line-highlight and diff work without fence meta (which
 				// Markdoc discards). Styled by the rules below.
-				const { transformerNotationHighlight, transformerNotationDiff } = await import(
-					'@shikijs/transformers'
-				);
+				const { transformerNotationHighlight, transformerNotationDiff } = (await import(
+					/* @vite-ignore */ `${base}/vendor/shiki-transformers.mjs`
+				)) as typeof import('@shikijs/transformers');
 				// Dual-theme per the official Shiki guide:
 				// https://shiki.style/guide/dual-themes
 				// Light theme renders as direct inline `color:` and
@@ -149,7 +158,11 @@
 		const isDark = mode.current === 'dark';
 		void (async () => {
 			try {
-				const mermaid = (await import('mermaid')).default;
+				// Pre-bundled like Shiki above — Mermaid (+d3) alone costs the
+				// Vite build ~450 MB of peak memory if bundled there.
+				const mermaid = (
+					(await import(/* @vite-ignore */ `${base}/vendor/mermaid.mjs`)) as typeof import('mermaid')
+				).default;
 				mermaid.initialize({
 					startOnLoad: false,
 					theme: 'base',

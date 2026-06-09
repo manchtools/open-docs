@@ -53,9 +53,10 @@ flowchart LR
   E --> S
 ```
 
-The build is the heavy step — it bundles Vite, Mermaid, and Shiki and peaks
-around 2 GB of memory, regardless of how many pages you have. Running it
-once at image-build keeps a plain `docker run` light.
+The build is the heavy step: bundling the app peaks at just under 2 GB of
+memory, regardless of how many pages you have (Mermaid and Shiki are
+pre-bundled separately with esbuild, which keeps that peak from being even
+higher). Running it once at image-build keeps a plain `docker run` light.
 
 To serve **custom** docs on a low-memory host, bake them into a small image
 on your build machine instead of rebuilding at container start:
@@ -67,7 +68,7 @@ RUN bun run build
 ```
 
 Run that image with no `/content` mount and it serves your pre-built site,
-no build (and no 2 GB) at runtime.
+no build (and none of that memory) at runtime.
 
 ## Sub-path deploys
 

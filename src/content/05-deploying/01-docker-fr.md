@@ -56,9 +56,11 @@ flowchart LR
   E --> S
 ```
 
-Le build est l'étape lourde : il regroupe Vite, Mermaid et Shiki et atteint
-environ 2 Go de mémoire, quel que soit le nombre de pages. L'exécuter une
-fois lors de la construction de l'image garde un simple `docker run` léger.
+Le build est l'étape lourde : le bundling de l'application atteint un peu
+moins de 2 Go de mémoire, quel que soit le nombre de pages (Mermaid et
+Shiki sont pré-bundlés séparément avec esbuild, ce qui évite un pic encore
+plus haut). L'exécuter une fois lors de la construction de l'image garde un
+simple `docker run` léger.
 
 Pour servir des documents **personnalisés** sur un hôte à faible mémoire,
 intégrez-les dans une petite image sur votre machine de build plutôt que de
@@ -71,7 +73,7 @@ RUN bun run build
 ```
 
 Lancez cette image sans montage `/content` et elle sert votre site
-pré-construit, sans build (ni 2 Go) à l'exécution.
+pré-construit, sans build (ni cette mémoire) à l'exécution.
 
 ## Déploiements sous un sous-chemin
 

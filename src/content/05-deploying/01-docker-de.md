@@ -55,9 +55,10 @@ flowchart LR
   E --> S
 ```
 
-Der Build ist der schwere Schritt – er bündelt Vite, Mermaid und Shiki und
-benötigt rund 2 GB Speicher, unabhängig von der Seitenzahl. Einmal beim
-Image-Build ausgeführt, bleibt ein einfaches `docker run` leicht.
+Der Build ist der schwere Schritt: das Bündeln der App benötigt knapp
+2 GB Speicher, unabhängig von der Seitenzahl (Mermaid und Shiki werden
+separat mit esbuild vorgebündelt, was den Spitzenwert zusätzlich senkt).
+Einmal beim Image-Build ausgeführt, bleibt ein einfaches `docker run` leicht.
 
 Um **eigene** Dokumente auf einem speicherarmen Host auszuliefern, backen
 Sie sie auf Ihrer Build-Maschine in ein kleines Image, statt beim Start neu
@@ -70,7 +71,7 @@ RUN bun run build
 ```
 
 Starten Sie dieses Image ohne `/content`-Mount, liefert es Ihre vorgebaute
-Site aus – ohne Build (und ohne 2 GB) zur Laufzeit.
+Site aus – ohne Build (und ohne diesen Speicherbedarf) zur Laufzeit.
 
 ## Deployments unter einem Unterpfad
 
