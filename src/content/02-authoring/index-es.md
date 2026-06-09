@@ -31,7 +31,7 @@ Traduce páginas con un sufijo en el nombre de archivo; el idioma por defecto se
 La entrada **Bloques** de la barra lateral es una subsección plegable, y
 **Media**, anidada dentro de ella, baja un nivel más, así que la navegación
 que ves aquí ejercita el
-[anidamiento derivado de carpetas](/es/navigation/folder-derived-nav#nesting)
+[anidamiento derivado de carpetas](/es/navigation/folder-derived-nav#anidamiento)
 de open-docs, hasta tres niveles, con la rama de la página en la que estás
 abierta automáticamente.
 {% /callout %}

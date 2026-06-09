@@ -31,7 +31,7 @@ Die Content-Blöcke: Callouts, Tabs, Steps, Cards und mehr.
 Der Eintrag **Blöcke** in der Seitenleiste ist ein einklappbarer
 Unterabschnitt, und **Medien** darin geht noch eine Ebene tiefer. Die
 Navigation, die Sie hier sehen, führt also die
-[aus Ordnern abgeleitete Verschachtelung](/de/navigation/folder-derived-nav#nesting)
+[aus Ordnern abgeleitete Verschachtelung](/de/navigation/folder-derived-nav#verschachtelung)
 von open-docs vor – bis zu drei Ebenen tief, wobei der Zweig der Seite, auf
 der Sie sich befinden, automatisch aufgeklappt wird.
 {% /callout %}

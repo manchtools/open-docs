@@ -28,5 +28,5 @@ Gerahmte Bilder mit Hell-/Dunkel-Varianten.
 
 Die letzten beiden liegen im verschachtelten Unterbereich **Media**. Diese
 Seite und ihre Unterseiten zeigen, wie diese Doku die
-[mehrstufige Verschachtelung](/de/navigation/folder-derived-nav#nesting)
+[mehrstufige Verschachtelung](/de/navigation/folder-derived-nav#verschachtelung)
 der Seitenleiste demonstriert.

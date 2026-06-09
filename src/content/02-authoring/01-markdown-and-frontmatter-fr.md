@@ -47,7 +47,7 @@ order: 2
 
 Le fichier `index.md` d'une section comprend une clé de plus, `icon`, qui
 définit l'icône de cette section sur la carte de la page d'accueil. Voir
-[Icônes de section](/fr/navigation/folder-derived-nav#section-icons).
+[Icônes de section](/fr/navigation/folder-derived-nav#icones-de-section).
 
 Le frontmatter est optionnel. Sans lui, le titre est dérivé du nom de fichier
 et les pages sont triées par ordre alphabétique (ou selon leur préfixe

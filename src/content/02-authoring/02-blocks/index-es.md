@@ -28,4 +28,4 @@ Imágenes enmarcadas con variantes para modo claro y oscuro.
 
 Las dos últimas viven en una subsección **Media** anidada. Esta página y sus
 hijas son la forma en que esta documentación demuestra el
-[anidamiento de varios niveles](/es/navigation/folder-derived-nav#nesting) de la barra lateral.
+[anidamiento de varios niveles](/es/navigation/folder-derived-nav#anidamiento) de la barra lateral.

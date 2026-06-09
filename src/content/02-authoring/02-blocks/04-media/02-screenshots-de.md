@@ -54,7 +54,7 @@ Legen Sie die Dateien in Ihrem Static-Verzeichnis ab:
 In Docker mounten Sie Ihre Assets unter `/static`. Sie werden in das
 `static/` des Images zusammengeführt, sodass Sie nur das überschreiben, was Sie
 selbst bereitstellen. Siehe
-[Statische Assets](/de/customizing/configuration#static-assets).
+[Statische Assets](/de/customizing/configuration#statische-assets).
 
 {% callout type="warn" title="Auf echte Dateien verweisen" %}
 Ein `screenshot`, der auf ein fehlendes Bild zeigt, schlägt bei der

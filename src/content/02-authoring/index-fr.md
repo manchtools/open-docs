@@ -31,7 +31,7 @@ Traduisez les pages avec un suffixe dans le nom de fichier ; la langue par défa
 L'entrée **Blocks** dans la barre latérale est une sous-section repliable, et
 **Media**, imbriquée dedans, descend d'un niveau supplémentaire : la navigation
 que vous voyez ici met donc en œuvre
-l'[imbrication issue des dossiers](/fr/navigation/folder-derived-nav#nesting)
+l'[imbrication issue des dossiers](/fr/navigation/folder-derived-nav#imbrication)
 d'open-docs, jusqu'à trois niveaux, avec la branche de la page courante ouverte
 automatiquement.
 {% /callout %}

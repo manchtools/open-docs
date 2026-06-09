@@ -89,7 +89,9 @@ Translate a page by adding a language suffix to its filename, after any
 - Keep a translation's slug identical to the original (only the language
   suffix differs) so they pair up. Translate the frontmatter `title` /
   `description` too. Internal links inside a translated page should point
-  at the same-language URLs (`/de/…`).
+  at the same-language URLs (`/de/…`) — and anchor fragments must use the
+  TRANSLATED heading's slug (a German "## Abschnitts-Icons" anchors as
+  `#abschnitts-icons`, not the English `#section-icons`).
 
 ### Links
 

@@ -46,7 +46,7 @@ order: 2
 
 Die `index.md` eines Abschnitts versteht einen weiteren Schlüssel, `icon`,
 der das Icon dieses Abschnitts auf der Karte der Startseite festlegt. Siehe
-[Abschnitts-Icons](/de/navigation/folder-derived-nav#section-icons).
+[Abschnitts-Icons](/de/navigation/folder-derived-nav#abschnitts-icons).
 
 Frontmatter ist optional. Ohne sie wird der Titel aus dem Dateinamen
 abgeleitet, und Seiten werden alphabetisch sortiert (oder nach ihrem

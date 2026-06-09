@@ -53,7 +53,7 @@ Coloca los archivos en tu directorio estático:
 
 En Docker, monta tus recursos en `/static`. Se fusionan con el `static/` de la
 imagen, así que solo sobrescribes lo que aportas. Consulta
-[Recursos estáticos](/es/customizing/configuration#static-assets).
+[Recursos estáticos](/es/customizing/configuration#recursos-estaticos).
 
 {% callout type="warn" title="Referencia archivos reales" %}
 Un `screenshot` que apunte a una imagen inexistente hace fallar la validación

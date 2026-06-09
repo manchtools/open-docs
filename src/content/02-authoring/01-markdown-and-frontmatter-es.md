@@ -46,7 +46,7 @@ order: 2
 
 El `index.md` de una sección entiende una clave más, `icon`, que establece el
 icono de esa sección en la tarjeta de la página de inicio. Consulta
-[Iconos de sección](/es/navigation/folder-derived-nav#section-icons).
+[Iconos de sección](/es/navigation/folder-derived-nav#iconos-de-seccion).
 
 El frontmatter es opcional. Sin él, el título se deriva del nombre de archivo
 y las páginas se ordenan alfabéticamente (o por su prefijo numérico). Consulta

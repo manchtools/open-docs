@@ -53,7 +53,7 @@ Déposez les fichiers dans votre répertoire statique :
 
 Sous Docker, montez vos ressources sur `/static`. Elles sont fusionnées dans le
 dossier `static/` de l'image, vous ne remplacez donc que ce que vous fournissez.
-Voir [Ressources statiques](/fr/customizing/configuration#static-assets).
+Voir [Ressources statiques](/fr/customizing/configuration#assets-statiques).
 
 {% callout type="warn" title="Référencez des fichiers réels" %}
 Un `screenshot` pointant vers une image manquante fait échouer la validation
