@@ -20,9 +20,9 @@ dev:
 	bun run dev
 
 # Production build. Pipeline:
-#   1. vite build — emits prerendered HTML to build/prerendered/
-#   2. pagefind --site build/prerendered --output-path build/client/pagefind
-#   3. scripts/strip-pagefind-html.ts — rewrites .pf_fragment URLs to
+#   1. vite build — compiles the app shell (content-independent; pages
+#      render at runtime from the content store)
+#   2. search is indexed at server start by scripts/index-search.ts, not
 #      match SvelteKit's clean routes (drops .html, /index → /).
 build:
 	bun run build

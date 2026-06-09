@@ -36,8 +36,9 @@ docker run --rm -p 3000:3000 \
   ghcr.io/manchtools/open-docs:latest
 ```
 
-Visit `http://localhost:3000`. The container builds the site at start
-with your content baked in, then serves it.
+Visit `http://localhost:3000`. The container parses your content at
+start (a couple of seconds, ~100 MB — it runs fine on small hosts) and
+renders pages on the fly; the search index follows a few seconds later.
 
 ### From source
 
@@ -105,9 +106,9 @@ footer instead — handy for an imprint, privacy policy, or other legal page.
 
 ## Configuration
 
-All configuration is environment variables — read at build time, baked
-into the bundle. Set them on the `docker run` command, in a `.env`
-file, or in your shell.
+All configuration is environment variables — read at **runtime** by the
+server, so changing them is a container restart, not a rebuild. Set them
+on the `docker run` command, in a `.env` file, or in your shell.
 
 ### Site chrome
 
@@ -130,7 +131,8 @@ automatically, so there is no separate flag for it.
 
 Any env var starting with `PUBLIC_TOKEN_` is exposed to markdown as a
 `{{NAME}}` placeholder. For example, `PUBLIC_TOKEN_API_URL=https://api.example.com`
-makes `{{API_URL}}` resolve to that value at build time.
+makes `{{API_URL}}` resolve to that value when the content is parsed at
+start.
 
 ```markdown
 Send requests to {{API_URL}}/v1/widgets.
@@ -162,7 +164,8 @@ keep working if you only override a subset.
 
 Translate a page by adding a language suffix to its filename:
 `introduction-de.md` is the German version of `introduction.md`. Languages
-are discovered from the suffixes at build time — no config file.
+are discovered from the suffixes when the content is parsed — no config
+file.
 
 - The **default language stays unprefixed** (`/getting-started/intro`);
   other languages get a `/<lang>` prefix (`/de/getting-started/intro`). A
@@ -178,8 +181,8 @@ Set the default with `PUBLIC_DEFAULT_LANG` (defaults to `en`). See the
 
 ## Discoverability (SEO & AI)
 
-Every page is pre-rendered to static HTML, so search engines and AI
-crawlers see the full content without running JavaScript. On top of that:
+Every page is rendered on the server, so search engines and AI crawlers
+see the full content without running JavaScript. On top of that:
 
 - **Per-page metadata** — each page emits its own `<title>`,
   `<meta name="description">`, canonical link, and Open Graph / Twitter
