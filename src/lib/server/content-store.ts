@@ -203,7 +203,9 @@ export function createContentStore(opts: Options): ContentStore {
 		),
 		nodes: Object.fromEntries(
 			Object.entries(schema.nodes).map(([type, t]) => {
-				const base = Markdoc.nodes[type as keyof typeof Markdoc.nodes];
+				const base = Markdoc.nodes[type as keyof typeof Markdoc.nodes] as {
+					attributes?: Record<string, unknown>;
+				};
 				// Markdoc's built-in schemas mark several attributes
 				// `render: false` (heading `level`, fence `content`, …) because
 				// their default transforms consume them internally. Our

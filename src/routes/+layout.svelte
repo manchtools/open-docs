@@ -1,15 +1,6 @@
 <script lang="ts">
 	import '../app.css';
 
-	// Optional user theme override. If the operator drops a `theme.css`
-	// into their content root (it ships in the same mount as the
-	// markdown), it's bundled *after* app.css here so its rules win on
-	// equal specificity — override the shadcn design tokens (colors,
-	// radius, fonts) or target component classes directly. The glob
-	// is a no-op when the file is absent, so the default theme stands.
-	// See theme.example.css at the repo root for a starting point.
-	import.meta.glob('/src/content/theme.css', { eager: true });
-
 	import { ModeWatcher } from 'mode-watcher';
 	import { afterNavigate } from '$app/navigation';
 	import { base } from '$app/paths';
@@ -17,18 +8,21 @@
 	import Lightbox from '$lib/components/lightbox.svelte';
 	import TopNav from '$lib/components/top-nav.svelte';
 	import Sidebar from '$lib/components/sidebar.svelte';
-	import { siteConfig } from '$lib/config';
-	import { metaPagesFor } from '$lib/nav';
-	import { defaultLang } from '$lib/i18n';
 	import { t } from '$lib/ui-strings';
+	import type { NavItem } from '$lib/nav-core';
+	import type { SiteConfig } from '$lib/site';
 
-	type Props = { children?: import('svelte').Snippet; data: { lang: string } };
+	type Props = {
+		children?: import('svelte').Snippet;
+		data: { lang: string; metaPages: NavItem[]; site: SiteConfig; hasTheme: boolean };
+	};
 	const { children, data }: Props = $props();
 
-	// Current language (resolved in +layout.ts from the URL). Drives the
-	// document language and the localized footer/legal links.
-	const lang = $derived(data?.lang ?? defaultLang);
-	const metaPages = $derived(metaPagesFor(lang));
+	// Everything chrome-shaped (language, footer/legal links, branding)
+	// arrives from the layout load — derived server-side at runtime.
+	const lang = $derived(data?.lang ?? 'en');
+	const metaPages = $derived(data?.metaPages ?? []);
+	const siteConfig = $derived(data.site);
 
 	// Keep <html lang> in sync on client-side navigation. The server hook
 	// sets it for the initial/prerendered response (which Pagefind reads to
@@ -96,6 +90,16 @@
 		});
 	}
 </script>
+
+<svelte:head>
+	{#if data.hasTheme}
+		<!-- Operator theme override (theme.css next to the content). Served at
+		     runtime by /theme.css; the <link> comes after the bundled
+		     stylesheet in <head>, so its rules win on equal specificity —
+		     same contract as the 0.3.x build-time bundling. -->
+		<link rel="stylesheet" href={`${base}/theme.css`} />
+	{/if}
+</svelte:head>
 
 <ModeWatcher />
 <ThemeColor />

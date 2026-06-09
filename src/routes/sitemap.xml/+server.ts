@@ -1,17 +1,12 @@
-import { siteConfig } from '$lib/config';
-import { listSlugs } from '$lib/content';
+import { getStore } from '$lib/server/store-instance';
+import { siteConfig } from '$lib/server/site';
 
-// Prerendered XML sitemap: the landing page plus every routed page in every
-// language (listSlugs already enumerates each language's slugs, translated
-// or default-fallback). Absolute <loc>s need siteConfig.siteUrl
-// (PUBLIC_SITE_URL); without it the locations are path-only.
-export const prerender = true;
-
+// XML sitemap over every servable path in every language, derived from
+// the runtime store. Absolute <loc>s need PUBLIC_SITE_URL; without it the
+// locations are path-only.
 export function GET() {
-	const origin = siteConfig.siteUrl;
-	const paths = ['/', ...listSlugs().map((s) => '/' + s)];
-	const seen = new Set<string>();
-	const locs = paths.filter((p) => !seen.has(p) && seen.add(p));
+	const origin = siteConfig().siteUrl;
+	const locs = getStore().listPaths();
 
 	const body =
 		`<?xml version="1.0" encoding="UTF-8"?>\n` +

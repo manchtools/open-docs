@@ -4,11 +4,11 @@
 	"version": "0.3.3",
 	"type": "module",
 	"scripts": {
-		"dev": "bun scripts/vendor-client-deps.ts && vite dev",
-		"build": "svelte-kit sync && bun scripts/vendor-client-deps.ts && vite build && pagefind --site build/prerendered --output-path build/client/pagefind && bun run scripts/strip-pagefind-html.ts",
+		"dev": "bun scripts/vendor-client-deps.ts && bun scripts/generate-markdoc-schema.ts && vite dev",
+		"build": "svelte-kit sync && bun scripts/vendor-client-deps.ts && bun scripts/generate-markdoc-schema.ts && vite build",
 		"preview": "bun run build/index.js",
 		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check": "svelte-kit sync && bun scripts/generate-markdoc-schema.ts && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest run",
 		"test:watch": "vitest"
@@ -43,7 +43,6 @@
 		"github-slugger": "^2.0.0",
 		"mermaid": "^11.15.0",
 		"shiki": "^1.29.2",
-		"svelte-markdoc-preprocess": "^3.0.0",
 		"tailwind-merge": "^3.5.0"
 	}
 }

@@ -2,16 +2,28 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button';
-	import { siteConfig } from '$lib/config';
-	import { localizedHref, defaultLang } from '$lib/i18n';
+	import { hrefFor } from '$lib/i18n';
+	import type { SiteConfig } from '$lib/site';
 	import ThemeToggle from './theme-toggle.svelte';
 	import Search from './search.svelte';
 	import MobileNav from './mobile-nav.svelte';
 	import LanguageSwitcher from './language-switcher.svelte';
 
+	// Runtime branding + language data arrive via the layout load — set
+	// PUBLIC_BRAND_NAME etc. on `docker run`; no rebuild involved.
+	const siteConfig = $derived(page.data.site as SiteConfig);
+
 	// The brand links to the current language's home (the default language's
 	// is just '/'), so clicking it on a /<lang> page keeps you in-language.
-	const homeHref = $derived(base + localizedHref((page.data.lang as string) ?? defaultLang, ''));
+	const homeHref = $derived(
+		base +
+			hrefFor(
+				(page.data.lang as string) ?? 'en',
+				'',
+				(page.data.defaultLang as string) ?? 'en',
+				(page.data.i18nActive as boolean) ?? false
+			)
+	);
 
 	// Top nav bar: mobile hamburger + site brand + search + optional
 	// GitHub link + theme toggle. Hamburger renders only at md:hidden;

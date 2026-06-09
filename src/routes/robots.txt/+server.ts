@@ -1,14 +1,11 @@
-import { siteConfig } from '$lib/config';
+import { siteConfig } from '$lib/server/site';
 
-// Prerendered robots.txt. Allows all crawlers and points them at the
-// sitemap when an absolute origin (PUBLIC_SITE_URL) is configured.
-export const prerender = true;
-
+// robots.txt: allow all crawlers; point them at the sitemap when an
+// absolute origin (PUBLIC_SITE_URL) is configured.
 export function GET() {
+	const { siteUrl } = siteConfig();
 	const lines = ['User-agent: *', 'Allow: /'];
-	if (siteConfig.siteUrl) {
-		lines.push('', `Sitemap: ${siteConfig.siteUrl}/sitemap.xml`);
-	}
+	if (siteUrl) lines.push('', `Sitemap: ${siteUrl}/sitemap.xml`);
 	return new Response(lines.join('\n') + '\n', {
 		headers: { 'content-type': 'text/plain; charset=utf-8' }
 	});

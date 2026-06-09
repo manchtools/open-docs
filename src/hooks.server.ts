@@ -1,25 +1,49 @@
 import type { Handle } from '@sveltejs/kit';
 import { base } from '$app/paths';
-import { splitRequestSlug } from '$lib/i18n';
+import { env } from '$env/dynamic/private';
+import { existsSync } from 'node:fs';
+import { getStore } from '$lib/server/store-instance';
+import { splitRequest } from '$lib/i18n';
+import { deriveFrameSrc } from '../scripts/derive-frame-src.js';
 
-// Sets the per-page `<html lang>` and the standard defensive response
-// headers. CSP is wired via svelte.config.js kit.csp so SvelteKit can emit
-// a nonce in production; these headers cover what SvelteKit's csp config
-// doesn't.
+// Sets the per-page `<html lang>`, the CSP frame-src for {% embed %}
+// hosts, and the standard defensive response headers.
 //
-// Svelte 5.48 has no `<svelte:html>`, and a client-only effect would leave
-// the *prerendered* HTML at the default language — which Pagefind reads at
-// index time to segment search by language. So we set `<html lang>` in the
-// SSR/prerender output here, derived from the URL (default language is
-// unprefixed; see $lib/i18n). app.html ships `<html lang="en">`; we rewrite
-// that first occurrence to the route's language.
+// `<html lang>` must be in the server-rendered HTML — Pagefind reads it at
+// index time to segment search by language, and crawlers use it for
+// hreflang sanity. app.html ships `lang="en"`; we rewrite the first
+// occurrence to the route's language.
+//
+// frame-src is derived from the {% embed %} blocks in the *runtime*
+// content (token-resolved), computed once per content generation and
+// appended to the CSP header kit.csp emitted — the build-time config
+// can't know the mounted content's embed hosts.
+let frameSrcCache: { key: string; hosts: string[] } | null = null;
+function frameSrc(): string[] {
+	const dir =
+		env.OPEN_DOCS_CONTENT && existsSync(env.OPEN_DOCS_CONTENT)
+			? env.OPEN_DOCS_CONTENT
+			: 'src/content';
+	if (frameSrcCache?.key !== dir) {
+		frameSrcCache = { key: dir, hosts: deriveFrameSrc(dir) };
+	}
+	return frameSrcCache.hosts;
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
+	const store = getStore();
 	const path = event.url.pathname.slice(base.length).replace(/^\//, '');
-	const { lang } = splitRequestSlug(path);
+	const { lang } = splitRequest(path, store.languages, store.defaultLang);
 
 	const response = await resolve(event, {
 		transformPageChunk: ({ html }) => html.replace('lang="en"', `lang="${lang}"`)
 	});
+
+	const csp = response.headers.get('content-security-policy');
+	const hosts = frameSrc();
+	if (csp && hosts.length > 0 && !csp.includes('frame-src')) {
+		response.headers.set('content-security-policy', `${csp}; frame-src ${hosts.join(' ')}`);
+	}
 
 	response.headers.set('X-Frame-Options', 'DENY');
 	response.headers.set('X-Content-Type-Options', 'nosniff');

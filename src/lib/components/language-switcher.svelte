@@ -5,7 +5,7 @@
 	import { cn } from '$lib/utils';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { languages, i18nActive, defaultLang, switchLangPath, langName } from '$lib/i18n';
+	import { switchTo, langName } from '$lib/i18n';
 	import { t } from '$lib/ui-strings';
 	import Check from '@lucide/svelte/icons/check';
 
@@ -13,12 +13,15 @@
 	// content ships more than one language. Switching preserves the page:
 	// it maps the path to the same slug in the chosen language (which falls
 	// back to default content if that page isn't translated).
+	const languages = $derived((page.data.languages as string[]) ?? ['en']);
+	const defaultLang = $derived((page.data.defaultLang as string) ?? 'en');
+	const i18nActive = $derived((page.data.i18nActive as boolean) ?? false);
 	const current = $derived((page.data.lang as string | undefined) ?? defaultLang);
 
 	function choose(lang: string) {
 		if (lang === current) return;
 		const path = page.url.pathname.slice(base.length);
-		void goto(base + switchLangPath(path, lang));
+		void goto(base + switchTo(path, lang, languages, defaultLang));
 	}
 </script>
 

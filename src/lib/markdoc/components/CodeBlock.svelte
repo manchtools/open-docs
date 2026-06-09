@@ -8,9 +8,8 @@
 	import Check from '@lucide/svelte/icons/check';
 	import { cn } from '$lib/utils';
 	import { t } from '$lib/ui-strings';
-	import { defaultLang } from '$lib/i18n';
 
-	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
+	const lang = $derived((page.data.lang as string | undefined) ?? 'en');
 
 	// Fenced code block. Two branches:
 	//

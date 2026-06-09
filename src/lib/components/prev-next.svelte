@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { Button } from '$lib/components/ui/button';
-	import { flatNavFor } from '$lib/nav';
-	import { defaultLang } from '$lib/i18n';
+	import { page } from '$app/state';
+	import type { NavItem } from '$lib/nav-core';
 	import { t } from '$lib/ui-strings';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
@@ -24,13 +24,14 @@
 
 	type Props = {
 		currentHref: string;
-		lang?: string;
 	};
 
-	const { currentHref, lang = defaultLang }: Props = $props();
+	const { currentHref }: Props = $props();
 
-	// Prev/next within the current language's nav order (localized hrefs).
-	const list = $derived(flatNavFor(lang));
+	// Prev/next within the current language's nav order (localized hrefs),
+	// delivered by the layout load.
+	const lang = $derived((page.data.lang as string) ?? 'en');
+	const list = $derived((page.data.flatNav as NavItem[]) ?? []);
 	const idx = $derived(list.findIndex((it) => it.href === currentHref));
 	const prev = $derived(idx > 0 ? list[idx - 1] : undefined);
 	const next = $derived(idx >= 0 && idx < list.length - 1 ? list[idx + 1] : undefined);

@@ -42,7 +42,7 @@ export function deriveFrameSrc(contentDir = 'src/content') {
 
 	for (const entry of entries) {
 		if (!entry.isFile() || !/\.(md|markdoc)$/.test(entry.name)) continue;
-		const dir = entry.parentPath ?? entry.path ?? contentDir;
+		const dir = entry.parentPath ?? contentDir;
 		let text;
 		try {
 			text = readFileSync(join(dir, entry.name), 'utf8');

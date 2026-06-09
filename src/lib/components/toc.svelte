@@ -3,9 +3,8 @@
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
 	import { t } from '$lib/ui-strings';
-	import { defaultLang } from '$lib/i18n';
 
-	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
+	const lang = $derived((page.data.lang as string | undefined) ?? 'en');
 
 	// Right-side "On this page" TOC. Auto-built from the rendered DOM
 	// rather than from frontmatter — that means the TOC always matches

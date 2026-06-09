@@ -16,10 +16,10 @@
 // With no suffixed files the site is single-language and URLs are
 // unprefixed exactly as before — i18n adds zero overhead until used.
 //
-// The functions below come in two layers: pure cores that take the
-// language config as arguments (so they're unit-testable in isolation —
-// see i18n.test.ts) and thin wrappers bound to the languages discovered
-// from the content tree at build time.
+// Everything here is a pure core that takes the language config as
+// arguments (unit-testable in isolation — see i18n.test.ts). The runtime
+// content store discovers the languages at boot and binds these per
+// request; the client receives the facts via the layout `load`.
 
 import { cleanSlug, stripPrefix } from './slug';
 
@@ -126,37 +126,8 @@ export function langName(code: string): string {
 	}
 }
 
-// ---------------------------------------------------------------------------
-// Build-time bindings (discovered from the content tree).
-// ---------------------------------------------------------------------------
-
-/** Operator-set default language (the one suffix-less files belong to). */
-export const defaultLang = (
-	(import.meta.env.PUBLIC_DEFAULT_LANG as string | undefined) || 'en'
-)
-	.trim()
-	.toLowerCase();
-
-// All content paths (keys only) — used purely to discover the languages.
-const allPaths = Object.keys(import.meta.glob('/src/content/**/*.{md,markdoc}'));
-
-/** Every language present, default first, the rest alphabetical. */
-export const languages: string[] = pickLanguages(allPaths, defaultLang);
-
-/** True when there's more than one language — turns on URL prefixing. */
-export const i18nActive = languages.length > 1;
-
-/** Path → { lang, language-agnostic slug }, bound to the default language. */
-export const parsePath = (path: string) => slugLang(path, defaultLang);
-
-/** Public URL for a language + slug, bound to the discovered languages. */
-export const localizedHref = (lang: string, slug: string) =>
-	hrefFor(lang, slug, defaultLang, i18nActive);
-
-/** Split a `[...slug]` request param into { lang, slug }. */
-export const splitRequestSlug = (requestSlug: string) =>
-	splitRequest(requestSlug, languages, defaultLang);
-
-/** Swap the language of a public path, preserving the page. */
-export const switchLangPath = (currentPath: string, lang: string) =>
-	switchTo(currentPath, lang, languages, defaultLang);
+// (0.4.0) The build-time bindings that used to live here — languages
+// discovered via import.meta.glob, defaultLang from import.meta.env, and
+// the bound helpers — moved to the server content store. Components get
+// `languages` / `defaultLang` / `i18nActive` from the layout `load` and
+// call the pure functions above with them.

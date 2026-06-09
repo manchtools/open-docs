@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
 	import { cn } from '$lib/utils';
-	import { subtreeHasHref, type NavNode } from '$lib/nav';
+	import { subtreeHasHref, type NavNode } from '$lib/nav-core';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Self from './nav-node.svelte';

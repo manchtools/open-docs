@@ -2,8 +2,7 @@
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
 	import { cn } from '$lib/utils';
-	import { navByLang } from '$lib/nav';
-	import { defaultLang } from '$lib/i18n';
+	import type { NavNode as NavTreeNode } from '$lib/nav-core';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import NavNode from './nav-node.svelte';
 
@@ -22,10 +21,9 @@
 	const pathname = $derived(page.url.pathname.replace(base, '') || '/');
 
 	// The nav tree for the current language (localized titles + prefixed
-	// hrefs). Resolved from page.data.lang so it tracks the route, including
-	// inside the mobile sheet, without prop-threading.
-	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
-	const groups = $derived(navByLang(lang));
+	// hrefs), derived server-side and delivered by the layout load — the
+	// client bundle carries no content data.
+	const groups = $derived((page.data.nav as NavTreeNode[]) ?? []);
 
 	// Auto-scroll the active link into view when the route changes. The
 	// active branch is expanded by NavNode, so its link is in the DOM by

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from 'svelte/server';
-import MarkdocTree from './MarkdocTree.svelte';
+import MarkdocTree, { type TreeNode } from './MarkdocTree.svelte';
 import { createContentStore } from '../server/content-store';
 
 // SSR parity smoke tests: render the fixture store's trees through the
@@ -18,7 +18,7 @@ const store = createContentStore({
 function html(lang: string, slug: string): string {
 	const page = store.getPage(lang, slug);
 	expect(page, `${lang}/${slug}`).toBeTruthy();
-	return render(MarkdocTree, { props: { node: page!.tree } }).body;
+	return render(MarkdocTree, { props: { node: page!.tree as TreeNode } }).body;
 }
 
 describe('MarkdocTree SSR', () => {

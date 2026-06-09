@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { siteConfig } from '$lib/config';
-	import { i18nActive, languages, defaultLang, localizedHref } from '$lib/i18n';
+	import { page } from '$app/state';
+	import { hrefFor } from '$lib/i18n';
+	import type { SiteConfig } from '$lib/site';
 
 	// Per-page document head: title, meta description, canonical, Open Graph,
 	// Twitter card, and (when multilingual) hreflang alternates. One
@@ -27,6 +28,13 @@
 		slug?: string;
 	};
 	let { title, description, path = '/', type = 'article', slug }: Props = $props();
+
+	// Runtime site config + language facts from the layout load.
+	const siteConfig = $derived(page.data.site as SiteConfig);
+	const languages = $derived((page.data.languages as string[]) ?? ['en']);
+	const defaultLang = $derived((page.data.defaultLang as string) ?? 'en');
+	const i18nActive = $derived((page.data.i18nActive as boolean) ?? false);
+	const localizedHref = (l: string, s: string) => hrefFor(l, s, defaultLang, i18nActive);
 
 	const fullTitle = $derived(
 		title && title !== siteConfig.siteTitle

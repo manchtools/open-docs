@@ -1,19 +1,22 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { page } from '$app/state';
 	import { Card, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import BookOpen from '@lucide/svelte/icons/book-open';
-	import { siteConfig } from '$lib/config';
-	import { navByLang, type NavNode } from '$lib/nav';
 	import { t } from '$lib/ui-strings';
+	import type { NavNode } from '$lib/nav-core';
+	import type { SiteConfig } from '$lib/site';
 
 	// Landing-page hero, rendered at `/` (default language) and at the bare
-	// language path `/<lang>` for each other language. The card grid is
-	// built from the language's nav so it stays in sync with the sidebar
-	// and uses translated section titles. Brand text comes from siteConfig
-	// (site-level, not per-language).
+	// language path `/<lang>`. The card grid comes from the language's nav
+	// (already localized by the layout load) so it stays in sync with the
+	// sidebar; brand text comes from the runtime site config.
 	let { lang }: { lang: string } = $props();
+
+	const site = $derived(page.data.site as SiteConfig);
+	const nav = $derived((page.data.nav as NavNode[]) ?? []);
 
 	function countPages(nodes: NavNode[] = []): number {
 		return nodes.reduce((n, x) => n + (x.href ? 1 : 0) + countPages(x.items), 0);
@@ -28,7 +31,7 @@
 	}
 
 	const groupCards = $derived(
-		navByLang(lang)
+		nav
 			.filter((g) => g.title && (g.items?.length ?? 0) > 0)
 			.map((g) => {
 				const pages = countPages(g.items);
@@ -58,13 +61,13 @@
 <div class="px-6 py-12 lg:py-16 xl:px-12">
 	<section class="max-w-3xl">
 		<p class="mb-4 text-sm font-medium uppercase tracking-wider text-muted-foreground">
-			{siteConfig.brandTagline || 'Documentation'}
+			{site.brandTagline || 'Documentation'}
 		</p>
 		<h1 class="text-4xl font-bold tracking-tight md:text-5xl">
-			{siteConfig.siteTitle}
+			{site.siteTitle}
 		</h1>
 		<p class="mt-6 text-lg leading-relaxed text-muted-foreground">
-			{siteConfig.siteDescription}
+			{site.siteDescription}
 		</p>
 		{#if groupCards.length > 0}
 			<div class="mt-8 flex flex-wrap gap-3">
@@ -72,8 +75,8 @@
 					{t(lang, 'getStarted')}
 					<ArrowRight class="ml-2 size-4" />
 				</Button>
-				{#if siteConfig.repoUrl}
-					<Button variant="outline" href={siteConfig.repoUrl}>{t(lang, 'viewSource')}</Button>
+				{#if site.repoUrl}
+					<Button variant="outline" href={site.repoUrl}>{t(lang, 'viewSource')}</Button>
 				{/if}
 			</div>
 		{/if}

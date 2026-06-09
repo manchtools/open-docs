@@ -7,10 +7,9 @@
 	import * as Command from '$lib/components/ui/command';
 	import { cn } from '$lib/utils';
 	import { t } from '$lib/ui-strings';
-	import { defaultLang } from '$lib/i18n';
 	import Search from '@lucide/svelte/icons/search';
 
-	const lang = $derived((page.data.lang as string | undefined) ?? defaultLang);
+	const lang = $derived((page.data.lang as string | undefined) ?? 'en');
 
 	// Static-site search built on shadcn-svelte's Command palette,
 	// powered by a Pagefind index baked at build time. The trigger
