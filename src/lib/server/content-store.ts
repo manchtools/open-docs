@@ -202,15 +202,38 @@ export function createContentStore(opts: Options): ContentStore {
 			])
 		),
 		nodes: Object.fromEntries(
-			Object.entries(schema.nodes).map(([type, t]) => [
-				type,
-				{
-					...Markdoc.nodes[type as keyof typeof Markdoc.nodes],
-					transform(node: import('@markdoc/markdoc').Node, cfg: import('@markdoc/markdoc').Config) {
-						return new Markdoc.Tag(t.render, node.transformAttributes(cfg), node.transformChildren(cfg));
+			Object.entries(schema.nodes).map(([type, t]) => {
+				const base = Markdoc.nodes[type as keyof typeof Markdoc.nodes];
+				// Markdoc's built-in schemas mark several attributes
+				// `render: false` (heading `level`, fence `content`, …) because
+				// their default transforms consume them internally. Our
+				// components ARE the consumers, so strip the flag — attributes
+				// must flow through transformAttributes into component props,
+				// exactly as the old pipeline's schema copies behaved.
+				const attributes = Object.fromEntries(
+					Object.entries(base.attributes ?? {}).map(([name, def]) => {
+						const { render: _render, ...rest } = def as Record<string, unknown>;
+						return [name, rest];
+					})
+				);
+				return [
+					type,
+					{
+						...base,
+						attributes,
+						transform(
+							node: import('@markdoc/markdoc').Node,
+							cfg: import('@markdoc/markdoc').Config
+						) {
+							return new Markdoc.Tag(
+								t.render,
+								node.transformAttributes(cfg),
+								node.transformChildren(cfg)
+							);
+						}
 					}
-				}
-			])
+				];
+			})
 		)
 	};
 
