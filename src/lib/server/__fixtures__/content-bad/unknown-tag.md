@@ -1,0 +1,3 @@
+# Bad
+
+{% bogus %}nope{% /bogus %}
