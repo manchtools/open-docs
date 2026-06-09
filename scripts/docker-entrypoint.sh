@@ -33,6 +33,16 @@ fi
 if [ -d "$STATIC_SRC" ] && [ -n "$(ls -A "$STATIC_SRC" 2>/dev/null || true)" ]; then
     echo "[open-docs] merging static assets from $STATIC_SRC → build/client/"
     cp -r "$STATIC_SRC/." /app/build/client/
+    # Evict stale precompressed variants of every overridden file. The
+    # image build precompressed the BUNDLED statics (favicon.svg.br/.gz,
+    # …); the adapter prefers those for any client that sends
+    # Accept-Encoding — i.e. every browser — so a stale sibling would
+    # shadow the operator's override (plain curl shows the new file,
+    # browsers silently get the old one).
+    (cd "$STATIC_SRC" && find . -type f ! -name '*.br' ! -name '*.gz' -print) |
+        while IFS= read -r f; do
+            rm -f "/app/build/client/${f#./}.br" "/app/build/client/${f#./}.gz"
+        done
 fi
 
 # BASE_PATH is compiled into the shell; a sub-path deploy still needs a
