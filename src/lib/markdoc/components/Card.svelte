@@ -8,10 +8,12 @@
 	// homepage hero exactly. Optional `href` makes it a link (internal paths
 	// are base-resolved, external open in a new tab); `icon` mirrors section
 	// icons — emoji, inline <svg>, or a path under static/.
+	// href/icon defaults keep those attributes OPTIONAL in the derived
+	// Markdoc schema, per the reference docs; `title` stays required.
 	let {
 		title,
-		href,
-		icon,
+		href = undefined,
+		icon = undefined,
 		children
 	}: {
 		title?: string;

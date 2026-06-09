@@ -38,7 +38,7 @@
 		"vitest": "^4.1.8"
 	},
 	"dependencies": {
-		"@markdoc/markdoc": "^0.5.1",
+		"@markdoc/markdoc": "^0.5.7",
 		"clsx": "^2.1.1",
 		"github-slugger": "^2.0.0",
 		"mermaid": "^11.15.0",
