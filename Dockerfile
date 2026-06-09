@@ -66,11 +66,9 @@ COPY . .
 # mounted there, the entrypoint falls back to the baked-in docs above.
 RUN mkdir -p /content
 
-# Pre-build the default documentation here, on the build host, so a plain
-# `docker run` (no mounts, no env overrides) serves a ready-made site with
-# near-zero memory. The heavy bundling (Vite, just under ~2 GB) runs
-# once at image-build instead of on every container start. The entrypoint
-# rebuilds only when you customize.
+# Build the app SHELL here (content-independent since 0.4.0). Content is
+# parsed at runtime by the server, so this is the only Vite run anywhere —
+# mounting content, rebranding via PUBLIC_*, or theming never rebuilds.
 RUN bun run build
 
 EXPOSE 3000

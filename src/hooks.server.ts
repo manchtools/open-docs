@@ -30,6 +30,13 @@ function frameSrc(): string[] {
 	return frameSrcCache.hosts;
 }
 
+// Build the content store eagerly when the server starts, so validation
+// errors abort the boot (container exits non-zero) instead of turning
+// every request into a 500 — the runtime equivalent of a failed build.
+export const init = () => {
+	getStore();
+};
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const store = getStore();
 	const path = event.url.pathname.slice(base.length).replace(/^\//, '');

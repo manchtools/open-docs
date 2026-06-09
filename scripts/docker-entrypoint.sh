@@ -1,89 +1,58 @@
 #!/bin/sh
-# Container entrypoint.
+# Container entrypoint — 0.4.0 runtime content pipeline.
 #
-# The image ships with the default documentation ALREADY BUILT at
-# image-build time (see the Dockerfile's `RUN bun run build`). So a plain
-# `docker run` — no mounts, no env overrides — serves that pre-built site
-# immediately, with almost no memory: the heavy bundling (Vite, just under
-# 2 GB at peak) already happened on the build host, not here.
+# Content is DATA now: the server parses the mounted Markdown at boot
+# (seconds, ~200 MB) and renders pages at request time. There is no
+# content build, so mounting different docs, rebranding via PUBLIC_*, or
+# adding a theme.css needs no Vite run and works on small hosts.
 #
-# We only (re)build at container start when the operator actually
-# customizes the site:
-#   /content   → src/content   (your .md / .markdoc + optional theme.css)
-#   /static    → static/       (merged; favicons, og.png, screenshots, …)
-#   PUBLIC_* / BASE_PATH env    (compiled into the build)
+#   /content   → read in place (OPEN_DOCS_CONTENT); bundled docs otherwise
+#   /static    → merged into the served assets at start (plain file copy)
+#   PUBLIC_*   → read at runtime by the server; no rebuild
+#   BASE_PATH  → the ONE remaining build-time setting (SvelteKit's base
+#                is compile-time); setting it rebuilds the app shell at
+#                start, which needs ~1.5 GB — prefer baking an image.
 #
-# To avoid a runtime build on a low-memory host, bake your content into a
-# custom image instead — see the Dockerfile header. Mount paths are
-# overridable via OPEN_DOCS_CONTENT / OPEN_DOCS_STATIC.
+# Search: a boot pass renders every page and writes the Pagefind index a
+# few seconds after the server is up (scripts/index-search.ts).
 
 set -eu
 
 CONTENT_SRC="${OPEN_DOCS_CONTENT:-/content}"
 STATIC_SRC="${OPEN_DOCS_STATIC:-/static}"
-
-need_build=0
-reason=""
-mark() {
-    reason="${reason:+$reason, }$1"
-    need_build=1
-}
+PORT="${PORT:-3000}"
 
 if [ -d "$CONTENT_SRC" ] && [ -n "$(ls -A "$CONTENT_SRC" 2>/dev/null || true)" ]; then
-    echo "[open-docs] copying content from $CONTENT_SRC → src/content"
-    rm -rf /app/src/content
-    mkdir -p /app/src/content
-    cp -r "$CONTENT_SRC/." /app/src/content/
-    mark "mounted content"
+    echo "[open-docs] serving content from $CONTENT_SRC"
+    export OPEN_DOCS_CONTENT="$CONTENT_SRC"
+else
+    echo "[open-docs] no content mounted at $CONTENT_SRC — serving the bundled open-docs documentation"
+    unset OPEN_DOCS_CONTENT || true
 fi
 
 if [ -d "$STATIC_SRC" ] && [ -n "$(ls -A "$STATIC_SRC" 2>/dev/null || true)" ]; then
-    echo "[open-docs] merging static assets from $STATIC_SRC → static/"
-    mkdir -p /app/static
-    cp -r "$STATIC_SRC/." /app/static/
-    mark "mounted static"
+    echo "[open-docs] merging static assets from $STATIC_SRC → build/client/"
+    cp -r "$STATIC_SRC/." /app/build/client/
 fi
 
-# PUBLIC_* and BASE_PATH are compiled into the build, so changing them from
-# the baked-in defaults requires a rebuild.
-if env | grep -qE '^(PUBLIC_|BASE_PATH=)'; then
-    mark "custom env"
+# BASE_PATH is compiled into the shell; a sub-path deploy still needs a
+# shell rebuild. Everything else is runtime.
+if [ -n "${BASE_PATH:-}" ]; then
+    echo "[open-docs] BASE_PATH=$BASE_PATH requires a shell rebuild (~1.5 GB)…"
+    (cd /app && bun run build)
 fi
 
-# Safety net: build if the pre-built site is somehow absent.
-if [ ! -f /app/build/index.js ]; then
-    mark "no pre-built site"
-fi
+cd /app
+echo "[open-docs] starting server on port $PORT"
+bun build/index.js &
+SERVER_PID=$!
 
-if [ "$need_build" -eq 1 ]; then
-    # An empty src/content makes Vite's import.meta.glob match nothing and
-    # fails the build; plant a stub so the operator sees a "drop your
-    # markdown here" page instead of an error.
-    if [ ! -d /app/src/content ] || [ -z "$(ls -A /app/src/content 2>/dev/null || true)" ]; then
-        mkdir -p /app/src/content
-        cat > /app/src/content/index.md <<'EOF'
----
-title: Welcome
----
+# Index search once the server answers; non-fatal if it fails (the search
+# dialog then shows its "index not found" notice instead of results).
+(
+    bun scripts/index-search.ts "http://localhost:$PORT" || \
+        echo "[open-docs] search indexing failed — continuing without search"
+) &
 
-# Welcome to open-docs
-
-Mount your markdown directory at `/content` to get started.
-
-```
-docker run --rm -p 3000:3000 \
-  -v ./content:/content:ro \
-  ghcr.io/manchtools/open-docs:latest
-```
-EOF
-    fi
-
-    cd /app
-    echo "[open-docs] building site ($reason)…"
-    bun run build
-else
-    echo "[open-docs] serving the pre-built default documentation (no rebuild needed)"
-fi
-
-echo "[open-docs] starting server on port ${PORT:-3000}"
-exec bun /app/build/index.js
+trap 'kill $SERVER_PID 2>/dev/null || true' TERM INT
+wait $SERVER_PID
