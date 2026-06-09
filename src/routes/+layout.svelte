@@ -5,6 +5,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { base } from '$app/paths';
 	import ThemeColor from '$lib/components/theme-color.svelte';
+	import Favicon from '$lib/components/favicon.svelte';
 	import Lightbox from '$lib/components/lightbox.svelte';
 	import TopNav from '$lib/components/top-nav.svelte';
 	import Sidebar from '$lib/components/sidebar.svelte';
@@ -103,6 +104,7 @@
 
 <ModeWatcher />
 <ThemeColor />
+<Favicon />
 <Lightbox />
 
 <!-- Fixed-viewport layout. Outer container is exactly the viewport

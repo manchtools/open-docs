@@ -12,12 +12,16 @@ import { createIndex } from 'pagefind';
 
 const server = process.argv[2] ?? `http://localhost:${process.env.PORT ?? 3000}`;
 const out = process.argv[3] ?? 'build/client/pagefind';
+// Sub-path deploys serve everything under BASE_PATH; the sitemap lives
+// there and page paths must carry the prefix (both for fetching and for
+// the URLs stored in the index, which the search UI links to).
+const base = (process.env.BASE_PATH ?? '').replace(/\/+$/, '');
 
 async function waitForServer(timeoutMs = 60_000): Promise<void> {
 	const t0 = Date.now();
 	for (;;) {
 		try {
-			const res = await fetch(`${server}/sitemap.xml`);
+			const res = await fetch(`${server}${base}/sitemap.xml`);
 			if (res.ok) return;
 		} catch {
 			// not up yet
@@ -29,11 +33,13 @@ async function waitForServer(timeoutMs = 60_000): Promise<void> {
 
 await waitForServer();
 
-const sitemap = await (await fetch(`${server}/sitemap.xml`)).text();
-const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) =>
-	// locs are absolute when PUBLIC_SITE_URL is set, path-only otherwise
-	new URL(m[1], server).pathname
-);
+const sitemap = await (await fetch(`${server}${base}/sitemap.xml`)).text();
+const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => {
+	// locs are absolute when PUBLIC_SITE_URL is set, path-only otherwise;
+	// either way the served path must carry the base prefix.
+	const p = new URL(m[1], server).pathname;
+	return p.startsWith(base + '/') || p === base ? p : base + (p === '/' ? '' : p) || '/';
+});
 if (paths.length === 0) throw new Error('sitemap listed no pages');
 
 const { index, errors } = await createIndex({});

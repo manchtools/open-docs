@@ -1,7 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
 import { base } from '$app/paths';
 import { env } from '$env/dynamic/private';
-import { existsSync } from 'node:fs';
+import { createReadStream, existsSync, statSync } from 'node:fs';
+import { Readable } from 'node:stream';
+import { join, resolve as resolvePath, sep } from 'node:path';
 import { getStore } from '$lib/server/store-instance';
 import { splitRequest } from '$lib/i18n';
 import { deriveFrameSrc } from '../scripts/derive-frame-src.js';
@@ -37,7 +39,54 @@ export const init = () => {
 	getStore();
 };
 
+// Static assets under BASE_PATH. The adapter serves build/client at the
+// ROOT only, but pages reference assets under the base (SvelteKit's
+// relative URLs resolve to /docs/favicon.svg etc.), so those requests
+// fall through to the router. Serve them from disk here — request-time,
+// traversal-guarded, and zero-cost when no base is configured. (A
+// build/client/<base> self-symlink was tried instead and crashes the
+// adapter's startup file walker with infinite recursion.)
+const CLIENT_ROOT = resolvePath('build/client');
+const MIME: Record<string, string> = {
+	'.svg': 'image/svg+xml',
+	'.png': 'image/png',
+	'.ico': 'image/x-icon',
+	'.webp': 'image/webp',
+	'.jpg': 'image/jpeg',
+	'.jpeg': 'image/jpeg',
+	'.gif': 'image/gif',
+	'.css': 'text/css; charset=utf-8',
+	'.js': 'text/javascript; charset=utf-8',
+	'.mjs': 'text/javascript; charset=utf-8',
+	'.json': 'application/json',
+	'.wasm': 'application/wasm',
+	'.woff2': 'font/woff2',
+	'.txt': 'text/plain; charset=utf-8',
+	'.xml': 'application/xml; charset=utf-8'
+};
+
+function baseStatic(pathname: string): Response | null {
+	if (!base || !pathname.startsWith(base + '/')) return null;
+	const rel = decodeURIComponent(pathname.slice(base.length + 1));
+	// Page routes have no file extension — skip the stat for them.
+	if (!rel.includes('.') || rel.includes('\0')) return null;
+	const target = resolvePath(join(CLIENT_ROOT, rel));
+	if (!target.startsWith(CLIENT_ROOT + sep)) return null;
+	try {
+		if (!statSync(target).isFile()) return null;
+	} catch {
+		return null;
+	}
+	const ext = target.slice(target.lastIndexOf('.'));
+	return new Response(Readable.toWeb(createReadStream(target)) as ReadableStream, {
+		headers: { 'content-type': MIME[ext] ?? 'application/octet-stream' }
+	});
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
+	const assetHit = baseStatic(event.url.pathname);
+	if (assetHit) return assetHit;
+
 	const store = getStore();
 	const path = event.url.pathname.slice(base.length).replace(/^\//, '');
 	const { lang } = splitRequest(path, store.languages, store.defaultLang);
