@@ -27,7 +27,7 @@ Un article est une page Markdown ordinaire avec une date :
 ---
 title: The launch post
 date: 2026-06-01
-author: /blog/authors/paul
+author: /blog/authors/ada
 tags: release, open-source
 description: How we launched, and what comes next.
 ---
@@ -62,24 +62,24 @@ articles (aucune date requise, jamais listées) :
 
 ```markdown
 ---
-title: Paul Dotterer        # blog/authors/paul.md
-avatar: authors/paul.png    # under static/
+title: Ada Lovelace        # blog/authors/ada.md
+avatar: authors/ada.png    # under static/
 ---
 
 Builds manchtools.
 ```
 
-Le `author: /blog/authors/paul` d'un article prend le nom dans le `title`
+Le `author: /blog/authors/ada` d'un article prend le nom dans le `title`
 de cette page, l'image dans `avatar:`, et fait pointer la signature vers
 la page. Un chemin qui ne se résout pas fait échouer la validation. Un
-simple `author: Paul Dotterer` fonctionne aussi : pas de page, pas
+simple `author: Ada Lovelace` fonctionne aussi : pas de page, pas
 d'avatar, aucune configuration.
 
 La même référence fonctionne dans le bloc `{% avatar %}`, si bien qu'un
 auteur est déclaré une seule fois et réutilisé partout :
 
 ```markdown
-{% avatar author="/blog/authors/paul" /%}
+{% avatar author="/blog/authors/ada" /%}
 ```
 
 Le nom, l'image, la bio (le premier paragraphe de la page) et le lien
@@ -94,13 +94,13 @@ Deux blocs conçus pour les blogs, utilisables partout :
 
 ```markdown
 {% hero src="/screenshots/cover.png" alt="…" title="Big news" subtitle="Optional" /%}
-{% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/authors/ada.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 En direct, avec les images de démonstration fournies :
 
 {% hero src="/screenshots/open-docs-home.png" alt="Couverture de démo" title="Grande nouvelle" subtitle="L'avatar ci-dessous chevauche de moitié" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Développe manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Ada Lovelace" description="Développe manchtools." /%}
 
 Placé directement après un hero, l'image de l'avatar **chevauche le bord inférieur du hero de la moitié de sa hauteur**, soit l'en-tête
 classique avec photo de couverture. Les deux s'affichent normalement

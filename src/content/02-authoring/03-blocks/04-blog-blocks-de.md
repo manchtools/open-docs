@@ -32,11 +32,11 @@ Hälfte – der klassische Cover-Foto-Header:
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Baut manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Baut manchtools." /%}
 
 Für sich allein rendert er mit normalem Abstand. Auf Beiträgen verwendet
 die Autorenzeile unter dem Titel dieselbe Komponente, gespeist aus dem

@@ -27,7 +27,7 @@ Una entrada es una página de Markdown normal con una fecha:
 ---
 title: The launch post
 date: 2026-06-01
-author: /blog/authors/paul
+author: /blog/authors/ada
 tags: release, open-source
 description: How we launched, and what comes next.
 ---
@@ -62,24 +62,24 @@ necesitan fecha y nunca se listan):
 
 ```markdown
 ---
-title: Paul Dotterer        # blog/authors/paul.md
-avatar: authors/paul.png    # under static/
+title: Ada Lovelace        # blog/authors/ada.md
+avatar: authors/ada.png    # under static/
 ---
 
 Builds manchtools.
 ```
 
-Una entrada con `author: /blog/authors/paul` toma el nombre del `title`
+Una entrada con `author: /blog/authors/ada` toma el nombre del `title`
 de esa página, la imagen de `avatar:` y enlaza la firma a la página. Una
 ruta que no se resuelve hace fallar la validación. Un simple
-`author: Paul Dotterer` también funciona: sin página, sin avatar, cero
+`author: Ada Lovelace` también funciona: sin página, sin avatar, cero
 configuración.
 
 La misma referencia funciona en el bloque `{% avatar %}`, de modo que un
 autor se declara una sola vez y se reutiliza en todas partes:
 
 ```markdown
-{% avatar author="/blog/authors/paul" /%}
+{% avatar author="/blog/authors/ada" /%}
 ```
 
 El nombre, la imagen, la bio (el primer párrafo de la página) y el
@@ -94,13 +94,13 @@ Dos bloques pensados para blogs, utilizables en cualquier parte:
 
 ```markdown
 {% hero src="/screenshots/cover.png" alt="…" title="Big news" subtitle="Optional" /%}
-{% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/authors/ada.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 En vivo, con las imágenes de demostración incluidas:
 
 {% hero src="/screenshots/open-docs-home.png" alt="Portada de demo" title="Grandes noticias" subtitle="El avatar de abajo se superpone a la mitad" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Construye manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Ada Lovelace" description="Construye manchtools." /%}
 
 Colocado justo después de un hero, la imagen del avatar
 **se solapa con el borde inferior del hero hasta la mitad de su altura**:

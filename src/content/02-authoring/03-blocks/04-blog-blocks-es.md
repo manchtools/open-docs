@@ -31,11 +31,11 @@ Una tarjeta de autor. Justo después de un hero, la imagen se solapa con
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Portada" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Construye manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Construye manchtools." /%}
 
 Por sí solo se renderiza con el espaciado normal. En las entradas, la
 firma bajo el título usa el mismo componente, alimentado por el

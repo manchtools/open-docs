@@ -30,11 +30,11 @@ the classic cover-photo header:
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Builds manchtools." /%}
 
 Standalone it renders with normal spacing. On posts, the byline under
 the title uses the same component, fed by the `author:` frontmatter.

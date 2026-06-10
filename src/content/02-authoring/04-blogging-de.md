@@ -27,7 +27,7 @@ Ein Beitrag ist eine gewöhnliche Markdown-Seite mit einem Datum:
 ---
 title: The launch post
 date: 2026-06-01
-author: /blog/authors/paul
+author: /blog/authors/ada
 tags: release, open-source
 description: How we launched, and what comes next.
 ---
@@ -62,25 +62,25 @@ Blog-Abschnitts ab. Die Seiten dort sind Profilseiten, keine Beiträge
 
 ```markdown
 ---
-title: Paul Dotterer        # blog/authors/paul.md
-avatar: authors/paul.png    # under static/
+title: Ada Lovelace        # blog/authors/ada.md
+avatar: authors/ada.png    # under static/
 ---
 
 Builds manchtools.
 ```
 
-Ein `author: /blog/authors/paul` im Beitrag übernimmt den Namen aus dem
+Ein `author: /blog/authors/ada` im Beitrag übernimmt den Namen aus dem
 `title` dieser Seite, das Bild aus `avatar:` und verlinkt die
 Autorenzeile mit der Seite. Ein Pfad, der sich nicht auflösen lässt,
 lässt die Validierung fehlschlagen. Ein schlichtes
-`author: Paul Dotterer` funktioniert ebenfalls – keine Seite, kein
+`author: Ada Lovelace` funktioniert ebenfalls – keine Seite, kein
 Avatar, null Einrichtung.
 
 Dieselbe Referenz funktioniert auch im `{% avatar %}`-Block – ein Autor
 wird also einmal angegeben und überall wiederverwendet:
 
 ```markdown
-{% avatar author="/blog/authors/paul" /%}
+{% avatar author="/blog/authors/ada" /%}
 ```
 
 Name, Bild, Bio (der erste Absatz der Seite) und der Link stammen alle
@@ -95,13 +95,13 @@ Zwei Blöcke, gemacht für Blogs, überall einsetzbar:
 
 ```markdown
 {% hero src="/screenshots/cover.png" alt="…" title="Big news" subtitle="Optional" /%}
-{% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/authors/ada.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 Live, mit den mitgelieferten Demo-Bildern:
 
 {% hero src="/screenshots/open-docs-home.png" alt="Demo-Cover" title="Große Neuigkeiten" subtitle="Der Avatar darunter überlappt zur Hälfte" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Entwickelt manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Ada Lovelace" description="Entwickelt manchtools." /%}
 
 Direkt nach einem Hero platziert, **überlappt das Bild des Avatars die Unterkante des Heros um die halbe Bildhöhe** – der klassische Cover-Foto-Header. Beide rendern für sich allein ganz normal. Ein Beitrag mit `cover:` bekommt den Hero automatisch.
 

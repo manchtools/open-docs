@@ -25,7 +25,7 @@ A post is a normal Markdown page with a date:
 ---
 title: The launch post
 date: 2026-06-01
-author: /blog/authors/paul
+author: /blog/authors/ada
 tags: release, open-source
 description: How we launched, and what comes next.
 ---
@@ -57,23 +57,23 @@ are profile pages, not posts (no date needed, never listed):
 
 ```markdown
 ---
-title: Paul Dotterer        # blog/authors/paul.md
-avatar: authors/paul.png    # under static/
+title: Ada Lovelace        # blog/authors/ada.md
+avatar: authors/ada.png    # under static/
 ---
 
 Builds manchtools.
 ```
 
-A post's `author: /blog/authors/paul` takes the name from that page's
+A post's `author: /blog/authors/ada` takes the name from that page's
 `title`, the image from `avatar:`, and links the byline to the page. A
 path that doesn't resolve fails validation. A plain
-`author: Paul Dotterer` works too: no page, no avatar, zero setup.
+`author: Ada Lovelace` works too: no page, no avatar, zero setup.
 
 The same reference works in the `{% avatar %}` block, so an author is
 stated once and reused everywhere:
 
 ```markdown
-{% avatar author="/blog/authors/paul" /%}
+{% avatar author="/blog/authors/ada" /%}
 ```
 
 Name, image, bio (the page's first paragraph), and the link all come
@@ -88,13 +88,13 @@ Two blocks made for blogs, usable anywhere:
 
 ```markdown
 {% hero src="/screenshots/cover.png" alt="…" title="Big news" subtitle="Optional" /%}
-{% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/authors/ada.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 Live, with the bundled demo images:
 
 {% hero src="/screenshots/open-docs-home.png" alt="Demo cover" title="Big news" subtitle="The avatar below overlaps by half" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Ada Lovelace" description="Builds manchtools." /%}
 
 Placed directly after a hero, the avatar's image **overlaps the hero**
 by half its height, the classic cover-photo header. Both

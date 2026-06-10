@@ -31,11 +31,11 @@ chevauche de moitié, soit l'en-tête classique avec photo de couverture :
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Couverture" /%}
-{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Développe manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Ada Lovelace" description="Développe manchtools." /%}
 
 En version autonome, elle s'affiche avec un espacement normal. Sur les
 articles, la signature sous le titre utilise le même composant, alimenté
