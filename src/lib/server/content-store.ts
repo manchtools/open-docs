@@ -442,6 +442,7 @@ export function createContentStore(opts: Options): ContentStore {
 	}
 
 	// --- post metadata (blog sections) -----------------------------------
+	// docref: begin post-frontmatter-contract
 	// `date: YYYY-MM-DD` is the canonical sort key and is REQUIRED on every
 	// post; a missing/malformed date fails the boot like any author error.
 	const postMeta: Record<string, PostMeta> = {};
@@ -513,6 +514,7 @@ export function createContentStore(opts: Options): ContentStore {
 			section
 		};
 	}
+	// docref: end post-frontmatter-contract
 
 	// Relative references, resolved per linking file (VSCode/GitHub style;
 	// sources are never rewritten): ./other.md, ../x.md#a, sibling.md, and

@@ -1,0 +1,2 @@
+[scan]
+include = ["docs/**/*.md", "src/content/**/*.md"]

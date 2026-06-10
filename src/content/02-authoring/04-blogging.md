@@ -19,6 +19,7 @@ blog: true        # in blog/index.md
 
 ## Posts
 
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract sha=bf9c57f0 -->
 A post is a normal Markdown page with a date:
 
 ```markdown
@@ -42,13 +43,16 @@ description: How we launched, and what comes next.
 Filenames are free-form (`launch-post.md` → `/blog/launch-post`); the
 date lives only in frontmatter. Posts use their own Newer/Older
 navigation and never mix into the docs prev/next chain.
+<!-- docref: end -->
 
 ## The listing
 
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract sha=bf9c57f0 -->
 The section's `index.md` renders its own prose first, then the
 generated post list: cover, localized date, reading time, author,
 description, and tags. Reading time is the post's word count at 200
 words per minute, rounded, minimum one minute.
+<!-- docref: end -->
 
 ## Authors are pages
 

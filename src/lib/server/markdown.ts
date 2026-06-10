@@ -222,6 +222,7 @@ export function applyFootnotes(content: string): string {
 	});
 	if (order.length === 0) return content;
 
+	// docref: begin footnote-block-form
 	// Block form (open/body/close on separate lines) is required: a
 	// single-line tag is an INLINE tag to Markdoc and would be wrapped in
 	// a paragraph — putting the <li> inside a <p>, which browsers repair
@@ -237,5 +238,6 @@ export function applyFootnotes(content: string): string {
 		'{% /footnotes %}',
 		''
 	];
+	// docref: end footnote-block-form
 	return replaced.join('\n') + section.join('\n');
 }

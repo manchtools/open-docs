@@ -10,6 +10,7 @@ editing the Markdown. Any environment variable starting with
 
 ## How it works
 
+<!-- docref: begin src=scripts/tokens.js#applyTokens sha=6536bf55 -->
 Set the variable:
 
 ```sh
@@ -27,6 +28,7 @@ page reads "Send requests to https://api.example.com/v1/widgets."
 
 The `PUBLIC_TOKEN_` prefix is dropped to form the placeholder name:
 `PUBLIC_TOKEN_SUPPORT_EMAIL` → `{{SUPPORT_EMAIL}}`.
+<!-- docref: end -->
 
 ## When to use it
 

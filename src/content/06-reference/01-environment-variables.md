@@ -11,6 +11,7 @@ Every variable is read at runtime when the container starts (only
 
 ## Site chrome
 
+<!-- docref: begin src=src/lib/server/site.ts#siteConfig sha=c0130420 -->
 | Variable | Default | Effect |
 |---|---|---|
 | `PUBLIC_BRAND_NAME` | `open-docs` | Brand text in the top bar. |
@@ -21,6 +22,7 @@ Every variable is read at runtime when the container starts (only
 | `PUBLIC_SITE_URL` | _(empty)_ | Full base URL, e.g. `https://docs.example.com`. Enables canonical URLs, `sitemap.xml`, `robots.txt`, and `llms.txt`. See [SEO & AI search](/customizing/seo). |
 | `PUBLIC_DEFAULT_LANG` | `en` | Default language for unprefixed URLs. See [Multi-language](/authoring/multi-language). |
 | `PUBLIC_REPO_URL` | _(empty)_ | Shows a GitHub link in nav + footer when set. |
+<!-- docref: end -->
 
 The mobile browser `theme-color` (the chrome tint) isn't set here. It
 follows your `--primary` token automatically, in both light and dark
@@ -44,10 +46,12 @@ mode. See [Theming](/customizing/theming).
 These only apply to the Docker image and point the entrypoint at
 alternate source directories. Most users never change them.
 
+<!-- docref: begin src=src/lib/server/store-instance.ts#contentDir sha=9be957b8 -->
 | Variable | Default | Effect |
 |---|---|---|
 | `OPEN_DOCS_CONTENT` | `/content` | Directory copied into `src/content/`. |
 | `OPEN_DOCS_STATIC` | `/static` | Directory merged into `static/`. |
+<!-- docref: end -->
 
 {% callout type="info" title="PUBLIC_ is not a secret prefix" %}
 `PUBLIC_*` values are delivered to the browser and visible to

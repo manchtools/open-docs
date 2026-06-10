@@ -5,9 +5,11 @@ label: Markdoc tags
 
 # Markdoc tags
 
+<!-- docref: begin src=src/lib/markdoc/tags.svelte sha=7c5c0d6c -->
 A reference for the custom blocks layered on top of Markdown, plus the
 enhanced Markdown elements. For usage with examples, see
 [Authoring](/authoring).
+<!-- docref: end -->
 
 ## Custom tags
 
