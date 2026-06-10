@@ -124,3 +124,12 @@ describe('GFM task lists', () => {
 		expect(out).toContain('plain item');
 	});
 });
+
+describe('footnotes + comment stripping (rendered)', () => {
+	it('renders sup reference, end list with backlink, and no comments', () => {
+		const out = html('en', 'getting-started/install');
+		expect(out).toMatch(/<sup[^>]*od-fnref[\s\S]*?href="#fn-src"[^>]*id="fnref-src"/);
+		expect(out).toMatch(/<li id="fn-src"[\s\S]*?manual[\s\S]*?href="#fnref-src"/);
+		expect(out).not.toContain('hide me');
+	});
+});

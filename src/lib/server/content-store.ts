@@ -16,7 +16,7 @@ import Markdoc, { type RenderableTreeNode } from '@markdoc/markdoc';
 import { cleanSlug, stripPrefix, titleFromSegment } from '../slug';
 import { slugLang, pickLanguages, hrefFor } from '../i18n';
 import type { NavItem, NavNode } from '../nav-core';
-import { applyHeadingAnchors } from './markdown';
+import { applyHeadingAnchors, applyFootnotes, stripHtmlComments } from './markdown';
 import { buildSchemaFromRegistry, type RegistrySchema } from './markdoc-schema';
 import { applyTokens, buildTokenMap } from '../../../scripts/tokens.js';
 
@@ -396,7 +396,7 @@ export function createContentStore(opts: Options): ContentStore {
 		) {
 			continue;
 		}
-		const raw = applyHeadingAnchors(applyTokens(original, tokens));
+		const raw = applyHeadingAnchors(applyFootnotes(stripHtmlComments(applyTokens(original, tokens))));
 		const ast = Markdoc.parse(raw);
 		// Fences are literal. Markdoc parses {% tags %} inside code fences
 		// into child nodes (process=true by default), which would validate

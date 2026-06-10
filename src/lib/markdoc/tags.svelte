@@ -40,4 +40,10 @@
 	export { default as Avatar } from './components/Avatar.svelte';
 	export { default as Quote } from './components/Quote.svelte';
 	export { default as Gallery } from './components/Gallery.svelte';
+
+	// Footnote rendering (emitted by the GFM-footnote source pass; authors
+	// write [^id], not these tags).
+	export { default as Footnotes } from './components/Footnotes.svelte';
+	export { default as Footnote } from './components/Footnote.svelte';
+	export { default as FootnoteRef } from './components/FootnoteRef.svelte';
 </script>

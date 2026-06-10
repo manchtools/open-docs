@@ -84,3 +84,150 @@ export function applyHeadingAnchors(content: string): string {
 
 	return changed ? lines.join('\n') : content;
 }
+
+/**
+ * Strip HTML comments outside code fences. Comments are author notes
+ * (review remarks, disabled snippets) — rendering them as literal text
+ * would leak them onto the page, and HTML is never rendered here.
+ */
+export function stripHtmlComments(content: string): string {
+	const lines = content.split('\n');
+	let fenceChar = '';
+	let fenceLen = 0;
+	let inComment = false;
+	let changed = false;
+	const out: string[] = [];
+
+	for (const line of lines) {
+		const fence = /^\s*(`{3,}|~{3,})/.exec(line);
+		if (fence && !inComment) {
+			const char = fence[1][0];
+			const len = fence[1].length;
+			if (!fenceChar) {
+				fenceChar = char;
+				fenceLen = len;
+			} else if (char === fenceChar && len >= fenceLen) {
+				fenceChar = '';
+				fenceLen = 0;
+			}
+			out.push(line);
+			continue;
+		}
+		if (fenceChar) {
+			out.push(line);
+			continue;
+		}
+
+		let rest = line;
+		let kept = '';
+		for (;;) {
+			if (inComment) {
+				const end = rest.indexOf('-->');
+				if (end === -1) {
+					rest = '';
+					break;
+				}
+				rest = rest.slice(end + 3);
+				inComment = false;
+				changed = true;
+			}
+			const start = rest.indexOf('<!--');
+			if (start === -1) {
+				kept += rest;
+				break;
+			}
+			kept += rest.slice(0, start);
+			rest = rest.slice(start + 4);
+			inComment = true;
+			changed = true;
+		}
+		// Drop lines that were nothing but comment; keep partial lines.
+		if (kept !== '' || !changed || line.trim() === '' || kept.trim() !== '') {
+			if (!(kept === '' && line.trim().startsWith('<!--'))) out.push(kept === '' ? line : kept);
+			else if (kept !== '') out.push(kept);
+		}
+	}
+
+	return changed ? out.join('\n') : content;
+}
+
+/**
+ * GFM footnotes as a source pass (like heading anchors). References
+ * `[^id]` become `{% footnoteref %}` tags numbered by first appearance;
+ * definition lines `[^id]: text` are collected, removed, and re-emitted
+ * at the end of the page inside a `{% footnotes %}` block, keeping the
+ * definition's inline markdown. Fenced code is untouched; references
+ * without a definition stay literal.
+ */
+export function applyFootnotes(content: string): string {
+	const lines = content.split('\n');
+	const defs = new Map<string, string>();
+	let fenceChar = '';
+	let fenceLen = 0;
+
+	// Pass 1: collect + remove definitions (outside fences).
+	const body: string[] = [];
+	for (const line of lines) {
+		const fence = /^\s*(`{3,}|~{3,})/.exec(line);
+		if (fence) {
+			const char = fence[1][0];
+			const len = fence[1].length;
+			if (!fenceChar) {
+				fenceChar = char;
+				fenceLen = len;
+			} else if (char === fenceChar && len >= fenceLen) {
+				fenceChar = '';
+				fenceLen = 0;
+			}
+			body.push(line);
+			continue;
+		}
+		if (fenceChar) {
+			body.push(line);
+			continue;
+		}
+		const def = /^\[\^([^\]\s]+)\]:\s+(.*)$/.exec(line);
+		if (def) {
+			defs.set(def[1], def[2]);
+			continue;
+		}
+		body.push(line);
+	}
+	if (defs.size === 0) return content;
+
+	// Pass 2: replace references (outside fences) numbered by appearance.
+	const order: string[] = [];
+	fenceChar = '';
+	fenceLen = 0;
+	const replaced = body.map((line) => {
+		const fence = /^\s*(`{3,}|~{3,})/.exec(line);
+		if (fence) {
+			const char = fence[1][0];
+			const len = fence[1].length;
+			if (!fenceChar) {
+				fenceChar = char;
+				fenceLen = len;
+			} else if (char === fenceChar && len >= fenceLen) {
+				fenceChar = '';
+				fenceLen = 0;
+			}
+			return line;
+		}
+		if (fenceChar) return line;
+		return line.replace(/\[\^([^\]\s]+)\]/g, (whole, id: string) => {
+			if (!defs.has(id)) return whole;
+			if (!order.includes(id)) order.push(id);
+			return `{% footnoteref n=${order.indexOf(id) + 1} id="${id}" /%}`;
+		});
+	});
+	if (order.length === 0) return content;
+
+	const section = [
+		'',
+		'{% footnotes %}',
+		...order.map((id) => `{% footnote id="${id}" n=${order.indexOf(id) + 1} %}${defs.get(id)}{% /footnote %}`),
+		'{% /footnotes %}',
+		''
+	];
+	return replaced.join('\n') + section.join('\n');
+}

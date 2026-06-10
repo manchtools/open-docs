@@ -92,3 +92,56 @@ describe('applyHeadingAnchors', () => {
 		expect(applyHeadingAnchors(src)).toBe(src);
 	});
 });
+
+import { applyFootnotes, stripHtmlComments } from './markdown';
+
+describe('stripHtmlComments', () => {
+	it('removes single-line and multi-line comments outside fences', () => {
+		const out = stripHtmlComments('a <!-- note -->b\n<!-- multi\nline -->\nc\n');
+		expect(out).not.toContain('note');
+		expect(out).not.toContain('multi');
+		expect(out).toContain('a b');
+		expect(out).toContain('c');
+	});
+
+	it('leaves comments inside code fences alone', () => {
+		const src = '```html\n<!-- keep me -->\n```\n';
+		expect(stripHtmlComments(src)).toBe(src);
+	});
+
+	it('returns input unchanged when there is nothing to strip', () => {
+		const src = 'plain text\n';
+		expect(stripHtmlComments(src)).toBe(src);
+	});
+});
+
+describe('applyFootnotes', () => {
+	it('turns references into footnoteref tags and definitions into a footnotes block', () => {
+		const out = applyFootnotes('Fact[^a] and more[^b].\n\n[^a]: First note.\n[^b]: Second *note*.\n');
+		expect(out).toContain('{% footnoteref n=1 id="a" /%}');
+		expect(out).toContain('{% footnoteref n=2 id="b" /%}');
+		expect(out).not.toMatch(/^\[\^a\]:/m);
+		expect(out).toContain('{% footnotes %}');
+		expect(out).toContain('{% footnote id="a" n=1 %}First note.{% /footnote %}');
+		expect(out).toContain('Second *note*.');
+	});
+
+	it('numbers by first reference order, not definition order', () => {
+		const out = applyFootnotes('See[^z] then[^y].\n\n[^y]: Y.\n[^z]: Z.\n');
+		expect(out).toContain('{% footnoteref n=1 id="z" /%}');
+		expect(out).toContain('{% footnoteref n=2 id="y" /%}');
+	});
+
+	it('ignores fenced content and undefined references', () => {
+		const src = '```\n[^a] not a ref\n```\n\nReal[^a] and broken[^nope].\n\n[^a]: Note.\n';
+		const out = applyFootnotes(src);
+		expect(out).toContain('[^a] not a ref');
+		expect(out).toContain('broken[^nope]');
+		expect(out).toContain('{% footnoteref n=1 id="a" /%}');
+	});
+
+	it('returns input unchanged without footnotes', () => {
+		const src = 'No notes here.\n';
+		expect(applyFootnotes(src)).toBe(src);
+	});
+});
