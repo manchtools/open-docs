@@ -69,6 +69,19 @@ A post's `author: /blog/authors/paul` takes the name from that page's
 path that doesn't resolve fails validation. A plain
 `author: Paul Dotterer` works too — no page, no avatar, zero setup.
 
+The same reference works in the `{% avatar %}` block, so an author is
+stated once and reused everywhere:
+
+```markdown
+{% avatar author="/blog/authors/paul" /%}
+```
+
+Name, image, bio (the page's first paragraph), and the link all come
+from the author page; any attribute you set explicitly wins. In short:
+`author:` frontmatter is *metadata* (listing, byline, feed), the
+`{% avatar %}` block is the *visual card* — and both can point at the
+same page.
+
 ## Hero & avatar blocks
 
 Two blocks made for blogs, usable anywhere:

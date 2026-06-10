@@ -103,3 +103,13 @@ describe('quote + gallery blocks', () => {
 		expect((out.match(/<img[^>]*alt="(one|two)"/g) ?? []).length).toBe(2);
 	});
 });
+
+describe('avatar referencing an author page', () => {
+	it('resolves name/avatar/bio from the page', () => {
+		const out = html('en', 'blog/second-post');
+		expect(out).toContain('Jane Doe');
+		expect(out).toMatch(/<img src="\/screenshots\/exists\.png"[^>]*od-avatar-img/);
+		expect(out).toMatch(/<a href="\/blog\/authors\/jane"[^>]*>Jane Doe/);
+		expect(out).toContain('Writes the second posts.');
+	});
+});

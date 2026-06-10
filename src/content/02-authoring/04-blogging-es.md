@@ -75,6 +75,19 @@ ruta que no se resuelve hace fallar la validación. Un simple
 `author: Paul Dotterer` también funciona: sin página, sin avatar, cero
 configuración.
 
+La misma referencia funciona en el bloque `{% avatar %}`, de modo que un
+autor se declara una sola vez y se reutiliza en todas partes:
+
+```markdown
+{% avatar author="/blog/authors/paul" /%}
+```
+
+El nombre, la imagen, la bio (el primer párrafo de la página) y el
+enlace vienen todos de la página del autor; cualquier atributo definido
+explícitamente gana. En resumen: el frontmatter `author:` son
+*metadatos* (listado, firma, feed), el bloque `{% avatar %}` es la
+*tarjeta visual* — y ambos pueden apuntar a la misma página.
+
 ## Bloques hero y avatar
 
 Dos bloques pensados para blogs, utilizables en cualquier parte:

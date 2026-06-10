@@ -75,6 +75,19 @@ la page. Un chemin qui ne se résout pas fait échouer la validation. Un
 simple `author: Paul Dotterer` fonctionne aussi — pas de page, pas
 d'avatar, aucune configuration.
 
+La même référence fonctionne dans le bloc `{% avatar %}`, si bien qu'un
+auteur est déclaré une seule fois et réutilisé partout :
+
+```markdown
+{% avatar author="/blog/authors/paul" /%}
+```
+
+Le nom, l'image, la bio (le premier paragraphe de la page) et le lien
+proviennent tous de la page d'auteur ; tout attribut que vous définissez
+explicitement l'emporte. En bref : le frontmatter `author:` relève des
+*métadonnées* (liste, signature, flux), le bloc `{% avatar %}` est la
+*carte visuelle* — et les deux peuvent pointer vers la même page.
+
 ## Les blocs hero et avatar
 
 Deux blocs conçus pour les blogs, utilisables partout :

@@ -12,12 +12,16 @@
 	// name/description stay below the hero edge so text never sits on the
 	// photo. Standalone, the block renders with normal spacing.
 	let {
-		name,
+		// `author` (a site-absolute author-page path) is resolved server-side
+		// into the other props; declared here so the schema accepts it.
+		author = undefined,
+		name = '',
 		src = undefined,
 		description = undefined,
 		url = undefined
 	}: {
-		name: string;
+		author?: string;
+		name?: string;
 		src?: string;
 		description?: string;
 		url?: string;
@@ -26,6 +30,8 @@
 	const resolved = $derived(
 		src ? (src.startsWith('http') ? src : base + (src.startsWith('/') ? src : '/' + src)) : undefined
 	);
+	const link = $derived(url ? (url.startsWith('/') ? base + url : url) : undefined);
+	void author;
 </script>
 
 <div class="od-avatar not-prose my-8 flex items-start gap-4">
@@ -37,8 +43,8 @@
 		/>
 	{/if}
 	<div class="min-w-0 pt-1">
-		{#if url}
-			<a href={url} class="font-semibold text-foreground underline-offset-4 hover:underline"
+		{#if link}
+			<a href={link} class="font-semibold text-foreground underline-offset-4 hover:underline"
 				>{name}</a
 			>
 		{:else}

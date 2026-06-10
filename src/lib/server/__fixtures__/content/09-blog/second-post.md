@@ -16,3 +16,5 @@ The engine weaves algebraic patterns.
 ![one](/screenshots/exists.png)
 ![two](/screenshots/exists.png)
 {% /gallery %}
+
+{% avatar author="/blog/authors/jane" /%}

@@ -76,6 +76,19 @@ lässt die Validierung fehlschlagen. Ein schlichtes
 `author: Paul Dotterer` funktioniert ebenfalls – keine Seite, kein
 Avatar, null Einrichtung.
 
+Dieselbe Referenz funktioniert auch im `{% avatar %}`-Block – ein Autor
+wird also einmal angegeben und überall wiederverwendet:
+
+```markdown
+{% avatar author="/blog/authors/paul" /%}
+```
+
+Name, Bild, Bio (der erste Absatz der Seite) und der Link stammen alle
+von der Autorenseite; jedes Attribut, das Sie explizit setzen, gewinnt.
+Kurz gesagt: Das `author:`-Frontmatter sind *Metadaten* (Auflistung,
+Autorenzeile, Feed), der `{% avatar %}`-Block ist die *visuelle Karte* –
+und beide können auf dieselbe Seite zeigen.
+
 ## Hero- & Avatar-Blöcke
 
 Zwei Blöcke, gemacht für Blogs, überall einsetzbar:

@@ -452,6 +452,28 @@ export function createContentStore(opts: Options): ContentStore {
 		};
 	}
 
+	// {% avatar author="/path" %}: fill name/src/description/url from the
+	// referenced page so authors are stated once. Unresolvable → boot error.
+	for (const f of files) {
+		(function enrich(n: unknown): void {
+			if (Array.isArray(n)) return n.forEach(enrich);
+			if (!n || typeof n !== 'object') return;
+			const tag = n as { name?: string; attributes?: Record<string, unknown>; children?: unknown };
+			if (tag.name === 'Avatar' && typeof tag.attributes?.author === 'string') {
+				const ref = defaultFiles.get((tag.attributes.author as string).replace(/^\//, ''));
+				if (!ref) {
+					errors.push({ file: f.shortPath, message: `author page not found: ${tag.attributes.author}` });
+				} else {
+					tag.attributes.name ??= ref.fm.title ?? ref.slug.split('/').pop();
+					tag.attributes.src ??= ref.fm.avatar;
+					tag.attributes.description ??= firstParagraph(ref.raw);
+					tag.attributes.url ??= '/' + ref.slug;
+				}
+			}
+			enrich(tag.children);
+		})(f.tree);
+	}
+
 	// Nav order for posts: newest-first via negated timestamp; same-date
 	// ties rank by title DESCENDING (v0.4.0 above v0.3.3), mirrored in
 	// postsFor(). The +rank (0..n ms) never crosses into the previous day.
