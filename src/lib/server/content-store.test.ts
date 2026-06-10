@@ -301,3 +301,32 @@ describe('cover derived from a body hero', () => {
 		expect(none?.cover).toBeUndefined();
 	});
 });
+
+describe('plain-markdown compatibility (0.6 M1)', () => {
+	const plain = createContentStore({
+		contentDir: 'src/lib/server/__fixtures__/content-plain',
+		defaultLang: 'en'
+	});
+
+	it('README.md acts as the folder index', () => {
+		// root README.md → landing slug '' (like index.md)
+		expect(plain.errors).toEqual([]);
+		expect(plain.getPage('en', '')).toBeTruthy();
+	});
+
+	it('resolves relative .md links against the linking file', () => {
+		const home = JSON.stringify(plain.getPage('en', '')?.tree);
+		expect(home).toContain('"/guides/setup"');
+		expect(home).toContain('"/guides/setup#install"');
+		expect(home).not.toContain('setup.md');
+		const setup = JSON.stringify(plain.getPage('en', 'guides/setup')?.tree);
+		expect(setup).toContain('"/"'); // ../README.md → landing
+	});
+
+	it('resolves relative image srcs and renders them as Screenshot tags', () => {
+		const setup = JSON.stringify(plain.getPage('en', 'guides/setup')?.tree);
+		expect(setup).toContain('Screenshot');
+		expect(setup).toContain('/guides/images/pic.png');
+		expect(setup).not.toContain('./images/pic.png');
+	});
+});
