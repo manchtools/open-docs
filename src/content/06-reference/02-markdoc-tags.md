@@ -30,7 +30,7 @@ Body Markdown.
 
 ### tabs / tab
 
-<!-- docref: begin src=src/lib/markdoc/components/Tabs.svelte#@props sha=17c65a4f -->
+<!-- docref: begin src=src/lib/markdoc/components/Tabs.svelte#@props,src/lib/markdoc/components/Tab.svelte#@props sha=17c65a4f,0ce05808 -->
 ````markdown
 {% tabs labels="One, Two" initial="One" %}
   {% tab label="One" %} … {% /tab %}
@@ -68,7 +68,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### steps / step
 
-<!-- docref: begin src=src/lib/markdoc/components/Step.svelte#@props sha=ed2ce0a8 -->
+<!-- docref: begin src=src/lib/markdoc/components/Steps.svelte#@props,src/lib/markdoc/components/Step.svelte#@props sha=26850e43,ed2ce0a8 -->
 ````markdown
 {% steps %}
   {% step title="First" %} … {% /step %}
@@ -81,7 +81,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### cards / card
 
-<!-- docref: begin src=src/lib/markdoc/components/Card.svelte#@props sha=c82718eb -->
+<!-- docref: begin src=src/lib/markdoc/components/Cards.svelte#@props,src/lib/markdoc/components/Card.svelte#@props sha=26850e43,c82718eb -->
 ````markdown
 {% cards %}
   {% card title="…" href="/path" icon="🚀" %} description {% /card %}
@@ -97,7 +97,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### accordions / accordion
 
-<!-- docref: begin src=src/lib/markdoc/components/Accordion.svelte#@props sha=ed2ce0a8 -->
+<!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props,src/lib/markdoc/components/Accordion.svelte#@props sha=84cfb144,ed2ce0a8 -->
 ````markdown
 {% accordions %}
   {% accordion title="Question?" %} answer {% /accordion %}
@@ -177,7 +177,7 @@ only when the built-in heading weights aren't enough to surface something.
 
 ### columns / column
 
-<!-- docref: begin src=src/lib/markdoc/components/Columns.svelte#@props sha=26850e43 -->
+<!-- docref: begin src=src/lib/markdoc/components/Columns.svelte#@props,src/lib/markdoc/components/Column.svelte#@props sha=26850e43,671be0b5 -->
 Side-by-side columns that stack on mobile, capped at three across; a
 fourth wraps to the next row. Two columns fill 50/50, three fill in thirds.
 
@@ -191,7 +191,7 @@ fourth wraps to the next row. Two columns fill 50/50, three fill in thirds.
 
 ### grid
 
-<!-- docref: begin src=src/lib/markdoc/components/Grid.svelte#@props sha=7451a1f3 -->
+<!-- docref: begin src=src/lib/markdoc/components/Grid.svelte#@props,src/lib/markdoc/components/Column.svelte#@props sha=7451a1f3,671be0b5 -->
 A responsive grid for laying content out in shapes other than a single
 top-to-bottom column. `cols` (1–3, default 2) sets the track count on
 larger screens; cells stack to one column on mobile. A cell can span
