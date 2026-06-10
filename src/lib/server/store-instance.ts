@@ -85,5 +85,10 @@ function build(dir: string): ContentStore {
 			throw new Error(`[open-docs] content validation failed:\n${listing}`);
 		}
 	}
+	// One unambiguous line about what is actually being served — the
+	// answer to "is this my content or the bundled docs?".
+	console.log(
+		`[open-docs] content source: ${dir} — ${store.listPaths().length} pages, languages: ${store.languages.join(', ')}`
+	);
 	return store;
 }

@@ -25,6 +25,15 @@ PORT="${PORT:-3000}"
 if [ -d "$CONTENT_SRC" ] && [ -n "$(ls -A "$CONTENT_SRC" 2>/dev/null || true)" ]; then
     echo "[open-docs] serving content from $CONTENT_SRC"
     export OPEN_DOCS_CONTENT="$CONTENT_SRC"
+elif grep -qs " $CONTENT_SRC " /proc/self/mounts; then
+    # Something IS mounted there but it's empty — almost always a host
+    # path typo: `docker run -v ./pathh:/content` silently creates the
+    # missing host directory as empty. Say so, loudly.
+    echo "[open-docs] WARNING: $CONTENT_SRC is mounted but EMPTY."
+    echo "[open-docs]   If you used -v <hostpath>:$CONTENT_SRC, check that <hostpath> exists —"
+    echo "[open-docs]   Docker creates missing host paths as empty directories."
+    echo "[open-docs]   Serving the bundled open-docs documentation instead."
+    unset OPEN_DOCS_CONTENT || true
 else
     echo "[open-docs] no content mounted at $CONTENT_SRC — serving the bundled open-docs documentation"
     unset OPEN_DOCS_CONTENT || true
