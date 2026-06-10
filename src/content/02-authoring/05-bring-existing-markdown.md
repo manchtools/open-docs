@@ -18,9 +18,9 @@ renders without rewriting. The conventions those tools rely on hold:
   its `README.md` takes that role.
 - **Images next to your markdown.** `![diagram](./images/arch.png)`
   renders in place and the file is served from your content folder; no
-  move to `static/` needed. Every markdown image — relative, absolute,
-  or a web URL — displays through the screenshot frame in its plain
-  variant.
+  move to `static/` needed. Every markdown image, whether relative,
+  absolute, or a web URL, displays through the screenshot frame in its
+  plain variant.
 - **Task lists.** `- [ ]` and `- [x]` render as checkboxes.
 - **Footnotes.** `[^1]` references become numbered superscript links
   with the definitions listed at the end of the page.
