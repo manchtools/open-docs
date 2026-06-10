@@ -137,3 +137,17 @@ fest; Zellen stapeln sich auf Mobilgeräten. Eine Zelle kann mit
   {% column span=2 %} a wider cell {% /column %}
 {% /grid %}
 ````
+
+## Aufgabenlisten
+
+Kein Tag: einfache GFM-Syntax wird als Kontrollkästchen gerendert.
+
+```markdown
+- [x] write the docs
+- [ ] translate them
+- [ ] ship the release
+```
+
+- [x] Dokumentation schreiben
+- [ ] Übersetzungen anfertigen
+- [ ] Release veröffentlichen

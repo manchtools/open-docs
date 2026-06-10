@@ -137,3 +137,17 @@ pistas con `{% column span=2 %}`.
   {% column span=2 %} a wider cell {% /column %}
 {% /grid %}
 ````
+
+## Listas de tareas
+
+No es una etiqueta: la sintaxis GFM normal se muestra como casillas de verificación.
+
+```markdown
+- [x] write the docs
+- [ ] translate them
+- [ ] ship the release
+```
+
+- [x] escribir la documentación
+- [ ] preparar las traducciones
+- [ ] publicar la versión

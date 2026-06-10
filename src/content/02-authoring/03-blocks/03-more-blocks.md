@@ -133,3 +133,17 @@ mobile. A cell can span tracks with `{% column span=2 %}`.
   {% column span=2 %} a wider cell {% /column %}
 {% /grid %}
 ````
+
+## Task lists
+
+Not a tag: plain GFM syntax renders as checkboxes.
+
+```markdown
+- [x] write the docs
+- [ ] translate them
+- [ ] ship the release
+```
+
+- [x] write the docs
+- [ ] translate them
+- [ ] ship the release
