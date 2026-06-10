@@ -25,6 +25,9 @@ Los bloques de contenido: callouts, pestañas, pasos, tarjetas y más.
 {% card title="Blogs" href="/es/authoring/blogging" icon="📰" %}
 Entradas con fecha, listados, autores, etiquetas y feeds, todo por sección.
 {% /card %}
+{% card title="Markdown existente" href="/es/authoring/bring-existing-markdown" icon="📦" %}
+Las convenciones de GitHub/VSCode se mantienen: enlaces relativos, README.md, notas al pie.
+{% /card %}
 {% card title="Multiidioma" href="/es/authoring/multi-language" icon="🌐" %}
 Traduce páginas con un sufijo en el nombre de archivo; el idioma por defecto se queda sin prefijo.
 {% /card %}

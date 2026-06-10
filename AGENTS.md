@@ -109,9 +109,12 @@ a directly preceding hero by half its image), `{% quote %}`,
 
 ### Links
 
-Internal links are **absolute site paths** — no `.md`, no `NN-` prefix,
-no base path: `[Quick start](/getting-started/quick-start)`. The base
-path (`BASE_PATH`) is applied automatically; never hardcode it.
+Internal links are **absolute site paths** with no `.md` and no `NN-`
+prefix: `[Quick start](/getting-started/quick-start)`. The base path
+(`BASE_PATH`) is applied automatically; never hardcode it. Relative
+editor-style links (`./other.md#section`, `../intro.md`) also resolve,
+for markdown brought from elsewhere — prefer absolute paths when
+writing new content.
 
 ---
 
@@ -123,8 +126,14 @@ Standard CommonMark + GitHub tables and task lists. On top of that:
   on hover — automatically.
 - **Links** to external URLs open in a new tab with safe `rel`.
 - **Code fences** are syntax-highlighted (Shiki) with a copy button.
-- **Images:** put files under `static/` and link them from `/…`, or use
-  `{% screenshot %}` (below).
+- **Images:** `![alt](…)` renders through the screenshot frame (plain
+  variant) whether the src is relative to the file, under `static/`, or
+  a web URL; files next to the markdown are served in place. Use
+  `{% screenshot %}` (below) for the framed look, captions, or dark
+  variants.
+- **Footnotes:** `[^1]` works (GFM style). **Task lists** render as
+  checkboxes. **HTML comments** are stripped; **inline HTML is never
+  rendered**; **bare URLs stay plain text** (links are explicit).
 
 When an example needs to *show* a Markdoc tag or a code fence literally,
 put it inside a code fence. If the example itself contains a ```` ``` ````

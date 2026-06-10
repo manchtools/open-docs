@@ -25,6 +25,9 @@ Die Content-Blöcke: Callouts, Tabs, Steps, Cards und mehr.
 {% card title="Blogging" href="/de/authoring/blogging" icon="📰" %}
 Datierte Beiträge, Auflistungen, Autoren, Tags und Feeds – pro Abschnitt.
 {% /card %}
+{% card title="Vorhandenes Markdown" href="/de/authoring/bring-existing-markdown" icon="📦" %}
+GitHub/VSCode-Konventionen gelten: relative Links, README.md, Fußnoten.
+{% /card %}
 {% card title="Mehrsprachigkeit" href="/de/authoring/multi-language" icon="🌐" %}
 Übersetzen Sie Seiten über ein Dateinamen-Suffix; die Standardsprache bleibt ohne Präfix.
 {% /card %}

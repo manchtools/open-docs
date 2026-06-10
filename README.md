@@ -50,6 +50,13 @@ PUBLIC_BRAND_NAME="My Project" bun run dev
 Drop your `.md` / `.markdoc` files into `src/content/`. The dev server
 hot-reloads on save.
 
+Markdown written for GitHub or VSCode works as-is: relative links
+(`./other.md#section`), `README.md` as the folder page, images next to
+your files, task lists, and footnotes all render. Inline HTML is never
+rendered and bare URLs stay text, by design. See the
+[Bring existing markdown](./src/content/02-authoring/05-bring-existing-markdown.md)
+docs page.
+
 ## Content layout
 
 The sidebar is derived **entirely from the folder structure** — there

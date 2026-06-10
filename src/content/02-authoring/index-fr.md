@@ -25,6 +25,9 @@ Les blocs de contenu : callouts, onglets, étapes, cartes, et plus encore.
 {% card title="Blog" href="/fr/authoring/blogging" icon="📰" %}
 Articles datés, listes générées, auteurs, tags et flux, le tout par section.
 {% /card %}
+{% card title="Markdown existant" href="/fr/authoring/bring-existing-markdown" icon="📦" %}
+Les conventions GitHub/VSCode tiennent : liens relatifs, README.md, notes de bas de page.
+{% /card %}
 {% card title="Multilingue" href="/fr/authoring/multi-language" icon="🌐" %}
 Traduisez les pages avec un suffixe dans le nom de fichier ; la langue par défaut reste sans préfixe.
 {% /card %}
