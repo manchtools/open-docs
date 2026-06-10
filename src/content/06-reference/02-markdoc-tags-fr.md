@@ -200,7 +200,7 @@ Directement après un `hero`, l'image chevauche le bord inférieur du hero
 de la moitié de sa hauteur.
 
 ```markdown
-{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+{% avatar src="/authors/ada.png" name="Ada" description="…" url="…" /%}
 ```
 
 ### quote

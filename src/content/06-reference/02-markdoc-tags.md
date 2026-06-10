@@ -193,7 +193,7 @@ An author card: round image, name, optional bio and link. Directly after
 a `hero`, the image overlaps the hero's bottom edge by half its height.
 
 ```markdown
-{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+{% avatar src="/authors/ada.png" name="Ada" description="…" url="…" /%}
 ```
 
 ### quote

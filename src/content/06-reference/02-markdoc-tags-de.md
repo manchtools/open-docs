@@ -199,7 +199,7 @@ Direkt nach einem `hero` überlappt das Bild die Unterkante des Heros um
 die halbe Bildhöhe.
 
 ```markdown
-{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+{% avatar src="/authors/ada.png" name="Ada" description="…" url="…" /%}
 ```
 
 ### quote
