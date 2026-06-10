@@ -234,3 +234,55 @@ describe('blog mode (per-section opt-in)', () => {
 		expect(bad.errors.map((e) => e.message).join('\n')).toMatch(/cover/i);
 	});
 });
+
+describe('authors as pages + tags', () => {
+	it('resolves an author page path into name, avatar, and link', () => {
+		const post = store.getPage('en', 'blog/second-post')?.post;
+		expect(post?.author).toBe('Jane Doe');
+		expect(post?.authorAvatar).toBe('screenshots/exists.png');
+		expect(post?.authorHref).toBe('/blog/authors/jane');
+	});
+
+	it('keeps a literal author as a plain display name', () => {
+		const post = store.getPage('en', 'blog/first-post')?.post;
+		expect(post?.author).toBe('Paul');
+		expect(post?.authorHref).toBeUndefined();
+	});
+
+	it('author pages are not posts: no date needed, absent from the listing', () => {
+		expect(store.postsFor('en', 'blog').some((p) => p.title === 'Jane Doe')).toBe(false);
+		expect(store.getPage('en', 'blog/authors/jane')).toBeTruthy();
+	});
+
+	it('rejects an author path that resolves to no page (fail closed)', () => {
+		const bad = createContentStore({
+			contentDir: 'src/lib/server/__fixtures__/content-badauthor',
+			defaultLang: 'en'
+		});
+		expect(bad.errors.map((e) => e.message).join('\n')).toMatch(/author.*ghost/i);
+	});
+
+	it('exposes tag pages as servable paths and filters posts by tag', () => {
+		expect(store.listPaths()).toContain('/blog/tags/release');
+		expect(store.listPaths()).toContain('/blog/tags/security');
+		const tagged = store.postsByTag('en', 'blog', 'release');
+		expect(tagged.map((p) => p.title)).toEqual(['First Post']);
+		expect(store.postsByTag('en', 'blog', 'nope')).toEqual([]);
+	});
+});
+
+describe('multiple blog sections + same-date ties', () => {
+	it('a second blog section is fully independent', () => {
+		expect(store.isBlogSection('news')).toBe(true);
+		expect(store.postsFor('en', 'news')).toHaveLength(2);
+		expect(store.postsFor('en', 'blog').some((p) => p.title.includes('tie'))).toBe(false);
+	});
+
+	it('same-date posts tie-break by title DESCENDING (newest-feeling first)', () => {
+		// Changelogs date-tie often (several releases a day); descending
+		// titles put v0.4.0 above v0.3.3.
+		expect(store.postsFor('en', 'news').map((p) => p.title)).toEqual(['Beta tie', 'Alpha tie']);
+		const nav = store.navByLang('en').find((g) => g.title === 'News');
+		expect(nav?.items?.map((i) => i.title)).toEqual(['Beta tie', 'Alpha tie']);
+	});
+});

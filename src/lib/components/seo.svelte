@@ -26,8 +26,23 @@
 		lang?: string;
 		/** Language-agnostic slug (for hreflang alternates). '' is the landing. */
 		slug?: string;
+		/** Blog posts: ISO publish date → article:published_time. */
+		published?: string;
+		/** Blog posts: author display name → article:author. */
+		authorName?: string;
+		/** Page-specific social image (path under static/), e.g. a post cover. */
+		image?: string;
 	};
-	let { title, description, path = '/', type = 'article', slug }: Props = $props();
+	let {
+		title,
+		description,
+		path = '/',
+		type = 'article',
+		slug,
+		published = undefined,
+		authorName = undefined,
+		image = undefined
+	}: Props = $props();
 
 	// Runtime site config + language facts from the layout load.
 	const siteConfig = $derived(page.data.site as SiteConfig);
@@ -80,12 +95,28 @@
 	<!-- Social-card image. Absolute URL (needs siteUrl); points at the
 	     operator's optional static/og.png. Omitted without a site URL —
 	     a relative og:image doesn't work for off-site scrapers. -->
-	{#if siteConfig.siteUrl}<meta property="og:image" content={`${siteConfig.siteUrl}/og.png`} />{/if}
+	{#if siteConfig.siteUrl}
+		<meta
+			property="og:image"
+			content={image
+				? `${siteConfig.siteUrl}/${image.replace(/^\//, '')}`
+				: `${siteConfig.siteUrl}/og.png`}
+		/>
+	{/if}
+	{#if published}<meta property="article:published_time" content={published} />{/if}
+	{#if authorName}<meta property="article:author" content={authorName} />{/if}
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content={fullTitle} />
 	<meta name="twitter:description" content={desc} />
-	{#if siteConfig.siteUrl}<meta name="twitter:image" content={`${siteConfig.siteUrl}/og.png`} />{/if}
+	{#if siteConfig.siteUrl}
+		<meta
+			name="twitter:image"
+			content={image
+				? `${siteConfig.siteUrl}/${image.replace(/^\//, '')}`
+				: `${siteConfig.siteUrl}/og.png`}
+		/>
+	{/if}
 
 	<!-- hreflang alternates (multilingual sites with a configured origin). -->
 	{#each alternates as a (a.lang)}

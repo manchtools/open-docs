@@ -23,7 +23,12 @@ import { applyTokens, buildTokenMap } from '../../../scripts/tokens.js';
 export type PostMeta = {
 	/** ISO date (frontmatter `date: YYYY-MM-DD`) — the canonical sort key. */
 	date: string;
+	/** Display name — the literal value, or the author page's title. */
 	author?: string;
+	/** From the author page's `avatar:` frontmatter (path under static/). */
+	authorAvatar?: string;
+	/** Canonical slug-href of the author page, when `author:` is a path. */
+	authorHref?: string;
 	tags: string[];
 	cover?: string;
 	readingTimeMin: number;
@@ -63,6 +68,8 @@ export type ContentStore = {
 	isBlogSection(slug: string): boolean;
 	/** Posts of a blog section, newest first, localized. */
 	postsFor(lang: string, section: string): PostListItem[];
+	/** Posts of a section carrying the given tag slug, newest first. */
+	postsByTag(lang: string, section: string, tag: string): PostListItem[];
 	/** Chronological neighbours of a post (newer/older), or null for non-posts. */
 	chronoFor(
 		lang: string,
@@ -305,6 +312,10 @@ export function createContentStore(opts: Options): ContentStore {
 		}
 		return undefined;
 	};
+	// Author profile pages: servable and linkable, but never sidebar
+	// entries or posts.
+	const isAuthorPage = (slug: string): boolean =>
+		[...blogSections].some((sec) => slug.startsWith(sec + '/authors/'));
 
 	const files: FileData[] = [];
 	for (const [virtualPath, original] of sources) {
@@ -382,9 +393,30 @@ export function createContentStore(opts: Options): ContentStore {
 		}
 		const body = f.raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
 		const words = body.split(/\s+/).filter(Boolean).length;
+		// `author:` is a literal display name, or a site-absolute path to an
+		// author page whose frontmatter supplies name (title) and avatar.
+		let author: string | undefined = f.fm.author;
+		let authorAvatar: string | undefined;
+		let authorHref: string | undefined;
+		if (author?.startsWith('/')) {
+			const authorFile = defaultFiles.get(author.replace(/^\//, ''));
+			if (!authorFile) {
+				errors.push({
+					file: f.shortPath,
+					message: `author page not found: ${author}`
+				});
+				author = undefined;
+			} else {
+				authorHref = author;
+				author = authorFile.fm.title ?? authorFile.slug.split('/').pop();
+				authorAvatar = authorFile.fm.avatar;
+			}
+		}
 		postMeta[f.slug] = {
 			date,
-			author: f.fm.author,
+			author,
+			authorAvatar,
+			authorHref,
 			tags: (f.fm.tags ?? '')
 				.split(',')
 				.map((t) => t.trim())
@@ -395,6 +427,26 @@ export function createContentStore(opts: Options): ContentStore {
 		};
 	}
 
+	// Nav order for posts: newest-first via negated timestamp; same-date
+	// ties rank by title DESCENDING (v0.4.0 above v0.3.3), mirrored in
+	// postsFor(). The +rank (0..n ms) never crosses into the previous day.
+	const postNavOrder: Record<string, number> = {};
+	{
+		const groups = new Map<string, string[]>();
+		for (const [slug, m] of Object.entries(postMeta)) {
+			const key = `${m.section}|${m.date}`;
+			(groups.get(key) ?? groups.set(key, []).get(key)!).push(slug);
+		}
+		for (const slugs of groups.values()) {
+			slugs.sort((a, b) =>
+				(defaultFiles.get(b)?.fm.title ?? b).localeCompare(defaultFiles.get(a)?.fm.title ?? a)
+			);
+			slugs.forEach((slug, rank) => {
+				postNavOrder[slug] = -Date.parse(postMeta[slug].date) + rank;
+			});
+		}
+	}
+
 	// --- nav tree (default language defines the structure) ------------------
 	const metaRaw: { title: string; href: string; label?: string; order: number }[] = [];
 
@@ -402,6 +454,7 @@ export function createContentStore(opts: Options): ContentStore {
 		const root: BuildNode = { title: '', order: FALLBACK, children: new Map() };
 
 		for (const f of defaultFiles.values()) {
+			if (isAuthorPage(f.slug)) continue;
 			const fm = f.fm;
 			const href = '/' + f.slug;
 			const rawSegments = f.virtualPath
@@ -458,9 +511,10 @@ export function createContentStore(opts: Options): ContentStore {
 				// Posts sort newest-first: the negated timestamp rides the
 				// existing order machinery (ties fall through to the title
 				// comparison, matching the proposal).
-				order: postMeta[f.slug]
-					? -Date.parse(postMeta[f.slug].date)
-					: (orderOf(fm, fileSegment) ?? (isIndex ? Number.NEGATIVE_INFINITY : FALLBACK)),
+				order:
+					postNavOrder[f.slug] ??
+					orderOf(fm, fileSegment) ??
+					(isIndex ? Number.NEGATIVE_INFINITY : FALLBACK),
 				children: new Map()
 			});
 		}
@@ -560,7 +614,10 @@ export function createContentStore(opts: Options): ContentStore {
 			.filter(([, m]) => m.section === section)
 			.sort(([sa, a], [sb, b]) =>
 				a.date === b.date
-					? pageMetaFor(lang, sa).title.localeCompare(pageMetaFor(lang, sb).title)
+					? // Same-date ties break by title DESCENDING — changelogs
+						// often release several versions a day, and v0.4.0
+						// belongs above v0.3.3.
+						pageMetaFor(lang, sb).title.localeCompare(pageMetaFor(lang, sa).title)
 					: a.date < b.date
 						? 1
 						: -1
@@ -570,6 +627,12 @@ export function createContentStore(opts: Options): ContentStore {
 				...pageMetaFor(lang, slug),
 				href: localizedHref(lang, slug)
 			}));
+	}
+
+	const tagSlug = (t: string) => t.toLowerCase().replace(/\s+/g, '-');
+
+	function postsByTag(lang: string, section: string, tag: string): PostListItem[] {
+		return postsFor(lang, section).filter((p) => p.tags.some((t) => tagSlug(t) === tag));
 	}
 
 	function chronoFor(
@@ -607,6 +670,13 @@ export function createContentStore(opts: Options): ContentStore {
 	// --- servable paths -------------------------------------------------------
 	function listPaths(): string[] {
 		const slugs = [...defaultFiles.keys()].filter((s) => s !== '');
+		// Generated tag-listing pages, one per unique tag per blog section.
+		for (const m of Object.values(postMeta)) {
+			for (const t of m.tags) {
+				const p = `${m.section}/tags/${tagSlug(t)}`;
+				if (!slugs.includes(p)) slugs.push(p);
+			}
+		}
 		const out = ['/'];
 		for (const lang of languages) {
 			if (lang === defaultLang) {
@@ -621,6 +691,13 @@ export function createContentStore(opts: Options): ContentStore {
 	// --- link validation (replaces the prerender crawl) -----------------------
 	{
 		const known = new Set(listPaths());
+		// Atom feeds are served by the hooks layer (not pages), so they are
+		// linkable but deliberately absent from listPaths()/sitemap.
+		for (const sec of blogSections) {
+			for (const lang of languages) {
+				known.add(localizedHref(lang, sec) + '/feed.xml');
+			}
+		}
 		const linkRender = schema.nodes.link?.render ?? 'Link';
 		const screenshotRender = schema.tags.screenshot?.render ?? 'Screenshot';
 		const staticDirs = opts.staticDirs ?? ['static', 'build/client'];
@@ -715,6 +792,7 @@ export function createContentStore(opts: Options): ContentStore {
 		localizedHref,
 		isBlogSection: (slug: string) => blogSections.has(slug),
 		postsFor,
+		postsByTag,
 		chronoFor
 	};
 }

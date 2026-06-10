@@ -180,6 +180,47 @@ colonne sur mobile. Une cellule peut s'étendre sur plusieurs pistes avec
 {% /grid %}
 ````
 
+### hero
+
+Un en-tête image pleine largeur avec un titre optionnel en surimpression.
+Se colle au bord supérieur lorsqu'il est le premier bloc. Le frontmatter
+`cover:` d'un article de blog en affiche un automatiquement.
+
+```markdown
+{% hero src="/screenshots/cover.png" alt="…" title="…" subtitle="…" /%}
+```
+
+### avatar
+
+Une carte d'auteur : image ronde, nom, bio et lien optionnels.
+Directement après un `hero`, l'image chevauche le bord inférieur du hero
+de la moitié de sa hauteur.
+
+```markdown
+{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+```
+
+### quote
+
+Une citation mise en exergue avec une attribution optionnelle (liée
+lorsque `cite` est défini).
+
+```markdown
+{% quote by="Ada Lovelace" cite="https://…" %}Body.{% /quote %}
+```
+
+### gallery
+
+Une grille d'images responsive ; chaque image s'agrandit dans la
+lightbox.
+
+```markdown
+{% gallery %}
+![a](/img/a.png)
+![b](/img/b.png)
+{% /gallery %}
+```
+
 ## Markdown enrichi
 
 Ceux-ci ne demandent aucune syntaxe particulière. Le Markdown ordinaire

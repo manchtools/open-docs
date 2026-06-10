@@ -22,6 +22,9 @@ Die Grundlagen und die Frontmatter-Schlüssel, die die Seitenleiste steuern.
 {% card title="Blöcke" href="/de/authoring/blocks" icon="🧱" %}
 Die Content-Blöcke: Callouts, Tabs, Steps, Cards und mehr.
 {% /card %}
+{% card title="Blogging" href="/de/authoring/blogging" icon="📰" %}
+Datierte Beiträge, Auflistungen, Autoren, Tags und Feeds – pro Abschnitt.
+{% /card %}
 {% card title="Mehrsprachigkeit" href="/de/authoring/multi-language" icon="🌐" %}
 Übersetzen Sie Seiten über ein Dateinamen-Suffix; die Standardsprache bleibt ohne Präfix.
 {% /card %}

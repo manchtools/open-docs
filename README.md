@@ -183,6 +183,17 @@ file.
 Set the default with `PUBLIC_DEFAULT_LANG` (defaults to `en`). See the
 [Multi-language](./src/content/02-authoring/03-multi-language.md) docs page.
 
+## Blogging
+
+Set `blog: true` on any section's `index.md` and its pages become dated
+posts: newest-first sorting, a generated listing with covers and reading
+time, author pages, tag pages, Newer/Older navigation, and an Atom feed
+at `/<section>/feed.xml`. Posts need `date: YYYY-MM-DD` in frontmatter
+(validated at startup); `draft: true` posts serve only in dev. Works per
+section — docs, a blog, and a changelog can share one container. See the
+[Blogging](./src/content/02-authoring/04-blogging.md) docs page; this
+repo's own [changelog](./src/content/10-changelog/) is a live example.
+
 ## Discoverability (SEO & AI)
 
 Every page is rendered on the server, so search engines and AI crawlers

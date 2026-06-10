@@ -88,3 +88,18 @@ describe('hero + avatar blocks', () => {
 		expect(out).not.toContain('od-avatar-img');
 	});
 });
+
+describe('quote + gallery blocks', () => {
+	it('renders a pull-quote with linked attribution', () => {
+		const out = html('en', 'blog/second-post');
+		expect(out).toContain('od-quote');
+		expect(out).toContain('The engine weaves algebraic patterns.');
+		expect(out).toMatch(/<a[^>]*href="https:\/\/example\.com"[^>]*>Ada Lovelace<\/a>/);
+	});
+
+	it('renders a gallery grid with the child images', () => {
+		const out = html('en', 'blog/second-post');
+		expect(out).toContain('od-gallery');
+		expect((out.match(/<img[^>]*alt="(one|two)"/g) ?? []).length).toBe(2);
+	});
+});

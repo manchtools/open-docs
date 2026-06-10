@@ -22,6 +22,9 @@ Lo básico y las claves de frontmatter que controlan la barra lateral.
 {% card title="Bloques" href="/es/authoring/blocks" icon="🧱" %}
 Los bloques de contenido: callouts, pestañas, pasos, tarjetas y más.
 {% /card %}
+{% card title="Blogs" href="/es/authoring/blogging" icon="📰" %}
+Entradas con fecha, listados, autores, etiquetas y feeds — por sección.
+{% /card %}
 {% card title="Multiidioma" href="/es/authoring/multi-language" icon="🌐" %}
 Traduce páginas con un sufijo en el nombre de archivo; el idioma por defecto se queda sin prefijo.
 {% /card %}

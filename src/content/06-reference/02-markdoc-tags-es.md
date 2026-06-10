@@ -177,6 +177,46 @@ Una celda puede abarcar varias pistas con `{% column span=2 %}`.
 {% /grid %}
 ````
 
+### hero
+
+Una cabecera de imagen a ancho completo con un título superpuesto opcional. Se
+pega al borde superior cuando es el primer bloque. El frontmatter `cover:` de
+una entrada de blog renderiza una automáticamente.
+
+```markdown
+{% hero src="/screenshots/cover.png" alt="…" title="…" subtitle="…" /%}
+```
+
+### avatar
+
+Una tarjeta de autor: imagen redonda, nombre, biografía y enlace opcionales.
+Justo después de un `hero`, la imagen se solapa con el borde inferior del hero
+hasta la mitad de su altura.
+
+```markdown
+{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+```
+
+### quote
+
+Una cita destacada con una atribución opcional (enlazada cuando se define
+`cite`).
+
+```markdown
+{% quote by="Ada Lovelace" cite="https://…" %}Body.{% /quote %}
+```
+
+### gallery
+
+Una cuadrícula de imágenes adaptable; cada imagen se amplía en el diálogo.
+
+```markdown
+{% gallery %}
+![a](/img/a.png)
+![b](/img/b.png)
+{% /gallery %}
+```
+
 ## Markdown mejorado
 
 Estos no necesitan sintaxis especial. El Markdown corriente obtiene el

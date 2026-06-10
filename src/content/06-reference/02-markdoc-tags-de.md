@@ -179,6 +179,46 @@ mehrere Spuren überspannen.
 {% /grid %}
 ````
 
+### hero
+
+Ein Bild-Header in voller Breite mit optionalem Titel-Overlay. Zieht
+sich bündig an den oberen Rand, wenn er der erste Block ist. Das
+`cover:`-Frontmatter eines Blog-Beitrags rendert automatisch einen.
+
+```markdown
+{% hero src="/screenshots/cover.png" alt="…" title="…" subtitle="…" /%}
+```
+
+### avatar
+
+Eine Autorenkarte: rundes Bild, Name, optionale Bio und optionaler Link.
+Direkt nach einem `hero` überlappt das Bild die Unterkante des Heros um
+die halbe Bildhöhe.
+
+```markdown
+{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+```
+
+### quote
+
+Ein hervorgehobenes Zitat mit optionaler Quellenangabe (verlinkt, wenn
+`cite` gesetzt ist).
+
+```markdown
+{% quote by="Ada Lovelace" cite="https://…" %}Body.{% /quote %}
+```
+
+### gallery
+
+Ein responsives Bildraster; jedes Bild vergrößert sich in der Lightbox.
+
+```markdown
+{% gallery %}
+![a](/img/a.png)
+![b](/img/b.png)
+{% /gallery %}
+```
+
 ## Erweitertes Markdown
 
 Diese brauchen keine besondere Syntax. Reines Markdown erhält das

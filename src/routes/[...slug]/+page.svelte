@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Toc from '$lib/components/toc.svelte';
 	import PrevNext from '$lib/components/prev-next.svelte';
 	import Seo from '$lib/components/seo.svelte';
@@ -15,7 +16,18 @@
 			currentHref: string;
 			post?: PostMeta | null;
 			posts?: PostListItem[] | null;
-			seo: { title?: string; description?: string; path: string; lang: string; slug: string };
+			tag?: string;
+			feedHref?: string | null;
+			seo: {
+				title?: string;
+				description?: string;
+				path: string;
+				lang: string;
+				slug: string;
+				published?: string;
+				authorName?: string;
+				image?: string;
+			};
 		};
 	};
 	const { data }: Props = $props();
@@ -27,8 +39,22 @@
 	path={data.seo.path}
 	lang={data.seo.lang}
 	slug={data.seo.slug}
+	published={data.seo.published}
+	authorName={data.seo.authorName}
+	image={data.seo.image}
 	type={data.isHome ? 'website' : 'article'}
 />
+
+<svelte:head>
+	{#if data.feedHref}
+		<link
+			rel="alternate"
+			type="application/atom+xml"
+			href={`${base}${data.feedHref}`}
+			title="Atom feed"
+		/>
+	{/if}
+</svelte:head>
 
 {#if data.isHome}
 	<Hero lang={data.lang} />
@@ -42,7 +68,11 @@
 				{#if data.post}
 					<PostHeader post={data.post} />
 				{/if}
-				<MarkdocTree node={data.tree} />
+				{#if data.tag}
+					<h1>#{data.tag}</h1>
+				{:else}
+					<MarkdocTree node={data.tree} />
+				{/if}
 			</div>
 
 			{#if data.posts}

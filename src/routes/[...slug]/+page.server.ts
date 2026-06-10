@@ -17,6 +17,26 @@ export const load: PageServerLoad = ({ params }) => {
 		return { isHome: true as const, lang, currentHref: href, seo: { path: href, lang, slug } };
 	}
 
+	// Generated tag-listing pages: <blog-section>/tags/<tag> has no file —
+	// it renders the section's posts filtered by tag.
+	const tagMatch = /^(.*)\/tags\/([^/]+)$/.exec(slug);
+	if (tagMatch && store.isBlogSection(tagMatch[1])) {
+		const [, section, tag] = tagMatch;
+		const posts = store.postsByTag(lang, section, tag);
+		if (posts.length === 0) throw error(404, `No posts tagged ${tag}`);
+		return {
+			isHome: false as const,
+			lang,
+			currentHref: href,
+			post: null,
+			chrono: null,
+			posts,
+			tag,
+			feedHref: store.localizedHref(lang, section) + '/feed.xml',
+			seo: { title: `#${tag}`, path: href, lang, slug }
+		};
+	}
+
 	const page = store.getPage(lang, slug);
 	if (!page) throw error(404, `No content for ${slug}`);
 
@@ -30,6 +50,21 @@ export const load: PageServerLoad = ({ params }) => {
 		post: page.post ?? null,
 		chrono: store.chronoFor(lang, slug),
 		posts: store.isBlogSection(slug) ? store.postsFor(lang, slug) : null,
-		seo: { title: page.title, description: page.description, path: href, lang, slug }
+		// Feed advertisement on blog surfaces (index + posts).
+		feedHref:
+			page.post || store.isBlogSection(slug)
+				? store.localizedHref(lang, page.post ? page.post.section : slug) + '/feed.xml'
+				: null,
+		seo: {
+			title: page.title,
+			description: page.description,
+			path: href,
+			lang,
+			slug,
+			// Article extras for posts: published date + cover as og:image.
+			published: page.post?.date,
+			authorName: page.post?.author,
+			image: page.post?.cover
+		}
 	};
 };

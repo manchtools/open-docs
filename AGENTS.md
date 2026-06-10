@@ -93,6 +93,20 @@ Translate a page by adding a language suffix to its filename, after any
   TRANSLATED heading's slug (a German "## Abschnitts-Icons" anchors as
   `#abschnitts-icons`, not the English `#section-icons`).
 
+### Blog sections
+
+A section whose `index.md` sets `blog: true` is a blog: its pages are
+POSTS and require `date: YYYY-MM-DD` in frontmatter (startup validation
+fails otherwise). Posts sort newest-first by date — `NN-` prefixes don't
+order them. Optional post keys: `author` (display name or site-absolute
+path to a page in the section's `authors/` folder — those are profile
+pages, not posts), `tags` (comma-separated), `cover` (image under
+`static/`, becomes hero + social image), `draft: true` (dev only). The
+section index gets a generated listing; don't hand-write one. Blocks
+made for posts (usable anywhere): `{% hero %}`, `{% avatar %}` (overlaps
+a directly preceding hero by half its image), `{% quote %}`,
+`{% gallery %}`.
+
 ### Links
 
 Internal links are **absolute site paths** — no `.md`, no `NN-` prefix,

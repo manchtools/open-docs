@@ -38,4 +38,6 @@
 	// card; an avatar directly after a hero overlaps it by half its image.
 	export { default as Hero } from './components/Hero.svelte';
 	export { default as Avatar } from './components/Avatar.svelte';
+	export { default as Quote } from './components/Quote.svelte';
+	export { default as Gallery } from './components/Gallery.svelte';
 </script>

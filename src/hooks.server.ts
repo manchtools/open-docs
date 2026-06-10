@@ -7,6 +7,7 @@ import { join, resolve as resolvePath, sep } from 'node:path';
 import { getStore } from '$lib/server/store-instance';
 import { splitRequest } from '$lib/i18n';
 import { deriveFrameSrc } from '../scripts/derive-frame-src.js';
+import { siteConfig } from '$lib/server/site';
 
 // Sets the per-page `<html lang>`, the CSP frame-src for {% embed %}
 // hosts, and the standard defensive response headers.
@@ -83,9 +84,52 @@ function baseStatic(pathname: string): Response | null {
 	});
 }
 
+// Atom feeds: /<section>/feed.xml (language-prefixed variants included),
+// one per `blog: true` section, generated from the store like sitemap.xml.
+function atomFeed(pathname: string): Response | null {
+	if (!pathname.endsWith('/feed.xml')) return null;
+	const store = getStore();
+	const trimmed = pathname.slice(base.length).replace(/^\//, '').replace(/\/feed\.xml$/, '');
+	const { lang, slug: section } = splitRequest(trimmed, store.languages, store.defaultLang);
+	if (!store.isBlogSection(section)) return null;
+	const site = siteConfig();
+	const posts = store.postsFor(lang, section);
+	const xml = (v: string) =>
+		v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	const url = (p: string) => `${site.siteUrl}${p}`;
+	const sectionTitle = store.pageMetaFor(lang, section).title || section;
+	const updated = posts[0] ? `${posts[0].date}T00:00:00Z` : '1970-01-01T00:00:00Z';
+	const body = `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>${xml(site.siteTitle)} — ${xml(sectionTitle)}</title>
+	<id>${xml(url(store.localizedHref(lang, section)))}</id>
+	<link rel="self" href="${xml(url(store.localizedHref(lang, section) + '/feed.xml'))}"/>
+	<link href="${xml(url(store.localizedHref(lang, section)))}"/>
+	<updated>${updated}</updated>
+${posts
+	.map(
+		(p) => `	<entry>
+		<title>${xml(p.title)}</title>
+		<id>${xml(url(p.href))}</id>
+		<link href="${xml(url(p.href))}"/>
+		<updated>${p.date}T00:00:00Z</updated>
+		${p.description ? `<summary>${xml(p.description)}</summary>` : ''}
+		${p.author ? `<author><name>${xml(p.author)}</name></author>` : ''}
+	</entry>`
+	)
+	.join('\n')}
+</feed>
+`;
+	return new Response(body, {
+		headers: { 'content-type': 'application/atom+xml; charset=utf-8' }
+	});
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const assetHit = baseStatic(event.url.pathname);
 	if (assetHit) return assetHit;
+	const feed = atomFeed(event.url.pathname);
+	if (feed) return feed;
 
 	const store = getStore();
 	const path = event.url.pathname.slice(base.length).replace(/^\//, '');

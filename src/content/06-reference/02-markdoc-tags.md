@@ -174,6 +174,44 @@ tracks with `{% column span=2 %}`.
 {% /grid %}
 ````
 
+### hero
+
+A full-width image header with an optional title overlay. Pulls flush to
+the top when it is the first block. A blog post's `cover:` frontmatter
+renders one automatically.
+
+```markdown
+{% hero src="/screenshots/cover.png" alt="…" title="…" subtitle="…" /%}
+```
+
+### avatar
+
+An author card: round image, name, optional bio and link. Directly after
+a `hero`, the image overlaps the hero's bottom edge by half its height.
+
+```markdown
+{% avatar src="/authors/p.png" name="Paul" description="…" url="…" /%}
+```
+
+### quote
+
+A pull-quote with an optional attribution (linked when `cite` is set).
+
+```markdown
+{% quote by="Ada Lovelace" cite="https://…" %}Body.{% /quote %}
+```
+
+### gallery
+
+A responsive image grid; each image enlarges in the lightbox.
+
+```markdown
+{% gallery %}
+![a](/img/a.png)
+![b](/img/b.png)
+{% /gallery %}
+```
+
 ## Enhanced Markdown
 
 These need no special syntax. Plain Markdown gets the behavior
