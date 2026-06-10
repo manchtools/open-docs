@@ -6,9 +6,7 @@ icon: "📰"
 
 # Changelog
 
-Every open-docs release, newest first. This section is itself a live
-demo of [blog mode](/authoring/blogging): a folder with `blog: true`,
-one dated page per entry, and the listing, feed, and tags below are all
-generated.
-
-Subscribe via the [Atom feed](/changelog/feed.xml).
+Every open-docs release, newest first. This section is a regular blog
+section: a folder with `blog: true` and one dated page per entry. The
+listing, the tags, and the [Atom feed](/changelog/feed.xml) are
+generated from those pages.
