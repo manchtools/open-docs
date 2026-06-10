@@ -215,11 +215,21 @@ export function createContentStore(opts: Options): ContentStore {
 	} catch {
 		// missing dir → empty site; the boot wiring decides how to react
 	}
+	const hasOwnIndex = new Set<string>();
+	for (const entry of entries) {
+		if (!entry.isFile() || !/^index\.(md|markdoc)$/i.test(entry.name)) continue;
+		hasOwnIndex.add(entry.parentPath ?? opts.contentDir);
+	}
 	for (const entry of entries) {
 		if (!entry.isFile() || !/\.(md|markdoc)$/.test(entry.name)) continue;
 		const dir = entry.parentPath ?? opts.contentDir;
 		const abs = join(dir, entry.name);
-		const rel = abs.slice(join(opts.contentDir, '/').length).replaceAll('\\', '/');
+		let rel = abs.slice(join(opts.contentDir, '/').length).replaceAll('\\', '/');
+		// GitHub convention: README.md is the folder index when no index
+		// file exists.
+		if (/(^|\/)README\.(md|markdoc)$/i.test(rel) && !hasOwnIndex.has(dir)) {
+			rel = rel.replace(/README(\.(md|markdoc))$/i, 'index$1');
+		}
 		try {
 			sources.set('/src/content/' + rel, readFileSync(abs, 'utf8'));
 		} catch (err) {
@@ -249,6 +259,24 @@ export function createContentStore(opts: Options): ContentStore {
 			// GFM task lists: a list item starting with "[ ] " / "[x] " becomes
 			// a disabled checkbox. Plain markdown convention, not a tag — so it
 			// lives here rather than in the component registry.
+			// Markdown images render through the Screenshot component (flat),
+			// like an editor preview — local paths, content-relative paths,
+			// and web URLs alike.
+			image: {
+				...Markdoc.nodes.image,
+				transform(node: import('@markdoc/markdoc').Node, cfg: import('@markdoc/markdoc').Config) {
+					const a = node.transformAttributes(cfg) as Record<string, string>;
+					return new Markdoc.Tag('Screenshot', {
+						src: a.src,
+						alt: a.alt ?? '',
+						variant: 'flat',
+						// marks markdown-image origin: only these get relative-src
+						// resolution ({% screenshot %} srcs stay bare names under
+						// static/screenshots/, per the block contract)
+						implicit: true
+					});
+				}
+			},
 			item: {
 				...Markdoc.nodes.item,
 				transform(node: import('@markdoc/markdoc').Node, cfg: import('@markdoc/markdoc').Config) {
@@ -351,6 +379,8 @@ export function createContentStore(opts: Options): ContentStore {
 	// entries or posts.
 	const isAuthorPage = (slug: string): boolean =>
 		[...blogSections].some((sec) => slug.startsWith(sec + '/authors/'));
+
+	const linkRenderName = schema.nodes.link?.render ?? 'Link';
 
 	const files: FileData[] = [];
 	for (const [virtualPath, original] of sources) {
@@ -482,6 +512,48 @@ export function createContentStore(opts: Options): ContentStore {
 			readingTimeMin: Math.max(1, Math.round(words / 200)),
 			section
 		};
+	}
+
+	// Relative references, resolved per linking file (VSCode/GitHub style;
+	// sources are never rewritten): ./other.md, ../x.md#a, sibling.md, and
+	// relative image srcs. .md/.markdoc and NN- prefixes map through the
+	// normal slug rules; index/README collapse to the folder URL.
+	const resolveRel = (fromSlug: string, ref: string): string | null => {
+		if (/^([a-z]+:|\/|#)/i.test(ref)) return null; // absolute, scheme, or pure anchor
+		const [pathPart, anchor] = ref.split('#');
+		if (!pathPart) return null;
+		const baseSegs = fromSlug.split('/').slice(0, -1);
+		for (const seg of pathPart.split('/')) {
+			if (seg === '' || seg === '.') continue;
+			if (seg === '..') baseSegs.pop();
+			else baseSegs.push(seg);
+		}
+		const joined = baseSegs.join('/');
+		const target = /\.(md|markdoc)$/i.test(joined)
+			? cleanSlug('/src/content/' + joined.replace(/(^|\/)README\.(md|markdoc)$/i, '$1index.$2'))
+			: joined; // asset: keep the extension
+		return '/' + target + (anchor ? '#' + anchor : '');
+	};
+	for (const f of files) {
+		(function resolve(n: unknown): void {
+			if (Array.isArray(n)) return n.forEach(resolve);
+			if (!n || typeof n !== 'object') return;
+			const tag = n as { name?: string; attributes?: Record<string, unknown>; children?: unknown };
+			if (tag.name === linkRenderName && typeof tag.attributes?.href === 'string') {
+				const r = resolveRel(f.slug, tag.attributes.href);
+				if (r) tag.attributes.href = r === '/index' ? '/' : r;
+			}
+			if (
+				tag.name === 'Screenshot' &&
+				tag.attributes?.implicit === true &&
+				typeof tag.attributes?.src === 'string'
+			) {
+				const r = resolveRel(f.slug, tag.attributes.src);
+				if (r) tag.attributes.src = r;
+				delete tag.attributes.implicit;
+			}
+			resolve(tag.children);
+		})(f.tree);
 	}
 
 	// {% avatar author="/path" %}: fill name/src/description/url from the
@@ -801,16 +873,21 @@ export function createContentStore(opts: Options): ContentStore {
 					children?: unknown;
 				};
 					if (tag.name === screenshotRender) {
-					// The docs promise a screenshot pointing at a missing file
-					// fails validation (it used to fail the prerender crawl).
+					// A screenshot pointing at a missing file fails validation.
+					// Block-style srcs are bare names under static/screenshots/;
+					// implicit markdown images carry full paths (static/ or
+					// content-relative, already resolved); web URLs are skipped.
 					for (const attr of ['src', 'dark'] as const) {
 						const value = tag.attributes?.[attr];
-						if (typeof value !== 'string' || !value) continue;
-						const rel = 'screenshots/' + value.replace(/^\//, '');
-						if (!staticDirs.some((d) => existsSync(join(d, rel)))) {
+						if (typeof value !== 'string' || !value || /^[a-z]+:/i.test(value)) continue;
+						const rels = value.startsWith('/')
+							? [value.slice(1)]
+							: ['screenshots/' + value];
+						const dirs = [...staticDirs, opts.contentDir];
+						if (!dirs.some((d) => rels.some((r) => existsSync(join(d, r))))) {
 							errors.push({
 								file: f.shortPath,
-								message: `screenshot ${attr}="${value}" not found under static/screenshots/`
+								message: `screenshot ${attr}="${value}" not found under static/ or the content directory`
 							});
 						}
 					}
