@@ -15,7 +15,7 @@
 	);
 </script>
 
-{#if post.cover}
+{#if post.cover && !post.coverFromBody}
 	<Hero src={post.cover} alt="" />
 {/if}
 <p class="not-prose mb-6 text-sm text-muted-foreground" data-pagefind-ignore>

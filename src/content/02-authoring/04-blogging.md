@@ -37,7 +37,7 @@ description: How we launched, and what comes next.
 | `date` | yes | `YYYY-MM-DD`. Sort key and displayed date (localized). A missing or malformed date fails validation at startup. |
 | `author` | no | A display name, or a site-absolute path to an [author page](#authors-are-pages). |
 | `tags` | no | Comma-separated. Shown as chips and collected into `/<section>/tags/<tag>` pages. |
-| `cover` | no | Image under `static/`. Renders as a full-width hero on the post, a thumbnail in the listing, and the post's social-card image. |
+| `cover` | no | Image under `static/`. Renders as a full-width hero on the post, a thumbnail in the listing, and the post's social-card image. Posts that start with a `{% hero %}` block don't need it — the hero's image is used. |
 | `draft` | no | `true` serves the post in dev only — production excludes it everywhere. |
 
 Filenames are free-form (`launch-post.md` → `/blog/launch-post`); the
@@ -48,7 +48,8 @@ navigation and never mix into the docs prev/next chain.
 
 The section's `index.md` renders its own prose first, then the
 generated post list — cover, localized date, reading time, author,
-description, and tags. There is nothing to maintain.
+description, and tags. Reading time is the post's word count at 200
+words per minute, rounded, minimum one minute.
 
 ## Authors are pages
 

@@ -39,7 +39,7 @@ description: How we launched, and what comes next.
 | `date` | sí | `YYYY-MM-DD`. Clave de ordenación y fecha mostrada (localizada). Una fecha ausente o mal formada hace fallar la validación al arrancar. |
 | `author` | no | Un nombre para mostrar, o una ruta absoluta del sitio a una [página de autor](#los-autores-son-paginas). |
 | `tags` | no | Separadas por comas. Se muestran como chips y se recogen en páginas `/<section>/tags/<tag>`. |
-| `cover` | no | Imagen dentro de `static/`. Se renderiza como un hero a ancho completo en la entrada, como miniatura en el listado y como imagen de la tarjeta social de la entrada. |
+| `cover` | no | Imagen dentro de `static/`. Se renderiza como un hero a ancho completo en la entrada, como miniatura en el listado y como imagen de la tarjeta social de la entrada. Las entradas que empiezan con un bloque `{% hero %}` no la necesitan — se usa la imagen del hero. |
 | `draft` | no | `true` sirve la entrada solo en desarrollo; producción la excluye en todas partes. |
 
 Los nombres de archivo son libres (`launch-post.md` → `/blog/launch-post`);
@@ -51,7 +51,9 @@ anterior/siguiente de la documentación.
 
 El `index.md` de la sección renderiza primero su propia prosa y después
 la lista de entradas generada: portada, fecha localizada, tiempo de
-lectura, autor, descripción y etiquetas. No hay nada que mantener.
+lectura, autor, descripción y etiquetas. El tiempo de lectura es el
+número de palabras de la entrada a 200 palabras por minuto, redondeado,
+con un mínimo de un minuto.
 
 ## Los autores son páginas
 

@@ -39,7 +39,7 @@ description: How we launched, and what comes next.
 | `date` | ja | `YYYY-MM-DD`. Sortierschlüssel und angezeigtes Datum (lokalisiert). Ein fehlendes oder fehlerhaftes Datum lässt die Validierung beim Start fehlschlagen. |
 | `author` | nein | Ein Anzeigename oder ein websiteabsoluter Pfad zu einer [Autorenseite](#autoren-sind-seiten). |
 | `tags` | nein | Kommagetrennt. Werden als Chips angezeigt und auf `/<section>/tags/<tag>`-Seiten gesammelt. |
-| `cover` | nein | Bild unter `static/`. Rendert als Hero in voller Breite auf dem Beitrag, als Vorschaubild in der Auflistung und als Social-Card-Bild des Beitrags. |
+| `cover` | nein | Bild unter `static/`. Rendert als Hero in voller Breite auf dem Beitrag, als Vorschaubild in der Auflistung und als Social-Card-Bild des Beitrags. Beiträge, die mit einem `{% hero %}`-Block beginnen, brauchen es nicht – das Bild des Heros wird verwendet. |
 | `draft` | nein | `true` liefert den Beitrag nur in der Entwicklung aus – die Produktion schließt ihn überall aus. |
 
 Dateinamen sind frei wählbar (`launch-post.md` → `/blog/launch-post`);
@@ -51,7 +51,9 @@ der Dokumentation.
 
 Die `index.md` des Abschnitts rendert zuerst ihren eigenen Fließtext und
 dann die generierte Beitragsliste – Cover, lokalisiertes Datum,
-Lesezeit, Autor, Beschreibung und Tags. Es gibt nichts zu pflegen.
+Lesezeit, Autor, Beschreibung und Tags. Die Lesezeit ist die Wortzahl
+des Beitrags bei 200 Wörtern pro Minute, gerundet, mindestens eine
+Minute.
 
 ## Autoren sind Seiten
 

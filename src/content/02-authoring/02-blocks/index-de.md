@@ -18,6 +18,9 @@ Nummerierte Abläufe und Link-Kacheln wie diese.
 {% card title="Weitere Blöcke" href="/de/authoring/blocks/more-blocks" icon="🧩" %}
 Akkordeons, Badges, Dateibäume und Video-Einbettungen.
 {% /card %}
+{% card title="Blog-Blöcke" href="/de/authoring/blocks/blog-blocks" icon="📰" %}
+Hero-Bilder, Avatare, Zitate und Galerien.
+{% /card %}
 {% card title="Code & Diagramme" href="/de/authoring/blocks/media/code-and-diagrams" icon="💻" %}
 Dateinamen, Zeilenhervorhebung, Diffs und Mermaid-Diagramme.
 {% /card %}

@@ -39,7 +39,7 @@ description: How we launched, and what comes next.
 | `date` | oui | `YYYY-MM-DD`. Clé de tri et date affichée (localisée). Une date absente ou malformée fait échouer la validation au démarrage. |
 | `author` | non | Un nom d'affichage, ou un chemin absolu du site vers une [page d'auteur](#les-auteurs-sont-des-pages). |
 | `tags` | non | Séparés par des virgules. Affichés sous forme de pastilles et regroupés dans des pages `/<section>/tags/<tag>`. |
-| `cover` | non | Image sous `static/`. S'affiche en hero pleine largeur sur l'article, en vignette dans la liste, et comme image de carte sociale de l'article. |
+| `cover` | non | Image sous `static/`. S'affiche en hero pleine largeur sur l'article, en vignette dans la liste, et comme image de carte sociale de l'article. Les articles qui commencent par un bloc `{% hero %}` n'en ont pas besoin — l'image du hero est utilisée. |
 | `draft` | non | `true` ne sert l'article qu'en développement — la production l'exclut partout. |
 
 Les noms de fichiers sont libres (`launch-post.md` → `/blog/launch-post`) ;
@@ -51,7 +51,9 @@ précédent/suivant de la documentation.
 
 L'`index.md` de la section affiche d'abord sa propre prose, puis la
 liste générée des articles — couverture, date localisée, temps de
-lecture, auteur, description et tags. Il n'y a rien à maintenir.
+lecture, auteur, description et tags. Le temps de lecture correspond au
+nombre de mots de l'article à 200 mots par minute, arrondi, avec un
+minimum d'une minute.
 
 ## Les auteurs sont des pages
 

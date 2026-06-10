@@ -18,6 +18,9 @@ Procédures numérotées et tuiles de liens comme celles-ci.
 {% card title="Autres blocs" href="/fr/authoring/blocks/more-blocks" icon="🧩" %}
 Accordéons, badges, arborescences de fichiers et intégrations vidéo.
 {% /card %}
+{% card title="Blocs de blog" href="/fr/authoring/blocks/blog-blocks" icon="📰" %}
+Images hero, avatars, citations en exergue et galeries.
+{% /card %}
 {% card title="Code et diagrammes" href="/fr/authoring/blocks/media/code-and-diagrams" icon="💻" %}
 Noms de fichiers, surlignage de lignes, diffs et diagrammes Mermaid.
 {% /card %}

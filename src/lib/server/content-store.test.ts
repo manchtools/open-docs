@@ -286,3 +286,18 @@ describe('multiple blog sections + same-date ties', () => {
 		expect(nav?.items?.map((i) => i.title)).toEqual(['Beta tie', 'Alpha tie']);
 	});
 });
+
+describe('cover derived from a body hero', () => {
+	it('a post without cover: frontmatter takes its cover from the first {% hero %}', () => {
+		// first-post has a body hero (src /screenshots/exists.png) and no cover:
+		const post = store.getPage('en', 'blog/first-post')?.post;
+		expect(post?.cover).toBe('screenshots/exists.png');
+		expect(post?.coverFromBody).toBe(true);
+	});
+
+	it('frontmatter cover: wins and is not marked as body-derived', () => {
+		// give second-post nothing — it has neither → no cover at all
+		const none = store.getPage('en', 'blog/second-post')?.post;
+		expect(none?.cover).toBeUndefined();
+	});
+});

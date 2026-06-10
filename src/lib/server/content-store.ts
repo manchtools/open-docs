@@ -31,6 +31,9 @@ export type PostMeta = {
 	authorHref?: string;
 	tags: string[];
 	cover?: string;
+	/** True when the cover came from a {% hero %} in the body — the post
+	 *  header must not render a second one. */
+	coverFromBody?: boolean;
 	readingTimeMin: number;
 	/** Slug of the blog section this post belongs to. */
 	section: string;
@@ -412,6 +415,27 @@ export function createContentStore(opts: Options): ContentStore {
 				authorAvatar = authorFile.fm.avatar;
 			}
 		}
+		// `cover:` frontmatter wins; otherwise the first {% hero %} in the
+		// body supplies the cover (listing thumbnail + og:image) — no need
+		// to state the image twice.
+		let cover = f.fm.cover;
+		let coverFromBody: boolean | undefined;
+		if (!cover) {
+			(function findHero(n: unknown): void {
+				if (cover !== undefined || !n) return;
+				if (Array.isArray(n)) return n.forEach(findHero);
+				if (typeof n !== 'object') return;
+				const t = n as { name?: string; attributes?: { src?: unknown }; children?: unknown };
+				if (t.name === 'Hero' && typeof t.attributes?.src === 'string') {
+					if (!/^https?:/.test(t.attributes.src)) {
+						cover = t.attributes.src.replace(/^\//, '');
+						coverFromBody = true;
+					}
+					return;
+				}
+				findHero(t.children);
+			})(f.tree);
+		}
 		postMeta[f.slug] = {
 			date,
 			author,
@@ -421,7 +445,8 @@ export function createContentStore(opts: Options): ContentStore {
 				.split(',')
 				.map((t) => t.trim())
 				.filter(Boolean),
-			cover: f.fm.cover,
+			cover,
+			coverFromBody,
 			readingTimeMin: Math.max(1, Math.round(words / 200)),
 			section
 		};

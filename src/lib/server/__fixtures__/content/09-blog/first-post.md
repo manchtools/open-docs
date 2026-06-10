@@ -3,7 +3,6 @@ title: First Post
 date: 2026-01-02
 author: Paul
 tags: release, security
-cover: screenshots/exists.png
 ---
 
 # First Post

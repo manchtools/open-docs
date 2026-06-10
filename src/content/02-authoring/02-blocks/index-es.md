@@ -18,6 +18,9 @@ Procedimientos numerados y tarjetas de enlace como estas.
 {% card title="Más bloques" href="/es/authoring/blocks/more-blocks" icon="🧩" %}
 Acordeones, distintivos, árboles de archivos e incrustación de vídeos.
 {% /card %}
+{% card title="Bloques de blog" href="/es/authoring/blocks/blog-blocks" icon="📰" %}
+Imágenes hero, avatares, citas destacadas y galerías.
+{% /card %}
 {% card title="Código y diagramas" href="/es/authoring/blocks/media/code-and-diagrams" icon="💻" %}
 Nombres de archivo, resaltado de líneas, diffs y diagramas de Mermaid.
 {% /card %}

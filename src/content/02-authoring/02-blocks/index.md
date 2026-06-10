@@ -18,6 +18,9 @@ Numbered procedures and link tiles like these.
 {% card title="More blocks" href="/authoring/blocks/more-blocks" icon="🧩" %}
 Accordions, badges, file trees, and video embeds.
 {% /card %}
+{% card title="Blog blocks" href="/authoring/blocks/blog-blocks" icon="📰" %}
+Hero images, avatars, pull-quotes, and galleries.
+{% /card %}
 {% card title="Code & diagrams" href="/authoring/blocks/media/code-and-diagrams" icon="💻" %}
 Filenames, line-highlighting, diffs, and Mermaid diagrams.
 {% /card %}
