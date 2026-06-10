@@ -1,6 +1,6 @@
 ---
 title: Blog
-description: "Transformez n'importe quelle section en blog avec blog: true — articles datés, une liste générée, des auteurs, des tags et un flux Atom, aux côtés de votre documentation."
+description: "Transformez n'importe quelle section en blog avec blog: true : articles datés, une liste générée, des auteurs, des tags et un flux Atom, aux côtés de votre documentation."
 ---
 
 # Blog
@@ -10,7 +10,7 @@ dans l'`index.md` de la section et ses pages deviennent des **articles** :
 triés du plus récent au plus ancien par date, listés automatiquement sur
 la page de la section, avec une navigation Plus récent/Plus ancien, des
 pages de tags et un flux Atom. Documentation et blogs cohabitent dans une
-seule arborescence de contenu — le [changelog](/fr/changelog) de ce site
+seule arborescence de contenu : le [changelog](/fr/changelog) de ce site
 est exactement une section de ce type.
 
 ```markdown
@@ -38,8 +38,8 @@ description: How we launched, and what comes next.
 | `date` | oui | `YYYY-MM-DD`. Clé de tri et date affichée (localisée). Une date absente ou malformée fait échouer la validation au démarrage. |
 | `author` | non | Un nom d'affichage, ou un chemin absolu du site vers une [page d'auteur](#les-auteurs-sont-des-pages). |
 | `tags` | non | Séparés par des virgules. Affichés sous forme de pastilles et regroupés dans des pages `/<section>/tags/<tag>`. |
-| `cover` | non | Image sous `static/`. S'affiche en hero pleine largeur sur l'article, en vignette dans la liste, et comme image de carte sociale de l'article. Les articles qui commencent par un bloc `{% hero %}` n'en ont pas besoin — l'image du hero est utilisée. |
-| `draft` | non | `true` ne sert l'article qu'en développement — la production l'exclut partout. |
+| `cover` | non | Image sous `static/`. S'affiche en hero pleine largeur sur l'article, en vignette dans la liste, et comme image de carte sociale de l'article. Les articles qui commencent par un bloc `{% hero %}` n'en ont pas besoin : l'image du hero est utilisée. |
+| `draft` | non | `true` ne sert l'article qu'en développement ; la production l'exclut partout. |
 
 Les noms de fichiers sont libres (`launch-post.md` → `/blog/launch-post`) ;
 la date ne vit que dans le frontmatter. Les articles utilisent leur propre
@@ -49,7 +49,7 @@ précédent/suivant de la documentation.
 ## La liste
 
 L'`index.md` de la section affiche d'abord sa propre prose, puis la
-liste générée des articles — couverture, date localisée, temps de
+liste générée des articles : couverture, date localisée, temps de
 lecture, auteur, description et tags. Le temps de lecture correspond au
 nombre de mots de l'article à 200 mots par minute, arrondi, avec un
 minimum d'une minute.
@@ -72,7 +72,7 @@ Builds manchtools.
 Le `author: /blog/authors/paul` d'un article prend le nom dans le `title`
 de cette page, l'image dans `avatar:`, et fait pointer la signature vers
 la page. Un chemin qui ne se résout pas fait échouer la validation. Un
-simple `author: Paul Dotterer` fonctionne aussi — pas de page, pas
+simple `author: Paul Dotterer` fonctionne aussi : pas de page, pas
 d'avatar, aucune configuration.
 
 La même référence fonctionne dans le bloc `{% avatar %}`, si bien qu'un
@@ -86,7 +86,7 @@ Le nom, l'image, la bio (le premier paragraphe de la page) et le lien
 proviennent tous de la page d'auteur ; tout attribut que vous définissez
 explicitement l'emporte. En bref : le frontmatter `author:` relève des
 *métadonnées* (liste, signature, flux), le bloc `{% avatar %}` est la
-*carte visuelle* — et les deux peuvent pointer vers la même page.
+*carte visuelle*, et les deux peuvent pointer vers la même page.
 
 ## Les blocs hero et avatar
 
@@ -97,7 +97,7 @@ Deux blocs conçus pour les blogs, utilisables partout :
 {% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
-Placé directement après un hero, l'image de l'avatar **chevauche le bord inférieur du hero de la moitié de sa hauteur** — l'en-tête
+Placé directement après un hero, l'image de l'avatar **chevauche le bord inférieur du hero de la moitié de sa hauteur**, soit l'en-tête
 classique avec photo de couverture. Les deux s'affichent normalement
 lorsqu'ils sont seuls. Un article avec `cover:` reçoit le hero
 automatiquement.

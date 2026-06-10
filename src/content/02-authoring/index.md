@@ -23,7 +23,7 @@ The basics, and the frontmatter keys that control the sidebar.
 The content blocks: callouts, tabs, steps, cards, and more.
 {% /card %}
 {% card title="Blogging" href="/authoring/blogging" icon="📰" %}
-Dated posts, listings, authors, tags, and feeds — per section.
+Dated posts, listings, authors, tags, and feeds, per section.
 {% /card %}
 {% card title="Multi-language" href="/authoring/multi-language" icon="🌐" %}
 Translate pages with a filename suffix; the default language stays unprefixed.

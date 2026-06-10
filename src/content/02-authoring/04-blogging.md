@@ -1,6 +1,6 @@
 ---
 title: Blogging
-description: Turn any section into a blog with blog: true — dated posts, a generated listing, authors, tags, and an Atom feed, alongside your docs.
+description: Turn any section into a blog with blog: true. Dated posts, a generated listing, authors, tags, and an Atom feed, alongside your docs.
 ---
 
 # Blogging
@@ -9,7 +9,7 @@ Any section can be a blog. Set `blog: true` on the section's `index.md`
 and its pages become **posts**: sorted newest-first by date, listed
 automatically on the section page, with Newer/Older navigation, tag
 pages, and an Atom feed. Docs and blogs live side by side in one
-content tree — the [changelog](/changelog) on this site is one.
+content tree; the [changelog](/changelog) on this site is one.
 
 ```markdown
 ---
@@ -36,8 +36,8 @@ description: How we launched, and what comes next.
 | `date` | yes | `YYYY-MM-DD`. Sort key and displayed date (localized). A missing or malformed date fails validation at startup. |
 | `author` | no | A display name, or a site-absolute path to an [author page](#authors-are-pages). |
 | `tags` | no | Comma-separated. Shown as chips and collected into `/<section>/tags/<tag>` pages. |
-| `cover` | no | Image under `static/`. Renders as a full-width hero on the post, a thumbnail in the listing, and the post's social-card image. Posts that start with a `{% hero %}` block don't need it — the hero's image is used. |
-| `draft` | no | `true` serves the post in dev only — production excludes it everywhere. |
+| `cover` | no | Image under `static/`. Renders as a full-width hero on the post, a thumbnail in the listing, and the post's social-card image. Posts that start with a `{% hero %}` block don't need it; the hero's image is used. |
+| `draft` | no | `true` serves the post in dev only; production excludes it everywhere. |
 
 Filenames are free-form (`launch-post.md` → `/blog/launch-post`); the
 date lives only in frontmatter. Posts use their own Newer/Older
@@ -46,7 +46,7 @@ navigation and never mix into the docs prev/next chain.
 ## The listing
 
 The section's `index.md` renders its own prose first, then the
-generated post list — cover, localized date, reading time, author,
+generated post list: cover, localized date, reading time, author,
 description, and tags. Reading time is the post's word count at 200
 words per minute, rounded, minimum one minute.
 
@@ -67,7 +67,7 @@ Builds manchtools.
 A post's `author: /blog/authors/paul` takes the name from that page's
 `title`, the image from `avatar:`, and links the byline to the page. A
 path that doesn't resolve fails validation. A plain
-`author: Paul Dotterer` works too — no page, no avatar, zero setup.
+`author: Paul Dotterer` works too: no page, no avatar, zero setup.
 
 The same reference works in the `{% avatar %}` block, so an author is
 stated once and reused everywhere:
@@ -79,7 +79,7 @@ stated once and reused everywhere:
 Name, image, bio (the page's first paragraph), and the link all come
 from the author page; any attribute you set explicitly wins. In short:
 `author:` frontmatter is *metadata* (listing, byline, feed), the
-`{% avatar %}` block is the *visual card* — and both can point at the
+`{% avatar %}` block is the *visual card*, and both can point at the
 same page.
 
 ## Hero & avatar blocks
@@ -92,7 +92,7 @@ Two blocks made for blogs, usable anywhere:
 ```
 
 Placed directly after a hero, the avatar's image **overlaps the hero**
-by half its height — the classic cover-photo header. Both
+by half its height, the classic cover-photo header. Both
 render normally on their own. A post with `cover:` gets the hero
 automatically.
 

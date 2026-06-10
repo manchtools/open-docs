@@ -91,7 +91,7 @@ Body Markdown.
 | Tag | Attribute | Notes |
 |---|---|---|
 | `accordion` | `title` | The summary text. Native `<details>`. |
-| `accordions` | `exclusive` | Group wrapper; `true` (default) opens one at a time, `false` allows several. Optional — `accordion` also works standalone. |
+| `accordions` | `exclusive` | Group wrapper; `true` (default) opens one at a time, `false` allows several. Optional; `accordion` also works standalone. |
 
 ### badge
 

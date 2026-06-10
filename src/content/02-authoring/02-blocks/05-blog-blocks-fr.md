@@ -1,7 +1,7 @@
 ---
 title: Blocs de blog
 label: Blocs de blog
-description: Images hero, avatars d'auteur, citations en exergue et galeries d'images — conçus pour les articles, utilisables sur n'importe quelle page.
+description: Images hero, avatars d'auteur, citations en exergue et galeries d'images, conçus pour les articles et utilisables sur n'importe quelle page.
 ---
 
 # Blocs de blog
@@ -21,13 +21,13 @@ Une image pleine largeur, avec en option un titre en surimpression :
 {% hero src="/screenshots/open-docs-home.png" alt="La page d'accueil" title="Grande nouvelle" subtitle="Ligne facultative en dessous" /%}
 
 En premier bloc d'une page, il s'aligne au ras du haut. Un article qui
-commence par un hero n'a pas besoin de frontmatter `cover:` — l'image de
+commence par un hero n'a pas besoin de frontmatter `cover:` ; l'image de
 la liste et de la carte sociale en est dérivée.
 
 ## Avatar
 
 Une carte d'auteur. Placée directement après un hero, l'image le
-chevauche de moitié — l'en-tête classique avec photo de couverture :
+chevauche de moitié, soit l'en-tête classique avec photo de couverture :
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}

@@ -1,7 +1,7 @@
 ---
 title: Blog blocks
 label: Blog blocks
-description: Hero images, author avatars, pull-quotes, and image galleries — made for posts, usable on any page.
+description: Hero images, author avatars, pull-quotes, and image galleries. Made for posts, usable on any page.
 ---
 
 # Blog blocks
@@ -20,12 +20,12 @@ A full-width image, optionally with a title overlay:
 {% hero src="/screenshots/open-docs-home.png" alt="The landing page" title="Big news" subtitle="Optional line below" /%}
 
 As the first block on a page it pulls flush to the top. A post that
-starts with a hero needs no `cover:` frontmatter — the listing and
+starts with a hero needs no `cover:` frontmatter; the listing and
 social-card image are derived from it.
 
 ## Avatar
 
-An author card. Directly after a hero, the image overlaps it by half —
+An author card. Directly after a hero, the image overlaps it by half,
 the classic cover-photo header:
 
 ```markdown

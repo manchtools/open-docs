@@ -1,7 +1,7 @@
 ---
 title: Bloques de blog
 label: Bloques de blog
-description: Imágenes hero, avatares de autor, citas destacadas y galerías de imágenes — pensados para entradas, utilizables en cualquier página.
+description: Imágenes hero, avatares de autor, citas destacadas y galerías de imágenes, pensados para entradas y utilizables en cualquier página.
 ---
 
 # Bloques de blog
@@ -21,13 +21,13 @@ Una imagen a ancho completo, opcionalmente con un título superpuesto:
 {% hero src="/screenshots/open-docs-home.png" alt="La página de inicio" title="Grandes noticias" subtitle="Línea opcional debajo" /%}
 
 Como primer bloque de una página se pega al borde superior. Una entrada
-que empieza con un hero no necesita el frontmatter `cover:` — la imagen
+que empieza con un hero no necesita el frontmatter `cover:`; la imagen
 del listado y de la tarjeta social se derivan de él.
 
 ## Avatar
 
 Una tarjeta de autor. Justo después de un hero, la imagen se solapa con
-él hasta la mitad — la clásica cabecera con foto de portada:
+él hasta la mitad, la clásica cabecera con foto de portada:
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}

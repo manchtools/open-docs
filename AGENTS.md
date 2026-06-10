@@ -97,9 +97,9 @@ Translate a page by adding a language suffix to its filename, after any
 
 A section whose `index.md` sets `blog: true` is a blog: its pages are
 POSTS and require `date: YYYY-MM-DD` in frontmatter (startup validation
-fails otherwise). Posts sort newest-first by date — `NN-` prefixes don't
+fails otherwise). Posts sort newest-first by date; `NN-` prefixes don't
 order them. Optional post keys: `author` (display name or site-absolute
-path to a page in the section's `authors/` folder — those are profile
+path to a page in the section's `authors/` folder; those are profile
 pages, not posts), `tags` (comma-separated), `cover` (image under
 `static/`, becomes hero + social image), `draft: true` (dev only). The
 section index gets a generated listing; don't hand-write one. Blocks

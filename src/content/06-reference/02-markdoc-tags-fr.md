@@ -91,7 +91,7 @@ Body Markdown.
 | Balise | Attribut | Notes |
 |---|---|---|
 | `accordion` | `title` | Le texte du résumé. `<details>` natif. |
-| `accordions` | `exclusive` | Conteneur de groupe ; `true` (défaut) n'en ouvre qu'un à la fois, `false` en autorise plusieurs. Optionnel — `accordion` fonctionne aussi seul. |
+| `accordions` | `exclusive` | Conteneur de groupe ; `true` (défaut) n'en ouvre qu'un à la fois, `false` en autorise plusieurs. Optionnel ; `accordion` fonctionne aussi seul. |
 
 ### badge
 
