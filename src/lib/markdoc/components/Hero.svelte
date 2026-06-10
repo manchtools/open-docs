@@ -54,8 +54,15 @@
 
 <style>
 	/* When an avatar follows (and will overlap the bottom-left corner),
-	   lift the overlay text clear of the avatar's intrusion zone. */
+	   move the overlay text aside: lifted above AND indented right of the
+	   avatar's intrusion zone, so title/subtitle stay fully readable. */
 	:global(.od-hero:has(+ .od-avatar) .od-hero-overlay) {
 		padding-bottom: 4.5rem;
+		padding-left: 8rem;
+	}
+	@media (min-width: 1280px) {
+		:global(.od-hero:has(+ .od-avatar) .od-hero-overlay) {
+			padding-left: 9.5rem;
+		}
 	}
 </style>

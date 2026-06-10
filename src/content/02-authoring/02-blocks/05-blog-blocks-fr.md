@@ -31,11 +31,11 @@ chevauche de moitié — l'en-tête classique avec photo de couverture :
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Couverture" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Développe manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Développe manchtools." /%}
 
 En version autonome, elle s'affiche avec un espacement normal. Sur les
 articles, la signature sous le titre utilise le même composant, alimenté
@@ -62,13 +62,13 @@ grille ; chaque image s'ouvre dans la lightbox, où les boutons fléchés
 ```markdown
 {% gallery %}
 ![Light](/screenshots/open-docs-home.png)
-![Dark](/screenshots/open-docs-home-dark.png)
-![German](/screenshots/open-docs-home-de.png)
+![Dark](/screenshots/open-docs-home-de-dark.png)
+![German](/screenshots/open-docs-home-fr.png)
 {% /gallery %}
 ```
 
 {% gallery %}
 ![Clair](/screenshots/open-docs-home.png)
-![Sombre](/screenshots/open-docs-home-dark.png)
-![Allemand](/screenshots/open-docs-home-de.png)
+![Sombre](/screenshots/open-docs-home-de-dark.png)
+![Allemand](/screenshots/open-docs-home-fr.png)
 {% /gallery %}

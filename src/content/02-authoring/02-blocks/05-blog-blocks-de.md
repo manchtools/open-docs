@@ -32,11 +32,11 @@ Hälfte – der klassische Cover-Foto-Header:
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Baut manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Baut manchtools." /%}
 
 Für sich allein rendert er mit normalem Abstand. Auf Beiträgen verwendet
 die Autorenzeile unter dem Titel dieselbe Komponente, gespeist aus dem
@@ -63,13 +63,13 @@ jedes Bild öffnet sich in der Lightbox, in der die Pfeil-Schaltflächen
 ```markdown
 {% gallery %}
 ![Light](/screenshots/open-docs-home.png)
-![Dark](/screenshots/open-docs-home-dark.png)
-![German](/screenshots/open-docs-home-de.png)
+![Dark](/screenshots/open-docs-home-de-dark.png)
+![German](/screenshots/open-docs-home-fr.png)
 {% /gallery %}
 ```
 
 {% gallery %}
 ![Hell](/screenshots/open-docs-home.png)
-![Dunkel](/screenshots/open-docs-home-dark.png)
-![Deutsch](/screenshots/open-docs-home-de.png)
+![Dunkel](/screenshots/open-docs-home-de-dark.png)
+![Deutsch](/screenshots/open-docs-home-fr.png)
 {% /gallery %}

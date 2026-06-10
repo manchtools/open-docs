@@ -31,11 +31,11 @@ Una tarjeta de autor. Justo después de un hero, la imagen se solapa con
 
 ```markdown
 {% hero src="/screenshots/open-docs-home.png" alt="Cover" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
 {% hero src="/screenshots/open-docs-home.png" alt="Portada" /%}
-{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Construye manchtools." /%}
+{% avatar src="/screenshots/open-docs-home-de-dark.png" name="Paul Dotterer" description="Construye manchtools." /%}
 
 Por sí solo se renderiza con el espaciado normal. En las entradas, la
 firma bajo el título usa el mismo componente, alimentado por el
@@ -62,13 +62,13 @@ flecha (o ← / →) recorren todas las imágenes de la página:
 ```markdown
 {% gallery %}
 ![Light](/screenshots/open-docs-home.png)
-![Dark](/screenshots/open-docs-home-dark.png)
-![German](/screenshots/open-docs-home-de.png)
+![Dark](/screenshots/open-docs-home-de-dark.png)
+![German](/screenshots/open-docs-home-fr.png)
 {% /gallery %}
 ```
 
 {% gallery %}
 ![Claro](/screenshots/open-docs-home.png)
-![Oscuro](/screenshots/open-docs-home-dark.png)
-![Alemán](/screenshots/open-docs-home-de.png)
+![Oscuro](/screenshots/open-docs-home-de-dark.png)
+![Alemán](/screenshots/open-docs-home-fr.png)
 {% /gallery %}
