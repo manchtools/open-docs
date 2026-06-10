@@ -27,7 +27,9 @@
 
 	// `initial = undefined` keeps the attribute OPTIONAL in the derived
 	// Markdoc schema — the docs promise it "defaults to the first" tab.
+	// docref: begin props
 	const { labels, initial = undefined, children }: Props = $props();
+	// docref: end props
 
 	// `labels` is a comma-separated string from the Markdoc
 	// attribute — split + trim so authors can write

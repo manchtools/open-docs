@@ -4,7 +4,9 @@
 	// Numbered, vertically-connected procedure. Numbering is done with a
 	// pure CSS counter (reset here, incremented per Step), so — unlike
 	// Tabs — nothing needs to be enumerated up front for SSR.
+	// docref: begin props
 	let { children }: { children?: import('svelte').Snippet } = $props();
+	// docref: end props
 </script>
 
 <!-- No `not-prose`: step content keeps full prose styling (lists, inline

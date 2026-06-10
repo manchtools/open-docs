@@ -15,7 +15,9 @@
 	import { setContext } from 'svelte';
 	import { MDOC_CELL } from './cell-context';
 
+	// docref: begin props
 	let { span = '', children }: { span?: string; children?: import('svelte').Snippet } = $props();
+	// docref: end props
 	// Map span → a responsive col-span class (sm+ only). Literal strings so
 	// Tailwind's scanner generates them. Cells are at most three across.
 	const spanClass = $derived(

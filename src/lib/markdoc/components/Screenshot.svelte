@@ -33,6 +33,7 @@
 		width?: string;
 	};
 
+	// docref: begin props
 	const {
 		src,
 		alt,
@@ -41,6 +42,7 @@
 		variant = 'frame',
 		width = undefined
 	}: Props = $props();
+	// docref: end props
 
 	// Block-style srcs are bare names under static/screenshots/ (the
 	// documented contract). Implicit markdown images arrive with full

@@ -2,7 +2,9 @@
 	// A single step inside {% steps %}. The number in the marker comes
 	// from the CSS counter the parent resets; the left border draws the
 	// connecting line, dropped on the last step.
+	// docref: begin props
 	let { title, children }: { title?: string; children?: import('svelte').Snippet } = $props();
+	// docref: end props
 </script>
 
 <div class="step relative border-l border-border pb-6 pl-7 last:border-l-transparent last:pb-1">

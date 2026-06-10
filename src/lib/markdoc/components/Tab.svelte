@@ -10,7 +10,9 @@
 		children?: import('svelte').Snippet;
 	};
 
+	// docref: begin props
 	const { label, children }: Props = $props();
+	// docref: end props
 </script>
 
 <Tabs.Content value={label}>

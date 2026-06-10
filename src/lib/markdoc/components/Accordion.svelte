@@ -8,7 +8,9 @@
 	// {% accordions %} group it renders as a bare <Accordion.Item> under the
 	// group's shared root (so the group controls single/multiple). Used on
 	// its own, it wraps itself in a single, collapsible root.
+	// docref: begin props
 	let { title, children }: { title?: string; children?: import('svelte').Snippet } = $props();
+	// docref: end props
 
 	const inGroup = getContext('open-docs-accordion-group') === true;
 	const value = $props.id();

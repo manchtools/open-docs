@@ -11,6 +11,7 @@
 	//
 	// Pairing: an {% avatar %} placed directly after a hero overlaps it by
 	// half the avatar image (see the adjacency rules in Avatar.svelte).
+	// docref: begin props
 	let {
 		src,
 		alt = '',
@@ -22,6 +23,7 @@
 		title?: string;
 		subtitle?: string;
 	} = $props();
+	// docref: end props
 
 	const resolved = $derived(
 		src.startsWith('http') ? src : base + (src.startsWith('/') ? src : '/' + src)

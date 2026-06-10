@@ -10,6 +10,7 @@
 	// icons — emoji, inline <svg>, or a path under static/.
 	// href/icon defaults keep those attributes OPTIONAL in the derived
 	// Markdoc schema, per the reference docs; `title` stays required.
+	// docref: begin props
 	let {
 		title,
 		href = undefined,
@@ -21,6 +22,7 @@
 		icon?: string;
 		children?: import('svelte').Snippet;
 	} = $props();
+	// docref: end props
 
 	const isExternal = $derived(!!href && !href.startsWith('/'));
 	const resolved = $derived(href ? (href.startsWith('/') ? base + href : href) : undefined);

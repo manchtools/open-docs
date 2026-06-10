@@ -3,6 +3,7 @@
 	//
 	// Pull-quote: large italic body with a primary accent bar and an
 	// optional attribution line (linked when `cite` is a URL).
+	// docref: begin props
 	let {
 		by = undefined,
 		cite = undefined,
@@ -12,6 +13,7 @@
 		cite?: string;
 		children?: import('svelte').Snippet;
 	} = $props();
+	// docref: end props
 </script>
 
 <figure class="od-quote not-prose my-8 border-l-4 border-primary pl-5">

@@ -11,6 +11,7 @@
 	// cover-photo header) — see the :global adjacency rules below. The
 	// name/description stay below the hero edge so text never sits on the
 	// photo. Standalone, the block renders with normal spacing.
+	// docref: begin props
 	let {
 		// `author` (a site-absolute author-page path) is resolved server-side
 		// into the other props; declared here so the schema accepts it.
@@ -26,6 +27,7 @@
 		description?: string;
 		url?: string;
 	} = $props();
+	// docref: end props
 
 	const resolved = $derived(
 		src ? (src.startsWith('http') ? src : base + (src.startsWith('/') ? src : '/' + src)) : undefined

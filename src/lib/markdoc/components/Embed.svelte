@@ -7,7 +7,9 @@
 	// embeds in your content, so allowed hosts stay in sync automatically.
 	import { toEmbedSrc } from '$lib/embed';
 
+	// docref: begin props
 	let { src, title = 'Embedded content' }: { src: string; title?: string } = $props();
+	// docref: end props
 
 	const resolved = $derived(toEmbedSrc(src));
 </script>

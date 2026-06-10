@@ -5,7 +5,9 @@
 	// format to learn: an item that contains a nested list is shown as a
 	// folder, a leaf as a file — detected purely with the CSS `:has()`
 	// selector, so there's no per-item markup to author.
+	// docref: begin props
 	let { children }: { children?: import('svelte').Snippet } = $props();
+	// docref: end props
 </script>
 
 <div class="filetree not-prose my-6 rounded-lg border border-border bg-muted/30 px-4 py-3 font-mono text-sm">

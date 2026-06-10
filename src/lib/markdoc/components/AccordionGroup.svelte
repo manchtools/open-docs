@@ -11,10 +11,12 @@
 	//
 	// `[&_h3]:m-0` neutralises the prose heading margin the trigger's <h3>
 	// header would otherwise inherit (the group lives inside `.prose`).
+	// docref: begin props
 	let {
 		exclusive = true,
 		children
 	}: { exclusive?: boolean; children?: import('svelte').Snippet } = $props();
+	// docref: end props
 
 	// Tell child accordions they're in a group, so each renders only an
 	// <Accordion.Item> under this shared <Accordion.Root>.

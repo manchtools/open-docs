@@ -5,7 +5,9 @@
 	// a filename header can't ride on the fence itself. This thin wrapper
 	// supplies one: it renders a title bar and flattens the inner code
 	// block's own border/radius/margin so the two read as a single unit.
+	// docref: begin props
 	let { title, children }: { title?: string; children?: import('svelte').Snippet } = $props();
+	// docref: end props
 </script>
 
 <!-- The inner code block self-styles its padding/background (see

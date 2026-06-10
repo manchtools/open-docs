@@ -27,7 +27,9 @@
 	// `title = undefined` keeps the attribute OPTIONAL in the derived
 	// Markdoc schema (a prop without a default is required) — the docs
 	// promise an optional title.
+	// docref: begin props
 	const { type = 'info', title = undefined, children }: Props = $props();
+	// docref: end props
 
 	const variantClasses: Record<Variant, string> = {
 		info: 'border-blue-500/30 bg-blue-500/5 text-blue-900 dark:text-blue-100',

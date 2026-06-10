@@ -10,7 +10,9 @@
 	//
 	// `display: contents` (the `contents` class) keeps the wrapper out of
 	// the layout; Pagefind reads the weight from the static HTML regardless.
+	// docref: begin props
 	let { weight = 5, children }: { weight?: number; children?: import('svelte').Snippet } = $props();
+	// docref: end props
 </script>
 
 <div class="contents" data-pagefind-weight={weight}>

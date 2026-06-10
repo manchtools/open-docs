@@ -56,6 +56,7 @@ words per minute, rounded, minimum one minute.
 
 ## Authors are pages
 
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract sha=bf9c57f0 -->
 Put authors in an `authors/` folder inside the blog section. Pages there
 are profile pages, not posts (no date needed, never listed):
 
@@ -85,9 +86,11 @@ from the author page; any attribute you set explicitly wins. In short:
 `author:` frontmatter is *metadata* (listing, byline, feed), the
 `{% avatar %}` block is the *visual card*, and both can point at the
 same page.
+<!-- docref: end -->
 
 ## Hero & avatar blocks
 
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props sha=2d0e6d15 -->
 Two blocks made for blogs, usable anywhere:
 
 ```markdown
@@ -104,6 +107,7 @@ Placed directly after a hero, the avatar's image **overlaps the hero**
 by half its height, the classic cover-photo header. Both
 render normally on their own. A post with `cover:` gets the hero
 automatically.
+<!-- docref: end -->
 
 ## Quote & gallery
 
@@ -123,11 +127,13 @@ like every image.
 
 ## Feeds
 
+<!-- docref: begin src=src/hooks.server.ts#atomFeed sha=e1fcac5f -->
 Every blog section serves an Atom feed at `/<section>/feed.xml`
 (per language too: `/de/blog/feed.xml`). Set `PUBLIC_SITE_URL` so
 entries carry absolute links. Blog pages advertise the feed with a
 `<link rel="alternate">`, and the blog index's `h1` carries a
 copy-feed-URL button next to the usual copy-page-link button.
+<!-- docref: end -->
 
 {% callout type="info" title="Multiple blogs per site" %}
 `blog: true` is per-section: a docs site can carry a blog, a changelog,

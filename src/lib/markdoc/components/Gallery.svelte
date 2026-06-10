@@ -4,7 +4,9 @@
 	// Responsive image grid. Children are plain Markdown images; the grid
 	// styles them uniformly and the existing lightbox makes each one
 	// click-to-zoom (it targets images inside <main> automatically).
+	// docref: begin props
 	let { children }: { children?: import('svelte').Snippet } = $props();
+	// docref: end props
 </script>
 
 <div class="od-gallery not-prose my-8 grid grid-cols-2 gap-3 md:grid-cols-3">
