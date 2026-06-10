@@ -28,9 +28,11 @@
 
 	const lang = $derived((page.data.lang as string | undefined) ?? 'en');
 
+	// Avatar circles are excluded: at 80px there is nothing to inspect,
+	// and they would otherwise show a zoom cursor that does nothing.
 	function zoomable(): HTMLImageElement[] {
 		return [...document.querySelectorAll<HTMLImageElement>('main img')].filter(
-			(i) => !i.closest('a') && i.clientWidth > 80
+			(i) => !i.closest('a') && !i.classList.contains('od-avatar-img') && i.clientWidth > 80
 		);
 	}
 
@@ -39,8 +41,8 @@
 		if (!t || !t.closest('main')) return;
 
 		const img = t.closest('img') as HTMLImageElement | null;
-		// Skip tiny images (icons) and images that are themselves links.
-		if (img && !img.closest('a') && img.clientWidth > 80) {
+		// Skip tiny images (icons), avatars, and images that are links.
+		if (img && !img.closest('a') && !img.classList.contains('od-avatar-img') && img.clientWidth > 80) {
 			const all = zoomable();
 			images = all.map((i) => ({ src: i.currentSrc || i.src, alt: i.alt }));
 			index = Math.max(0, all.indexOf(img));
@@ -135,8 +137,9 @@
 </Dialog.Root>
 
 <style>
-	/* Affordance: zoomable content shows the zoom cursor. */
-	:global(main img),
+	/* Affordance: zoomable content shows the zoom cursor. Avatars are not
+	   zoomable (see zoomable() above) and keep the default cursor. */
+	:global(main img:not(.od-avatar-img)),
 	:global(main .mermaid-figure) {
 		cursor: zoom-in;
 	}
