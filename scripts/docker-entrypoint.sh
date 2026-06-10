@@ -35,7 +35,7 @@ elif grep -qs " $CONTENT_SRC " /proc/self/mounts; then
     echo "[open-docs]   Serving the bundled open-docs documentation instead."
     unset OPEN_DOCS_CONTENT || true
 else
-    echo "[open-docs] no content mounted at $CONTENT_SRC — serving the bundled open-docs documentation"
+    echo "[open-docs] serving the bundled open-docs documentation (mount your Markdown at $CONTENT_SRC to serve your own)"
     unset OPEN_DOCS_CONTENT || true
 fi
 
