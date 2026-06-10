@@ -39,7 +39,8 @@ flowchart TD
 - El **`index.md` de una carpeta** hace que el encabezado de esa sección
   sea el enlace a su página (servida en la URL de la carpeta). No hay una
   entrada "Resumen" aparte; haz clic en el título de la sección para
-  abrirla.
+  abrirla. Un `README.md` sirve de respaldo cuando una carpeta no tiene
+  `index.md`.
 
 ## Anidamiento
 
@@ -99,8 +100,9 @@ Las tarjetas de la página de inicio de este sitio funcionan todas así:
 cada sección de nivel superior define aquí un icono emoji en su
 `index.md`.
 
-{% callout type="info" title="La desincronización es un 404, no un fallo" %}
-Los enlaces se validan contra el sistema de archivos al construir el
-sitio, así que un enlace obsoleto aparece como un 404 claro durante la
-compilación en lugar de una página rota en producción.
+{% callout type="info" title="Los enlaces muertos fallan rápido" %}
+Los enlaces internos se validan cuando el sitio arranca. Un enlace
+interno muerto detiene el contenedor con un error que indica el archivo
+y la línea, así que un enlace obsoleto nunca llega a producción como
+una página rota.
 {% /callout %}

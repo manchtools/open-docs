@@ -31,7 +31,7 @@ en mode clair comme en mode sombre. Voir [Thèmes](/fr/customizing/theming).
 
 | Variable | Effet |
 |---|---|
-| `PUBLIC_TOKEN_<NAME>` | Expose `{{<NAME>}}` comme placeholder résolu au build dans le texte. Voir [Jetons de contenu](/fr/customizing/content-tokens). |
+| `PUBLIC_TOKEN_<NAME>` | Expose `{{<NAME>}}` comme placeholder dans le texte, substitué quand le contenu est analysé au démarrage. Voir [Jetons de contenu](/fr/customizing/content-tokens). |
 
 ## Déploiement
 
@@ -52,6 +52,6 @@ touchent jamais.
 | `OPEN_DOCS_STATIC` | `/static` | Répertoire fusionné dans `static/`. |
 
 {% callout type="info" title="PUBLIC_ n'est pas un préfixe de secret" %}
-Les valeurs `PUBLIC_*` sont compilées dans le bundle client et visibles
+Les valeurs `PUBLIC_*` sont livrées au navigateur et visibles
 par quiconque consulte le site. N'y placez jamais de secrets.
 {% /callout %}

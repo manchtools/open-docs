@@ -5,8 +5,8 @@ icon: "🎨"
 
 # Anpassen
 
-Legen Sie Branding, Theming und Build-Zeit-Inhaltswerte fest, ohne den
-Quellcode anzufassen.
+Legen Sie Branding, Theming und beim Start ersetzte Inhaltswerte fest,
+ohne den Quellcode anzufassen.
 
 {% cards %}
 {% card title="Konfiguration" href="/de/customizing/configuration" icon="⚙️" %}
@@ -16,7 +16,7 @@ Umgebungsvariablen und Rahmen der Website.
 Alles mit Ihrer eigenen `theme.css` umgestalten.
 {% /card %}
 {% card title="Content-Tokens" href="/de/customizing/content-tokens" icon="🧩" %}
-Build-Zeit-Werte in den Fließtext einfügen.
+Beim Start ersetzte Werte in den Fließtext einfügen.
 {% /card %}
 {% card title="Suche" href="/de/customizing/search" icon="🔎" %}
 Wie Ergebnisse gewichtet werden und wie Sie eine Passage höher schieben.

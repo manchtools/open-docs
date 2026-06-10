@@ -55,6 +55,9 @@ Body Markdown.
 | `variant` | non | `frame` (défaut) ou `flat`. |
 | `width` | non | Largeur maximale, par ex. `720px`. |
 
+Les images Markdown ordinaires `![]()` sont elles aussi rendues par ce
+composant, en variante `flat`.
+
 ### steps / step
 
 ````markdown
@@ -228,10 +231,17 @@ obtient ce comportement automatiquement :
 
 | Élément | Comportement |
 |---|---|
-| Titres (`##`+) | Reçoivent des id d'ancre, alimentent la table des matières et affichent une icône de copie de lien au survol. |
+| Titres | Reçoivent des id d'ancre et alimentent la table des matières ; chaque `h1` porte un bouton de copie du lien de la page, et les boutons de copie sont discrètement visibles au repos, plus marqués au survol. |
 | Liens | Les liens externes s'ouvrent dans un nouvel onglet avec des attributs `rel` sûrs. |
+| Liens relatifs (`./x.md`) | Résolus par rapport au fichier ; les liens de style éditeur continuent donc de fonctionner. |
+| Images (`![]()`) | Rendues via le composant screenshot (variante flat) ; les fichiers relatifs au contenu sont servis, et la lightbox les fait défiler comme un carrousel. |
+| Listes de tâches (`- [ ]`) | Rendues sous forme de cases à cocher. |
+| Notes de bas de page (`[^1]`) | Liens numérotés en exposant, avec leurs définitions regroupées en fin de page. |
 | Blocs de code | Coloration syntaxique (Shiki) avec un bouton de copie ; les commentaires `// [!code highlight]` / `++` / `--` ajoutent la mise en surbrillance de lignes et les diffs. |
 | Blocs `mermaid` | Rendus sous forme de diagrammes thématisés. |
+
+Le HTML en ligne n'est jamais rendu, et les URL nues restent du texte
+brut.
 
 {% callout type="info" title="Les attributs reflètent les props des composants" %}
 Les attributs de chaque balise sont les props du composant Svelte qui se

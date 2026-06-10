@@ -22,7 +22,7 @@ Coloca un archivo Markdown en tu carpeta de contenido. La ruta y la entrada de
 la barra lateral aparecen solas.
 {% /step %}
 {% step title="Ejecútalo" %}
-Arranca el servidor de desarrollo y abre `http://localhost:5173`.
+Arranca el servidor de desarrollo y abre `http://localhost:3000`.
 {% /step %}
 {% /steps %}
 

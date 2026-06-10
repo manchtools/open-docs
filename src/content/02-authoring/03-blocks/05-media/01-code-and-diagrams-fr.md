@@ -83,8 +83,8 @@ une boîte de dialogue, ce qui aide quand il devient détaillé.
 ````markdown
 ```mermaid
 flowchart LR
-  A[Markdown] --> B[open-docs build]
-  B --> C[Static site]
+  A[Markdown] --> B[Parsed at start]
+  B --> C[Server-rendered pages]
   C --> D[Pagefind search]
 ```
 ````
@@ -93,8 +93,8 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  A[Markdown] --> B[open-docs build]
-  B --> C[Static site]
+  A[Markdown] --> B[Parsed at start]
+  B --> C[Server-rendered pages]
   C --> D[Pagefind search]
 ```
 

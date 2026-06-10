@@ -121,7 +121,9 @@ vergrößern sich in der Lightbox wie jedes Bild.
 Jeder Blog-Abschnitt liefert unter `/<section>/feed.xml` einen Atom-Feed
 aus (auch pro Sprache: `/de/blog/feed.xml`). Setzen Sie
 `PUBLIC_SITE_URL`, damit die Einträge absolute Links tragen. Blog-Seiten
-machen den Feed über ein `<link rel="alternate">` bekannt.
+machen den Feed über ein `<link rel="alternate">` bekannt, und die `h1`
+der Blog-Übersicht trägt neben der üblichen Schaltfläche zum Kopieren
+des Seitenlinks eine Schaltfläche zum Kopieren der Feed-URL.
 
 {% callout type="info" title="Mehrere Blogs pro Website" %}
 `blog: true` gilt pro Abschnitt: Eine Doku-Website kann gleichzeitig

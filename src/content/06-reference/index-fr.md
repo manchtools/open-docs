@@ -12,6 +12,6 @@ Documentation de consultation, pour quand vous savez ce qu'il vous faut.
 Toutes les variables `PUBLIC_*` et de déploiement.
 {% /card %}
 {% card title="Balises Markdoc" href="/fr/reference/markdoc-tags" icon="🏷️" %}
-Encarts, onglets, étapes, cartes, code, et plus encore.
+Encarts, onglets, étapes, cartes, code, blocs de blog, et plus encore.
 {% /card %}
 {% /cards %}

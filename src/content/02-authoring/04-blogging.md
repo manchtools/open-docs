@@ -117,7 +117,8 @@ like every image.
 Every blog section serves an Atom feed at `/<section>/feed.xml`
 (per language too: `/de/blog/feed.xml`). Set `PUBLIC_SITE_URL` so
 entries carry absolute links. Blog pages advertise the feed with a
-`<link rel="alternate">`.
+`<link rel="alternate">`, and the blog index's `h1` carries a
+copy-feed-URL button next to the usual copy-page-link button.
 
 {% callout type="info" title="Multiple blogs per site" %}
 `blog: true` is per-section: a docs site can carry a blog, a changelog,

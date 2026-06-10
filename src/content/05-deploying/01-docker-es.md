@@ -29,7 +29,8 @@ Abre `http://localhost:3000`.
 | `/static` | `static/` | Favicons, `og.png`, capturas de pantalla. Se fusionan sobre los valores por defecto. |
 
 Ambos montajes son opcionales. El montaje de contenido puede ser de solo
-lectura (`:ro`); el entrypoint lo copia al árbol de la imagen antes de compilar.
+lectura (`:ro`); el entrypoint lo copia al árbol de la imagen antes de que
+el servidor arranque.
 
 {% callout type="info" title="Ejecutar sin nada montado" %}
 Sin un montaje en `/content`, la imagen sirve la propia documentación de
@@ -37,7 +38,7 @@ open-docs, una demo en vivo que puedes recorrer antes de añadir tu propio
 contenido.
 {% /callout %}
 
-## Cómo se produce una compilación
+## Qué ocurre al arrancar
 
 No hay ningún paso de compilación. El contenedor analiza y valida el
 Markdown al arrancar (un par de segundos, entre 100 y 150 MB de memoria

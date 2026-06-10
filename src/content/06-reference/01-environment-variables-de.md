@@ -31,7 +31,7 @@ hellen als auch im dunklen Modus. Siehe [Theming](/de/customizing/theming).
 
 | Variable | Wirkung |
 |---|---|
-| `PUBLIC_TOKEN_<NAME>` | Stellt `{{<NAME>}}` als Platzhalter zur Build-Zeit im Fließtext bereit. Siehe [Content-Token](/de/customizing/content-tokens). |
+| `PUBLIC_TOKEN_<NAME>` | Stellt `{{<NAME>}}` als Platzhalter im Fließtext bereit, ersetzt beim Parsen des Inhalts zum Start. Siehe [Content-Token](/de/customizing/content-tokens). |
 
 ## Deployment
 
@@ -51,7 +51,7 @@ alternative Quellverzeichnisse aus. Die meisten Nutzer ändern sie nie.
 | `OPEN_DOCS_STATIC` | `/static` | Verzeichnis, das in `static/` zusammengeführt wird. |
 
 {% callout type="info" title="PUBLIC_ ist kein Präfix für Geheimnisse" %}
-`PUBLIC_*`-Werte werden in das Client-Bundle kompiliert und sind für
+`PUBLIC_*`-Werte werden an den Browser ausgeliefert und sind für
 jeden sichtbar, der die Site ansieht. Hinterlegen Sie darin niemals
 Geheimnisse.
 {% /callout %}

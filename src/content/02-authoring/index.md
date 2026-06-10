@@ -19,14 +19,14 @@ the custom blocks when prose alone is not enough.
 {% card title="Markdown & frontmatter" href="/authoring/markdown-and-frontmatter" icon="📝" %}
 The basics, and the frontmatter keys that control the sidebar.
 {% /card %}
+{% card title="Existing markdown" href="/authoring/bring-existing-markdown" icon="📦" %}
+GitHub/VSCode conventions hold: relative links, README.md, footnotes.
+{% /card %}
 {% card title="Blocks" href="/authoring/blocks" icon="🧱" %}
 The content blocks: callouts, tabs, steps, cards, and more.
 {% /card %}
 {% card title="Blogging" href="/authoring/blogging" icon="📰" %}
 Dated posts, listings, authors, tags, and feeds, per section.
-{% /card %}
-{% card title="Existing markdown" href="/authoring/bring-existing-markdown" icon="📦" %}
-GitHub/VSCode conventions hold: relative links, README.md, footnotes.
 {% /card %}
 {% card title="Multi-language" href="/authoring/multi-language" icon="🌐" %}
 Translate pages with a filename suffix; the default language stays unprefixed.

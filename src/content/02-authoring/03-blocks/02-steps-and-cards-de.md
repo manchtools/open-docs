@@ -22,7 +22,7 @@ Legen Sie eine Markdown-Datei in Ihrem Content-Ordner ab. Route und
 Seitenleisten-Eintrag erscheinen von selbst.
 {% /step %}
 {% step title="Starten" %}
-Starten Sie den Dev-Server und öffnen Sie `http://localhost:5173`.
+Starten Sie den Dev-Server und öffnen Sie `http://localhost:3000`.
 {% /step %}
 {% /steps %}
 

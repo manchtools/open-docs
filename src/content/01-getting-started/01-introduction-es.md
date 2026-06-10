@@ -53,6 +53,16 @@ Por eso encaja bien cuando quieres:
   [Configuración](/es/customizing/configuration).
 - **Bloques de contenido** (callouts, pestañas, capturas) sobre Markdown
   plano. Consulta [Callouts y pestañas](/es/authoring/blocks/callouts-and-tabs).
+- **Modo blog por sección.** Marca una carpeta como blog y obtén entradas
+  con fecha, listados, autores, etiquetas y feeds. Consulta
+  [Blogs](/es/authoring/blogging).
+- **Tu Markdown existente funciona tal cual.** Las convenciones de
+  GitHub/VSCode (enlaces relativos, `README.md`, imágenes junto al
+  archivo) se mantienen. Consulta
+  [Markdown existente](/es/authoring/bring-existing-markdown).
+- **Traducciones por sufijo en el nombre de archivo.** Añade `-de.md` (o
+  cualquier idioma) junto a una página y se sirve bajo `/de/…`. Consulta
+  [Multiidioma](/es/authoring/multi-language).
 
 ## Siguientes pasos
 

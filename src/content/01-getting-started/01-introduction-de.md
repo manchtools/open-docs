@@ -54,6 +54,16 @@ Das macht es zu einer guten Wahl, wenn Sie:
   [Konfiguration](/de/customizing/configuration).
 - **Content-Blöcke** (Callouts, Tabs, Screenshots) zusätzlich zu reinem
   Markdown. Siehe [Callouts & Tabs](/de/authoring/blocks/callouts-and-tabs).
+- **Blog-Modus pro Abschnitt.** Markieren Sie einen Ordner als Blog und
+  erhalten Sie datierte Beiträge, Auflistungen, Autoren, Tags und Feeds.
+  Siehe [Blogging](/de/authoring/blogging).
+- **Ihr vorhandenes Markdown funktioniert unverändert.** GitHub-/
+  VSCode-Konventionen (relative Links, `README.md`, danebenliegende
+  Bilder) gelten weiter. Siehe
+  [Vorhandenes Markdown](/de/authoring/bring-existing-markdown).
+- **Übersetzungen per Dateinamenssuffix.** Legen Sie eine `-de.md` (oder
+  eine beliebige Sprache) neben eine Seite, und sie wird unter `/de/…`
+  ausgeliefert. Siehe [Mehrsprachigkeit](/de/authoring/multi-language).
 
 ## Nächste Schritte
 

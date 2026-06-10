@@ -30,8 +30,9 @@ bun run build      # production build → ./build/
 bun run preview    # serve the built site
 ```
 
-La compilación pre-renderiza cada página a HTML estático y luego ejecuta
-[Pagefind](https://pagefind.app) sobre el resultado para producir el índice de
+La compilación solo compila la aplicación; las páginas se renderizan en el
+servidor en tiempo de ejecución. [Pagefind](https://pagefind.app) indexa las
+páginas poco después de que el servidor arranque para producir el índice de
 búsqueda.
 
 ## Objetivos del Makefile

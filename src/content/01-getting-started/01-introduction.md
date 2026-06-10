@@ -50,6 +50,15 @@ That makes it a good fit when you want to:
   [Configuration](/customizing/configuration).
 - **Content blocks** (callouts, tabs, screenshots) on top of
   plain Markdown. See [Callouts & tabs](/authoring/blocks/callouts-and-tabs).
+- **Blog mode per section.** Mark a folder as a blog and get dated
+  posts, listings, authors, tags, and feeds. See
+  [Blogging](/authoring/blogging).
+- **Your existing markdown works as-is.** GitHub/VSCode conventions
+  (relative links, `README.md`, co-located images) carry over. See
+  [Existing markdown](/authoring/bring-existing-markdown).
+- **Filename-suffix translations.** Add `-de.md` (or any language) next
+  to a page and it serves under `/de/…`. See
+  [Multi-language](/authoring/multi-language).
 
 ## Next steps
 

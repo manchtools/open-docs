@@ -123,7 +123,9 @@ s'agrandissent dans la lightbox comme toute image.
 Chaque section blog sert un flux Atom à `/<section>/feed.xml`
 (par langue aussi : `/de/blog/feed.xml`). Définissez `PUBLIC_SITE_URL`
 pour que les entrées portent des liens absolus. Les pages du blog
-annoncent le flux via un `<link rel="alternate">`.
+annoncent le flux via un `<link rel="alternate">`, et le `h1` de l'index
+du blog porte un bouton de copie de l'URL du flux à côté du bouton
+habituel de copie du lien de la page.
 
 {% callout type="info" title="Plusieurs blogs par site" %}
 `blog: true` est par section : un site de documentation peut porter à la

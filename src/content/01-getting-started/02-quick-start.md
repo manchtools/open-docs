@@ -71,3 +71,6 @@ Markdown, callouts, tabs, code, and diagrams.
 Mounts, environment, and production notes.
 {% /card %}
 {% /cards %}
+
+Already have a folder of markdown? Point open-docs at it as-is; see
+[Existing markdown](/authoring/bring-existing-markdown).

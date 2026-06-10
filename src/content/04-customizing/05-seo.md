@@ -21,8 +21,8 @@ no trailing slash:
 This is the one value the discovery files need. With it set, each page gets
 an absolute canonical URL, `sitemap.xml` and `robots.txt` reference real
 addresses, and `llms.txt` links resolve. If it is left empty, the site
-still works and the files still build, but canonical and `og:url` tags are
-omitted and the sitemap falls back to path-only links.
+still works and the files are still generated, but canonical and `og:url`
+tags are omitted and the sitemap falls back to path-only links.
 
 If the docs live under a sub-path (for example `https://example.com/docs`),
 include that sub-path in `PUBLIC_SITE_URL`.
@@ -49,6 +49,14 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 
 `brandName`, the site title, and the default description come from the
 [configuration](/customizing/configuration) environment variables.
+
+## Blog posts and feeds
+
+Posts in a [blog section](/authoring/blogging) carry extra metadata:
+`article:published_time` and `article:author` tags from the post's
+frontmatter, and the post's `cover` image as the social-card image. The
+section's Atom feed is advertised on its pages via
+`<link rel="alternate">`, so feed readers discover it automatically.
 
 ## sitemap.xml
 

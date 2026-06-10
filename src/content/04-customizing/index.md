@@ -5,7 +5,7 @@ icon: "🎨"
 
 # Customizing
 
-Set your branding, theming, and build-time content values without
+Set your branding, theming, and values substituted at start without
 touching the source.
 
 {% cards %}
@@ -16,7 +16,7 @@ Environment variables and site chrome.
 Restyle everything with your own `theme.css`.
 {% /card %}
 {% card title="Content tokens" href="/customizing/content-tokens" icon="🧩" %}
-Inject build-time values into prose.
+Inject values substituted at start into prose.
 {% /card %}
 {% card title="Search" href="/customizing/search" icon="🔎" %}
 How results are ranked, and how to push a passage higher.

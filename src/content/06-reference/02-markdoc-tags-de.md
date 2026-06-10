@@ -55,6 +55,9 @@ Body Markdown.
 | `variant` | nein | `frame` (Default) oder `flat`. |
 | `width` | nein | Maximalbreite, z. B. `720px`. |
 
+Normale Markdown-Bilder `![]()` werden ebenfalls über diese Komponente
+gerendert, in der `flat`-Variante.
+
 ### steps / step
 
 ````markdown
@@ -226,10 +229,16 @@ Verhalten automatisch:
 
 | Element | Verhalten |
 |---|---|
-| Überschriften (`##`+) | Erhalten Anker-IDs, speisen das Inhaltsverzeichnis und zeigen beim Überfahren ein Symbol zum Link-Kopieren. |
+| Überschriften | Erhalten Anker-IDs und speisen das Inhaltsverzeichnis; jede `h1` hat eine Schaltfläche zum Kopieren des Seitenlinks, und die Kopierschaltflächen sind im Ruhezustand schwach sichtbar, beim Überfahren kräftiger. |
 | Links | Externe Links öffnen in einem neuen Tab mit sicheren `rel`-Attributen. |
+| Relative Links (`./x.md`) | Werden relativ zur Datei aufgelöst, sodass Links im Editor-Stil weiter funktionieren. |
+| Bilder (`![]()`) | Werden über die Screenshot-Komponente gerendert (`flat`-Variante); Dateien relativ zum Inhalt werden ausgeliefert, und die Lightbox blättert wie ein Karussell durch sie. |
+| Aufgabenlisten (`- [ ]`) | Werden als Checkboxen gerendert. |
+| Fußnoten (`[^1]`) | Nummerierte hochgestellte Links, deren Definitionen am Seitenende gesammelt werden. |
 | Code-Fences | Syntaxhervorhebung (Shiki) mit Kopierschaltfläche; `// [!code highlight]`-/`++`-/`--`-Kommentare fügen Zeilenhervorhebung und Diffs hinzu. |
 | `mermaid`-Fences | Werden als designte Diagramme gerendert. |
+
+Inline-HTML wird nie gerendert, und nackte URLs bleiben reiner Text.
 
 {% callout type="info" title="Attribute spiegeln Komponenten-Props" %}
 Die Attribute jedes Tags sind die Props der dahinterstehenden

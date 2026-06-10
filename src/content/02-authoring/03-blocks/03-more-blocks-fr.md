@@ -18,7 +18,7 @@ Non. Les pages sont rendues directement depuis votre Markdown ; il n'y a rien à
 {% /accordion %}
 {% accordion title="Puis-je l'héberger moi-même ?" %}
 Oui. Exécutez le conteneur n'importe où, ou compilez depuis les sources et
-servez la sortie comme n'importe quel site statique.
+lancez le serveur fourni.
 {% /accordion %}
 {% accordion title="Prend-il en charge les dossiers imbriqués ?" %}
 Jusqu'à trois niveaux de profondeur. Voir la

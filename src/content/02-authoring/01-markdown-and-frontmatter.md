@@ -11,8 +11,13 @@ Write pages in plain Markdown. Standard elements all work:
   on-page table of contents on the right.
 - **Lists**, ordered and unordered, with nesting.
 - **Links**, internal (`/getting-started/quick-start`) and external.
+  Relative editor-style links like `./sibling.md` resolve against the
+  file too; see [Existing markdown](/authoring/bring-existing-markdown).
   External links automatically open in a new tab with safe `rel`
   attributes.
+- **Images** (`![alt](./diagram.png)`), co-located with your markdown
+  or under `static/`.
+- **Task lists** (`- [ ]` / `- [x]`) and **footnotes** (`[^1]`).
 - **Emphasis**, `inline code`, blockquotes, tables, and horizontal
   rules.
 
@@ -47,7 +52,13 @@ order: 2
 
 A section's `index.md` understands one more key, `icon`, which sets
 that section's icon on the home-page card. See
-[Section icons](/navigation/folder-derived-nav#section-icons).
+[Section icons](/navigation/folder-derived-nav#section-icons). An
+`index.md` also takes `blog: true` to turn its section into a blog; see
+[Blogging](/authoring/blogging). Blog posts add their own keys (`date`,
+`author`, `tags`, `cover`, `draft`), covered in
+[Blogging](/authoring/blogging) as well. A `meta: true` page stays out of
+the sidebar and prev/next and is listed in the footer instead; see
+[Ordering & titles](/navigation/ordering-and-titles).
 
 Frontmatter is optional. Without it, the title is derived from the
 filename and pages sort alphabetically (or by their number prefix). See

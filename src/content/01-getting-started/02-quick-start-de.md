@@ -73,3 +73,7 @@ Markdown, Callouts, Tabs, Code und Diagramme.
 Mounts, Umgebung und Hinweise für den Produktivbetrieb.
 {% /card %}
 {% /cards %}
+
+Sie haben bereits einen Ordner voller Markdown? Richten Sie open-docs
+unverändert darauf; siehe
+[Vorhandenes Markdown](/de/authoring/bring-existing-markdown).

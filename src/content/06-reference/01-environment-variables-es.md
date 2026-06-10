@@ -31,7 +31,7 @@ oscuro. Consulta [Temas](/es/customizing/theming).
 
 | Variable | Efecto |
 |---|---|
-| `PUBLIC_TOKEN_<NAME>` | Expone `{{<NAME>}}` como marcador de posición en tiempo de compilación dentro del texto. Consulta [Tokens de contenido](/es/customizing/content-tokens). |
+| `PUBLIC_TOKEN_<NAME>` | Expone `{{<NAME>}}` como marcador de posición dentro del texto, sustituido cuando el contenido se analiza al arrancar. Consulta [Tokens de contenido](/es/customizing/content-tokens). |
 
 ## Despliegue
 
@@ -51,6 +51,6 @@ origen alternativos. La mayoría de los usuarios nunca los cambian.
 | `OPEN_DOCS_STATIC` | `/static` | Directorio que se fusiona en `static/`. |
 
 {% callout type="info" title="PUBLIC_ no es un prefijo para secretos" %}
-Los valores `PUBLIC_*` se compilan en el bundle del cliente y son visibles para
+Los valores `PUBLIC_*` se entregan al navegador y son visibles para
 cualquiera que vea el sitio. Nunca pongas secretos en ellos.
 {% /callout %}

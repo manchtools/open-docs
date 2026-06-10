@@ -6,7 +6,8 @@ title: Search
 
 Every open-docs site ships with **full-text search**, powered by
 [Pagefind](https://pagefind.app). The index is built from your pages
-when the container starts and served as static files, so there is no
+shortly after the server starts; pages serve immediately and search
+comes online moments later. It is served as static files, so there is no
 search server and it keeps working offline. Open it from the box in the top bar, or with
 **⌘K / Ctrl&nbsp;K**.
 

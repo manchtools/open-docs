@@ -7,8 +7,9 @@ title: Captures d'écran
 Le bloc `screenshot` affiche une image avec, en option, un habillage façon
 fenêtre de navigateur, une légende et une variante distincte pour le mode
 sombre. Les images sont résolues depuis `static/screenshots/`. Cliquez sur une
-image pour l'agrandir dans une boîte de dialogue (cela vaut aussi pour les
-images Markdown classiques `![]()`). Les contrôles de fenêtre de l'habillage
+image pour l'agrandir dans une visionneuse ; de là, vous pouvez faire défiler
+toutes les images de la page avec les boutons fléchés ou les touches ← et →,
+comme un carrousel manuel. Les contrôles de fenêtre de l'habillage
 s'adaptent au système d'exploitation du lecteur (macOS, Windows ou Linux).
 
 Voici la page d'accueil d'open-docs, rendue par ce bloc même :
@@ -40,6 +41,15 @@ Voici la page d'accueil d'open-docs, rendue par ce bloc même :
 | `variant` | non | `frame` (habillage façon navigateur, par défaut) ou `flat` (image avec bordure). |
 | `width` | non | Largeur maximale, p. ex. `720px`. Par défaut, la largeur de la colonne de contenu. |
 
+## Images Markdown classiques
+
+Les images ordinaires `![alt](path)` sont rendues implicitement par ce même
+composant, en variante `flat` et sans habillage de fenêtre. Les fichiers
+placés à côté du Markdown sont servis sur place, les chemins relatifs de
+style éditeur fonctionnent donc tels quels. Réservez le bloc explicite aux
+cas où vous voulez l'habillage de navigateur, une légende ou une variante
+pour le mode sombre.
+
 ## Ajouter les fichiers image
 
 Déposez les fichiers dans votre répertoire statique :
@@ -54,6 +64,10 @@ Déposez les fichiers dans votre répertoire statique :
 Sous Docker, montez vos ressources sur `/static`. Elles sont fusionnées dans le
 dossier `static/` de l'image, vous ne remplacez donc que ce que vous fournissez.
 Voir [Ressources statiques](/fr/customizing/configuration#assets-statiques).
+
+Vous pouvez aussi garder les images à côté du Markdown qui les référence et
+les lier de façon relative ; voir
+[Markdown existant](/fr/authoring/bring-existing-markdown).
 
 {% callout type="warn" title="Référencez des fichiers réels" %}
 Un `screenshot` pointant vers une image manquante fait échouer la validation

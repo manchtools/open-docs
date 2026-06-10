@@ -70,3 +70,6 @@ Markdown, callouts, pestañas, código y diagramas.
 Montajes, entorno y notas de producción.
 {% /card %}
 {% /cards %}
+
+¿Ya tienes una carpeta de Markdown? Apunta open-docs a ella tal cual;
+consulta [Markdown existente](/es/authoring/bring-existing-markdown).

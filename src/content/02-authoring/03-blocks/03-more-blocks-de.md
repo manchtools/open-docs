@@ -17,8 +17,8 @@ können mehrere gleichzeitig offen bleiben.
 Nein. Die Seiten werden direkt aus Ihrem Markdown gerendert; es gibt nichts zu installieren oder zu verwalten.
 {% /accordion %}
 {% accordion title="Kann ich es selbst hosten?" %}
-Ja. Betreiben Sie den Container, wo immer Sie wollen, oder starten Sie den
-Server direkt aus dem Quellcode.
+Ja. Betreiben Sie den Container, wo immer Sie wollen, oder bauen Sie aus
+dem Quellcode und starten den mitgelieferten Server.
 {% /accordion %}
 {% accordion title="Werden verschachtelte Ordner unterstützt?" %}
 Bis zu drei Ebenen tief. Siehe

@@ -39,6 +39,8 @@ flowchart TD
 - **Le fichier `index.md` d'un dossier** transforme le titre de la section
   en lien vers sa page (servie à l'URL du dossier). Il n'y a pas d'entrée
   « Aperçu » distincte ; cliquez sur le titre de la section pour l'ouvrir.
+  Un `README.md` sert de solution de repli quand un dossier n'a pas
+  d'`index.md`.
 
 ## Imbrication
 
@@ -100,8 +102,8 @@ Les cartes de la page d'accueil de ce site fonctionnent toutes ainsi :
 chaque section de premier niveau y définit une icône emoji dans son
 `index.md`.
 
-{% callout type="info" title="Une désynchronisation donne un 404, pas un plantage" %}
-Les liens sont validés par rapport au système de fichiers lors de la
-construction du site ; un lien périmé se manifeste donc par un 404 clair
-pendant la construction plutôt que par une page cassée en production.
+{% callout type="info" title="Les liens morts échouent vite" %}
+Les liens internes sont validés au démarrage du site. Un lien interne mort
+arrête le conteneur avec une erreur indiquant le fichier et la ligne ; un
+lien périmé n'atteint donc jamais la production sous forme de page cassée.
 {% /callout %}

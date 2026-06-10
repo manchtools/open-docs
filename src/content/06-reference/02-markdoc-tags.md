@@ -55,6 +55,9 @@ Body Markdown.
 | `variant` | no | `frame` (default) or `flat`. |
 | `width` | no | Max width, e.g. `720px`. |
 
+Plain Markdown `![]()` images render through this component too, in the
+`flat` variant.
+
 ### steps / step
 
 ````markdown
@@ -219,10 +222,16 @@ automatically:
 
 | Element | Behavior |
 |---|---|
-| Headings (`##`+) | Get anchor ids, feed the table of contents, and show a copy-link icon on hover. |
+| Headings | Get anchor ids and feed the table of contents; every `h1` has a copy-page-link button, and the copy buttons are faintly visible at rest, stronger on hover. |
 | Links | External links open in a new tab with safe `rel` attributes. |
+| Relative links (`./x.md`) | Resolved against the file, so editor-style links keep working. |
+| Images (`![]()`) | Rendered via the screenshot component (flat variant); content-relative files are served, and the lightbox pages through them as a carousel. |
+| Task lists (`- [ ]`) | Rendered as checkboxes. |
+| Footnotes (`[^1]`) | Numbered superscript links with their definitions collected at the end of the page. |
 | Code fences | Syntax-highlighted (Shiki) with a copy button; `// [!code highlight]` / `++` / `--` comments add line-highlighting and diffs. |
 | `mermaid` fences | Rendered as themed diagrams. |
+
+Inline HTML never renders, and bare URLs stay plain text.
 
 {% callout type="info" title="Attributes mirror component props" %}
 Each tag's attributes are the props of the Svelte component behind it,

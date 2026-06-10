@@ -37,7 +37,8 @@ Cela produit :
 - **Les noms de fichiers deviennent des URL**, en kebab-case : `quick-start.md` →
   `/…/quick-start`.
 - **Le fichier `index.md` d'un dossier** est la page d'accueil de cette section,
-  servie à l'URL du dossier (`reference/index.md` → `/reference`).
+  servie à l'URL du dossier (`reference/index.md` → `/reference`). Un
+  `README.md` joue le même rôle quand il n'y a pas d'`index.md`.
 - **Les préfixes numériques** comme `01-` définissent l'ordre et sont retirés
   de l'URL et du titre. Voir
   [Ordre et titres](/fr/navigation/ordering-and-titles).
@@ -52,9 +53,14 @@ page dans un groupe, comme le fait ce site avec
 ## Ce qui est ignoré
 
 Seuls les fichiers `.md` et `.markdoc` du répertoire de contenu deviennent des
-pages. Un fichier `theme.css` est pris en compte pour le [thème](/fr/customizing/theming) ;
-tout le reste (brouillons, notes, fichiers `.txt`) est ignoré, ce qui vous
-permet de garder des fichiers de travail à côté de votre documentation.
+pages. Un fichier `theme.css` est pris en compte pour le [thème](/fr/customizing/theming).
+Les fichiers non Markdown que vos pages référencent (images et assimilés) sont
+servis depuis le dossier de contenu ; les fichiers de travail non référencés
+(brouillons, notes, fichiers `.txt`) restent invisibles, ce qui vous permet de
+les garder à côté de votre documentation.
 
-Si vous référencez une image, placez-la sous `static/` et pointez vers elle
-depuis `/screenshots/…` — voir [Captures d'écran](/fr/authoring/blocks/media/screenshots).
+Les images peuvent vivre juste à côté de votre Markdown et être liées comme
+votre éditeur s'y attend (`![diagram](./images/arch.png)`) ; elles sont
+servies depuis le dossier de contenu. Voir
+[Markdown existant](/fr/authoring/bring-existing-markdown). Le répertoire
+`static/` reste là pour les ressources partagées comme les favicons.

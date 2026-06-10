@@ -22,7 +22,7 @@ Drop a Markdown file into your content folder. The route and sidebar
 entry appear on their own.
 {% /step %}
 {% step title="Run it" %}
-Start the dev server and open `http://localhost:5173`.
+Start the dev server and open `http://localhost:3000`.
 {% /step %}
 {% /steps %}
 

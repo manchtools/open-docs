@@ -23,7 +23,7 @@ Das ist der einzige Wert, den die Discovery-Dateien brauchen. Ist er
 gesetzt, bekommt jede Seite eine absolute kanonische URL, `sitemap.xml` und
 `robots.txt` verweisen auf echte Adressen, und die Links in `llms.txt`
 lösen sich auf. Bleibt er leer, funktioniert die Website weiterhin und die
-Dateien werden trotzdem gebaut, aber die `canonical`- und `og:url`-Tags
+Dateien werden trotzdem erzeugt, aber die `canonical`- und `og:url`-Tags
 entfallen, und die Sitemap fällt auf reine Pfad-Links zurück.
 
 Liegt die Doku unter einem Unterpfad (zum Beispiel
@@ -53,6 +53,15 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 
 `brandName`, der Website-Titel und die Standardbeschreibung stammen aus den
 Umgebungsvariablen der [Konfiguration](/de/customizing/configuration).
+
+## Blogbeiträge und Feeds
+
+Beiträge in einem [Blog-Abschnitt](/de/authoring/blogging) tragen
+zusätzliche Metadaten: `article:published_time`- und
+`article:author`-Tags aus dem Frontmatter des Beitrags sowie das
+`cover`-Bild des Beitrags als Social-Card-Bild. Der Atom-Feed des
+Abschnitts wird auf dessen Seiten per `<link rel="alternate">`
+angekündigt, sodass Feed-Reader ihn automatisch entdecken.
 
 ## sitemap.xml
 

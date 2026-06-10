@@ -17,8 +17,8 @@ abiertos a la vez.
 No. Las páginas se renderizan directamente desde tu Markdown; no hay nada que instalar ni administrar.
 {% /accordion %}
 {% accordion title="¿Puedo alojarlo yo mismo?" %}
-Sí. Ejecuta el contenedor donde quieras, o arranca el servidor directamente
-desde el código fuente.
+Sí. Ejecuta el contenedor donde quieras, o compila desde el código fuente y
+ejecuta el servidor incluido.
 {% /accordion %}
 {% accordion title="¿Admite carpetas anidadas?" %}
 Hasta tres niveles de profundidad. Consulta la

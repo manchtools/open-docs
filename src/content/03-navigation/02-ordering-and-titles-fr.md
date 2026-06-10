@@ -28,6 +28,10 @@ position au sein d'un groupe qui se classe lui-même en premier. Les
 préfixes fonctionnent aussi sur les dossiers, ce qui permet d'ordonner
 les **groupes**.
 
+Les sections marquées `blog: true` font exception : leurs articles sont
+triés par `date`, du plus récent au plus ancien, et paginés avec des
+liens Plus récents/Plus anciens. Voir [Blog](/fr/authoring/blogging).
+
 ## Frontmatter
 
 Pour un contrôle plus fin, définissez des clés dans le frontmatter d'une

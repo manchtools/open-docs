@@ -30,7 +30,7 @@ mode. See [Theming](/customizing/theming).
 
 | Variable | Effect |
 |---|---|
-| `PUBLIC_TOKEN_<NAME>` | Exposes `{{<NAME>}}` as a build-time placeholder in prose. See [Content tokens](/customizing/content-tokens). |
+| `PUBLIC_TOKEN_<NAME>` | Exposes `{{<NAME>}}` as a placeholder in prose, substituted when the content is parsed at start. See [Content tokens](/customizing/content-tokens). |
 
 ## Deployment
 
@@ -50,6 +50,6 @@ alternate source directories. Most users never change them.
 | `OPEN_DOCS_STATIC` | `/static` | Directory merged into `static/`. |
 
 {% callout type="info" title="PUBLIC_ is not a secret prefix" %}
-`PUBLIC_*` values are compiled into the client bundle and visible to
+`PUBLIC_*` values are delivered to the browser and visible to
 anyone viewing the site. Never put secrets in them.
 {% /callout %}

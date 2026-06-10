@@ -37,6 +37,7 @@ Esto produce:
   `/…/quick-start`.
 - **El `index.md` de una carpeta** es la página de inicio de esa sección,
   servida en la URL de la carpeta (`reference/index.md` → `/reference`).
+  Un `README.md` funciona igual cuando no hay `index.md`.
 - **Los prefijos numéricos iniciales** como `01-` establecen el orden y se
   eliminan de la URL y del título. Consulta
   [Orden y títulos](/es/navigation/ordering-and-titles).
@@ -51,9 +52,14 @@ de un grupo, como hace este sitio con
 ## Qué se ignora
 
 Solo los archivos `.md` y `.markdoc` dentro del directorio de contenido se
-convierten en páginas. Un `theme.css` se toma para los [estilos](/es/customizing/theming);
-cualquier otra cosa (borradores, notas, archivos `.txt`) se ignora, así que
-puedes mantener archivos de trabajo junto a tu documentación.
+convierten en páginas. Un `theme.css` se toma para los
+[estilos](/es/customizing/theming). Los archivos no Markdown que tus páginas
+referencian (imágenes y similares) se sirven desde la carpeta de contenido;
+los archivos de trabajo sin referenciar (borradores, notas, archivos `.txt`)
+permanecen invisibles, así que puedes mantenerlos junto a tu documentación.
 
-Si referencias una imagen, colócala dentro de `static/` y enlázala desde
-`/screenshots/…`; consulta [Capturas](/es/authoring/blocks/media/screenshots).
+Las imágenes pueden vivir justo al lado de tu Markdown y enlazarse como tu
+editor espera (`![diagram](./images/arch.png)`); se sirven desde la carpeta
+de contenido. Consulta
+[Markdown existente](/es/authoring/bring-existing-markdown). El directorio
+`static/` sigue existiendo para recursos compartidos como los favicons.

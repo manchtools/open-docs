@@ -23,7 +23,7 @@ Este es el único valor que necesitan los archivos de descubrimiento. Con
 él definido, cada página obtiene una URL canónica absoluta, `sitemap.xml`
 y `robots.txt` apuntan a direcciones reales y los enlaces de `llms.txt`
 resuelven. Si se deja vacío, el sitio sigue funcionando y los archivos
-siguen construyéndose, pero se omiten las etiquetas canónica y `og:url`,
+siguen generándose, pero se omiten las etiquetas canónica y `og:url`,
 y el sitemap recurre a enlaces de solo ruta.
 
 Si los docs viven bajo una subruta (por ejemplo
@@ -52,6 +52,15 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 
 `brandName`, el título del sitio y la descripción por defecto provienen
 de las variables de entorno de [configuración](/es/customizing/configuration).
+
+## Entradas de blog y feeds
+
+Las entradas de una [sección de blog](/es/authoring/blogging) llevan
+metadatos adicionales: etiquetas `article:published_time` y
+`article:author` a partir del frontmatter de la entrada, y la imagen
+`cover` de la entrada como imagen de la tarjeta social. El feed Atom de
+la sección se anuncia en sus páginas mediante `<link rel="alternate">`,
+así que los lectores de feeds lo descubren automáticamente.
 
 ## sitemap.xml
 

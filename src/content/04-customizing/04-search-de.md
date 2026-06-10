@@ -5,8 +5,10 @@ title: Suche
 # Suche
 
 Jede open-docs-Website bringt eine **Volltextsuche** mit, betrieben von
-[Pagefind](https://pagefind.app). Der Index wird beim Start des Containers
-aus Ihren Seiten erzeugt und als statische Dateien ausgeliefert. Es gibt also keinen
+[Pagefind](https://pagefind.app). Der Index wird kurz nach dem Start des
+Servers aus Ihren Seiten erzeugt; die Seiten sind sofort erreichbar, und
+die Suche steht wenige Augenblicke später bereit. Ausgeliefert wird er als
+statische Dateien. Es gibt also keinen
 Suchserver, und die Suche funktioniert auch offline. Öffnen Sie sie über das
 Feld in der oberen Leiste oder mit **⌘K / Strg&nbsp;K**.
 

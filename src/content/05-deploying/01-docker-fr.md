@@ -30,7 +30,7 @@ Rendez-vous sur `http://localhost:3000`.
 
 Les deux montages sont optionnels. Le montage du contenu peut être en
 lecture seule (`:ro`) ; l'entrypoint le copie dans l'arborescence de
-l'image avant le build.
+l'image avant le démarrage du serveur.
 
 {% callout type="info" title="Lancer sans rien monter" %}
 Sans montage `/content`, l'image sert la documentation d'open-docs
@@ -38,7 +38,7 @@ elle-même, une démo en direct que vous pouvez parcourir avant d'ajouter
 votre propre contenu.
 {% /callout %}
 
-## Comment un build se déroule
+## Ce qui se passe au démarrage
 
 Il n'y a pas d'étape de build. Le conteneur analyse et valide votre
 Markdown à son démarrage (quelques secondes, environ 100–150 Mo de

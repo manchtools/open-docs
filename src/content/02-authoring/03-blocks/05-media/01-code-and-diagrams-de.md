@@ -82,8 +82,8 @@ einem Dialog, was bei detaillierteren Diagrammen hilft.
 ````markdown
 ```mermaid
 flowchart LR
-  A[Markdown] --> B[open-docs build]
-  B --> C[Static site]
+  A[Markdown] --> B[Parsed at start]
+  B --> C[Server-rendered pages]
   C --> D[Pagefind search]
 ```
 ````
@@ -92,9 +92,9 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  A[Markdown] --> B[open-docs build]
-  B --> C[Statische Seite]
-  C --> D[Pagefind-Suche]
+  A[Markdown] --> B[Parsed at start]
+  B --> C[Server-rendered pages]
+  C --> D[Pagefind search]
 ```
 
 {% callout type="info" title="Bei Bedarf geladen" %}

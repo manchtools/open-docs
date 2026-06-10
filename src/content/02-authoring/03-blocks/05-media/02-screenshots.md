@@ -8,8 +8,9 @@ The `screenshot` block renders an image with optional browser-frame
 chrome, a caption, and a separate dark-mode variant. The faux window
 controls match the reader's own operating system (macOS, Windows, or
 Linux). Images are resolved from `static/screenshots/`. Click any image
-to enlarge it in a dialog (this also applies to plain Markdown `![]()`
-images).
+to enlarge it in a lightbox; from there you can page through every
+image on the page with the arrow buttons or the ← and → keys, like a
+manual carousel.
 
 Here is the open-docs landing page, rendered by this very block:
 
@@ -42,6 +43,14 @@ The syntax:
 | `variant` | no | `frame` (faux-browser chrome, default) or `flat` (bordered image). |
 | `width` | no | Max width, e.g. `720px`. Defaults to the content column width. |
 
+## Plain markdown images
+
+Ordinary `![alt](path)` images render through this same component
+implicitly, in the `flat` variant and without window chrome. Files
+sitting next to the markdown are served in place, so editor-style
+relative paths just work. Reach for the explicit block when you want
+the browser chrome, a caption, or a dark-mode variant.
+
 ## Adding the image files
 
 Drop the files into your static directory:
@@ -56,6 +65,10 @@ Drop the files into your static directory:
 In Docker, mount your assets at `/static`. They are merged into the
 image's `static/`, so you only override what you provide. See
 [Static assets](/customizing/configuration#static-assets).
+
+Alternatively, keep images next to the markdown that references them
+and link them relatively; see
+[Existing markdown](/authoring/bring-existing-markdown).
 
 {% callout type="warn" title="Reference real files" %}
 A `screenshot` pointing at a missing image fails validation when the

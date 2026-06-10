@@ -5,8 +5,8 @@ icon: "🎨"
 
 # Personalización
 
-Define tu marca, el tema y los valores de contenido en tiempo de
-compilación sin tocar el código fuente.
+Define tu marca, el tema y los valores sustituidos al arrancar sin
+tocar el código fuente.
 
 {% cards %}
 {% card title="Configuración" href="/es/customizing/configuration" icon="⚙️" %}
@@ -16,7 +16,7 @@ Variables de entorno y elementos visuales del sitio.
 Reestiliza todo con tu propio `theme.css`.
 {% /card %}
 {% card title="Tokens de contenido" href="/es/customizing/content-tokens" icon="🧩" %}
-Inyecta valores de tiempo de compilación en el texto.
+Inyecta valores sustituidos al arrancar en el texto.
 {% /card %}
 {% card title="Búsqueda" href="/es/customizing/search" icon="🔎" %}
 Cómo se clasifican los resultados y cómo subir un pasaje.

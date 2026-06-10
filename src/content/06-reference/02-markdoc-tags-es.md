@@ -55,6 +55,9 @@ Body Markdown.
 | `variant` | no | `frame` (por defecto) o `flat`. |
 | `width` | no | Ancho máximo, p. ej. `720px`. |
 
+Las imágenes `![]()` de Markdown plano también se renderizan con este
+componente, en la variante `flat`.
+
 ### steps / step
 
 ````markdown
@@ -224,10 +227,17 @@ comportamiento automáticamente:
 
 | Elemento | Comportamiento |
 |---|---|
-| Encabezados (`##`+) | Reciben ids de ancla, alimentan la tabla de contenidos y muestran un icono de copiar enlace al pasar el cursor. |
+| Encabezados | Reciben ids de ancla y alimentan la tabla de contenidos; cada `h1` lleva un botón para copiar el enlace de la página, y los botones de copia se ven tenues en reposo y más marcados al pasar el cursor. |
 | Enlaces | Los enlaces externos se abren en una pestaña nueva con atributos `rel` seguros. |
+| Enlaces relativos (`./x.md`) | Se resuelven respecto al archivo, así que los enlaces al estilo del editor siguen funcionando. |
+| Imágenes (`![]()`) | Se renderizan con el componente de captura (variante `flat`); los archivos relativos al contenido se sirven, y el visor pasa por ellos como un carrusel. |
+| Listas de tareas (`- [ ]`) | Se renderizan como casillas de verificación. |
+| Notas al pie (`[^1]`) | Enlaces numerados en superíndice con sus definiciones reunidas al final de la página. |
 | Bloques de código | Resaltado de sintaxis (Shiki) con un botón de copiar; los comentarios `// [!code highlight]` / `++` / `--` añaden resaltado de líneas y diffs. |
 | Vallas `mermaid` | Se renderizan como diagramas con tema. |
+
+El HTML en línea nunca se renderiza y las URL sueltas se quedan como
+texto plano.
 
 {% callout type="info" title="Los atributos reflejan las props del componente" %}
 Los atributos de cada etiqueta son las props del componente de Svelte que hay

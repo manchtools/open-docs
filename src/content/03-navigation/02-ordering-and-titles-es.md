@@ -27,6 +27,11 @@ Así, `01-get-started/02-install.md` produce la URL
 dentro de un grupo que a su vez se ordena primero. Los prefijos también
 funcionan en carpetas, que es la forma de ordenar los **grupos**.
 
+Las secciones marcadas con `blog: true` son la excepción: sus entradas
+se ordenan por `date`, de más reciente a más antigua, y se paginan con
+enlaces Más recientes/Más antiguas. Consulta
+[Blogs](/es/authoring/blogging).
+
 ## Frontmatter
 
 Para un control más fino, define claves en el frontmatter de una página.

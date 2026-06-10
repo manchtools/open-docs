@@ -37,7 +37,8 @@ flowchart TD
   groups, ungrouped.
 - **A folder's `index.md`** makes that section's heading the link to its
   page (served at the folder's URL). There's no separate "Overview"
-  entry; click the section title to open it.
+  entry; click the section title to open it. A `README.md` serves as
+  the fallback when a folder has no `index.md`.
 
 ## Nesting
 
@@ -93,8 +94,8 @@ icon: "🚀"                              # an emoji
 The cards on this site's home page are all driven this way: every
 top-level section here sets an emoji icon in its `index.md`.
 
-{% callout type="info" title="Out-of-sync is a 404, not a crash" %}
-Links are validated against the filesystem when the site is built, so a
-stale link surfaces as a clear 404 during the build rather than a
-broken page in production.
+{% callout type="info" title="Dead links fail fast" %}
+Internal links are validated when the site starts. A dead internal
+link stops the container with an error naming the file and line, so a
+stale link never reaches production as a broken page.
 {% /callout %}

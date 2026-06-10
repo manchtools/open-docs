@@ -70,3 +70,6 @@ Markdown, callouts, onglets, code et diagrammes.
 Montages, environnement et notes de production.
 {% /card %}
 {% /cards %}
+
+Vous avez déjà un dossier de Markdown ? Pointez open-docs dessus tel quel ;
+voir [Markdown existant](/fr/authoring/bring-existing-markdown).

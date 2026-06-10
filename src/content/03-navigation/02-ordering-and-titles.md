@@ -26,6 +26,10 @@ So `01-get-started/02-install.md` produces the URL
 group that itself sorts first. Prefixes work on folders too, which is
 how you order the **groups**.
 
+Sections marked `blog: true` are the exception: their posts sort by
+`date`, newest first, and are paged with Newer/Older links. See
+[Blogging](/authoring/blogging).
+
 ## Frontmatter
 
 For finer control, set keys in a page's frontmatter. Frontmatter wins

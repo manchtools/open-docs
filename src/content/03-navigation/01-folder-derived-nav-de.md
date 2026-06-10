@@ -38,7 +38,8 @@ flowchart TD
 - **Die `index.md` eines Ordners** macht die Überschrift des Abschnitts zum
   Link auf dessen Seite (ausgeliefert unter der URL des Ordners). Es gibt
   keinen separaten Eintrag „Übersicht"; klicken Sie auf den Abschnittstitel,
-  um ihn zu öffnen.
+  um ihn zu öffnen. Eine `README.md` dient als Rückgriff, wenn ein Ordner
+  keine `index.md` hat.
 
 ## Verschachtelung
 
@@ -98,8 +99,8 @@ Die Karten auf der Startseite dieser Website werden alle auf diese Weise
 gesteuert: jeder Abschnitt auf oberster Ebene setzt hier ein Emoji-Icon in
 seiner `index.md`.
 
-{% callout type="info" title="Nicht synchron heißt 404, kein Absturz" %}
-Links werden beim Bau der Website gegen das Dateisystem geprüft, sodass ein
-veralteter Link beim Build als klarer 404 auftaucht statt als kaputte Seite in
-der Produktion.
+{% callout type="info" title="Tote Links schlagen sofort fehl" %}
+Interne Links werden beim Start der Website geprüft. Ein toter interner Link
+stoppt den Container mit einer Fehlermeldung, die Datei und Zeile nennt,
+sodass ein veralteter Link nie als kaputte Seite in die Produktion gelangt.
 {% /callout %}

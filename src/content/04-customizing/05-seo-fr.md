@@ -23,7 +23,7 @@ C'est la seule valeur dont les fichiers de découverte ont besoin. Une fois
 définie, chaque page obtient une URL canonique absolue, `sitemap.xml` et
 `robots.txt` référencent de vraies adresses, et les liens de `llms.txt` se
 résolvent. Si elle est laissée vide, le site fonctionne quand même et les
-fichiers se construisent toujours, mais les balises canonique et `og:url` sont
+fichiers sont toujours générés, mais les balises canonique et `og:url` sont
 omises et le sitemap se rabat sur des liens limités au chemin.
 
 Si la documentation se trouve sous un sous-chemin (par exemple
@@ -52,6 +52,15 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 
 `brandName`, le titre du site et la description par défaut proviennent des
 variables d'environnement de [configuration](/fr/customizing/configuration).
+
+## Articles de blog et flux
+
+Les articles d'une [section blog](/fr/authoring/blogging) portent des
+métadonnées supplémentaires : des balises `article:published_time` et
+`article:author` issues du frontmatter de l'article, et l'image `cover` de
+l'article comme image de carte sociale. Le flux Atom de la section est
+annoncé sur ses pages via `<link rel="alternate">`, de sorte que les
+lecteurs de flux le découvrent automatiquement.
 
 ## sitemap.xml
 

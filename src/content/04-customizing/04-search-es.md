@@ -6,8 +6,10 @@ title: Búsqueda
 
 Cada sitio open-docs incluye **búsqueda de texto completo**, con
 [Pagefind](https://pagefind.app). El índice se construye a partir de tus
-páginas cuando arranca el contenedor y se sirve como archivos estáticos,
-así que no hay servidor de búsqueda y sigue funcionando sin conexión.
+páginas poco después de que el servidor arranque; las páginas se sirven de
+inmediato y la búsqueda queda disponible momentos después. Se sirve como
+archivos estáticos, así que no hay servidor de búsqueda y sigue funcionando
+sin conexión.
 Ábrela desde el cuadro de la barra superior o con
 **⌘K / Ctrl&nbsp;K**.
 

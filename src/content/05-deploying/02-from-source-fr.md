@@ -31,9 +31,9 @@ bun run build      # production build → ./build/
 bun run preview    # serve the built site
 ```
 
-Le build pré-rend chaque page en HTML statique, puis exécute
-[Pagefind](https://pagefind.app) sur la sortie pour produire l'index de
-recherche.
+Le build ne compile que l'application ; les pages sont rendues sur le
+serveur à l'exécution. [Pagefind](https://pagefind.app) indexe les pages
+peu après le démarrage du serveur pour produire l'index de recherche.
 
 ## Cibles Make
 

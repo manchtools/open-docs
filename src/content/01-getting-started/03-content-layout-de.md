@@ -41,6 +41,7 @@ Daraus entsteht:
   → `/…/quick-start`.
 - **Die `index.md` eines Ordners** ist dessen Startseite und wird unter
   der Ordner-URL ausgeliefert (`reference/index.md` → `/reference`).
+  Eine `README.md` funktioniert genauso, wenn es keine `index.md` gibt.
 - **Führende Nummernpräfixe** wie `01-` legen die Reihenfolge fest und
   werden aus URL und Titel entfernt. Siehe
   [Reihenfolge & Titel](/de/navigation/ordering-and-titles).
@@ -56,10 +57,14 @@ echte Seite in eine Gruppe, so wie diese Seite es mit der
 
 Nur `.md`- und `.markdoc`-Dateien im Inhaltsverzeichnis werden zu Seiten.
 Eine `theme.css` wird für das [Styling](/de/customizing/theming)
-verwendet; alles andere (Entwürfe, Notizen, `.txt`-Dateien) wird
-ignoriert, sodass Sie Arbeitsdateien neben Ihren Dokumenten ablegen
-können.
+verwendet. Nicht-Markdown-Dateien, die Ihre Seiten referenzieren (Bilder
+und Ähnliches), werden aus dem Inhaltsordner ausgeliefert; nicht
+referenzierte Arbeitsdateien (Entwürfe, Notizen, `.txt`-Dateien) bleiben
+unsichtbar, sodass Sie sie neben Ihren Dokumenten ablegen können.
 
-Wenn Sie ein Bild einbinden, legen Sie es unter `static/` ab und
-verlinken es von `/screenshots/…` — siehe
-[Screenshots](/de/authoring/blocks/media/screenshots).
+Bilder können direkt neben Ihrem Markdown liegen und so verlinkt werden,
+wie Ihr Editor es erwartet (`![diagram](./images/arch.png)`); sie werden
+aus dem Inhaltsordner ausgeliefert. Siehe
+[Vorhandenes Markdown](/de/authoring/bring-existing-markdown). Das
+Verzeichnis `static/` bleibt für gemeinsam genutzte Assets wie Favicons
+bestehen.

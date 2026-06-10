@@ -5,8 +5,8 @@ icon: "🎨"
 
 # Personnalisation
 
-Définissez votre marque, votre thème et vos valeurs de contenu calculées à
-la construction, sans toucher au code source.
+Définissez votre marque, votre thème et vos valeurs substituées au
+démarrage, sans toucher au code source.
 
 {% cards %}
 {% card title="Configuration" href="/fr/customizing/configuration" icon="⚙️" %}
@@ -16,7 +16,7 @@ Variables d'environnement et habillage du site.
 Restylisez tout avec votre propre `theme.css`.
 {% /card %}
 {% card title="Jetons de contenu" href="/fr/customizing/content-tokens" icon="🧩" %}
-Injectez des valeurs calculées à la construction dans le texte.
+Injectez des valeurs substituées au démarrage dans le texte.
 {% /card %}
 {% card title="Recherche" href="/fr/customizing/search" icon="🔎" %}
 Comment les résultats sont classés, et comment remonter un passage.

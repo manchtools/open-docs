@@ -11,8 +11,15 @@ Rédigez vos pages en Markdown ordinaire. Tous les éléments standard fonctionn
   alimente la table des matières en marge à droite.
 - **Les listes**, ordonnées et non ordonnées, avec imbrication.
 - **Les liens**, internes (`/getting-started/quick-start`) et externes. Les
-  liens externes s'ouvrent automatiquement dans un nouvel onglet avec des
-  attributs `rel` sûrs.
+  liens relatifs de style éditeur comme `./sibling.md` se résolvent aussi par
+  rapport au fichier ; voir
+  [Markdown existant](/fr/authoring/bring-existing-markdown). Les liens
+  externes s'ouvrent automatiquement dans un nouvel onglet avec des attributs
+  `rel` sûrs.
+- **Les images** (`![alt](./diagram.png)`), placées à côté de votre Markdown
+  ou sous `static/`.
+- **Les listes de tâches** (`- [ ]` / `- [x]`) et les
+  **notes de bas de page** (`[^1]`).
 - **L'emphase**, le `code en ligne`, les citations, les tableaux et les filets
   horizontaux.
 
@@ -47,7 +54,14 @@ order: 2
 
 Le fichier `index.md` d'une section comprend une clé de plus, `icon`, qui
 définit l'icône de cette section sur la carte de la page d'accueil. Voir
-[Icônes de section](/fr/navigation/folder-derived-nav#icones-de-section).
+[Icônes de section](/fr/navigation/folder-derived-nav#icones-de-section). Un
+`index.md` accepte aussi `blog: true` pour transformer sa section en blog ;
+voir [Blog](/fr/authoring/blogging). Les articles de blog ajoutent leurs
+propres clés (`date`, `author`, `tags`, `cover`, `draft`), elles aussi
+couvertes dans [Blog](/fr/authoring/blogging). Une page `meta: true` reste en
+dehors de la barre latérale et des liens précédent/suivant, et figure à la
+place dans le pied de page ; voir
+[Ordre et titres](/fr/navigation/ordering-and-titles).
 
 Le frontmatter est optionnel. Sans lui, le titre est dérivé du nom de fichier
 et les pages sont triées par ordre alphabétique (ou selon leur préfixe

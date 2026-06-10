@@ -22,7 +22,7 @@ Déposez un fichier Markdown dans votre dossier de contenu. La route et l'entré
 de la barre latérale apparaissent d'elles-mêmes.
 {% /step %}
 {% step title="Lancer" %}
-Démarrez le serveur de développement et ouvrez `http://localhost:5173`.
+Démarrez le serveur de développement et ouvrez `http://localhost:3000`.
 {% /step %}
 {% /steps %}
 

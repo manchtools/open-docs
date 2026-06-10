@@ -29,7 +29,8 @@ Rufen Sie `http://localhost:3000` auf.
 | `/static` | `static/` | Favicons, `og.png`, Screenshots. Werden über die Standarddateien gelegt. |
 
 Beide Mounts sind optional. Der Content-Mount kann nur lesend sein
-(`:ro`); der Entrypoint kopiert ihn vor dem Build in den Image-Baum.
+(`:ro`); der Entrypoint kopiert ihn in den Image-Baum, bevor der Server
+startet.
 
 {% callout type="info" title="Ohne Mounts starten" %}
 Ohne `/content`-Mount bedient das Image die open-docs-Dokumentation
@@ -37,7 +38,7 @@ selbst, eine Live-Demo, die Sie durchklicken können, bevor Sie eigene
 Inhalte hinzufügen.
 {% /callout %}
 
-## Wie ein Build abläuft
+## Was beim Start passiert
 
 Es gibt keinen Build-Schritt. Der Container parst und validiert Ihr
 Markdown beim Start (ein paar Sekunden, rund 100–150 MB Speicher – er

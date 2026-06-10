@@ -37,7 +37,8 @@ This produces:
 - **Filenames become URLs**, kebab-cased: `quick-start.md` →
   `/…/quick-start`.
 - **A folder's `index.md`** is that section's landing page, served at
-  the folder's URL (`reference/index.md` → `/reference`).
+  the folder's URL (`reference/index.md` → `/reference`). A `README.md`
+  works the same way when there is no `index.md`.
 - **Leading number prefixes** like `01-` set order and are stripped
   from the URL and title. See
   [Ordering & titles](/navigation/ordering-and-titles).
@@ -52,9 +53,14 @@ group, as this site does with
 ## What is ignored
 
 Only `.md` and `.markdoc` files under the content directory become
-pages. A `theme.css` is picked up for [styling](/customizing/theming);
-anything else (drafts, notes, `.txt` files) is ignored, so you
-can keep working files alongside your docs.
+pages. A `theme.css` is picked up for [styling](/customizing/theming).
+Non-markdown files that your pages reference (images and the like) are
+served from the content folder; unreferenced working files (drafts,
+notes, `.txt` files) stay invisible, so you can keep them alongside
+your docs.
 
-If you reference an image, put it under `static/` and link it from
-`/screenshots/…` — see [Screenshots](/authoring/blocks/media/screenshots).
+Images can live right next to your markdown and be linked the way your
+editor expects (`![diagram](./images/arch.png)`); they are served from
+the content folder. See
+[Existing markdown](/authoring/bring-existing-markdown). The `static/`
+directory remains for shared assets like favicons.

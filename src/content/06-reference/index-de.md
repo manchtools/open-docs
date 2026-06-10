@@ -12,6 +12,6 @@ Nachschlagewerk für den Fall, dass Sie schon wissen, was Sie brauchen.
 Jede `PUBLIC_*`- und Deployment-Variable.
 {% /card %}
 {% card title="Markdoc-Tags" href="/de/reference/markdoc-tags" icon="🏷️" %}
-Callouts, Tabs, Steps, Cards, Code und mehr.
+Callouts, Tabs, Steps, Cards, Code, Blog-Blöcke und mehr.
 {% /card %}
 {% /cards %}

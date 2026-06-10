@@ -19,14 +19,14 @@ Recourez aux blocs personnalisés quand le texte ne suffit plus.
 {% card title="Markdown et frontmatter" href="/fr/authoring/markdown-and-frontmatter" icon="📝" %}
 Les bases, et les clés de frontmatter qui pilotent la barre latérale.
 {% /card %}
+{% card title="Markdown existant" href="/fr/authoring/bring-existing-markdown" icon="📦" %}
+Les conventions GitHub/VSCode tiennent : liens relatifs, README.md, notes de bas de page.
+{% /card %}
 {% card title="Blocs" href="/fr/authoring/blocks" icon="🧱" %}
 Les blocs de contenu : callouts, onglets, étapes, cartes, et plus encore.
 {% /card %}
 {% card title="Blog" href="/fr/authoring/blogging" icon="📰" %}
 Articles datés, listes générées, auteurs, tags et flux, le tout par section.
-{% /card %}
-{% card title="Markdown existant" href="/fr/authoring/bring-existing-markdown" icon="📦" %}
-Les conventions GitHub/VSCode tiennent : liens relatifs, README.md, notes de bas de page.
 {% /card %}
 {% card title="Multilingue" href="/fr/authoring/multi-language" icon="🌐" %}
 Traduisez les pages avec un suffixe dans le nom de fichier ; la langue par défaut reste sans préfixe.

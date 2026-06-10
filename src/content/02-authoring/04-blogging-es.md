@@ -124,7 +124,9 @@ amplían en el diálogo como cualquier imagen.
 Cada sección de blog sirve un feed Atom en `/<section>/feed.xml`
 (también por idioma: `/de/blog/feed.xml`). Define `PUBLIC_SITE_URL`
 para que las entradas lleven enlaces absolutos. Las páginas del blog
-anuncian el feed con un `<link rel="alternate">`.
+anuncian el feed con un `<link rel="alternate">`, y el `h1` del índice
+del blog lleva un botón para copiar la URL del feed junto al botón
+habitual de copiar el enlace de la página.
 
 {% callout type="info" title="Varios blogs por sitio" %}
 `blog: true` es por sección: un sitio de documentación puede llevar a la

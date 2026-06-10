@@ -50,6 +50,16 @@ C'est donc un bon choix quand vous voulez :
   [Configuration](/fr/customizing/configuration).
 - **Des blocs de contenu** (callouts, onglets, captures d'écran) par-dessus le
   Markdown ordinaire. Voir [Callouts et onglets](/fr/authoring/blocks/callouts-and-tabs).
+- **Un mode blog par section.** Marquez un dossier comme blog et obtenez des
+  articles datés, des listes, des auteurs, des tags et des flux. Voir
+  [Blog](/fr/authoring/blogging).
+- **Votre Markdown existant fonctionne tel quel.** Les conventions
+  GitHub/VSCode (liens relatifs, `README.md`, images placées à côté des pages)
+  sont reprises. Voir
+  [Markdown existant](/fr/authoring/bring-existing-markdown).
+- **Des traductions par suffixe de nom de fichier.** Ajoutez `-de.md` (ou
+  n'importe quelle langue) à côté d'une page, et elle est servie sous
+  `/de/…`. Voir [Multilingue](/fr/authoring/multi-language).
 
 ## Étapes suivantes
 

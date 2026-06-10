@@ -16,8 +16,8 @@ the default; add `exclusive=false` to let several stay open at once.
 No. Pages render straight from your Markdown; there is nothing to install or manage.
 {% /accordion %}
 {% accordion title="Can I self-host it?" %}
-Yes. Run the container anywhere, or build from source and serve the
-output like any static site.
+Yes. Run the container anywhere, or build from source and run the
+bundled server.
 {% /accordion %}
 {% accordion title="Does it support nested folders?" %}
 Up to three levels deep. See

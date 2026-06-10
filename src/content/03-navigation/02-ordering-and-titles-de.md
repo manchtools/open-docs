@@ -28,6 +28,10 @@ Titel „Install", und sortiert an zweiter Stelle innerhalb einer Gruppe, die
 selbst an erster Stelle sortiert. Präfixe funktionieren auch bei Ordnern – so
 ordnen Sie die **Gruppen**.
 
+Abschnitte mit `blog: true` sind die Ausnahme: ihre Beiträge sortieren nach
+`date`, neueste zuerst, und werden mit Neuere/Ältere-Links umgeblättert.
+Siehe [Blogging](/de/authoring/blogging).
+
 ## Frontmatter
 
 Für feinere Kontrolle setzen Sie Schlüssel im Frontmatter einer Seite. Das

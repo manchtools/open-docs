@@ -29,9 +29,9 @@ bun run build      # production build → ./build/
 bun run preview    # serve the built site
 ```
 
-The build pre-renders every page to static HTML, then runs
-[Pagefind](https://pagefind.app) over the output to produce the search
-index.
+The build compiles the app only; pages render on the server at
+runtime. [Pagefind](https://pagefind.app) indexes the pages shortly
+after the server starts to produce the search index.
 
 ## Make targets
 

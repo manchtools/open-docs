@@ -28,7 +28,7 @@ Visit `http://localhost:3000`.
 | `/static` | `static/` | Favicons, `og.png`, screenshots. Merged over the defaults. |
 
 Both mounts are optional. The content mount can be read-only (`:ro`);
-the entrypoint copies it into the image tree before building.
+the entrypoint copies it into the image tree before the server starts.
 
 {% callout type="info" title="Run with nothing mounted" %}
 With no `/content` mount, the image serves the open-docs documentation
@@ -36,7 +36,7 @@ itself, a live demo you can click through before adding your own
 content.
 {% /callout %}
 
-## How a build happens
+## What happens at start
 
 There is no build step. The container parses and validates your Markdown
 when it starts (a couple of seconds, roughly 100–150 MB of memory — it
