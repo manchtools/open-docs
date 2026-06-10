@@ -113,3 +113,14 @@ describe('avatar referencing an author page', () => {
 		expect(out).toContain('Writes the second posts.');
 	});
 });
+
+describe('GFM task lists', () => {
+	it('renders checkboxes for [ ] and [x] items, plain items untouched', () => {
+		const out = html('en', 'getting-started/usage');
+		expect((out.match(/type="checkbox"/g) ?? []).length).toBe(2);
+		expect(out).toMatch(/checked[^>]*>[\s\S]{0,200}done task/);
+		expect(out).not.toContain('[ ]');
+		expect(out).not.toContain('[x]');
+		expect(out).toContain('plain item');
+	});
+});

@@ -245,7 +245,38 @@ export function createContentStore(opts: Options): ContentStore {
 				}
 			])
 		),
-		nodes: Object.fromEntries(
+		nodes: {
+			// GFM task lists: a list item starting with "[ ] " / "[x] " becomes
+			// a disabled checkbox. Plain markdown convention, not a tag — so it
+			// lives here rather than in the component registry.
+			item: {
+				...Markdoc.nodes.item,
+				transform(node: import('@markdoc/markdoc').Node, cfg: import('@markdoc/markdoc').Config) {
+					const children = node.transformChildren(cfg);
+					// The marker is the item's leading text — directly (tight
+					// list) or inside the first paragraph/inline tag (loose).
+					const holder: { arr: unknown[] } | null = (() => {
+						if (typeof children[0] === 'string') return { arr: children as unknown[] };
+						const f = children[0] as { children?: unknown[] } | undefined;
+						if (f && Array.isArray(f.children) && typeof f.children[0] === 'string')
+							return { arr: f.children };
+						return null;
+					})();
+					const text = holder?.arr[0] as string | undefined;
+					const m = typeof text === 'string' ? /^\[( |x|X)\] /.exec(text) : null;
+					if (m && holder) {
+						holder.arr[0] = (text as string).slice(4);
+						const box = new Markdoc.Tag('input', {
+							type: 'checkbox',
+							disabled: true,
+							...(m[1] !== ' ' ? { checked: true } : {})
+						});
+						return new Markdoc.Tag('li', { class: 'od-task' }, [box, ...children]);
+					}
+					return new Markdoc.Tag('li', node.transformAttributes(cfg), children);
+				}
+			},
+			...Object.fromEntries(
 			Object.entries(schema.nodes).map(([type, t]) => {
 				const base = Markdoc.nodes[type as keyof typeof Markdoc.nodes] as {
 					attributes?: Record<string, unknown>;
@@ -281,6 +312,7 @@ export function createContentStore(opts: Options): ContentStore {
 				];
 			})
 		)
+		}
 	};
 
 	// --- parse + validate + transform every file ----------------------------

@@ -250,3 +250,13 @@
     @apply rounded bg-yellow-200 px-0.5 text-foreground dark:bg-yellow-700/40;
   }
 }
+
+/* GFM task-list items: the checkbox replaces the bullet. */
+.prose li.od-task {
+	list-style: none;
+}
+.prose li.od-task > input[type='checkbox'] {
+	margin-right: 0.5em;
+	vertical-align: -0.15em;
+	accent-color: var(--primary);
+}

@@ -14,3 +14,7 @@ Use it. With a fence:
 {% screenshot src="never-exists.png" alt="fenced example" /%}
 {% bogus %}also fenced{% /bogus %}
 ````
+
+- [ ] open task
+- [x] done task
+- plain item
