@@ -1,0 +1,41 @@
+<script lang="ts">
+	import { base } from '$app/paths';
+
+	// {% hero src="cover.png" alt="..." title="..." subtitle="..." /%}
+	//
+	// Full-bleed image header: breaks out of the prose column (negative
+	// horizontal margins mirror the article padding) and pulls flush to
+	// the top when it is the first block on the page. Optional title /
+	// subtitle render on a bottom gradient. Also used automatically when a
+	// blog post sets `cover:` frontmatter.
+	//
+	// Pairing: an {% avatar %} placed directly after a hero overlaps it by
+	// half the avatar image (see the adjacency rules in Avatar.svelte).
+	let {
+		src,
+		alt = '',
+		title = undefined,
+		subtitle = undefined
+	}: {
+		src: string;
+		alt?: string;
+		title?: string;
+		subtitle?: string;
+	} = $props();
+
+	const resolved = $derived(
+		src.startsWith('http') ? src : base + (src.startsWith('/') ? src : '/' + src)
+	);
+</script>
+
+<div class="od-hero not-prose relative -mx-6 my-8 overflow-hidden first:-mt-12 xl:-mx-12">
+	<img src={resolved} {alt} class="h-56 w-full object-cover sm:h-72 lg:h-96" />
+	{#if title || subtitle}
+		<div
+			class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-6 pb-5 pt-16 text-white xl:px-12"
+		>
+			{#if title}<p class="text-2xl font-bold tracking-tight sm:text-3xl">{title}</p>{/if}
+			{#if subtitle}<p class="mt-1 text-sm text-white/80 sm:text-base">{subtitle}</p>{/if}
+		</div>
+	{/if}
+</div>

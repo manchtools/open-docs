@@ -20,10 +20,29 @@ import { applyHeadingAnchors } from './markdown';
 import { buildSchemaFromRegistry, type RegistrySchema } from './markdoc-schema';
 import { applyTokens, buildTokenMap } from '../../../scripts/tokens.js';
 
+export type PostMeta = {
+	/** ISO date (frontmatter `date: YYYY-MM-DD`) — the canonical sort key. */
+	date: string;
+	author?: string;
+	tags: string[];
+	cover?: string;
+	readingTimeMin: number;
+	/** Slug of the blog section this post belongs to. */
+	section: string;
+};
+
+export type PostListItem = {
+	title: string;
+	href: string;
+	description?: string;
+} & PostMeta;
+
 export type PageData = {
 	title: string;
 	description?: string;
 	tree: RenderableTreeNode;
+	/** Present when the page is a blog post. */
+	post?: PostMeta;
 };
 
 export type StoreError = { file: string; line?: number; message: string };
@@ -40,6 +59,15 @@ export type ContentStore = {
 	pageMetaFor(lang: string, slug: string): { title: string; description?: string };
 	listPaths(): string[];
 	localizedHref(lang: string, slug: string): string;
+	/** Is this slug a `blog: true` section index? */
+	isBlogSection(slug: string): boolean;
+	/** Posts of a blog section, newest first, localized. */
+	postsFor(lang: string, section: string): PostListItem[];
+	/** Chronological neighbours of a post (newer/older), or null for non-posts. */
+	chronoFor(
+		lang: string,
+		slug: string
+	): { newer: NavItem | null; older: NavItem | null } | null;
 };
 
 type Options = {
@@ -51,6 +79,8 @@ type Options = {
 	 *  files, first hit wins). Defaults cover dev (static/) and the
 	 *  container (the merged build/client + the /static mount). */
 	staticDirs?: string[];
+	/** Serve `draft: true` posts (dev mode). Production excludes them. */
+	includeDrafts?: boolean;
 };
 
 // ---------------------------------------------------------------------------
@@ -255,11 +285,41 @@ export function createContentStore(opts: Options): ContentStore {
 		ids: Set<string>;
 	};
 
+	// Blog sections: a section whose index sets `blog: true` (default
+	// language defines the structure, as everywhere). Posts are its
+	// non-index descendant pages — except an `authors/` subfolder, whose
+	// pages are profile pages, not posts.
+	const blogSections = new Set<string>();
+	for (const [virtualPath, original] of sources) {
+		const { lang, slug } = slugLang(virtualPath, defaultLang);
+		if (lang !== defaultLang) continue;
+		const file = virtualPath.split('/').pop() ?? '';
+		if (stripPrefix(file.replace(/\.(md|markdoc)$/, '')).rest.toLowerCase() !== 'index') continue;
+		if (frontmatter(original).blog?.toLowerCase() === 'true' && slug) blogSections.add(slug);
+	}
+	const postSectionOf = (slug: string): string | undefined => {
+		for (const sec of blogSections) {
+			if (!slug.startsWith(sec + '/')) continue;
+			if (slug.startsWith(sec + '/authors/')) return undefined;
+			return sec;
+		}
+		return undefined;
+	};
+
 	const files: FileData[] = [];
 	for (const [virtualPath, original] of sources) {
 		const shortPath = virtualPath.replace('/src/content/', '');
 		const { lang, slug } = slugLang(virtualPath, defaultLang);
 		const fm = frontmatter(original);
+		// Drafts: a post with `draft: true` is invisible in production —
+		// nav, content, paths, search, feeds — and visible in dev.
+		if (
+			!opts.includeDrafts &&
+			fm.draft?.toLowerCase() === 'true' &&
+			postSectionOf(slug) !== undefined
+		) {
+			continue;
+		}
 		const raw = applyHeadingAnchors(applyTokens(original, tokens));
 		const ast = Markdoc.parse(raw);
 		// Fences are literal. Markdoc parses {% tags %} inside code fences
@@ -303,6 +363,36 @@ export function createContentStore(opts: Options): ContentStore {
 
 	function fileFor(lang: string, slug: string): FileData | null {
 		return byLang.get(lang)?.get(slug) ?? defaultFiles.get(slug) ?? null;
+	}
+
+	// --- post metadata (blog sections) -----------------------------------
+	// `date: YYYY-MM-DD` is the canonical sort key and is REQUIRED on every
+	// post; a missing/malformed date fails the boot like any author error.
+	const postMeta: Record<string, PostMeta> = {};
+	for (const f of defaultFiles.values()) {
+		const section = postSectionOf(f.slug);
+		if (!section) continue;
+		const date = f.fm.date;
+		if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date))) {
+			errors.push({
+				file: f.shortPath,
+				message: `posts in a blog section need a valid \`date: YYYY-MM-DD\` (got: ${date ?? 'none'})`
+			});
+			continue;
+		}
+		const body = f.raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+		const words = body.split(/\s+/).filter(Boolean).length;
+		postMeta[f.slug] = {
+			date,
+			author: f.fm.author,
+			tags: (f.fm.tags ?? '')
+				.split(',')
+				.map((t) => t.trim())
+				.filter(Boolean),
+			cover: f.fm.cover,
+			readingTimeMin: Math.max(1, Math.round(words / 200)),
+			section
+		};
 	}
 
 	// --- nav tree (default language defines the structure) ------------------
@@ -365,7 +455,12 @@ export function createContentStore(opts: Options): ContentStore {
 				title: fm.title ?? (isIndex ? 'Overview' : titleFromSegment(fileSegment)),
 				href,
 				label,
-				order: orderOf(fm, fileSegment) ?? (isIndex ? Number.NEGATIVE_INFINITY : FALLBACK),
+				// Posts sort newest-first: the negated timestamp rides the
+				// existing order machinery (ties fall through to the title
+				// comparison, matching the proposal).
+				order: postMeta[f.slug]
+					? -Date.parse(postMeta[f.slug].date)
+					: (orderOf(fm, fileSegment) ?? (isIndex ? Number.NEGATIVE_INFINITY : FALLBACK)),
 				children: new Map()
 			});
 		}
@@ -445,8 +540,53 @@ export function createContentStore(opts: Options): ContentStore {
 		return out;
 	}
 
+	// Map a (possibly language-prefixed) href back to its canonical slug.
+	function hrefSlug(href: string, lang: string): string {
+		const p = href.replace(/^\//, '');
+		if (lang !== defaultLang && (p === lang || p.startsWith(lang + '/'))) {
+			return p.slice(lang.length + 1);
+		}
+		return p;
+	}
+
+	// Posts leave the docs prev/next chain (their chain is chronological —
+	// see chronoFor); the blog index itself stays a regular page.
 	function flatNavFor(lang: string): NavItem[] {
-		return flatten(navByLang(lang));
+		return flatten(navByLang(lang)).filter((i) => !postMeta[hrefSlug(i.href, lang)]);
+	}
+
+	function postsFor(lang: string, section: string): PostListItem[] {
+		return Object.entries(postMeta)
+			.filter(([, m]) => m.section === section)
+			.sort(([sa, a], [sb, b]) =>
+				a.date === b.date
+					? pageMetaFor(lang, sa).title.localeCompare(pageMetaFor(lang, sb).title)
+					: a.date < b.date
+						? 1
+						: -1
+			)
+			.map(([slug, m]) => ({
+				...m,
+				...pageMetaFor(lang, slug),
+				href: localizedHref(lang, slug)
+			}));
+	}
+
+	function chronoFor(
+		lang: string,
+		slug: string
+	): { newer: NavItem | null; older: NavItem | null } | null {
+		const m = postMeta[slug];
+		if (!m) return null;
+		const list = postsFor(lang, m.section);
+		const href = localizedHref(lang, slug);
+		const idx = list.findIndex((p) => p.href === href);
+		const toItem = (p: PostListItem | undefined): NavItem | null =>
+			p ? { title: p.title, href: p.href } : null;
+		return {
+			newer: idx > 0 ? toItem(list[idx - 1]) : null,
+			older: idx >= 0 && idx < list.length - 1 ? toItem(list[idx + 1]) : null
+		};
 	}
 
 	function metaPagesFor(lang: string): NavItem[] {
@@ -484,6 +624,17 @@ export function createContentStore(opts: Options): ContentStore {
 		const linkRender = schema.nodes.link?.render ?? 'Link';
 		const screenshotRender = schema.tags.screenshot?.render ?? 'Screenshot';
 		const staticDirs = opts.staticDirs ?? ['static', 'build/client'];
+		// Post covers must exist, like screenshot files.
+		for (const [slug, m] of Object.entries(postMeta)) {
+			if (!m.cover) continue;
+			const rel = m.cover.replace(/^\//, '');
+			if (!staticDirs.some((d) => existsSync(join(d, rel)))) {
+				errors.push({
+					file: defaultFiles.get(slug)?.shortPath ?? slug,
+					message: `cover "${m.cover}" not found under static/`
+				});
+			}
+		}
 		for (const f of files) {
 			(function walk(n: unknown): void {
 				if (Array.isArray(n)) return n.forEach(walk);
@@ -545,7 +696,8 @@ export function createContentStore(opts: Options): ContentStore {
 		return {
 			title: meta.title || f.fm.title || '',
 			description: meta.description,
-			tree: f.tree
+			tree: f.tree,
+			post: postMeta[slug]
 		};
 	}
 
@@ -560,6 +712,9 @@ export function createContentStore(opts: Options): ContentStore {
 		metaPagesFor,
 		pageMetaFor,
 		listPaths,
-		localizedHref
+		localizedHref,
+		isBlogSection: (slug: string) => blogSections.has(slug),
+		postsFor,
+		chronoFor
 	};
 }

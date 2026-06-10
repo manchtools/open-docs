@@ -33,7 +33,10 @@ const en = {
 	renderingDiagram: 'Rendering diagram…',
 	copyCode: 'Copy code',
 	copied: 'Copied',
-	language: 'Language'
+	language: 'Language',
+	newer: 'Newer',
+	older: 'Older',
+	minRead: 'min read'
 };
 
 export type UIKey = keyof typeof en;
@@ -59,7 +62,10 @@ const de: Dict = {
 	renderingDiagram: 'Diagramm wird gerendert…',
 	copyCode: 'Code kopieren',
 	copied: 'Kopiert',
-	language: 'Sprache'
+	language: 'Sprache',
+	newer: 'Neuer',
+	older: 'Älter',
+	minRead: 'Min. Lesezeit'
 };
 
 const fr: Dict = {
@@ -82,7 +88,10 @@ const fr: Dict = {
 	renderingDiagram: 'Rendu du diagramme…',
 	copyCode: 'Copier le code',
 	copied: 'Copié',
-	language: 'Langue'
+	language: 'Langue',
+	newer: 'Plus récent',
+	older: 'Plus ancien',
+	minRead: 'min de lecture'
 };
 
 const es: Dict = {
@@ -105,7 +114,10 @@ const es: Dict = {
 	renderingDiagram: 'Renderizando el diagrama…',
 	copyCode: 'Copiar código',
 	copied: 'Copiado',
-	language: 'Idioma'
+	language: 'Idioma',
+	newer: 'Más reciente',
+	older: 'Más antiguo',
+	minRead: 'min de lectura'
 };
 
 const dictionaries: Record<string, Dict> = {

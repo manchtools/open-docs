@@ -33,4 +33,9 @@
 	export { default as Columns } from './components/Columns.svelte';
 	export { default as Column } from './components/Column.svelte';
 	export { default as Grid } from './components/Grid.svelte';
+
+	// Blog blocks (usable anywhere): full-bleed hero image and an author
+	// card; an avatar directly after a hero overlaps it by half its image.
+	export { default as Hero } from './components/Hero.svelte';
+	export { default as Avatar } from './components/Avatar.svelte';
 </script>

@@ -29,12 +29,25 @@
 	const { currentHref }: Props = $props();
 
 	// Prev/next within the current language's nav order (localized hrefs),
-	// delivered by the layout load.
+	// delivered by the layout load. Blog posts use their own chronological
+	// chain instead (Newer on the left, Older on the right) and never link
+	// into the docs chain.
 	const lang = $derived((page.data.lang as string) ?? 'en');
+	const chrono = $derived(
+		(page.data.chrono as { newer: NavItem | null; older: NavItem | null } | null) ?? null
+	);
 	const list = $derived((page.data.flatNav as NavItem[]) ?? []);
 	const idx = $derived(list.findIndex((it) => it.href === currentHref));
-	const prev = $derived(idx > 0 ? list[idx - 1] : undefined);
-	const next = $derived(idx >= 0 && idx < list.length - 1 ? list[idx + 1] : undefined);
+	const prev = $derived(chrono ? (chrono.newer ?? undefined) : idx > 0 ? list[idx - 1] : undefined);
+	const next = $derived(
+		chrono
+			? (chrono.older ?? undefined)
+			: idx >= 0 && idx < list.length - 1
+				? list[idx + 1]
+				: undefined
+	);
+	const prevLabel = $derived(t(lang, chrono ? 'newer' : 'previous'));
+	const nextLabel = $derived(t(lang, chrono ? 'older' : 'next'));
 </script>
 
 {#if prev || next}
@@ -57,7 +70,7 @@
 				/>
 				<span class="flex flex-col items-start">
 					<span class="text-xs font-normal uppercase tracking-wide text-muted-foreground">
-						{t(lang, 'previous')}
+						{prevLabel}
 					</span>
 					<span class="font-medium">{prev.title}</span>
 				</span>
@@ -74,7 +87,7 @@
 			>
 				<span class="flex flex-col items-end">
 					<span class="text-xs font-normal uppercase tracking-wide text-muted-foreground">
-						{t(lang, 'next')}
+						{nextLabel}
 					</span>
 					<span class="font-medium">{next.title}</span>
 				</span>

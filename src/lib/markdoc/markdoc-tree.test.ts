@@ -57,3 +57,34 @@ describe('MarkdocTree SSR', () => {
 		expect(out).not.toContain('Install with care');
 	});
 });
+
+describe('hero + avatar blocks', () => {
+	it('renders hero and avatar as adjacent siblings (overlap pairing contract)', () => {
+		const out = html('en', 'blog/first-post');
+		// hero with image + title overlay
+		expect(out).toMatch(/od-hero[^>]*>/);
+		expect(out).toMatch(/<img[^>]*src="\/screenshots\/exists\.png"/);
+		// avatar with the ringed image the adjacency CSS targets
+		expect(out).toMatch(/od-avatar[^"]*"/);
+		expect(out).toMatch(/od-avatar-img/);
+		expect(out).toContain('Builds manchtools.');
+		// adjacency: the avatar block follows the hero block directly
+		const heroIdx = out.indexOf('od-hero');
+		const avatarIdx = out.indexOf('od-avatar');
+		expect(heroIdx).toBeGreaterThan(-1);
+		expect(avatarIdx).toBeGreaterThan(heroIdx);
+	});
+
+	it('avatar renders standalone without an image', () => {
+		// name without src — no <img>, still a card
+		const tree = {
+			name: 'Avatar',
+			attributes: { name: 'Solo Author', description: 'No picture.' },
+			children: []
+		};
+		const out = render(MarkdocTree, { props: { node: tree as never } }).body;
+		expect(out).toContain('Solo Author');
+		expect(out).toContain('No picture.');
+		expect(out).not.toContain('od-avatar-img');
+	});
+});

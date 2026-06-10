@@ -70,7 +70,9 @@ function build(dir: string): ContentStore {
 		// /static mount.
 		staticDirs: [env.OPEN_DOCS_STATIC, 'static', 'build/client'].filter(
 			(d): d is string => !!d
-		)
+		),
+		// Drafts (`draft: true` posts) render in dev, never in production.
+		includeDrafts: dev
 	});
 
 	if (store.errors.length > 0) {

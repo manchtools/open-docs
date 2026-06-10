@@ -25,6 +25,11 @@ export const load: PageServerLoad = ({ params }) => {
 		tree: page.tree,
 		lang,
 		currentHref: href,
+		// Blog data: post meta + chronological neighbours on posts, the
+		// generated listing on a blog section's index.
+		post: page.post ?? null,
+		chrono: store.chronoFor(lang, slug),
+		posts: store.isBlogSection(slug) ? store.postsFor(lang, slug) : null,
 		seo: { title: page.title, description: page.description, path: href, lang, slug }
 	};
 };
