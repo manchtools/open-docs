@@ -91,6 +91,11 @@ Two blocks made for blogs, usable anywhere:
 {% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
+Live, with the bundled demo images:
+
+{% hero src="/screenshots/open-docs-home.png" alt="Demo cover" title="Big news" subtitle="The avatar below overlaps by half" /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Builds manchtools." /%}
+
 Placed directly after a hero, the avatar's image **overlaps the hero**
 by half its height, the classic cover-photo header. Both
 render normally on their own. A post with `cover:` gets the hero

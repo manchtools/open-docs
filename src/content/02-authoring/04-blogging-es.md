@@ -97,6 +97,11 @@ Dos bloques pensados para blogs, utilizables en cualquier parte:
 {% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
+En vivo, con las imágenes de demostración incluidas:
+
+{% hero src="/screenshots/open-docs-home.png" alt="Portada de demo" title="Grandes noticias" subtitle="El avatar de abajo se superpone a la mitad" /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Construye manchtools." /%}
+
 Colocado justo después de un hero, la imagen del avatar
 **se solapa con el borde inferior del hero hasta la mitad de su altura**:
 la clásica cabecera con foto de portada. Ambos se renderizan con

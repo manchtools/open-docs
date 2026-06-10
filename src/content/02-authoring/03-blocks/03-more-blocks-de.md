@@ -151,3 +151,17 @@ Kein Tag: einfache GFM-Syntax wird als Kontrollkästchen gerendert.
 - [x] Dokumentation schreiben
 - [ ] Übersetzungen anfertigen
 - [ ] Release veröffentlichen
+
+## Fußnoten
+
+Ebenfalls reines Markdown: ein `[^ref]` wird zu einem nummerierten, hochgestellten Link, und die Definition erscheint am Seitenende.
+
+```markdown
+The engine was proposed in 1837[^babbage].
+
+[^babbage]: By Charles Babbage, with notes by Ada Lovelace.
+```
+
+Die Maschine wurde 1837 vorgeschlagen[^babbage].
+
+[^babbage]: Von Charles Babbage, mit Anmerkungen von Ada Lovelace.

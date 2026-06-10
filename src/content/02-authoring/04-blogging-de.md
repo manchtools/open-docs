@@ -98,6 +98,11 @@ Zwei Blöcke, gemacht für Blogs, überall einsetzbar:
 {% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
+Live, mit den mitgelieferten Demo-Bildern:
+
+{% hero src="/screenshots/open-docs-home.png" alt="Demo-Cover" title="Große Neuigkeiten" subtitle="Der Avatar darunter überlappt zur Hälfte" /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Entwickelt manchtools." /%}
+
 Direkt nach einem Hero platziert, **überlappt das Bild des Avatars die Unterkante des Heros um die halbe Bildhöhe** – der klassische Cover-Foto-Header. Beide rendern für sich allein ganz normal. Ein Beitrag mit `cover:` bekommt den Hero automatisch.
 
 ## Quote & Gallery

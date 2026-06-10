@@ -151,3 +151,17 @@ No es una etiqueta: la sintaxis GFM normal se muestra como casillas de verificac
 - [x] escribir la documentación
 - [ ] preparar las traducciones
 - [ ] publicar la versión
+
+## Notas al pie
+
+También es Markdown normal: un `[^ref]` se convierte en un enlace numerado en superíndice, y la definición aparece al final de la página.
+
+```markdown
+The engine was proposed in 1837[^babbage].
+
+[^babbage]: By Charles Babbage, with notes by Ada Lovelace.
+```
+
+La máquina se propuso en 1837[^babbage].
+
+[^babbage]: Por Charles Babbage, con notas de Ada Lovelace.

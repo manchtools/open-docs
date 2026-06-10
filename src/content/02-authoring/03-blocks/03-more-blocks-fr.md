@@ -151,3 +151,17 @@ Pas une balise : la syntaxe GFM ordinaire s'affiche sous forme de cases à coche
 - [x] rédiger la documentation
 - [ ] préparer les traductions
 - [ ] publier la version
+
+## Notes de bas de page
+
+Du Markdown ordinaire là aussi : un `[^ref]` devient un lien numéroté en exposant, et la définition apparaît en fin de page.
+
+```markdown
+The engine was proposed in 1837[^babbage].
+
+[^babbage]: By Charles Babbage, with notes by Ada Lovelace.
+```
+
+La machine fut proposée en 1837[^babbage].
+
+[^babbage]: Par Charles Babbage, avec des notes d'Ada Lovelace.

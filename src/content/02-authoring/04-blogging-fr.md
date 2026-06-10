@@ -97,6 +97,11 @@ Deux blocs conçus pour les blogs, utilisables partout :
 {% avatar src="/authors/paul.png" name="Paul Dotterer" description="Builds manchtools." /%}
 ```
 
+En direct, avec les images de démonstration fournies :
+
+{% hero src="/screenshots/open-docs-home.png" alt="Couverture de démo" title="Grande nouvelle" subtitle="L'avatar ci-dessous chevauche de moitié" /%}
+{% avatar src="/screenshots/open-docs-home-dark.png" name="Paul Dotterer" description="Développe manchtools." /%}
+
 Placé directement après un hero, l'image de l'avatar **chevauche le bord inférieur du hero de la moitié de sa hauteur**, soit l'en-tête
 classique avec photo de couverture. Les deux s'affichent normalement
 lorsqu'ils sont seuls. Un article avec `cover:` reçoit le hero

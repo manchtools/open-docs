@@ -147,3 +147,18 @@ Not a tag: plain GFM syntax renders as checkboxes.
 - [x] write the docs
 - [ ] translate them
 - [ ] ship the release
+
+## Footnotes
+
+Also plain markdown: a `[^ref]` becomes a numbered superscript link and
+the definition lists at the end of the page.
+
+```markdown
+The engine was proposed in 1837[^babbage].
+
+[^babbage]: By Charles Babbage, with notes by Ada Lovelace.
+```
+
+The engine was proposed in 1837[^babbage].
+
+[^babbage]: By Charles Babbage, with notes by Ada Lovelace.
