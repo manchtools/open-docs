@@ -29,7 +29,6 @@ title: The launch post
 date: 2026-06-01
 author: /blog/authors/paul
 tags: release, open-source
-cover: screenshots/launch.png
 description: How we launched, and what comes next.
 ---
 ```

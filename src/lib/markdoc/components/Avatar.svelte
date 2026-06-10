@@ -33,7 +33,7 @@
 		<img
 			src={resolved}
 			alt={name}
-			class="od-avatar-img size-20 shrink-0 rounded-full object-cover shadow-lg ring-4 ring-background"
+			class="od-avatar-img size-20 shrink-0 rounded-full object-cover shadow-lg ring-4 ring-secondary"
 		/>
 	{/if}
 	<div class="min-w-0 pt-1">
@@ -54,7 +54,7 @@
 	/* Hero + avatar pairing. When an avatar directly follows a hero, pull
 	   the block up to the hero's edge (cancelling the hero's bottom
 	   margin) and let the IMAGE overlap the hero by half its height — the
-	   ring-4 ring-background carves the classic cutout. Only the image
+	   ring-4 ring-secondary carves the cutout with guaranteed contrast against both the photo and the page. Only the image
 	   rises; name/description stay below the hero so text never overlays
 	   the photo. Fully :global because the two blocks are siblings
 	   produced by different components (a scoped rule would be pruned). */
