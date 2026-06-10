@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setContext } from 'svelte';
 	import { base } from '$app/paths';
 	import Toc from '$lib/components/toc.svelte';
 	import PrevNext from '$lib/components/prev-next.svelte';
@@ -31,6 +32,11 @@
 		};
 	};
 	const { data }: Props = $props();
+
+	// Blog index pages expose their Atom feed to the h1 (Heading renders
+	// an RSS copy button next to the page-link button). Function-valued so
+	// it stays reactive across client-side navigations.
+	setContext('od:feed', () => (data.posts ? (data.feedHref ?? null) : null));
 </script>
 
 <Seo

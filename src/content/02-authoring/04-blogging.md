@@ -9,8 +9,7 @@ Any section can be a blog. Set `blog: true` on the section's `index.md`
 and its pages become **posts**: sorted newest-first by date, listed
 automatically on the section page, with Newer/Older navigation, tag
 pages, and an Atom feed. Docs and blogs live side by side in one
-content tree — the [changelog](/changelog) on this site is exactly such
-a section.
+content tree — the [changelog](/changelog) on this site is one.
 
 ```markdown
 ---

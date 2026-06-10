@@ -36,7 +36,9 @@ const en = {
 	language: 'Language',
 	newer: 'Newer',
 	older: 'Older',
-	minRead: 'min read'
+	minRead: 'min read',
+	copyLink: 'Copy link',
+	copyFeed: 'Copy feed URL'
 };
 
 export type UIKey = keyof typeof en;
@@ -65,7 +67,9 @@ const de: Dict = {
 	language: 'Sprache',
 	newer: 'Neuer',
 	older: 'Älter',
-	minRead: 'Min. Lesezeit'
+	minRead: 'Min. Lesezeit',
+	copyLink: 'Link kopieren',
+	copyFeed: 'Feed-URL kopieren'
 };
 
 const fr: Dict = {
@@ -91,7 +95,9 @@ const fr: Dict = {
 	language: 'Langue',
 	newer: 'Plus récent',
 	older: 'Plus ancien',
-	minRead: 'min de lecture'
+	minRead: 'min de lecture',
+	copyLink: 'Copier le lien',
+	copyFeed: "Copier l'URL du flux"
 };
 
 const es: Dict = {
@@ -117,7 +123,9 @@ const es: Dict = {
 	language: 'Idioma',
 	newer: 'Más reciente',
 	older: 'Más antiguo',
-	minRead: 'min de lectura'
+	minRead: 'min de lectura',
+	copyLink: 'Copiar enlace',
+	copyFeed: 'Copiar URL del feed'
 };
 
 const dictionaries: Record<string, Dict> = {

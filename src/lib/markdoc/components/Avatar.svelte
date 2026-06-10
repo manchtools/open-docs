@@ -33,7 +33,7 @@
 		<img
 			src={resolved}
 			alt={name}
-			class="od-avatar-img size-20 shrink-0 rounded-full object-cover ring-4 ring-background"
+			class="od-avatar-img size-20 shrink-0 rounded-full object-cover shadow-lg ring-4 ring-background"
 		/>
 	{/if}
 	<div class="min-w-0 pt-1">

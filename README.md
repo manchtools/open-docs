@@ -37,8 +37,8 @@ docker run --rm -p 3000:3000 \
 ```
 
 Visit `http://localhost:3000`. The container parses your content at
-start (a couple of seconds, ~100 MB — it runs fine on small hosts) and
-renders pages on the fly; the search index follows a few seconds later.
+start (seconds, ~100 MB — small hosts are fine) and renders pages on
+the fly; the search index follows moments later.
 
 ### From source
 
