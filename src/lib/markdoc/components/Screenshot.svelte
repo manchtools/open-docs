@@ -42,7 +42,16 @@
 		width = undefined
 	}: Props = $props();
 
-	const resolve = (path: string) => `${base}/screenshots/${path.replace(/^\//, '')}`;
+	// Block-style srcs are bare names under static/screenshots/ (the
+	// documented contract). Implicit markdown images arrive with full
+	// paths (static or content-relative, pre-resolved) or web URLs and
+	// pass through untouched apart from BASE_PATH.
+	const resolve = (path: string) =>
+		/^[a-z]+:/i.test(path)
+			? path
+			: path.startsWith('/')
+				? `${base}${path}`
+				: `${base}/screenshots/${path}`;
 </script>
 
 <figure class="not-prose my-8" style={width ? `max-width: ${width}; margin-inline: auto;` : ''}>

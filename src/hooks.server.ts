@@ -62,6 +62,10 @@ const MIME: Record<string, string> = {
 	'.json': 'application/json',
 	'.wasm': 'application/wasm',
 	'.woff2': 'font/woff2',
+	'.avif': 'image/avif',
+	'.mp4': 'video/mp4',
+	'.webm': 'video/webm',
+	'.pdf': 'application/pdf',
 	'.txt': 'text/plain; charset=utf-8',
 	'.xml': 'application/xml; charset=utf-8'
 };
@@ -125,9 +129,37 @@ ${posts
 	});
 }
 
+// Assets co-located with the content (images referenced relatively from
+// markdown, served in place — a copied docs folder brings its images).
+// Extension-allowlisted and traversal-guarded; markdown itself is never
+// served raw.
+const ASSET_EXT = /\.(png|jpe?g|gif|webp|avif|svg|ico|mp4|webm|pdf|txt)$/i;
+function contentAsset(pathname: string): Response | null {
+	const rel = decodeURIComponent(pathname.slice(base.length).replace(/^\//, ''));
+	if (!ASSET_EXT.test(rel) || rel.includes('\0')) return null;
+	const dir =
+		env.OPEN_DOCS_CONTENT && existsSync(env.OPEN_DOCS_CONTENT)
+			? env.OPEN_DOCS_CONTENT
+			: 'src/content';
+	const root = resolvePath(dir);
+	const target = resolvePath(join(root, rel));
+	if (!target.startsWith(root + sep)) return null;
+	try {
+		if (!statSync(target).isFile()) return null;
+	} catch {
+		return null;
+	}
+	const ext = target.slice(target.lastIndexOf('.'));
+	return new Response(Readable.toWeb(createReadStream(target)) as ReadableStream, {
+		headers: { 'content-type': MIME[ext] ?? 'application/octet-stream' }
+	});
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
 	const assetHit = baseStatic(event.url.pathname);
 	if (assetHit) return assetHit;
+	const contentHit = contentAsset(event.url.pathname);
+	if (contentHit) return contentHit;
 	const feed = atomFeed(event.url.pathname);
 	if (feed) return feed;
 
