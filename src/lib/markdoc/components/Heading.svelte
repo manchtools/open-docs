@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Renders Markdoc {% heading %} (the override of the markdown heading
 	// node). Emits the right h1–h6 element with the id the heading-anchor
-	// pass assigned. Every heading gets a hover-revealed copy affordance:
+	// pass assigned. Every heading gets a copy affordance (faintly visible always, full strength on hover):
 	// h2 and deeper copy a deep link to the section; the h1 copies the
 	// page's own URL. On a blog index the h1 additionally offers an RSS
 	// button that copies the section's Atom feed URL (provided via the
@@ -62,7 +62,7 @@
 	}
 
 	const btnClass =
-		'not-prose ml-2 inline-flex size-5 items-center justify-center rounded align-middle text-muted-foreground no-underline opacity-0 transition-opacity hover:bg-muted hover:text-primary focus-visible:opacity-100 group-hover/anchor:opacity-100';
+		'not-prose ml-2 inline-flex size-5 items-center justify-center rounded align-middle text-muted-foreground no-underline opacity-30 transition-opacity hover:bg-muted hover:text-primary hover:opacity-100 focus-visible:opacity-100 group-hover/anchor:opacity-100';
 </script>
 
 <svelte:element
