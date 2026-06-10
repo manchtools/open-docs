@@ -31,7 +31,6 @@
 		src ? (src.startsWith('http') ? src : base + (src.startsWith('/') ? src : '/' + src)) : undefined
 	);
 	const link = $derived(url ? (url.startsWith('/') ? base + url : url) : undefined);
-	void author;
 </script>
 
 <div class="od-avatar not-prose my-8 flex items-start gap-4">

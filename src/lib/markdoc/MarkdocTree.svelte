@@ -49,11 +49,13 @@
 		{:else}
 			<Tag {...node.attributes} />
 		{/if}
-	{:else}
+	{:else if node.children?.length}
 		<svelte:element this={node.name} {...node.attributes}>
-			{#if node.children?.length}
-				<Self node={node.children} />
-			{/if}
+			<Self node={node.children} />
 		</svelte:element>
+	{:else}
+		<!-- childless elements render self-closed: void elements (input,
+		     hr, br) may not carry a content template at all -->
+		<svelte:element this={node.name} {...node.attributes} />
 	{/if}
 {/if}
