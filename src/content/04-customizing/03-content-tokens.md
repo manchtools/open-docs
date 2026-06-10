@@ -10,7 +10,7 @@ editing the Markdown. Any environment variable starting with
 
 ## How it works
 
-<!-- docref: begin src=scripts/tokens.js#applyTokens sha=6536bf55 -->
+<!-- docref: begin src=scripts/tokens.js#applyTokens:6536bf55 -->
 Set the variable:
 
 ```sh

@@ -19,7 +19,7 @@ blog: true        # in blog/index.md
 
 ## Posts
 
-<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract sha=bf9c57f0 -->
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 A post is a normal Markdown page with a date:
 
 ```markdown
@@ -47,7 +47,7 @@ navigation and never mix into the docs prev/next chain.
 
 ## The listing
 
-<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract sha=bf9c57f0 -->
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 The section's `index.md` renders its own prose first, then the
 generated post list: cover, localized date, reading time, author,
 description, and tags. Reading time is the post's word count at 200
@@ -56,7 +56,7 @@ words per minute, rounded, minimum one minute.
 
 ## Authors are pages
 
-<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract sha=bf9c57f0 -->
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 Put authors in an `authors/` folder inside the blog section. Pages there
 are profile pages, not posts (no date needed, never listed):
 
@@ -90,7 +90,7 @@ same page.
 
 ## Hero & avatar blocks
 
-<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props sha=2d0e6d15 -->
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props:2d0e6d15 -->
 Two blocks made for blogs, usable anywhere:
 
 ```markdown
@@ -127,7 +127,7 @@ like every image.
 
 ## Feeds
 
-<!-- docref: begin src=src/hooks.server.ts#atomFeed sha=e1fcac5f -->
+<!-- docref: begin src=src/hooks.server.ts#atomFeed:e1fcac5f -->
 Every blog section serves an Atom feed at `/<section>/feed.xml`
 (per language too: `/de/blog/feed.xml`). Set `PUBLIC_SITE_URL` so
 entries carry absolute links. Blog pages advertise the feed with a

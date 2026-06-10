@@ -9,7 +9,7 @@ description: What works when you point open-docs at markdown written for GitHub 
 A folder of markdown written for GitHub, VSCode, or another generator
 renders without rewriting. The conventions those tools rely on hold:
 
-<!-- docref: begin src=src/lib/server/markdown.ts sha=097d96d1 -->
+<!-- docref: begin src=src/lib/server/markdown.ts:097d96d1 -->
 - **Relative links.** `[setup](./guides/setup.md)`, `../intro.md`, and
   `other.md#section` resolve against the linking file, exactly as your
   editor follows them. The `.md` ending and any `01-` prefixes map
@@ -50,7 +50,7 @@ Making something clickable is the author's call: write
 `[example](https://example.com)` or `<https://example.com>`.
 {% /callout %}
 
-<!-- docref: begin src=src/lib/server/markdown.ts#stripHtmlComments sha=41367d9c -->
+<!-- docref: begin src=src/lib/server/markdown.ts#stripHtmlComments:41367d9c -->
 Setext headings (underlined with `===` or `---`) don't receive anchor
 ids; use `#` headings. HTML comments (`<!-- … -->`) are stripped so
 review notes never reach readers.

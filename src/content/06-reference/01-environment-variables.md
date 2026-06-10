@@ -11,7 +11,7 @@ Every variable is read at runtime when the container starts (only
 
 ## Site chrome
 
-<!-- docref: begin src=src/lib/server/site.ts#siteConfig sha=c0130420 -->
+<!-- docref: begin src=src/lib/server/site.ts#siteConfig:c0130420 -->
 | Variable | Default | Effect |
 |---|---|---|
 | `PUBLIC_BRAND_NAME` | `open-docs` | Brand text in the top bar. |
@@ -46,7 +46,7 @@ mode. See [Theming](/customizing/theming).
 These only apply to the Docker image and point the entrypoint at
 alternate source directories. Most users never change them.
 
-<!-- docref: begin src=src/lib/server/store-instance.ts#contentDir sha=9be957b8 -->
+<!-- docref: begin src=src/lib/server/store-instance.ts#contentDir:9be957b8 -->
 | Variable | Default | Effect |
 |---|---|---|
 | `OPEN_DOCS_CONTENT` | `/content` | Directory copied into `src/content/`. |

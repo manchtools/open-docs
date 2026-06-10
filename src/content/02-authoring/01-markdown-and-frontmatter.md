@@ -23,7 +23,7 @@ Write pages in plain Markdown. Standard elements all work:
 
 ## Headings and the table of contents
 
-<!-- docref: begin src=src/lib/server/markdown.ts#applyHeadingAnchors sha=a5e8b91f -->
+<!-- docref: begin src=src/lib/server/markdown.ts#applyHeadingAnchors:a5e8b91f -->
 The first `#` heading is the page title shown at the top of the
 content. `##` and `###` headings populate the table of contents in the
 right rail and become linkable anchors, so you can deep-link to a
@@ -32,7 +32,7 @@ section.
 
 ## Frontmatter
 
-<!-- docref: begin src=src/lib/server/content-store.ts#frontmatter sha=641087be -->
+<!-- docref: begin src=src/lib/server/content-store.ts#frontmatter:641087be -->
 An optional YAML block at the very top of a file controls how the page
 appears in the **sidebar**:
 

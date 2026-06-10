@@ -5,7 +5,7 @@ label: Markdoc tags
 
 # Markdoc tags
 
-<!-- docref: begin src=src/lib/markdoc/tags.svelte sha=7c5c0d6c -->
+<!-- docref: begin src=src/lib/markdoc/tags.svelte:7c5c0d6c -->
 A reference for the custom blocks layered on top of Markdown, plus the
 enhanced Markdown elements. For usage with examples, see
 [Authoring](/authoring).
@@ -15,7 +15,7 @@ enhanced Markdown elements. For usage with examples, see
 
 ### callout
 
-<!-- docref: begin src=src/lib/markdoc/components/Callout.svelte#@props sha=04ebd609 -->
+<!-- docref: begin src=src/lib/markdoc/components/Callout.svelte#@props:04ebd609 -->
 ```markdown
 {% callout type="info" title="Optional title" %}
 Body Markdown.
@@ -30,7 +30,7 @@ Body Markdown.
 
 ### tabs / tab
 
-<!-- docref: begin src=src/lib/markdoc/components/Tabs.svelte#@props,src/lib/markdoc/components/Tab.svelte#@props sha=17c65a4f,0ce05808 -->
+<!-- docref: begin src=src/lib/markdoc/components/Tabs.svelte#@props:17c65a4f,src/lib/markdoc/components/Tab.svelte#@props:0ce05808 -->
 ````markdown
 {% tabs labels="One, Two" initial="One" %}
   {% tab label="One" %} … {% /tab %}
@@ -47,7 +47,7 @@ Body Markdown.
 
 ### screenshot
 
-<!-- docref: begin src=src/lib/markdoc/components/Screenshot.svelte#@props sha=f0667444 -->
+<!-- docref: begin src=src/lib/markdoc/components/Screenshot.svelte#@props:f0667444 -->
 ```markdown
 {% screenshot src="ui.png" alt="The UI" caption="…" dark="ui-dark.png"
    variant="frame" width="720px" /%}
@@ -68,7 +68,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### steps / step
 
-<!-- docref: begin src=src/lib/markdoc/components/Steps.svelte#@props,src/lib/markdoc/components/Step.svelte#@props sha=26850e43,ed2ce0a8 -->
+<!-- docref: begin src=src/lib/markdoc/components/Steps.svelte#@props:26850e43,src/lib/markdoc/components/Step.svelte#@props:ed2ce0a8 -->
 ````markdown
 {% steps %}
   {% step title="First" %} … {% /step %}
@@ -81,7 +81,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### cards / card
 
-<!-- docref: begin src=src/lib/markdoc/components/Cards.svelte#@props,src/lib/markdoc/components/Card.svelte#@props sha=26850e43,c82718eb -->
+<!-- docref: begin src=src/lib/markdoc/components/Cards.svelte#@props:26850e43,src/lib/markdoc/components/Card.svelte#@props:c82718eb -->
 ````markdown
 {% cards %}
   {% card title="…" href="/path" icon="🚀" %} description {% /card %}
@@ -97,7 +97,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### accordions / accordion
 
-<!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props,src/lib/markdoc/components/Accordion.svelte#@props sha=84cfb144,ed2ce0a8 -->
+<!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props:84cfb144,src/lib/markdoc/components/Accordion.svelte#@props:ed2ce0a8 -->
 ````markdown
 {% accordions %}
   {% accordion title="Question?" %} answer {% /accordion %}
@@ -112,7 +112,7 @@ Plain Markdown `![]()` images render through this component too, in the
 
 ### badge
 
-<!-- docref: begin src=src/lib/markdoc/components/Badge.svelte#@props sha=69aebe45 -->
+<!-- docref: begin src=src/lib/markdoc/components/Badge.svelte#@props:69aebe45 -->
 ```markdown
 {% badge variant="warning" %}Beta{% /badge %}
 ```
@@ -122,7 +122,7 @@ Inline pill. `variant`: `default`, `info`, `success`, `warning`, `danger`.
 
 ### filetree
 
-<!-- docref: begin src=src/lib/markdoc/components/FileTree.svelte#@props sha=26850e43 -->
+<!-- docref: begin src=src/lib/markdoc/components/FileTree.svelte#@props:26850e43 -->
 ```markdown
 {% filetree %}
 - folder/
@@ -136,7 +136,7 @@ auto-detected).
 
 ### embed
 
-<!-- docref: begin src=src/lib/markdoc/components/Embed.svelte#@props sha=36691986 -->
+<!-- docref: begin src=src/lib/markdoc/components/Embed.svelte#@props:36691986 -->
 ```markdown
 {% embed src="https://youtu.be/ID" title="…" /%}
 ```
@@ -147,7 +147,7 @@ iframe allow-list is derived from your embeds automatically.
 
 ### code
 
-<!-- docref: begin src=src/lib/markdoc/components/Code.svelte#@props sha=ed2ce0a8 -->
+<!-- docref: begin src=src/lib/markdoc/components/Code.svelte#@props:ed2ce0a8 -->
 ````markdown
 {% code title="app.ts" %}
 ```ts
@@ -162,7 +162,7 @@ so the filename rides on this wrapper).
 
 ### boost
 
-<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props sha=b07730c2 -->
+<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props:b07730c2 -->
 ```markdown
 {% boost weight=8 %}
 This passage is pushed harder in the search index.
@@ -177,7 +177,7 @@ only when the built-in heading weights aren't enough to surface something.
 
 ### columns / column
 
-<!-- docref: begin src=src/lib/markdoc/components/Columns.svelte#@props,src/lib/markdoc/components/Column.svelte#@props sha=26850e43,671be0b5 -->
+<!-- docref: begin src=src/lib/markdoc/components/Columns.svelte#@props:26850e43,src/lib/markdoc/components/Column.svelte#@props:671be0b5 -->
 Side-by-side columns that stack on mobile, capped at three across; a
 fourth wraps to the next row. Two columns fill 50/50, three fill in thirds.
 
@@ -191,7 +191,7 @@ fourth wraps to the next row. Two columns fill 50/50, three fill in thirds.
 
 ### grid
 
-<!-- docref: begin src=src/lib/markdoc/components/Grid.svelte#@props,src/lib/markdoc/components/Column.svelte#@props sha=7451a1f3,671be0b5 -->
+<!-- docref: begin src=src/lib/markdoc/components/Grid.svelte#@props:7451a1f3,src/lib/markdoc/components/Column.svelte#@props:671be0b5 -->
 A responsive grid for laying content out in shapes other than a single
 top-to-bottom column. `cols` (1–3, default 2) sets the track count on
 larger screens; cells stack to one column on mobile. A cell can span
@@ -207,7 +207,7 @@ tracks with `{% column span=2 %}`.
 
 ### hero
 
-<!-- docref: begin src=src/lib/markdoc/components/Hero.svelte#@props sha=35a1e113 -->
+<!-- docref: begin src=src/lib/markdoc/components/Hero.svelte#@props:35a1e113 -->
 A full-width image header with an optional title overlay. Pulls flush to
 the top when it is the first block. A blog post's `cover:` frontmatter
 renders one automatically.
@@ -219,7 +219,7 @@ renders one automatically.
 
 ### avatar
 
-<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props sha=2d0e6d15 -->
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props:2d0e6d15 -->
 An author card: round image, name, optional bio and link. Directly after
 a `hero`, the image overlaps the hero's bottom edge by half its height.
 
@@ -230,7 +230,7 @@ a `hero`, the image overlaps the hero's bottom edge by half its height.
 
 ### quote
 
-<!-- docref: begin src=src/lib/markdoc/components/Quote.svelte#@props sha=df46ce79 -->
+<!-- docref: begin src=src/lib/markdoc/components/Quote.svelte#@props:df46ce79 -->
 A pull-quote with an optional attribution (linked when `cite` is set).
 
 ```markdown
@@ -240,7 +240,7 @@ A pull-quote with an optional attribution (linked when `cite` is set).
 
 ### gallery
 
-<!-- docref: begin src=src/lib/markdoc/components/Gallery.svelte#@props sha=26850e43 -->
+<!-- docref: begin src=src/lib/markdoc/components/Gallery.svelte#@props:26850e43 -->
 A responsive image grid; each image enlarges in the lightbox.
 
 ```markdown
@@ -253,7 +253,7 @@ A responsive image grid; each image enlarges in the lightbox.
 
 ## Enhanced Markdown
 
-<!-- docref: begin src=src/lib/markdoc/nodes.svelte sha=52c58f22 -->
+<!-- docref: begin src=src/lib/markdoc/nodes.svelte:52c58f22 -->
 These need no special syntax. Plain Markdown gets the behavior
 automatically:
 
