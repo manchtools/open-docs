@@ -122,7 +122,7 @@ describe('applyFootnotes', () => {
 		expect(out).toContain('{% footnoteref n=2 id="b" /%}');
 		expect(out).not.toMatch(/^\[\^a\]:/m);
 		expect(out).toContain('{% footnotes %}');
-		expect(out).toContain('{% footnote id="a" n=1 %}First note.{% /footnote %}');
+		expect(out).toContain('{% footnote id="a" n=1 %}\nFirst note.\n{% /footnote %}');
 		expect(out).toContain('Second *note*.');
 	});
 

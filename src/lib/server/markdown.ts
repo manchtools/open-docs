@@ -222,10 +222,18 @@ export function applyFootnotes(content: string): string {
 	});
 	if (order.length === 0) return content;
 
+	// Block form (open/body/close on separate lines) is required: a
+	// single-line tag is an INLINE tag to Markdoc and would be wrapped in
+	// a paragraph — putting the <li> inside a <p>, which browsers repair
+	// and hydration then trips over.
 	const section = [
 		'',
 		'{% footnotes %}',
-		...order.map((id) => `{% footnote id="${id}" n=${order.indexOf(id) + 1} %}${defs.get(id)}{% /footnote %}`),
+		...order.flatMap((id) => [
+			`{% footnote id="${id}" n=${order.indexOf(id) + 1} %}`,
+			defs.get(id) ?? '',
+			'{% /footnote %}'
+		]),
 		'{% /footnotes %}',
 		''
 	];
