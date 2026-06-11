@@ -330,3 +330,39 @@ are the main lever. Reach for `{% boost %}` only as a last resort.
 - Don't put real content in a root `index.md` expecting it at `/`.
 - Don't hardcode the base path in links.
 - Don't invent tags or attributes; stick to the list above.
+
+## Keeping docs anchored to code (docref)
+
+Parts of this site's docs are pinned to the code with
+[docref](https://github.com/manchtools/open-docref): every Markdoc component's
+prop table is a claim against that component's `@props` region, and a few
+behavioural notes are claims against `src/lib/**`. If you change anchored code —
+a component's props, `content-store`, `i18n`, `nav`, the markdoc/server
+internals — keep the docs honest in the same change. Run the docref tool (a
+released `docref`, or the sibling build at
+`../open-docref/packages/cli/dist/docref.js`):
+
+1. `docref affected --since <merge-base> --json` — the docs your change endangers.
+2. For each affected doc:
+   - **snippets** — `docref refresh <doc>` (mechanical, always safe).
+   - **claims** — read the prose; if your change made it untrue, fix it, then
+     `docref approve <doc>`. Never approve without reading.
+3. `docref check` must be green.
+
+<!-- docref: begin src=open-docref:packages/core/src/ops.ts#exitCode:926bfd35 -->
+`docref check` exits `1` when a reference is stale and `2` when one is broken,
+so leaving drift unaddressed turns the gate red.
+<!-- docref: end -->
+
+### Anchors
+
+A reference names a symbol directly (`file.ts#name`) or a marked region.
+Component props and a few code spans carry `docref: begin <name>` / `end`
+markers, pointed at with `file#@name`.
+
+<!-- docref: begin src=open-docref:packages/core/src/ops.ts#findUnusedAnchors:9e39e6cb,open-docref:packages/core/src/ops.ts#exitCode:926bfd35 -->
+A marker that no doc references is reported as an **unused anchor** and fails
+`docref check` (unless `[anchors] allow-unused = true`): reference it from a
+doc, or delete the marker pair. `docref anchors` lists every marker and its
+references.
+<!-- docref: end -->

@@ -1,2 +1,7 @@
 [scan]
-include = ["docs/**/*.md", "src/content/**/*.md"]
+include = ["docs/**/*.md", "src/content/**/*.md", "AGENTS.md"]
+
+# The docref workflow notes in AGENTS.md are claims against the open-docref
+# CLI's own code, pinned cross-repo so they cannot drift when the tool changes.
+[repos.open-docref]
+url = "https://github.com/manchtools/open-docref"
