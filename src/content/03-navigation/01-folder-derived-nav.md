@@ -54,10 +54,12 @@ Folders can nest, and so does the sidebar, up to three levels deep
         - events.md
 {% /filetree %}
 
+<!-- docref: begin src=src/lib/server/content-store.ts#MAX_SECTION_DEPTH:ed5a3edd -->
 Levels 2 and 3 render as collapsible sub-sections; the branch
 containing the page you're on opens automatically. Anything nested
 deeper than three levels flattens into the third-level section. The
 page keeps its full URL, and the sidebar stops indenting.
+<!-- docref: end -->
 
 {% callout type="info" title="You're looking at level 1" %}
 Every group in this sidebar is a top-level folder. Add a subfolder and
@@ -66,9 +68,11 @@ it becomes a collapsible sub-section beneath its parent.
 
 ## Titles
 
+<!-- docref: begin src=src/lib/slug.ts#titleFromSegment:d11d1ecd -->
 By default a title is derived from the filename: `quick-start.md`
 becomes "Quick start". Override it per page with frontmatter. See
 [Ordering & titles](/navigation/ordering-and-titles).
+<!-- docref: end -->
 
 ## The home page
 

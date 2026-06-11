@@ -29,6 +29,7 @@ include that sub-path in `PUBLIC_SITE_URL`.
 
 ## Per-page metadata
 
+<!-- docref: begin src=src/lib/components/seo.svelte:5453cc33,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 Each page emits its own `<title>`, `<meta name="description">`, canonical
 link, and Open Graph / Twitter card tags. The values come from the page's
 frontmatter:
@@ -46,6 +47,7 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 - **Description** is the frontmatter `description`. If you omit it,
   open-docs falls back to the page's first paragraph, so every page has a
   usable description even without one written by hand.
+<!-- docref: end -->
 
 `brandName`, the site title, and the default description come from the
 [configuration](/customizing/configuration) environment variables.
@@ -60,20 +62,26 @@ section's Atom feed is advertised on its pages via
 
 ## sitemap.xml
 
+<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:f1e7500f -->
 `/sitemap.xml` lists the landing page and every content and legal page. It
 is rebuilt from the same folder tree the navigation uses, so adding a
 Markdown file adds it to the sitemap with no extra step.
+<!-- docref: end -->
 
 ## robots.txt
 
+<!-- docref: begin src=src/routes/robots.txt/+server.ts:dc592638 -->
 `/robots.txt` allows all crawlers and points them at the sitemap (when
 `PUBLIC_SITE_URL` is set). Replace it by dropping your own `robots.txt`
 into the site's static assets.
+<!-- docref: end -->
 
 ## llms.txt
 
+<!-- docref: begin src=src/routes/llms.txt/+server.ts:a1589926 -->
 `/llms.txt` is an [llms.txt](https://llmstxt.org) index for AI assistants
 and crawlers: the site title, a one-line summary, then every page grouped
 by section with its description and link. It gives a model the whole map of
 your docs in one small, link-first file. Like the sitemap, it is generated
 from your content, so it never drifts out of date.
+<!-- docref: end -->

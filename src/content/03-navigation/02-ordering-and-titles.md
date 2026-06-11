@@ -10,8 +10,10 @@ derived from the content itself. No external nav file is involved.
 
 ## Number prefixes
 
+<!-- docref: begin src=src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
 Prefix a file or folder with `NN-` (also `NN_` or `NN.`). The number
 sets sort position and is **stripped** from the URL and the title.
+<!-- docref: end -->
 
 ```
 content/
@@ -32,8 +34,10 @@ Sections marked `blog: true` are the exception: their posts sort by
 
 ## Frontmatter
 
+<!-- docref: begin src=src/lib/server/content-store.ts#orderOf:1c460e59,src/lib/server/content-store.ts#metaTitle:0ac7aeab -->
 For finer control, set keys in a page's frontmatter. Frontmatter wins
 over the filename.
+<!-- docref: end -->
 
 ```markdown
 ---

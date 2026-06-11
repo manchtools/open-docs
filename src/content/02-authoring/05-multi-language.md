@@ -5,10 +5,12 @@ description: Translate pages by adding a language suffix to the filename. The de
 
 # Multi-language
 
+<!-- docref: begin src=src/lib/i18n.ts#pickLanguages:cee45a25 -->
 Translate a page by adding a language suffix to its filename. The German
 version of `01-introduction.md` is `01-introduction-de.md`. That is the
 whole setup — the languages are discovered from the suffixes when the content is parsed,
 so there is no language config file to maintain.
+<!-- docref: end -->
 
 This page itself has a German version
 ([Inhaltsstruktur](/de/getting-started/content-layout) is one too), so the
@@ -19,10 +21,12 @@ language switcher in the top bar is live on this site.
 The **default language stays unprefixed** and every other language gets a
 `/<lang>` prefix:
 
+<!-- docref: begin src=src/lib/i18n.ts#slugLang:ebe3829f,src/lib/i18n.ts#hrefFor:bcfbc809 -->
 | File | URL |
 |---|---|
 | `getting-started/intro.md` | `/getting-started/intro` |
 | `getting-started/intro-de.md` | `/de/getting-started/intro` |
+<!-- docref: end -->
 
 So existing links keep working, and a single-language site has no prefixes
 at all. The site stays single-language (and unprefixed) until the first
@@ -48,8 +52,10 @@ as many pages as you like and fill in the rest over time.
 
 ## What you get
 
+<!-- docref: begin src=src/lib/i18n.ts#switchTo:8863925a -->
 - A **language switcher** in the top bar (shown only when more than one
   language exists). It keeps you on the same page when you switch.
+<!-- docref: end -->
 - A **localized sidebar and prev/next** — translated titles where a
   translation exists, default titles otherwise.
 - **Localized interface chrome.** The labels open-docs ships — the "On
@@ -72,10 +78,12 @@ content/
     02-install.md       → /getting-started/install     (en only; /de falls back)
 ```
 
+<!-- docref: begin src=src/lib/i18n.ts#langOfPath:9d401249,src/lib/i18n.ts#ISO_639_1:80e98caa -->
 The language suffix sits after any `NN-` order prefix and before the
 extension. Use [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 codes (`de`, `fr`, `ja`, …); a two-letter ending that isn't a real code
 (like `setup-ci.md`) is treated as an ordinary filename, not a language.
+<!-- docref: end -->
 
 {% callout type="info" title="What stays in the default language" %}
 Almost everything localizes: page content, navigation, and the interface
