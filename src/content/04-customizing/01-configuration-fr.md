@@ -20,7 +20,6 @@ modifier le code source.
 | `PUBLIC_SITE_TITLE` | `open-docs` | Titre de l'onglet du navigateur et `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _texte générique_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(vide)_ | Si définie, affiche un lien GitHub dans la navigation et le pied de page. |
-| `PUBLIC_THEME_COLOR` | `#6366F1` | `<meta name="theme-color">`. |
 
 ```sh
 docker run --rm -p 3000:3000 \

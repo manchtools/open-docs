@@ -11,6 +11,7 @@ this requires editing source.
 
 ## Site chrome
 
+<!-- docref: begin src=src/lib/server/site.ts#siteConfig:c0130420 -->
 | Variable | Default | Effect |
 |---|---|---|
 | `PUBLIC_BRAND_NAME` | `open-docs` | Brand text in the top bar. |
@@ -19,7 +20,7 @@ this requires editing source.
 | `PUBLIC_SITE_TITLE` | `open-docs` | Browser tab title and `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _generic blurb_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(empty)_ | If set, shows a GitHub link in the nav and footer. |
-| `PUBLIC_THEME_COLOR` | `#6366F1` | `<meta name="theme-color">`. |
+<!-- docref: end -->
 
 ```sh
 docker run --rm -p 3000:3000 \

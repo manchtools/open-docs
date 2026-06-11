@@ -19,7 +19,6 @@ recompilación. Defínelas en el comando `docker run`, en un archivo
 | `PUBLIC_SITE_TITLE` | `open-docs` | Título de la pestaña del navegador y `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _texto genérico_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(vacío)_ | Si se define, muestra un enlace a GitHub en la navegación y el pie. |
-| `PUBLIC_THEME_COLOR` | `#6366F1` | `<meta name="theme-color">`. |
 
 ```sh
 docker run --rm -p 3000:3000 \

@@ -19,7 +19,6 @@ oder in Ihrer Shell. Nichts davon erfordert das Bearbeiten des Quellcodes.
 | `PUBLIC_SITE_TITLE` | `open-docs` | Titel des Browser-Tabs und `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _generischer Text_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(leer)_ | Wenn gesetzt, zeigt einen GitHub-Link in Navigation und Footer. |
-| `PUBLIC_THEME_COLOR` | `#6366F1` | `<meta name="theme-color">`. |
 
 ```sh
 docker run --rm -p 3000:3000 \
