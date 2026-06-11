@@ -69,6 +69,7 @@
 				baseUrl: base + '/',
 				// Ranking tuned for docs. All are Pagefind's BM25-style knobs;
 				// tweak to taste. https://pagefind.app/docs/ranking/
+				// docref: begin ranking
 				ranking: {
 					// Favour pages that contain the exact search terms over
 					// fuzzy/compound matches — docs searches are usually precise.
@@ -80,6 +81,7 @@
 					termFrequency: 1.0,
 					termSaturation: 1.4
 				}
+				// docref: end ranking
 			});
 			mod = m;
 		} catch (err) {

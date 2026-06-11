@@ -4,9 +4,11 @@ title: Theming
 
 # Theming
 
+<!-- docref: begin src=src/routes/theme.css/+server.ts#GET:5578a8e6 -->
 Put a **`theme.css`** in your content root and open-docs loads it after
 its own stylesheet, so your rules always win. You do not need to fork
 the project or rebuild the image.
+<!-- docref: end -->
 
 {% filetree %}
 - content/
@@ -39,14 +41,18 @@ both light and dark mode.
 ```
 {% /code %}
 
+<!-- docref: begin src=src/app.css#@design-tokens:e02aec08 -->
 Common tokens: `--primary`, `--background`, `--foreground`,
 `--sidebar`, `--sidebar-accent`, `--muted`, `--border`, `--radius`,
 and `--font-sans`. Colors use `oklch()` to match the stock theme, but
 any valid CSS color works.
+<!-- docref: end -->
 
+<!-- docref: begin src=src/lib/components/theme-color.svelte:5dd34a8d -->
 The mobile browser chrome (the `<meta name="theme-color">` tint) tracks
 `--primary`, so it matches your accent in both modes. There is no
 separate colour to set.
+<!-- docref: end -->
 
 ### Component classes
 
@@ -62,9 +68,11 @@ This file loads last, so it beats the defaults at equal specificity.
 
 ## Dark mode
 
+<!-- docref: begin src=src/lib/components/theme-toggle.svelte:c9b875a9 -->
 Light/dark is driven by a `.dark` class toggled on `<html>` by the
 theme switch in the top bar. Put dark overrides under a `.dark { … }`
 selector, as above. There is nothing else to wire up.
+<!-- docref: end -->
 
 {% callout type="info" title="Start from the example" %}
 The repository ships a commented `theme.example.css`. Copy it to

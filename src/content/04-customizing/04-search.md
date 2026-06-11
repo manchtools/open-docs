@@ -24,6 +24,7 @@ out so it does not pollute results:
 
 ## How results are ranked
 
+<!-- docref: begin src=src/lib/components/search.svelte#@ranking:a5413ce0,src/lib/markdoc/components/Heading.svelte:43feb92a -->
 open-docs tunes Pagefind for documentation by default; there is
 nothing to configure:
 
@@ -38,13 +39,16 @@ nothing to configure:
 
 If you fork open-docs, these knobs live in
 `src/lib/components/search.svelte`.
+<!-- docref: end -->
 
 ## Pushing a passage higher
 
+<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props:b07730c2 -->
 When the heading weights aren't enough, for example a key definition
 sitting in the middle of a long page, wrap it in a `{% boost %}` block to
 weight it more heavily in the index. It renders unchanged and only
 affects search.
+<!-- docref: end -->
 
 ```markdown
 {% boost weight=8 %}

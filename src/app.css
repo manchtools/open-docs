@@ -32,6 +32,7 @@
    lands *before* this one, which would otherwise flip the cascade and
    let our defaults clobber the override.) */
 @layer base {
+/* docref: begin design-tokens */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -66,6 +67,7 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
 }
+/* docref: end design-tokens */
 
 .dark {
   --background: oklch(0.145 0 0);

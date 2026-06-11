@@ -31,6 +31,7 @@ This produces:
 
 ## The rules
 
+<!-- docref: begin src=src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
 - **Files become pages.** `reference/api.md` →  `/reference/api`.
 - **First-level folders become sidebar groups.** Files inside them
   become that group's items.
@@ -42,6 +43,7 @@ This produces:
 - **Leading number prefixes** like `01-` set order and are stripped
   from the URL and title. See
   [Ordering & titles](/navigation/ordering-and-titles).
+<!-- docref: end -->
 
 {% callout type="info" title="The landing page" %}
 The site's home page (`/`) is a generated hero that lists your sections
