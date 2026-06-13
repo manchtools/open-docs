@@ -113,6 +113,27 @@ describe('stripHtmlComments', () => {
 		const src = 'plain text\n';
 		expect(stripHtmlComments(src)).toBe(src);
 	});
+
+	it('drops a comment-only line entirely, even with surrounding whitespace', () => {
+		const out = stripHtmlComments('keep\n   <!-- gone -->   \nalso kept\n');
+		expect(out).not.toContain('gone');
+		expect(out.split('\n')).toEqual(['keep', 'also kept', '']);
+	});
+
+	it('keeps the surviving text when a comment is only part of a line', () => {
+		expect(stripHtmlComments('before <!-- c --> after\n')).toBe('before  after\n');
+	});
+
+	it('drops lines fully inside a multi-line comment but keeps partial ones', () => {
+		expect(stripHtmlComments('head <!-- open\nfully inside\nclose --> tail\n')).toBe(
+			'head \n tail\n'
+		);
+	});
+
+	it('preserves genuine blank lines in prose', () => {
+		const src = 'a\n\nb\n';
+		expect(stripHtmlComments(src)).toBe(src);
+	});
 });
 
 describe('applyFootnotes', () => {

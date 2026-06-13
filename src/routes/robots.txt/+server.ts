@@ -7,6 +7,6 @@ export function GET() {
 	const lines = ['User-agent: *', 'Allow: /'];
 	if (siteUrl) lines.push('', `Sitemap: ${siteUrl}/sitemap.xml`);
 	return new Response(lines.join('\n') + '\n', {
-		headers: { 'content-type': 'text/plain; charset=utf-8' }
+		headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-cache' }
 	});
 }

@@ -15,6 +15,8 @@
 
 import type { ContentStore } from './content-store';
 import { renderFeedHtml } from './feed-render';
+import { escapeXmlAttr } from './escape';
+import { joinAbsUrl } from './url';
 
 export type FeedOptions = {
 	store: ContentStore;
@@ -30,15 +32,11 @@ export type FeedOptions = {
 	basePath: string;
 };
 
-// XML text escaping for element text (title, summary, author, etc.). The
+// Element text and attribute values share one escaper (escapeXmlAttr also
+// neutralises `"`, harmless in text and required in attributes). The
 // feed-profile body is NOT escaped this way — it goes inside a CDATA section
 // (see cdata) so its HTML is delivered verbatim to the importer.
-const escapeXml = (v: string): string =>
-	v
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/"/g, '&quot;');
+const escapeXml = escapeXmlAttr;
 
 // Wrap HTML in a CDATA section, splitting any literal `]]>` so it can't close
 // the section early (the one sequence CDATA can't contain).
@@ -51,7 +49,7 @@ export function buildAtomFeed(opts: FeedOptions): string | null {
 	// Structural URLs (feed/entry id, link, self): origin + base + path.
 	// `siteUrl` is '' when PUBLIC_SITE_URL is unset, leaving a base-correct
 	// relative URL — the documented fallback.
-	const abs = (path: string): string => `${siteUrl}${basePath}${path}`;
+	const abs = (path: string): string => joinAbsUrl(siteUrl, basePath, path);
 	const sectionHref = store.localizedHref(lang, section);
 	const sectionTitle = store.pageMetaFor(lang, section).title || section;
 	const posts = store.postsFor(lang, section);

@@ -118,15 +118,15 @@ export function stripHtmlComments(content: string): string {
 			continue;
 		}
 
+		// Remove every comment span that opens and/or closes on this line,
+		// accumulating only the text OUTSIDE comments into `kept`.
+		const hadOpenComment = inComment;
 		let rest = line;
 		let kept = '';
 		for (;;) {
 			if (inComment) {
 				const end = rest.indexOf('-->');
-				if (end === -1) {
-					rest = '';
-					break;
-				}
+				if (end === -1) break; // comment runs past this line; drop the rest
 				rest = rest.slice(end + 3);
 				inComment = false;
 				changed = true;
@@ -141,11 +141,13 @@ export function stripHtmlComments(content: string): string {
 			inComment = true;
 			changed = true;
 		}
-		// Drop lines that were nothing but comment; keep partial lines.
-		if (kept !== '' || !changed || line.trim() === '' || kept.trim() !== '') {
-			if (!(kept === '' && line.trim().startsWith('<!--'))) out.push(kept === '' ? line : kept);
-			else if (kept !== '') out.push(kept);
-		}
+
+		// A line with no comment at all is kept verbatim (preserves blank
+		// lines and exact spacing). Otherwise: keep the line only if real text
+		// survived the strip — a line that was nothing but a comment (possibly
+		// with surrounding whitespace) is dropped, leaving no blank-line litter.
+		if (kept === line && !hadOpenComment) out.push(line);
+		else if (kept.trim() !== '') out.push(kept);
 	}
 
 	return changed ? out.join('\n') : content;

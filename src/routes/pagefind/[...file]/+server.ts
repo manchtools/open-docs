@@ -1,7 +1,8 @@
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream } from 'node:fs';
 import { Readable } from 'node:stream';
-import { join, resolve, sep } from 'node:path';
+import { resolve } from 'node:path';
 import { error } from '@sveltejs/kit';
+import { resolveFileWithin } from '$lib/server/safe-path';
 
 // Serves the Pagefind index from disk at request time. The index is
 // written a few seconds AFTER the server starts (scripts/index-search.ts
@@ -19,11 +20,9 @@ const MIME: Record<string, string> = {
 };
 
 export function GET({ params }: { params: { file: string } }) {
-	const target = resolve(join(ROOT, params.file));
-	// stay inside the index dir — no traversal
-	if (!target.startsWith(ROOT + sep) || !existsSync(target) || !statSync(target).isFile()) {
-		throw error(404, 'not indexed yet');
-	}
+	// Traversal- and symlink-guarded resolution: stay inside the index dir.
+	const target = resolveFileWithin(ROOT, params.file);
+	if (!target) throw error(404, 'not indexed yet');
 	const ext = target.slice(target.lastIndexOf('.'));
 	return new Response(Readable.toWeb(createReadStream(target)) as ReadableStream, {
 		headers: {

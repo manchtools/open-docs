@@ -18,6 +18,7 @@ import { slugLang, pickLanguages, hrefFor } from '../i18n';
 import type { NavItem, NavNode } from '../nav-core';
 import { applyHeadingAnchors, applyFootnotes, stripHtmlComments } from './markdown';
 import { buildSchemaFromRegistry, type RegistrySchema } from './markdoc-schema';
+import { looksLikeInlineSvg, validateSvgIcon } from './svg-icon';
 import { applyTokens, buildTokenMap } from '../../../scripts/tokens.js';
 
 export type PostMeta = {
@@ -394,6 +395,13 @@ export function createContentStore(opts: Options): ContentStore {
 		const shortPath = virtualPath.replace('/src/content/', '');
 		const { lang, slug } = slugLang(virtualPath, defaultLang);
 		const fm = frontmatter(original);
+		// An inline-SVG `icon:` is rendered verbatim ({@html}) on hero/section
+		// cards, so it's a stored-XSS sink. Validate it fail-closed against the
+		// safe-presentation allow-list (emoji / image-path icons are untouched).
+		if (looksLikeInlineSvg(fm.icon)) {
+			const reason = validateSvgIcon(fm.icon);
+			if (reason) errors.push({ file: shortPath, message: `unsafe inline-SVG icon: ${reason}` });
+		}
 		// Drafts: a post with `draft: true` is invisible in production —
 		// nav, content, paths, search, feeds — and visible in dev.
 		if (
@@ -440,7 +448,20 @@ export function createContentStore(opts: Options): ContentStore {
 	const byLang = new Map<string, Map<string, FileData>>();
 	for (const f of files) {
 		if (!byLang.has(f.lang)) byLang.set(f.lang, new Map());
-		byLang.get(f.lang)!.set(f.slug, f);
+		const langMap = byLang.get(f.lang)!;
+		const existing = langMap.get(f.slug);
+		if (existing) {
+			// Two source files collapse to the same slug in one language (e.g.
+			// `index.md` and `introduction.md` both → '', or `foo.md` and
+			// `01-foo.md` both → 'foo'). Silently overwriting loses a page with
+			// no signal — fail the boot, like every other content error.
+			errors.push({
+				file: f.shortPath,
+				message: `duplicate slug "${f.slug || '(landing)'}" — also produced by ${existing.shortPath}`
+			});
+			continue;
+		}
+		langMap.set(f.slug, f);
 	}
 	const defaultFiles = byLang.get(defaultLang) ?? new Map<string, FileData>();
 
@@ -637,7 +658,10 @@ export function createContentStore(opts: Options): ContentStore {
 			}
 
 			if (f.slug === '') {
-				root.children.set('pg:__landing__', {
+				// Same key shape as section index pages ('pg:index'); the root is
+				// built via toNodes(top), not toNavNode, so this stays consistent
+				// without changing nav output.
+				root.children.set('pg:index', {
 					title: fm.title ?? 'Introduction',
 					href: '/',
 					label,
@@ -861,6 +885,7 @@ export function createContentStore(opts: Options): ContentStore {
 		}
 		const linkRender = schema.nodes.link?.render ?? 'Link';
 		const screenshotRender = schema.tags.screenshot?.render ?? 'Screenshot';
+		const cardRender = schema.tags.card?.render ?? 'Card';
 		const staticDirs = opts.staticDirs ?? ['static', 'build/client'];
 		// Post covers must exist, like screenshot files.
 		for (const [slug, m] of Object.entries(postMeta)) {
@@ -882,6 +907,14 @@ export function createContentStore(opts: Options): ContentStore {
 					attributes?: Record<string, unknown>;
 					children?: unknown;
 				};
+					// A {% card icon="<svg…>" %} is rendered verbatim ({@html}) —
+					// validate any inline-SVG icon fail-closed, like frontmatter icons.
+					if (tag.name === cardRender && looksLikeInlineSvg(tag.attributes?.icon as string)) {
+						const reason = validateSvgIcon(String(tag.attributes!.icon));
+						if (reason) {
+							errors.push({ file: f.shortPath, message: `unsafe inline-SVG card icon: ${reason}` });
+						}
+					}
 					if (tag.name === screenshotRender) {
 					// A screenshot pointing at a missing file fails validation.
 					// Block-style srcs are bare names under static/screenshots/;

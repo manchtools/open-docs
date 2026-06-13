@@ -302,6 +302,51 @@ describe('cover derived from a body hero', () => {
 	});
 });
 
+describe('duplicate slug (fail closed)', () => {
+	// Two source files that collapse to the same slug in one language used to
+	// silently overwrite — a page vanished with no signal. The boot must fail.
+	it('rejects two files that produce the same slug', () => {
+		const dup = createContentStore({
+			contentDir: 'src/lib/server/__fixtures__/content-dupslug',
+			defaultLang: 'en'
+		});
+		const messages = dup.errors.map((e) => e.message).join('\n');
+		expect(messages).toMatch(/duplicate slug "intro"/);
+	});
+});
+
+describe('inline-SVG icon validation (fail closed)', () => {
+	// Section/card icons are rendered verbatim via {@html}; an author SVG with
+	// a script/handler vector must fail the boot, not reach a visitor.
+	const bad = createContentStore({
+		contentDir: 'src/lib/server/__fixtures__/content-badicon',
+		defaultLang: 'en'
+	});
+
+	it('rejects an unsafe inline-SVG icon in frontmatter', () => {
+		expect(
+			bad.errors.some(
+				(e) => e.file.endsWith('index.md') && /icon/i.test(e.message) && /onload/i.test(e.message)
+			)
+		).toBe(true);
+	});
+
+	it('rejects an unsafe inline-SVG icon in a {% card %} attribute', () => {
+		expect(
+			bad.errors.some((e) => e.file.endsWith('card.md') && /icon/i.test(e.message))
+		).toBe(true);
+	});
+
+	it('accepts a safe presentational inline-SVG icon (boots clean, icon survives)', () => {
+		const good = createContentStore({
+			contentDir: 'src/lib/server/__fixtures__/content-goodicon',
+			defaultLang: 'en'
+		});
+		expect(good.errors).toEqual([]);
+		expect(good.navByLang('en').find((g) => g.title === 'Guide')?.icon).toContain('<svg');
+	});
+});
+
 describe('plain-markdown compatibility (0.6 M1)', () => {
 	const plain = createContentStore({
 		contentDir: 'src/lib/server/__fixtures__/content-plain',

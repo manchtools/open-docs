@@ -1,9 +1,10 @@
 import type { Handle } from '@sveltejs/kit';
 import { base } from '$app/paths';
 import { env } from '$env/dynamic/private';
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync } from 'node:fs';
 import { Readable } from 'node:stream';
-import { join, resolve as resolvePath, sep } from 'node:path';
+import { resolve as resolvePath } from 'node:path';
+import { resolveFileWithin } from '$lib/server/safe-path';
 import { getStore } from '$lib/server/store-instance';
 import { splitRequest } from '$lib/i18n';
 import { deriveFrameSrc } from '../scripts/derive-frame-src.js';
@@ -88,15 +89,11 @@ const MIME: Record<string, string> = {
 function baseStatic(pathname: string): Response | null {
 	if (!base || !pathname.startsWith(base + '/')) return null;
 	const rel = decodeURIComponent(pathname.slice(base.length + 1));
-	// Page routes have no file extension — skip the stat for them.
-	if (!rel.includes('.') || rel.includes('\0')) return null;
-	const target = resolvePath(join(CLIENT_ROOT, rel));
-	if (!target.startsWith(CLIENT_ROOT + sep)) return null;
-	try {
-		if (!statSync(target).isFile()) return null;
-	} catch {
-		return null;
-	}
+	// Page routes have no file extension — skip the lookup for them.
+	if (!rel.includes('.')) return null;
+	// Traversal- and symlink-guarded resolution (see resolveFileWithin).
+	const target = resolveFileWithin(CLIENT_ROOT, rel);
+	if (!target) return null;
 	const ext = target.slice(target.lastIndexOf('.'));
 	return new Response(Readable.toWeb(createReadStream(target)) as ReadableStream, {
 		headers: { 'content-type': MIME[ext] ?? 'application/octet-stream' }
@@ -121,7 +118,7 @@ function atomFeed(pathname: string): Response | null {
 	);
 	if (body === null) return null;
 	return new Response(body, {
-		headers: { 'content-type': 'application/atom+xml; charset=utf-8' }
+		headers: { 'content-type': 'application/atom+xml; charset=utf-8', 'cache-control': 'no-cache' }
 	});
 }
 
@@ -132,19 +129,15 @@ function atomFeed(pathname: string): Response | null {
 const ASSET_EXT = /\.(png|jpe?g|gif|webp|avif|svg|ico|mp4|webm|pdf|txt)$/i;
 function contentAsset(pathname: string): Response | null {
 	const rel = decodeURIComponent(pathname.slice(base.length).replace(/^\//, ''));
-	if (!ASSET_EXT.test(rel) || rel.includes('\0')) return null;
+	if (!ASSET_EXT.test(rel)) return null;
 	const dir =
 		env.OPEN_DOCS_CONTENT && existsSync(env.OPEN_DOCS_CONTENT)
 			? env.OPEN_DOCS_CONTENT
 			: 'src/content';
-	const root = resolvePath(dir);
-	const target = resolvePath(join(root, rel));
-	if (!target.startsWith(root + sep)) return null;
-	try {
-		if (!statSync(target).isFile()) return null;
-	} catch {
-		return null;
-	}
+	// Traversal- AND symlink-guarded: a symlink inside an untrusted content
+	// mount must not be able to read a file outside it (see resolveFileWithin).
+	const target = resolveFileWithin(resolvePath(dir), rel);
+	if (!target) return null;
 	const ext = target.slice(target.lastIndexOf('.'));
 	return new Response(Readable.toWeb(createReadStream(target)) as ReadableStream, {
 		headers: { 'content-type': MIME[ext] ?? 'application/octet-stream' }

@@ -1,5 +1,6 @@
 import { getStore } from '$lib/server/store-instance';
 import { siteConfig } from '$lib/server/site';
+import { mdEscapeText, mdEscapeUrl } from '$lib/server/md-escape';
 import type { NavNode } from '$lib/nav-core';
 
 // llms.txt (https://llmstxt.org): a compact, link-first index of the docs
@@ -22,7 +23,9 @@ export function GET() {
 	const url = (href: string) => `${origin}${href === '/' ? '/' : href}`;
 	const line = (p: { title: string; href: string }) => {
 		const d = store.pageMetaFor(store.defaultLang, p.href.replace(/^\//, '')).description;
-		return `- [${p.title}](${url(p.href)})${d ? `: ${d}` : ''}`;
+		// Escape so a title/description bracket or a parenthesised slug can't
+		// break out of the `[label](url)` link syntax.
+		return `- [${mdEscapeText(p.title)}](${mdEscapeUrl(url(p.href))})${d ? `: ${mdEscapeText(d)}` : ''}`;
 	};
 
 	let out = `# ${site.siteTitle}\n\n> ${site.siteDescription}\n`;
@@ -37,5 +40,7 @@ export function GET() {
 	const meta = store.metaPagesFor(store.defaultLang);
 	if (meta.length) out += `\n## Other\n\n${meta.map(line).join('\n')}\n`;
 
-	return new Response(out, { headers: { 'content-type': 'text/plain; charset=utf-8' } });
+	return new Response(out, {
+		headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-cache' }
+	});
 }

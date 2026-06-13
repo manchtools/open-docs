@@ -25,6 +25,8 @@
 // relative (the boot path warns it is not syndication-ready).
 
 import type { RenderableTreeNode } from '@markdoc/markdoc';
+import { escapeXmlText, escapeXmlAttr } from './escape';
+import { joinAbsUrl } from './url';
 
 export type FeedRenderContext = {
 	/** Absolute origin from PUBLIC_SITE_URL, no trailing slash, '' if unset. */
@@ -52,13 +54,12 @@ const UNWRAP = new Set([
 	'FileTree', 'Boost', 'Columns', 'Column', 'Grid'
 ]);
 
-const esc = (s: string): string =>
-	s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const escAttr = (s: string): string => esc(s).replace(/"/g, '&quot;');
+const esc = escapeXmlText;
+const escAttr = escapeXmlAttr;
 
 export function renderFeedHtml(tree: RenderableTreeNode, ctx: FeedRenderContext): string {
 	const scheme = (u: string) => /^[a-z][a-z0-9+.-]*:/i.test(u) || u.startsWith('//');
-	const root = (path: string) => `${ctx.siteUrl}${ctx.basePath}${path}`;
+	const root = (path: string) => joinAbsUrl(ctx.siteUrl, ctx.basePath, path);
 
 	// A site-root path becomes `${origin}${base}${path}`; schemes, anchors and
 	// protocol-relative URLs pass through. Relative-but-not-rooted refs are
