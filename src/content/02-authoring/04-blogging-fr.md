@@ -141,7 +141,7 @@ s'agrandissent dans la lightbox comme toute image.
 
 ## Les flux
 
-<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:80eea571 -->
 
 Chaque section blog sert un flux Atom à `/<section>/feed.xml`
 (par langue aussi : `/de/blog/feed.xml`). Chaque entrée porte le

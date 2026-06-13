@@ -142,7 +142,7 @@ amplían en el diálogo como cualquier imagen.
 
 ## Feeds
 
-<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:80eea571 -->
 
 Cada sección de blog sirve un feed Atom en `/<section>/feed.xml`
 (también por idioma: `/de/blog/feed.xml`). Cada entrada lleva el

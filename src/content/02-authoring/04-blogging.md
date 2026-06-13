@@ -127,7 +127,7 @@ like every image.
 
 ## Feeds
 
-<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:80eea571 -->
 Every blog section serves an Atom feed at `/<section>/feed.xml`
 (per language too: `/de/blog/feed.xml`). Each entry carries the
 **full article** in `<content type="html">` next to the short `<summary>`,

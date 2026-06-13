@@ -107,6 +107,12 @@ composant, en variante `flat`.
 
 <!-- docref: end -->
 
+<!-- docref: begin src=src/lib/server/svg-icon.ts#validateSvgIcon:e7c17b17 -->
+Une icône `<svg>` en ligne doit être simple et présentationnelle : `<script>`,
+les gestionnaires `on*`, `<foreignObject>`, `<style>` et les références externes
+font échouer le démarrage.
+<!-- docref: end -->
+
 ### accordions / accordion
 
 <!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props:84cfb144,src/lib/markdoc/components/Accordion.svelte#@props:ed2ce0a8 -->
@@ -164,6 +170,12 @@ Iframe vidéo responsive. Les URL YouTube/Vimeo sont normalisées, et la
 liste d'autorisation CSP des iframes est dérivée automatiquement de vos
 embeds.
 
+<!-- docref: end -->
+
+<!-- docref: begin src=src/lib/embed.js#toEmbedSrc:fe59ca45 -->
+Seules les URL `http(s)` sont intégrées ; le cadre est en bac à sable (sandbox).
+Tout autre schéma (p. ex. `javascript:`) n'est jamais intégré — il s'affiche
+comme un simple lien.
 <!-- docref: end -->
 
 ### code

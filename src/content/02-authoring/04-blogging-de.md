@@ -139,7 +139,7 @@ vergrößern sich in der Lightbox wie jedes Bild.
 
 ## Feeds
 
-<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:80eea571 -->
 
 Jeder Blog-Abschnitt liefert unter `/<section>/feed.xml` einen Atom-Feed
 aus (auch pro Sprache: `/de/blog/feed.xml`). Jeder Eintrag trägt neben

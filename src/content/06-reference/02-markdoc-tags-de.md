@@ -107,6 +107,12 @@ gerendert, in der `flat`-Variante.
 
 <!-- docref: end -->
 
+<!-- docref: begin src=src/lib/server/svg-icon.ts#validateSvgIcon:e7c17b17 -->
+Ein Inline-`<svg>`-Icon muss schlicht und präsentational sein: `<script>`,
+`on*`-Handler, `<foreignObject>`, `<style>` und externe Referenzen lassen den
+Start fehlschlagen.
+<!-- docref: end -->
+
 ### accordions / accordion
 
 <!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props:84cfb144,src/lib/markdoc/components/Accordion.svelte#@props:ed2ce0a8 -->
@@ -163,6 +169,12 @@ Dateien werden automatisch unterschieden).
 Responsives Video-iframe. YouTube-/Vimeo-URLs werden normalisiert, und die
 iframe-Allow-List der CSP wird automatisch aus Ihren Embeds abgeleitet.
 
+<!-- docref: end -->
+
+<!-- docref: begin src=src/lib/embed.js#toEmbedSrc:fe59ca45 -->
+Nur `http(s)`-URLs werden eingebettet; der Frame ist sandboxed. Jedes andere
+Schema (z. B. `javascript:`) wird nie eingebettet — es wird stattdessen als
+einfacher Link dargestellt.
 <!-- docref: end -->
 
 ### code

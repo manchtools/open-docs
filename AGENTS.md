@@ -62,7 +62,7 @@ title: Installing the command-line tool   # full title (sidebar + prev/next + se
 label: Install                             # short sidebar label (alias: sidebar_label)
 order: 2                                    # overrides the NN- prefix
 description: Install the CLI on macOS…     # meta description + llms.txt (else first paragraph)
-icon: "🚀"                                  # section index.md only: hero-card icon (emoji, inline <svg>, or /static path)
+icon: "🚀"                                  # section index.md only: hero-card icon (emoji, /static path, or a plain presentational inline <svg> — scripts/handlers/external refs fail the boot)
 ---
 ```
 
@@ -183,6 +183,11 @@ optional. Each `tab label` must match a name in `labels`.
 ````
 `card`: `title`, optional `href` (internal path or external URL), optional
 `icon` (emoji, inline `<svg>`, or a `/static` path).
+
+<!-- docref: begin src=src/lib/server/svg-icon.ts#validateSvgIcon:e7c17b17 -->
+An inline `<svg>` icon must be a plain presentational icon — `<script>`, `on*`
+handlers, `<foreignObject>`, `<style>`, and external references fail the boot.
+<!-- docref: end -->
 
 ### accordions / accordion — collapsible Q&A
 ````markdown

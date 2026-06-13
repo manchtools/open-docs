@@ -95,6 +95,13 @@ icon: "🚀"                              # an emoji
 ---
 ```
 
+<!-- docref: begin src=src/lib/server/svg-icon.ts#validateSvgIcon:e7c17b17 -->
+An inline `<svg>` must be a plain presentational icon. `<script>`, `on*` event
+handlers, `<foreignObject>`, `<style>`, and external references fail the boot —
+so an icon can never run script. Use a simple shape/path SVG, an emoji, or a
+`/static` image.
+<!-- docref: end -->
+
 The cards on this site's home page are all driven this way: every
 top-level section here sets an emoji icon in its `index.md`.
 

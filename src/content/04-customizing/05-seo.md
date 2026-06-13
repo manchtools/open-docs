@@ -29,7 +29,7 @@ include that sub-path in `PUBLIC_SITE_URL`.
 
 ## Per-page metadata
 
-<!-- docref: begin src=src/lib/components/seo.svelte:5453cc33,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 Each page emits its own `<title>`, `<meta name="description">`, canonical
 link, and Open Graph / Twitter card tags. The values come from the page's
 frontmatter:
@@ -62,7 +62,7 @@ section's Atom feed is advertised on its pages via
 
 ## sitemap.xml
 
-<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:f1e7500f -->
+<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:5c721e4e -->
 `/sitemap.xml` lists the landing page and every content and legal page. It
 is rebuilt from the same folder tree the navigation uses, so adding a
 Markdown file adds it to the sitemap with no extra step.
@@ -70,7 +70,7 @@ Markdown file adds it to the sitemap with no extra step.
 
 ## robots.txt
 
-<!-- docref: begin src=src/routes/robots.txt/+server.ts:dc592638 -->
+<!-- docref: begin src=src/routes/robots.txt/+server.ts:baed8039 -->
 `/robots.txt` allows all crawlers and points them at the sitemap (when
 `PUBLIC_SITE_URL` is set). Replace it by dropping your own `robots.txt`
 into the site's static assets.
@@ -78,7 +78,7 @@ into the site's static assets.
 
 ## llms.txt
 
-<!-- docref: begin src=src/routes/llms.txt/+server.ts:a1589926 -->
+<!-- docref: begin src=src/routes/llms.txt/+server.ts:bb10e479 -->
 `/llms.txt` is an [llms.txt](https://llmstxt.org) index for AI assistants
 and crawlers: the site title, a one-line summary, then every page grouped
 by section with its description and link. It gives a model the whole map of

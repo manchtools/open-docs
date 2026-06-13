@@ -31,7 +31,7 @@ Si los docs viven bajo una subruta (por ejemplo
 
 ## Metadatos por página
 
-<!-- docref: begin src=src/lib/components/seo.svelte:5453cc33,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 
 Cada página emite su propio `<title>`, `<meta name="description">`,
 enlace canónico y etiquetas de tarjeta de Open Graph / Twitter. Los
@@ -68,7 +68,7 @@ así que los lectores de feeds lo descubren automáticamente.
 
 ## sitemap.xml
 
-<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:f1e7500f -->
+<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:5c721e4e -->
 
 `/sitemap.xml` lista la página de inicio y todas las páginas de contenido
 y legales. Se reconstruye a partir del mismo árbol de carpetas que usa la
@@ -79,7 +79,7 @@ ningún paso extra.
 
 ## robots.txt
 
-<!-- docref: begin src=src/routes/robots.txt/+server.ts:dc592638 -->
+<!-- docref: begin src=src/routes/robots.txt/+server.ts:baed8039 -->
 
 `/robots.txt` permite todos los rastreadores y los dirige al sitemap
 (cuando `PUBLIC_SITE_URL` está definido). Reemplázalo dejando tu propio
@@ -89,7 +89,7 @@ ningún paso extra.
 
 ## llms.txt
 
-<!-- docref: begin src=src/routes/llms.txt/+server.ts:a1589926 -->
+<!-- docref: begin src=src/routes/llms.txt/+server.ts:bb10e479 -->
 `/llms.txt` es un índice [llms.txt](https://llmstxt.org) para asistentes
 y rastreadores de IA: el título del sitio, un resumen de una línea y luego
 cada página agrupada por sección con su descripción y enlace. Le da a un

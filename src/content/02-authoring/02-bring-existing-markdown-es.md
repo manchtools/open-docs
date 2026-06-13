@@ -6,7 +6,7 @@ description: Qué funciona cuando apuntas open-docs a Markdown escrito para GitH
 
 # Trae tu Markdown existente
 
-<!-- docref: begin src=src/lib/server/markdown.ts:097d96d1 -->
+<!-- docref: begin src=src/lib/server/markdown.ts:bf320a3a -->
 
 Una carpeta de Markdown escrito para GitHub, VSCode u otro generador se
 renderiza sin reescribir nada. Las convenciones en las que se apoyan
@@ -56,7 +56,7 @@ Hacer algo clicable es decisión del autor: escribe
 `[example](https://example.com)` o `<https://example.com>`.
 {% /callout %}
 
-<!-- docref: begin src=src/lib/server/markdown.ts#stripHtmlComments:41367d9c -->
+<!-- docref: begin src=src/lib/server/markdown.ts#stripHtmlComments:30c9bbe9 -->
 Los encabezados Setext (subrayados con `===` o `---`) no reciben ids de
 ancla; usa encabezados `#`. Los comentarios HTML (`<!-- … -->`) se
 eliminan, de modo que las notas de revisión nunca llegan a los lectores.

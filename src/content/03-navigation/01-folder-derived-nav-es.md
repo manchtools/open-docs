@@ -104,6 +104,13 @@ icon: "🚀"                              # an emoji
 ---
 ```
 
+<!-- docref: begin src=src/lib/server/svg-icon.ts#validateSvgIcon:e7c17b17 -->
+Un `<svg>` en línea debe ser un icono puramente presentacional. `<script>`, los
+manejadores `on*`, `<foreignObject>`, `<style>` y las referencias externas hacen
+fallar el arranque, de modo que un icono nunca puede ejecutar scripts. Usa un
+SVG simple de formas/trazados, un emoji o una imagen en `/static`.
+<!-- docref: end -->
+
 Las tarjetas de la página de inicio de este sitio funcionan todas así:
 cada sección de nivel superior define aquí un icono emoji en su
 `index.md`.

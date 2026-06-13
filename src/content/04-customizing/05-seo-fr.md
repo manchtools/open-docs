@@ -31,7 +31,7 @@ Si la documentation se trouve sous un sous-chemin (par exemple
 
 ## Métadonnées par page
 
-<!-- docref: begin src=src/lib/components/seo.svelte:5453cc33,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 
 Chaque page émet ses propres balises `<title>`, `<meta name="description">`,
 lien canonique et cartes Open Graph / Twitter. Les valeurs proviennent du
@@ -68,7 +68,7 @@ lecteurs de flux le découvrent automatiquement.
 
 ## sitemap.xml
 
-<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:f1e7500f -->
+<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:5c721e4e -->
 
 `/sitemap.xml` répertorie la page d'accueil ainsi que chaque page de contenu et
 page légale. Il est reconstruit à partir de la même arborescence de dossiers que
@@ -79,7 +79,7 @@ l'ajoute au sitemap sans étape supplémentaire.
 
 ## robots.txt
 
-<!-- docref: begin src=src/routes/robots.txt/+server.ts:dc592638 -->
+<!-- docref: begin src=src/routes/robots.txt/+server.ts:baed8039 -->
 
 `/robots.txt` autorise tous les robots et les dirige vers le sitemap (lorsque
 `PUBLIC_SITE_URL` est défini). Remplacez-le en déposant votre propre
@@ -89,7 +89,7 @@ l'ajoute au sitemap sans étape supplémentaire.
 
 ## llms.txt
 
-<!-- docref: begin src=src/routes/llms.txt/+server.ts:a1589926 -->
+<!-- docref: begin src=src/routes/llms.txt/+server.ts:bb10e479 -->
 `/llms.txt` est un index [llms.txt](https://llmstxt.org) destiné aux assistants
 et robots d'IA : le titre du site, un résumé d'une ligne, puis chaque page
 groupée par section avec sa description et son lien. Il donne à un modèle la

@@ -95,6 +95,11 @@ Plain Markdown `![]()` images render through this component too, in the
 | `card` | `icon` | Emoji, inline `<svg>`, or a path under `static/`. |
 <!-- docref: end -->
 
+<!-- docref: begin src=src/lib/server/svg-icon.ts#validateSvgIcon:e7c17b17 -->
+An inline `<svg>` icon must be plain and presentational: `<script>`, `on*`
+handlers, `<foreignObject>`, `<style>`, and external references fail the boot.
+<!-- docref: end -->
+
 ### accordions / accordion
 
 <!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props:84cfb144,src/lib/markdoc/components/Accordion.svelte#@props:ed2ce0a8 -->
@@ -143,6 +148,11 @@ auto-detected).
 
 Responsive video iframe. YouTube/Vimeo URLs are normalised, and the CSP
 iframe allow-list is derived from your embeds automatically.
+<!-- docref: end -->
+
+<!-- docref: begin src=src/lib/embed.js#toEmbedSrc:fe59ca45 -->
+Only `http(s)` URLs are embedded; the frame is sandboxed. Any other scheme
+(e.g. `javascript:`) is never framed — it renders as a plain link instead.
 <!-- docref: end -->
 
 ### code
