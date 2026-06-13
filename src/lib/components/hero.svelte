@@ -47,8 +47,10 @@
 	// A section icon (from its index.md `icon:` frontmatter) can be an
 	// emoji, an inline `<svg>…</svg>`, or a path under static/. Classify it
 	// so the card renders the right element; no icon falls back to the
-	// default book glyph. Inline SVG is author-controlled, so rendering it
-	// raw is fine.
+	// default book glyph. Inline SVG is author-controlled and rendered via
+	// {@html}, so it is validated fail-closed at content ingestion against a
+	// strict safe-presentation allow-list (see server/svg-icon.ts) — only an
+	// already-validated icon ever reaches this render.
 	function iconKind(icon?: string): 'svg' | 'img' | 'emoji' | 'none' {
 		const t = icon?.trim();
 		if (!t) return 'none';

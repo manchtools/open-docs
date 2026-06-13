@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { safeHref } from '$lib/safe-url';
 
 	// Renders markdown links. External links (anything not starting
 	// with /, #, or `mailto:`) get target="_blank" + rel attributes
@@ -30,7 +31,9 @@
 		)
 	);
 
-	const href = $derived(rawHref.startsWith('/') ? base + rawHref : rawHref);
+	// Gate the final href: a `javascript:`/`data:` link from author markdown
+	// is click-to-XSS. undefined → an inert <a> (no href), never a live link.
+	const href = $derived(safeHref(rawHref.startsWith('/') ? base + rawHref : rawHref));
 
 	// Self-contained link styling so a link reads as a link in ANY
 	// container — including inside a `not-prose` block (callout, step,

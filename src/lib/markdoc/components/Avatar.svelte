@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { safeHref } from '$lib/safe-url';
 
 	// {% avatar name="Paul" src="/authors/paul.png" description="…" url="…" /%}
 	//
@@ -32,7 +33,9 @@
 	const resolved = $derived(
 		src ? (src.startsWith('http') ? src : base + (src.startsWith('/') ? src : '/' + src)) : undefined
 	);
-	const link = $derived(url ? (url.startsWith('/') ? base + url : url) : undefined);
+	// Gate the author link: an unsafe scheme yields undefined → the name
+	// renders as plain text, never a clickable javascript: link.
+	const link = $derived(url ? safeHref(url.startsWith('/') ? base + url : url) : undefined);
 </script>
 
 <div class="od-avatar not-prose my-8 flex items-start gap-4">

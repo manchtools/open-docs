@@ -66,6 +66,15 @@
 		siteConfig.siteUrl ? siteConfig.siteUrl + (path === '/' ? '' : path) : undefined
 	);
 
+	// Social-card image (og:image + twitter:image): the page-specific `image`
+	// rooted under the site origin, else the operator's default og.png. Needs
+	// an absolute origin — a relative social image doesn't work off-site.
+	const socialImage = $derived(
+		siteConfig.siteUrl
+			? `${siteConfig.siteUrl}/${image ? image.replace(/^\//, '') : 'og.png'}`
+			: undefined
+	);
+
 	// hreflang alternates: one per language plus x-default, pointing at the
 	// same slug in each. Needs an absolute origin and >1 language. Every
 	// slug exists in every language (translated or default-fallback), so
@@ -95,13 +104,8 @@
 	<!-- Social-card image. Absolute URL (needs siteUrl); points at the
 	     operator's optional static/og.png. Omitted without a site URL —
 	     a relative og:image doesn't work for off-site scrapers. -->
-	{#if siteConfig.siteUrl}
-		<meta
-			property="og:image"
-			content={image
-				? `${siteConfig.siteUrl}/${image.replace(/^\//, '')}`
-				: `${siteConfig.siteUrl}/og.png`}
-		/>
+	{#if socialImage}
+		<meta property="og:image" content={socialImage} />
 	{/if}
 	{#if published}<meta property="article:published_time" content={published} />{/if}
 	{#if authorName}<meta property="article:author" content={authorName} />{/if}
@@ -109,13 +113,8 @@
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content={fullTitle} />
 	<meta name="twitter:description" content={desc} />
-	{#if siteConfig.siteUrl}
-		<meta
-			name="twitter:image"
-			content={image
-				? `${siteConfig.siteUrl}/${image.replace(/^\//, '')}`
-				: `${siteConfig.siteUrl}/og.png`}
-		/>
+	{#if socialImage}
+		<meta name="twitter:image" content={socialImage} />
 	{/if}
 
 	<!-- hreflang alternates (multilingual sites with a configured origin). -->

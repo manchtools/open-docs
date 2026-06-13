@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { safeHref } from '$lib/safe-url';
 	import { Card, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
 
 	// {% card title="..." href="..." icon="..." %} description {% /card %}
@@ -25,7 +26,9 @@
 	// docref: end props
 
 	const isExternal = $derived(!!href && !href.startsWith('/'));
-	const resolved = $derived(href ? (href.startsWith('/') ? base + href : href) : undefined);
+	// Gate the card link: an unsafe scheme yields undefined → the tile renders
+	// without an <a> wrapper rather than as a clickable javascript: link.
+	const resolved = $derived(href ? safeHref(href.startsWith('/') ? base + href : href) : undefined);
 
 	function iconKind(i?: string): 'svg' | 'img' | 'emoji' | 'none' {
 		const t = i?.trim();
