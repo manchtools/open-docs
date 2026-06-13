@@ -31,6 +31,8 @@ Cela produit :
 
 ## Les règles
 
+<!-- docref: begin src=src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 - **Les fichiers deviennent des pages.** `reference/api.md` → `/reference/api`.
 - **Les dossiers de premier niveau deviennent des groupes** dans la barre
   latérale. Les fichiers qu'ils contiennent deviennent les éléments de ce groupe.
@@ -42,6 +44,8 @@ Cela produit :
 - **Les préfixes numériques** comme `01-` définissent l'ordre et sont retirés
   de l'URL et du titre. Voir
   [Ordre et titres](/fr/navigation/ordering-and-titles).
+
+<!-- docref: end -->
 
 {% callout type="info" title="La page d'accueil" %}
 La page d'accueil du site (`/`) est un hero généré qui liste vos sections sous

@@ -63,14 +63,18 @@ export function getStore(): ContentStore {
 function build(dir: string): ContentStore {
 	const store = createContentStore({
 		contentDir: dir,
+		// docref: begin default-lang
 		defaultLang: (env.PUBLIC_DEFAULT_LANG || 'en').trim().toLowerCase(),
+		// docref: end default-lang
 		schema: schemaJson as RegistrySchema,
 		// Screenshot files may live in the repo's static/ (dev), the served
 		// client dir (container, after the entrypoint merge), or the raw
 		// /static mount.
+		// docref: begin static-dir
 		staticDirs: [env.OPEN_DOCS_STATIC, 'static', 'build/client'].filter(
 			(d): d is string => !!d
 		),
+		// docref: end static-dir
 		// Drafts (`draft: true` posts) render in dev, never in production.
 		includeDrafts: dev
 	});

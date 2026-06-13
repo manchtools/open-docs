@@ -20,7 +20,9 @@ set -eu
 
 CONTENT_SRC="${OPEN_DOCS_CONTENT:-/content}"
 STATIC_SRC="${OPEN_DOCS_STATIC:-/static}"
+# docref: begin port
 PORT="${PORT:-3000}"
+# docref: end port
 
 if [ -d "$CONTENT_SRC" ] && [ -n "$(ls -A "$CONTENT_SRC" 2>/dev/null || true)" ]; then
     echo "[open-docs] serving content from $CONTENT_SRC"

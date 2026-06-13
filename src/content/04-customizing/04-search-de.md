@@ -25,6 +25,8 @@ außen vor, damit es die Ergebnisse nicht verwässert:
 
 ## Wie Ergebnisse bewertet werden
 
+<!-- docref: begin src=src/lib/components/search.svelte#@ranking:a5413ce0,src/lib/markdoc/components/Heading.svelte:43feb92a -->
+
 open-docs stimmt Pagefind standardmäßig auf Dokumentation ab; es gibt
 nichts zu konfigurieren:
 
@@ -41,12 +43,18 @@ nichts zu konfigurieren:
 Wenn Sie open-docs forken, sitzen diese Stellschrauben in
 `src/lib/components/search.svelte`.
 
+<!-- docref: end -->
+
 ## Eine Passage nach oben holen
+
+<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props:b07730c2 -->
 
 Wenn die Überschriftsgewichte nicht reichen, etwa bei einer zentralen
 Definition mitten in einer langen Seite, packen Sie sie in einen
 `{% boost %}`-Block, um sie im Index stärker zu gewichten. Sie wird
 unverändert dargestellt und wirkt sich nur auf die Suche aus.
+
+<!-- docref: end -->
 
 ```markdown
 {% boost weight=8 %}

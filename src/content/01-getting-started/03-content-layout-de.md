@@ -34,6 +34,8 @@ Daraus entsteht:
 
 ## Die Regeln
 
+<!-- docref: begin src=src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 - **Dateien werden zu Seiten.** `reference/api.md` → `/reference/api`.
 - **Ordner der ersten Ebene werden zu Gruppen** in der Seitenleiste; die
   Dateien darin werden zu deren Einträgen.
@@ -45,6 +47,8 @@ Daraus entsteht:
 - **Führende Nummernpräfixe** wie `01-` legen die Reihenfolge fest und
   werden aus URL und Titel entfernt. Siehe
   [Reihenfolge & Titel](/de/navigation/ordering-and-titles).
+
+<!-- docref: end -->
 
 {% callout type="info" title="Die Startseite" %}
 Die Startseite (`/`) ist eine generierte Übersicht, die Ihre Abschnitte

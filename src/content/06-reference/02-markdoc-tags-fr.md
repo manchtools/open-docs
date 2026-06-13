@@ -5,13 +5,19 @@ label: Balises Markdoc
 
 # Balises Markdoc
 
+<!-- docref: begin src=src/lib/markdoc/tags.svelte:7c5c0d6c -->
+
 Une référence des blocs personnalisés ajoutés par-dessus Markdown, ainsi
 que des éléments Markdown enrichis. Pour l'utilisation avec des exemples,
 voir [Rédaction](/fr/authoring).
 
+<!-- docref: end -->
+
 ## Balises personnalisées
 
 ### callout
+
+<!-- docref: begin src=src/lib/markdoc/components/Callout.svelte#@props:04ebd609 -->
 
 ```markdown
 {% callout type="info" title="Optional title" %}
@@ -24,7 +30,11 @@ Body Markdown.
 | `type` | `info`, `warn`, `danger`, `success` | `info` |
 | `title` | chaîne | _(aucun)_ |
 
+<!-- docref: end -->
+
 ### tabs / tab
+
+<!-- docref: begin src=src/lib/markdoc/components/Tabs.svelte#@props:17c65a4f,src/lib/markdoc/components/Tab.svelte#@props:0ce05808 -->
 
 ````markdown
 {% tabs labels="One, Two" initial="One" %}
@@ -39,7 +49,11 @@ Body Markdown.
 | `tabs` | `initial` | Onglet ouvert au chargement. Par défaut le premier. |
 | `tab` | `label` | Doit correspondre à un nom dans le `labels` du parent. Obligatoire. |
 
+<!-- docref: end -->
+
 ### screenshot
+
+<!-- docref: begin src=src/lib/markdoc/components/Screenshot.svelte#@props:f0667444 -->
 
 ```markdown
 {% screenshot src="ui.png" alt="The UI" caption="…" dark="ui-dark.png"
@@ -58,7 +72,11 @@ Body Markdown.
 Les images Markdown ordinaires `![]()` sont elles aussi rendues par ce
 composant, en variante `flat`.
 
+<!-- docref: end -->
+
 ### steps / step
+
+<!-- docref: begin src=src/lib/markdoc/components/Steps.svelte#@props:26850e43,src/lib/markdoc/components/Step.svelte#@props:ed2ce0a8 -->
 
 ````markdown
 {% steps %}
@@ -69,7 +87,11 @@ composant, en variante `flat`.
 
 `step` accepte un `title` optionnel. La numérotation est automatique.
 
+<!-- docref: end -->
+
 ### cards / card
+
+<!-- docref: begin src=src/lib/markdoc/components/Cards.svelte#@props:26850e43,src/lib/markdoc/components/Card.svelte#@props:c82718eb -->
 
 ````markdown
 {% cards %}
@@ -83,7 +105,11 @@ composant, en variante `flat`.
 | `card` | `href` | Lien optionnel (chemin interne ou URL externe). |
 | `card` | `icon` | Emoji, `<svg>` en ligne, ou un chemin sous `static/`. |
 
+<!-- docref: end -->
+
 ### accordions / accordion
+
+<!-- docref: begin src=src/lib/markdoc/components/AccordionGroup.svelte#@props:84cfb144,src/lib/markdoc/components/Accordion.svelte#@props:ed2ce0a8 -->
 
 ````markdown
 {% accordions %}
@@ -96,7 +122,11 @@ composant, en variante `flat`.
 | `accordion` | `title` | Le texte du résumé. `<details>` natif. |
 | `accordions` | `exclusive` | Conteneur de groupe ; `true` (défaut) n'en ouvre qu'un à la fois, `false` en autorise plusieurs. Optionnel ; `accordion` fonctionne aussi seul. |
 
+<!-- docref: end -->
+
 ### badge
+
+<!-- docref: begin src=src/lib/markdoc/components/Badge.svelte#@props:69aebe45 -->
 
 ```markdown
 {% badge variant="warning" %}Beta{% /badge %}
@@ -104,7 +134,11 @@ composant, en variante `flat`.
 
 Pastille en ligne. `variant` : `default`, `info`, `success`, `warning`, `danger`.
 
+<!-- docref: end -->
+
 ### filetree
+
+<!-- docref: begin src=src/lib/markdoc/components/FileTree.svelte#@props:26850e43 -->
 
 ```markdown
 {% filetree %}
@@ -116,7 +150,11 @@ Pastille en ligne. `variant` : `default`, `info`, `success`, `warning`, `danger`
 Met en forme une liste Markdown imbriquée en arborescence de répertoires
 (dossiers et fichiers sont détectés automatiquement).
 
+<!-- docref: end -->
+
 ### embed
+
+<!-- docref: begin src=src/lib/markdoc/components/Embed.svelte#@props:36691986 -->
 
 ```markdown
 {% embed src="https://youtu.be/ID" title="…" /%}
@@ -126,7 +164,11 @@ Iframe vidéo responsive. Les URL YouTube/Vimeo sont normalisées, et la
 liste d'autorisation CSP des iframes est dérivée automatiquement de vos
 embeds.
 
+<!-- docref: end -->
+
 ### code
+
+<!-- docref: begin src=src/lib/markdoc/components/Code.svelte#@props:ed2ce0a8 -->
 
 ````markdown
 {% code title="app.ts" %}
@@ -140,7 +182,11 @@ Ajoute un en-tête de nom de fichier à un bloc de code délimité (Markdoc
 supprime les métadonnées du fence, donc le nom de fichier passe par ce
 wrapper).
 
+<!-- docref: end -->
+
 ### boost
+
+<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props:b07730c2 -->
 
 ```markdown
 {% boost weight=8 %}
@@ -155,7 +201,11 @@ remonter un passage clé au-dessus du texte ordinaire. Ne l'utilisez que
 lorsque les poids intégrés des titres ne suffisent pas à faire ressortir
 un élément.
 
+<!-- docref: end -->
+
 ### columns / column
+
+<!-- docref: begin src=src/lib/markdoc/components/Columns.svelte#@props:26850e43,src/lib/markdoc/components/Column.svelte#@props:671be0b5 -->
 
 Colonnes côte à côte qui s'empilent sur mobile, limitées à trois de front ;
 une quatrième passe à la ligne suivante. Deux colonnes occupent 50/50,
@@ -168,7 +218,11 @@ trois se partagent en tiers.
 {% /columns %}
 ````
 
+<!-- docref: end -->
+
 ### grid
+
+<!-- docref: begin src=src/lib/markdoc/components/Grid.svelte#@props:7451a1f3,src/lib/markdoc/components/Column.svelte#@props:671be0b5 -->
 
 Une grille responsive pour disposer le contenu autrement que dans une
 seule colonne de haut en bas. `cols` (1–3, défaut 2) définit le nombre de
@@ -183,7 +237,11 @@ colonne sur mobile. Une cellule peut s'étendre sur plusieurs pistes avec
 {% /grid %}
 ````
 
+<!-- docref: end -->
+
 ### hero
+
+<!-- docref: begin src=src/lib/markdoc/components/Hero.svelte#@props:35a1e113 -->
 
 Un en-tête image pleine largeur avec un titre optionnel en surimpression.
 Se colle au bord supérieur lorsqu'il est le premier bloc. Le frontmatter
@@ -193,7 +251,11 @@ Se colle au bord supérieur lorsqu'il est le premier bloc. Le frontmatter
 {% hero src="/screenshots/cover.png" alt="…" title="…" subtitle="…" /%}
 ```
 
+<!-- docref: end -->
+
 ### avatar
+
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props:2d0e6d15 -->
 
 Une carte d'auteur : image ronde, nom, bio et lien optionnels.
 Directement après un `hero`, l'image chevauche le bord inférieur du hero
@@ -203,7 +265,11 @@ de la moitié de sa hauteur.
 {% avatar src="/authors/ada.png" name="Ada" description="…" url="…" /%}
 ```
 
+<!-- docref: end -->
+
 ### quote
+
+<!-- docref: begin src=src/lib/markdoc/components/Quote.svelte#@props:df46ce79 -->
 
 Une citation mise en exergue avec une attribution optionnelle (liée
 lorsque `cite` est défini).
@@ -212,7 +278,11 @@ lorsque `cite` est défini).
 {% quote by="Ada Lovelace" cite="https://…" %}Body.{% /quote %}
 ```
 
+<!-- docref: end -->
+
 ### gallery
+
+<!-- docref: begin src=src/lib/markdoc/components/Gallery.svelte#@props:26850e43 -->
 
 Une grille d'images responsive ; chaque image s'agrandit dans la
 lightbox.
@@ -224,7 +294,11 @@ lightbox.
 {% /gallery %}
 ```
 
+<!-- docref: end -->
+
 ## Markdown enrichi
+
+<!-- docref: begin src=src/lib/markdoc/nodes.svelte:52c58f22 -->
 
 Ceux-ci ne demandent aucune syntaxe particulière. Le Markdown ordinaire
 obtient ce comportement automatiquement :
@@ -248,3 +322,5 @@ Les attributs de chaque balise sont les props du composant Svelte qui se
 trouve derrière, si bien que les deux ne divergent jamais. Ajouter une
 prop à un composant en fait automatiquement un attribut valide.
 {% /callout %}
+
+<!-- docref: end -->

@@ -11,6 +11,8 @@ recompilación. Defínelas en el comando `docker run`, en un archivo
 
 ## Elementos visuales del sitio
 
+<!-- docref: begin src=src/lib/server/site.ts#siteConfig:c0130420 -->
+
 | Variable | Valor por defecto | Efecto |
 |---|---|---|
 | `PUBLIC_BRAND_NAME` | `open-docs` | Texto de la marca en la barra superior. |
@@ -19,6 +21,8 @@ recompilación. Defínelas en el comando `docker run`, en un archivo
 | `PUBLIC_SITE_TITLE` | `open-docs` | Título de la pestaña del navegador y `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _texto genérico_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(vacío)_ | Si se define, muestra un enlace a GitHub en la navegación y el pie. |
+
+<!-- docref: end -->
 
 ```sh
 docker run --rm -p 3000:3000 \

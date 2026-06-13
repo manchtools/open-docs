@@ -25,12 +25,18 @@ Rédigez vos pages en Markdown ordinaire. Tous les éléments standard fonctionn
 
 ## Les titres et la table des matières
 
+<!-- docref: begin src=src/lib/server/markdown.ts#applyHeadingAnchors:a5e8b91f -->
+
 Le premier titre `#` est le titre de la page affiché en haut du contenu. Les
 titres `##` et `###` remplissent la table des matières dans la colonne de droite
 et deviennent des ancres cliquables, ce qui permet de pointer directement vers
 une section.
 
+<!-- docref: end -->
+
 ## Frontmatter
+
+<!-- docref: begin src=src/lib/server/content-store.ts#frontmatter:641087be -->
 
 Un bloc YAML optionnel tout en haut d'un fichier contrôle l'apparence de la
 page dans la **barre latérale** :
@@ -73,3 +79,5 @@ Seules les lignes simples `clé : valeur` sont lues pour la navigation. Les
 valeurs YAML imbriquées ou sous forme de liste sont ignorées pour la barre
 latérale.
 {% /callout %}
+
+<!-- docref: end -->

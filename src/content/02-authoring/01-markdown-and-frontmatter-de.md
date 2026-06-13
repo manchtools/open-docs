@@ -23,12 +23,18 @@ Schreiben Sie Seiten in reinem Markdown. Alle Standardelemente funktionieren:
 
 ## Überschriften und das Inhaltsverzeichnis
 
+<!-- docref: begin src=src/lib/server/markdown.ts#applyHeadingAnchors:a5e8b91f -->
+
 Die erste `#`-Überschrift ist der Seitentitel, der oben im Inhalt angezeigt
 wird. `##`- und `###`-Überschriften füllen das Inhaltsverzeichnis in der
 rechten Spalte und werden zu verlinkbaren Ankern, sodass Sie direkt auf
 einen Abschnitt verlinken können.
 
+<!-- docref: end -->
+
 ## Frontmatter
+
+<!-- docref: begin src=src/lib/server/content-store.ts#frontmatter:641087be -->
 
 Ein optionaler YAML-Block ganz am Anfang einer Datei steuert, wie die Seite
 in der **Seitenleiste** erscheint:
@@ -71,3 +77,5 @@ Für die Navigation werden nur einfache `key: value`-Zeilen ausgewertet.
 Verschachtelte oder als Liste angegebene YAML-Werte werden für die
 Seitenleiste ignoriert.
 {% /callout %}
+
+<!-- docref: end -->

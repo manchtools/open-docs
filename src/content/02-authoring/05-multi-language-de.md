@@ -5,6 +5,8 @@ description: Übersetzen Sie Seiten, indem Sie dem Dateinamen ein Sprachsuffix h
 
 # Mehrsprachigkeit
 
+<!-- docref: begin src=src/lib/i18n.ts#pickLanguages:cee45a25 -->
+
 Übersetzen Sie eine Seite, indem Sie ihrem Dateinamen ein Sprachsuffix
 hinzufügen. Die deutsche Version von `01-introduction.md` ist
 `01-introduction-de.md`. Das ist die gesamte Einrichtung – die Sprachen
@@ -16,15 +18,21 @@ Diese Seite selbst hat eine deutsche Version
 also ist die Sprachumschaltung in der oberen Leiste auf dieser Website
 aktiv.
 
+<!-- docref: end -->
+
 ## URLs
 
 Die **Standardsprache bleibt ohne Präfix**, und jede andere Sprache bekommt
 ein `/<lang>`-Präfix:
 
+<!-- docref: begin src=src/lib/i18n.ts#slugLang:ebe3829f,src/lib/i18n.ts#hrefFor:bcfbc809 -->
+
 | Datei | URL |
 |---|---|
 | `getting-started/intro.md` | `/getting-started/intro` |
 | `getting-started/intro-de.md` | `/de/getting-started/intro` |
+
+<!-- docref: end -->
 
 So funktionieren bestehende Links weiter, und eine einsprachige Website hat
 überhaupt keine Präfixe. Die Website bleibt einsprachig (und ohne Präfix),
@@ -51,6 +59,8 @@ den Rest nach und nach ergänzen.
 
 ## Was Sie bekommen
 
+<!-- docref: begin src=src/lib/i18n.ts#switchTo:8863925a -->
+
 - Eine **Sprachumschaltung** in der oberen Leiste (nur sichtbar, wenn mehr
   als eine Sprache existiert). Sie bleiben beim Umschalten auf derselben
   Seite.
@@ -62,6 +72,8 @@ den Rest nach und nach ergänzen.
   Suchmaschinen die richtige Sprache ausliefern. Setzen Sie dafür
   `PUBLIC_SITE_URL` – siehe [SEO & KI-Suche](/de/customizing/seo).
 
+<!-- docref: end -->
+
 ## Beispiel
 
 ```text
@@ -72,12 +84,16 @@ content/
     02-install.md       → /getting-started/install     (en only; /de falls back)
 ```
 
+<!-- docref: begin src=src/lib/i18n.ts#langOfPath:9d401249,src/lib/i18n.ts#ISO_639_1:80e98caa -->
+
 Das Sprachsuffix steht nach einem etwaigen `NN-`-Reihenfolgepräfix und vor
 der Dateiendung. Verwenden Sie
 [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)-Codes
 (`de`, `fr`, `ja`, …); eine zweibuchstabige Endung, die kein echter Code ist
 (wie `setup-ci.md`), wird als gewöhnlicher Dateiname behandelt, nicht als
 Sprache.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Was in der Standardsprache bleibt" %}
 Fast alles wird lokalisiert: Seiteninhalt, Navigation und die

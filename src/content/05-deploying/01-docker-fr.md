@@ -13,6 +13,7 @@ fournissez le contenu à l'exécution.
 docker run --rm -p 3000:3000 \
   -v ./content:/content:ro \
   -v ./static:/static:ro \
+  -e PUBLIC_SITE_URL="https://docs.example.com" \
   -e PUBLIC_BRAND_NAME="My Project" \
   -e PUBLIC_SITE_TITLE="My Project Docs" \
   -e PUBLIC_REPO_URL="https://github.com/me/my-project" \
@@ -20,6 +21,45 @@ docker run --rm -p 3000:3000 \
 ```
 
 Rendez-vous sur `http://localhost:3000`.
+
+{% callout type="warn" title="Toujours définir PUBLIC_SITE_URL" %}
+`PUBLIC_SITE_URL` est l'URL de base publique complète de votre site (par
+exemple `https://docs.example.com`). Définissez-la sur **chaque**
+déploiement. Sans elle, les liens canoniques, `sitemap.xml`, `robots.txt`,
+`llms.txt` et les **flux Atom** du blog basculent sur des URL relatives —
+les moteurs de recherche et les importateurs de flux (dev.to, Medium) ne
+peuvent alors pas résoudre vos pages, et le serveur émet un avertissement
+au démarrage. Cela ne coûte rien et ne déclenche aucune reconstruction, il
+n'y a donc aucune raison de l'omettre.
+{% /callout %}
+
+## Docker Compose
+
+La même configuration sous forme de `compose.yaml`. Gardez
+`PUBLIC_SITE_URL` en tête de `environment:` pour ne jamais l'oublier :
+
+```yaml
+services:
+  docs:
+    image: ghcr.io/manchtools/open-docs:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # REQUISE en production — l'URL de base publique complète du site.
+      # Active les liens canoniques absolus, sitemap.xml, robots.txt,
+      # llms.txt et des flux Atom prêts pour la syndication. Sans elle,
+      # tout cela reste relatif (le serveur avertit au démarrage).
+      PUBLIC_SITE_URL: "https://docs.example.com"
+      PUBLIC_BRAND_NAME: "My Project"
+      PUBLIC_SITE_TITLE: "My Project Docs"
+      PUBLIC_REPO_URL: "https://github.com/me/my-project"
+    volumes:
+      - ./content:/content:ro
+      - ./static:/static:ro
+    restart: unless-stopped
+```
+
+Lancez-le avec `docker compose up -d`.
 
 ## Montages
 

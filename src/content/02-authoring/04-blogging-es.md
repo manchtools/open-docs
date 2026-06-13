@@ -21,6 +21,8 @@ blog: true        # in blog/index.md
 
 ## Entradas
 
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
+
 Una entrada es una página de Markdown normal con una fecha:
 
 ```markdown
@@ -46,7 +48,11 @@ la fecha vive solo en el frontmatter. Las entradas usan su propia
 navegación Más reciente/Más antigua y nunca se mezclan en la cadena
 anterior/siguiente de la documentación.
 
+<!-- docref: end -->
+
 ## El listado
+
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 
 El `index.md` de la sección renderiza primero su propia prosa y después
 la lista de entradas generada: portada, fecha localizada, tiempo de
@@ -54,7 +60,11 @@ lectura, autor, descripción y etiquetas. El tiempo de lectura es el
 número de palabras de la entrada a 200 palabras por minuto, redondeado,
 con un mínimo de un minuto.
 
+<!-- docref: end -->
+
 ## Los autores son páginas
+
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 
 Coloca los autores en una carpeta `authors/` dentro de la sección del
 blog. Las páginas que hay allí son páginas de perfil, no entradas (no
@@ -88,7 +98,11 @@ explícitamente gana. En resumen: el frontmatter `author:` son
 *metadatos* (listado, firma, feed), el bloque `{% avatar %}` es la
 *tarjeta visual*, y ambos pueden apuntar a la misma página.
 
+<!-- docref: end -->
+
 ## Bloques hero y avatar
+
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props:2d0e6d15 -->
 
 Dos bloques pensados para blogs, utilizables en cualquier parte:
 
@@ -108,6 +122,8 @@ la clásica cabecera con foto de portada. Ambos se renderizan con
 normalidad por sí solos. Una entrada con `cover:` recibe el hero
 automáticamente.
 
+<!-- docref: end -->
+
 ## Quote y gallery
 
 ```markdown
@@ -126,12 +142,39 @@ amplían en el diálogo como cualquier imagen.
 
 ## Feeds
 
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+
 Cada sección de blog sirve un feed Atom en `/<section>/feed.xml`
-(también por idioma: `/de/blog/feed.xml`). Define `PUBLIC_SITE_URL`
-para que las entradas lleven enlaces absolutos. Las páginas del blog
-anuncian el feed con un `<link rel="alternate">`, y el `h1` del índice
-del blog lleva un botón para copiar la URL del feed junto al botón
-habitual de copiar el enlace de la página.
+(también por idioma: `/de/blog/feed.xml`). Cada entrada lleva el
+**cuerpo completo del artículo** en `<content type="html">`
+junto al breve `<summary>`, de modo que las plataformas de sindicación
+(dev.to/Forem, Medium) y los lectores de feeds importan el artículo
+entero —bloques de código e imágenes incluidos— y no un resumen de una
+línea.
+
+El cuerpo se renderiza mediante un **perfil de feed** propio a partir de
+la misma fuente Markdoc que usa la página (no se extrae del HTML de la
+página), por lo que queda **limpio para el lector**: encabezados simples
+(sin anclas de copia ni iconos), sin pesos `data-pagefind`, sin envoltorio
+de maquetación. Los bloques interactivos se degradan a equivalentes
+estáticos —las galerías pasan a figuras simples; hero/avatar/captura a un
+`<img>` sin cromo de ventana; mermaid a su fuente como bloque de código—,
+porque los lectores de feeds no ejecutan JavaScript.
+
+Define `PUBLIC_SITE_URL` para que cada `id` del feed y de las entradas,
+el enlace `rel="self"` y cada enlace de entrada sean URLs **absolutas**
+(con prefijo de idioma y compatibles con `BASE_PATH`), y para que las
+imágenes con ruta raíz del cuerpo se resuelvan fuera del sitio. dev.to
+usa el enlace de una entrada como `canonical_url`, y muchos lectores no
+toleran los ids relativos. Sin `PUBLIC_SITE_URL` el feed sigue
+funcionando, pero permanece relativo y no está listo para sindicación: el
+servidor registra un aviso al arrancar.
+
+Las páginas del blog anuncian el feed con un `<link rel="alternate">`, y
+el `h1` del índice del blog lleva un botón para copiar la URL del feed
+junto al botón habitual de copiar el enlace de la página.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Varios blogs por sitio" %}
 `blog: true` es por sección: un sitio de documentación puede llevar a la

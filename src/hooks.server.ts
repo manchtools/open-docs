@@ -8,6 +8,7 @@ import { getStore } from '$lib/server/store-instance';
 import { splitRequest } from '$lib/i18n';
 import { deriveFrameSrc } from '../scripts/derive-frame-src.js';
 import { siteConfig } from '$lib/server/site';
+import { warmFeeds, getFeed } from '$lib/server/feed';
 
 // Sets the per-page `<html lang>`, the CSP frame-src for {% embed %}
 // hosts, and the standard defensive response headers.
@@ -37,7 +38,21 @@ function frameSrc(): string[] {
 // errors abort the boot (container exits non-zero) instead of turning
 // every request into a 500 — the runtime equivalent of a failed build.
 export const init = () => {
-	getStore();
+	const store = getStore();
+	const site = siteConfig();
+	// Feeds are static after the boot scan, like everything else in
+	// open-docs — render them once here, off the request path, and serve the
+	// cached XML thereafter.
+	const built = warmFeeds({ store, siteTitle: site.siteTitle, siteUrl: site.siteUrl, basePath: base });
+	if (built > 0) console.log(`[open-docs] built ${built} Atom feed(s)`);
+	// Full content ships always; absolute links need the site origin. Warn
+	// once at boot when it's missing so the operator knows the feeds import
+	// as relative stubs on dev.to/Medium until PUBLIC_SITE_URL is set.
+	if (!site.siteUrl) {
+		console.warn(
+			'[open-docs] PUBLIC_SITE_URL is not set — Atom feeds emit relative URLs and are not syndication-ready (dev.to, Medium, and many feed readers need absolute links). Set PUBLIC_SITE_URL=https://your.site to enable.'
+		);
+	}
 };
 
 // Static assets under BASE_PATH. The adapter serves build/client at the
@@ -89,41 +104,22 @@ function baseStatic(pathname: string): Response | null {
 }
 
 // Atom feeds: /<section>/feed.xml (language-prefixed variants included),
-// one per `blog: true` section, generated from the store like sitemap.xml.
+// one per `blog: true` section. The XML is built once at startup (warmFeeds
+// in init) and served from the store-keyed cache; this only resolves the
+// language/section from the path. getFeed returns null for a non-blog
+// section — a 404 here, falling through to the router.
 function atomFeed(pathname: string): Response | null {
 	if (!pathname.endsWith('/feed.xml')) return null;
 	const store = getStore();
 	const trimmed = pathname.slice(base.length).replace(/^\//, '').replace(/\/feed\.xml$/, '');
 	const { lang, slug: section } = splitRequest(trimmed, store.languages, store.defaultLang);
-	if (!store.isBlogSection(section)) return null;
 	const site = siteConfig();
-	const posts = store.postsFor(lang, section);
-	const xml = (v: string) =>
-		v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-	const url = (p: string) => `${site.siteUrl}${p}`;
-	const sectionTitle = store.pageMetaFor(lang, section).title || section;
-	const updated = posts[0] ? `${posts[0].date}T00:00:00Z` : '1970-01-01T00:00:00Z';
-	const body = `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-	<title>${xml(site.siteTitle)} — ${xml(sectionTitle)}</title>
-	<id>${xml(url(store.localizedHref(lang, section)))}</id>
-	<link rel="self" href="${xml(url(store.localizedHref(lang, section) + '/feed.xml'))}"/>
-	<link href="${xml(url(store.localizedHref(lang, section)))}"/>
-	<updated>${updated}</updated>
-${posts
-	.map(
-		(p) => `	<entry>
-		<title>${xml(p.title)}</title>
-		<id>${xml(url(p.href))}</id>
-		<link href="${xml(url(p.href))}"/>
-		<updated>${p.date}T00:00:00Z</updated>
-		${p.description ? `<summary>${xml(p.description)}</summary>` : ''}
-		${p.author ? `<author><name>${xml(p.author)}</name></author>` : ''}
-	</entry>`
-	)
-	.join('\n')}
-</feed>
-`;
+	const body = getFeed(
+		{ store, siteTitle: site.siteTitle, siteUrl: site.siteUrl, basePath: base },
+		lang,
+		section
+	);
+	if (body === null) return null;
 	return new Response(body, {
 		headers: { 'content-type': 'application/atom+xml; charset=utf-8' }
 	});

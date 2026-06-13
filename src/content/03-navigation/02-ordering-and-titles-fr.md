@@ -11,8 +11,12 @@ fichier de navigation externe n'entre en jeu.
 
 ## Préfixes numériques
 
+<!-- docref: begin src=src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 Préfixez un fichier ou un dossier avec `NN-` (ou `NN_`, ou `NN.`). Le
 numéro fixe la position de tri et est **retiré** de l'URL et du titre.
+
+<!-- docref: end -->
 
 ```
 content/
@@ -34,8 +38,12 @@ liens Plus récents/Plus anciens. Voir [Blog](/fr/authoring/blogging).
 
 ## Frontmatter
 
+<!-- docref: begin src=src/lib/server/content-store.ts#orderOf:1c460e59,src/lib/server/content-store.ts#metaTitle:0ac7aeab -->
+
 Pour un contrôle plus fin, définissez des clés dans le frontmatter d'une
 page. Le frontmatter l'emporte sur le nom de fichier.
+
+<!-- docref: end -->
 
 ```markdown
 ---

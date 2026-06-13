@@ -21,6 +21,8 @@ blog: true        # in blog/index.md
 
 ## Beiträge
 
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
+
 Ein Beitrag ist eine gewöhnliche Markdown-Seite mit einem Datum:
 
 ```markdown
@@ -46,7 +48,11 @@ das Datum lebt nur im Frontmatter. Beiträge verwenden ihre eigene
 Neuere/Ältere-Navigation und mischen sich nie in die Vor-/Zurück-Kette
 der Dokumentation.
 
+<!-- docref: end -->
+
 ## Die Auflistung
+
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 
 Die `index.md` des Abschnitts rendert zuerst ihren eigenen Fließtext und
 dann die generierte Beitragsliste – Cover, lokalisiertes Datum,
@@ -54,7 +60,11 @@ Lesezeit, Autor, Beschreibung und Tags. Die Lesezeit ist die Wortzahl
 des Beitrags bei 200 Wörtern pro Minute, gerundet, mindestens eine
 Minute.
 
+<!-- docref: end -->
+
 ## Autoren sind Seiten
+
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 
 Legen Sie Autoren in einem Ordner `authors/` innerhalb des
 Blog-Abschnitts ab. Die Seiten dort sind Profilseiten, keine Beiträge
@@ -89,7 +99,11 @@ Kurz gesagt: Das `author:`-Frontmatter sind *Metadaten* (Auflistung,
 Autorenzeile, Feed), der `{% avatar %}`-Block ist die *visuelle Karte* –
 und beide können auf dieselbe Seite zeigen.
 
+<!-- docref: end -->
+
 ## Hero- & Avatar-Blöcke
+
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props:2d0e6d15 -->
 
 Zwei Blöcke, gemacht für Blogs, überall einsetzbar:
 
@@ -104,6 +118,8 @@ Live, mit den mitgelieferten Demo-Bildern:
 {% avatar src="/screenshots/open-docs-home-dark.png" name="Ada Lovelace" description="Entwickelt manchtools." /%}
 
 Direkt nach einem Hero platziert, **überlappt das Bild des Avatars die Unterkante des Heros um die halbe Bildhöhe** – der klassische Cover-Foto-Header. Beide rendern für sich allein ganz normal. Ein Beitrag mit `cover:` bekommt den Hero automatisch.
+
+<!-- docref: end -->
 
 ## Quote & Gallery
 
@@ -123,12 +139,38 @@ vergrößern sich in der Lightbox wie jedes Bild.
 
 ## Feeds
 
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+
 Jeder Blog-Abschnitt liefert unter `/<section>/feed.xml` einen Atom-Feed
-aus (auch pro Sprache: `/de/blog/feed.xml`). Setzen Sie
-`PUBLIC_SITE_URL`, damit die Einträge absolute Links tragen. Blog-Seiten
-machen den Feed über ein `<link rel="alternate">` bekannt, und die `h1`
-der Blog-Übersicht trägt neben der üblichen Schaltfläche zum Kopieren
-des Seitenlinks eine Schaltfläche zum Kopieren der Feed-URL.
+aus (auch pro Sprache: `/de/blog/feed.xml`). Jeder Eintrag trägt neben
+der kurzen `<summary>` den **vollständigen Artikeltext** in
+`<content type="html">`, sodass Syndizierungsplattformen (dev.to/Forem,
+Medium) und Feed-Reader den ganzen Artikel übernehmen – samt Codeblöcken
+und Bildern – und nicht nur einen einzeiligen Stub.
+
+Der Text wird über ein eigenes **Feed-Profil** aus derselben
+Markdoc-Quelle wie die Seite gerendert (nicht aus dem Seiten-HTML
+extrahiert) und ist daher **leserrein**: schlichte Überschriften (ohne
+Kopierlink-Anker oder Symbole), keine `data-pagefind`-Gewichte, kein
+äußerer Layout-Wrapper. Interaktive Blöcke werden zu statischen
+Entsprechungen – Galerien werden zu schlichten Figures, Hero/Avatar/
+Screenshot zu einem einfachen `<img>` (ohne Fensterchrom), Mermaid zu
+seinem Quelltext als Codeblock –, da Feed-Reader kein JavaScript ausführen.
+
+Setzen Sie `PUBLIC_SITE_URL`, damit jede Feed- und Eintrags-`id`, der
+`rel="self"`-Link und jeder Eintragslink **absolute** URLs sind
+(sprachpräfigiert und `BASE_PATH`-bewusst) und damit wurzelrelative
+Bilder im Text auch extern auflösen. dev.to verwendet den Link eines
+Eintrags als `canonical_url`, und viele Reader kommen mit relativen IDs
+nicht zurecht. Ohne `PUBLIC_SITE_URL` funktioniert der Feed weiterhin,
+bleibt aber relativ und ist nicht syndizierungsbereit – der Server gibt
+beim Start eine Warnung aus.
+
+Blog-Seiten machen den Feed über ein `<link rel="alternate">` bekannt,
+und die `h1` der Blog-Übersicht trägt neben der üblichen Schaltfläche zum
+Kopieren des Seitenlinks eine Schaltfläche zum Kopieren der Feed-URL.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Mehrere Blogs pro Website" %}
 `blog: true` gilt pro Abschnitt: Eine Doku-Website kann gleichzeitig

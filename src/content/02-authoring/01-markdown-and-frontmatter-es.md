@@ -23,12 +23,18 @@ Escribe las páginas en Markdown plano. Todos los elementos estándar funcionan:
 
 ## Encabezados y la tabla de contenidos
 
+<!-- docref: begin src=src/lib/server/markdown.ts#applyHeadingAnchors:a5e8b91f -->
+
 El primer encabezado `#` es el título de la página que se muestra arriba del
 contenido. Los encabezados `##` y `###` rellenan la tabla de contenidos del
 panel derecho y se convierten en anclas enlazables, de modo que puedes
 enlazar directamente a una sección.
 
+<!-- docref: end -->
+
 ## Frontmatter
+
+<!-- docref: begin src=src/lib/server/content-store.ts#frontmatter:641087be -->
 
 Un bloque YAML opcional al principio del archivo controla cómo aparece la
 página en la **barra lateral**:
@@ -69,3 +75,5 @@ de orden completo.
 Para la navegación solo se leen líneas simples `clave: valor`. Los valores YAML
 anidados o en lista se ignoran a efectos de la barra lateral.
 {% /callout %}
+
+<!-- docref: end -->

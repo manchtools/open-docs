@@ -11,8 +11,12 @@ archivo de navegación externo.
 
 ## Prefijos numéricos
 
+<!-- docref: begin src=src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 Antepón a un archivo o carpeta un `NN-` (también `NN_` o `NN.`). El
 número fija la posición de orden y se **elimina** de la URL y del título.
+
+<!-- docref: end -->
 
 ```
 content/
@@ -34,8 +38,12 @@ enlaces Más recientes/Más antiguas. Consulta
 
 ## Frontmatter
 
+<!-- docref: begin src=src/lib/server/content-store.ts#orderOf:1c460e59,src/lib/server/content-store.ts#metaTitle:0ac7aeab -->
+
 Para un control más fino, define claves en el frontmatter de una página.
 El frontmatter prevalece sobre el nombre del archivo.
+
+<!-- docref: end -->
 
 ```markdown
 ---

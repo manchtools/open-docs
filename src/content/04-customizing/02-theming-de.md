@@ -4,6 +4,8 @@ title: Theming
 
 # Theming
 
+<!-- docref: begin src=src/routes/theme.css/+server.ts#GET:5578a8e6 -->
+
 Legen Sie eine **`theme.css`** in Ihr Inhaltsverzeichnis, und open-docs lädt
 sie nach seinem eigenen Stylesheet, sodass Ihre Regeln immer gewinnen. Sie
 müssen weder das Projekt forken noch das Image neu bauen.
@@ -18,6 +20,8 @@ müssen weder das Projekt forken noch das Image neu bauen.
 
 In Docker wird die Datei aus Ihrem Inhalts-Mount aufgegriffen; es gibt nichts
 weiter zu konfigurieren.
+
+<!-- docref: end -->
 
 ## Zwei Ebenen zum Überschreiben
 
@@ -39,14 +43,18 @@ Suche) passt sich an, sowohl im hellen als auch im dunklen Modus.
 ```
 {% /code %}
 
+<!-- docref: begin src=src/app.css#@design-tokens:e02aec08 -->
 Gängige Tokens: `--primary`, `--background`, `--foreground`, `--sidebar`,
 `--sidebar-accent`, `--muted`, `--border`, `--radius` und `--font-sans`.
 Farben verwenden `oklch()`, um zum Standard-Theme zu passen, aber jede gültige
 CSS-Farbe funktioniert.
+<!-- docref: end -->
 
+<!-- docref: begin src=src/lib/components/theme-color.svelte:5dd34a8d -->
 Der Browser-Rahmen auf Mobilgeräten (die Tönung über `<meta
 name="theme-color">`) folgt `--primary`, sodass er in beiden Modi zu Ihrer
 Akzentfarbe passt. Es gibt keine separate Farbe einzustellen.
+<!-- docref: end -->
 
 ### Komponentenklassen
 
@@ -63,9 +71,13 @@ Standardwerte bei gleicher Spezifität.
 
 ## Dunkler Modus
 
+<!-- docref: begin src=src/lib/components/theme-toggle.svelte:c9b875a9 -->
+
 Hell/Dunkel wird über eine `.dark`-Klasse gesteuert, die der Theme-Schalter in
 der oberen Leiste auf `<html>` umschaltet. Legen Sie Dunkel-Überschreibungen
 unter einen `.dark { … }`-Selektor, wie oben. Mehr ist nicht zu verdrahten.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Vom Beispiel ausgehen" %}
 Das Repository liefert eine kommentierte `theme.example.css`. Kopieren Sie sie

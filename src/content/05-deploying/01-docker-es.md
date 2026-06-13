@@ -13,6 +13,7 @@ proporciona en tiempo de ejecución.
 docker run --rm -p 3000:3000 \
   -v ./content:/content:ro \
   -v ./static:/static:ro \
+  -e PUBLIC_SITE_URL="https://docs.example.com" \
   -e PUBLIC_BRAND_NAME="My Project" \
   -e PUBLIC_SITE_TITLE="My Project Docs" \
   -e PUBLIC_REPO_URL="https://github.com/me/my-project" \
@@ -20,6 +21,44 @@ docker run --rm -p 3000:3000 \
 ```
 
 Abre `http://localhost:3000`.
+
+{% callout type="warn" title="Define siempre PUBLIC_SITE_URL" %}
+`PUBLIC_SITE_URL` es la URL base pública completa de tu sitio (por
+ejemplo `https://docs.example.com`). Defínela en **cada** despliegue. Sin
+ella, los enlaces canónicos, `sitemap.xml`, `robots.txt`, `llms.txt` y los
+**feeds Atom** del blog recurren a URLs relativas: los buscadores y los
+importadores de feeds (dev.to, Medium) no pueden resolver tus páginas, y
+el servidor registra un aviso al arrancar. No cuesta nada y no provoca
+ninguna reconstrucción, así que no hay razón para omitirla.
+{% /callout %}
+
+## Docker Compose
+
+La misma configuración como `compose.yaml`. Mantén `PUBLIC_SITE_URL` al
+principio de `environment:` para que nunca se omita:
+
+```yaml
+services:
+  docs:
+    image: ghcr.io/manchtools/open-docs:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # OBLIGATORIA en producción — la URL base pública completa de tu sitio.
+      # Activa enlaces canónicos absolutos, sitemap.xml, robots.txt,
+      # llms.txt y feeds Atom listos para sindicación. Sin ella, todo eso
+      # queda relativo (el servidor avisa al arrancar).
+      PUBLIC_SITE_URL: "https://docs.example.com"
+      PUBLIC_BRAND_NAME: "My Project"
+      PUBLIC_SITE_TITLE: "My Project Docs"
+      PUBLIC_REPO_URL: "https://github.com/me/my-project"
+    volumes:
+      - ./content:/content:ro
+      - ./static:/static:ro
+    restart: unless-stopped
+```
+
+Arráncalo con `docker compose up -d`.
 
 ## Montajes
 

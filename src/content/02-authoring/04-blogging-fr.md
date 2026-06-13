@@ -21,6 +21,8 @@ blog: true        # in blog/index.md
 
 ## Les articles
 
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
+
 Un article est une page Markdown ordinaire avec une date :
 
 ```markdown
@@ -46,7 +48,11 @@ la date ne vit que dans le frontmatter. Les articles utilisent leur propre
 navigation Plus récent/Plus ancien et ne se mélangent jamais à la chaîne
 précédent/suivant de la documentation.
 
+<!-- docref: end -->
+
 ## La liste
+
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 
 L'`index.md` de la section affiche d'abord sa propre prose, puis la
 liste générée des articles : couverture, date localisée, temps de
@@ -54,7 +60,11 @@ lecture, auteur, description et tags. Le temps de lecture correspond au
 nombre de mots de l'article à 200 mots par minute, arrondi, avec un
 minimum d'une minute.
 
+<!-- docref: end -->
+
 ## Les auteurs sont des pages
+
+<!-- docref: begin src=src/lib/server/content-store.ts#@post-frontmatter-contract:bf9c57f0 -->
 
 Placez les auteurs dans un dossier `authors/` à l'intérieur de la section
 blog. Les pages qui s'y trouvent sont des pages de profil, pas des
@@ -88,7 +98,11 @@ explicitement l'emporte. En bref : le frontmatter `author:` relève des
 *métadonnées* (liste, signature, flux), le bloc `{% avatar %}` est la
 *carte visuelle*, et les deux peuvent pointer vers la même page.
 
+<!-- docref: end -->
+
 ## Les blocs hero et avatar
+
+<!-- docref: begin src=src/lib/markdoc/components/Avatar.svelte#@props:2d0e6d15 -->
 
 Deux blocs conçus pour les blogs, utilisables partout :
 
@@ -106,6 +120,8 @@ Placé directement après un hero, l'image de l'avatar **chevauche le bord infé
 classique avec photo de couverture. Les deux s'affichent normalement
 lorsqu'ils sont seuls. Un article avec `cover:` reçoit le hero
 automatiquement.
+
+<!-- docref: end -->
 
 ## Quote et gallery
 
@@ -125,12 +141,38 @@ s'agrandissent dans la lightbox comme toute image.
 
 ## Les flux
 
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
+
 Chaque section blog sert un flux Atom à `/<section>/feed.xml`
-(par langue aussi : `/de/blog/feed.xml`). Définissez `PUBLIC_SITE_URL`
-pour que les entrées portent des liens absolus. Les pages du blog
-annoncent le flux via un `<link rel="alternate">`, et le `h1` de l'index
-du blog porte un bouton de copie de l'URL du flux à côté du bouton
-habituel de copie du lien de la page.
+(par langue aussi : `/de/blog/feed.xml`). Chaque entrée porte le
+**corps complet de l'article** dans `<content type="html">`, à côté
+du bref `<summary>`, de sorte que les plateformes de syndication (dev.to/Forem,
+Medium) et les lecteurs de flux importent l'article entier — blocs de
+code et images compris — et non un résumé d'une ligne.
+
+Le corps est rendu via un **profil de flux** dédié à partir de la même
+source Markdoc que la page (et non extrait du HTML de la page), il est
+donc **propre pour le lecteur** : titres simples (sans ancres de copie ni
+icônes), sans poids `data-pagefind`, sans conteneur de mise en page. Les
+blocs interactifs se dégradent en équivalents statiques — les galeries
+deviennent de simples figures ; hero/avatar/capture, un `<img>` sans
+habillage de fenêtre ; mermaid, sa source sous forme de bloc de code —,
+car les lecteurs de flux n'exécutent aucun JavaScript.
+
+Définissez `PUBLIC_SITE_URL` pour que chaque `id` du flux et des entrées,
+le lien `rel="self"` et chaque lien d'entrée soient des URL **absolues**
+(préfixées par langue et compatibles `BASE_PATH`), et pour que les images
+en chemin racine du corps se résolvent hors site. dev.to utilise le lien
+d'une entrée comme `canonical_url`, et beaucoup de lecteurs supportent mal
+les ids relatifs. Sans `PUBLIC_SITE_URL`, le flux fonctionne toujours mais
+reste relatif et n'est pas prêt pour la syndication — le serveur émet un
+avertissement au démarrage.
+
+Les pages du blog annoncent le flux via un `<link rel="alternate">`, et le
+`h1` de l'index du blog porte un bouton de copie de l'URL du flux à côté
+du bouton habituel de copie du lien de la page.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Plusieurs blogs par site" %}
 `blog: true` est par section : un site de documentation peut porter à la

@@ -11,6 +11,8 @@ posición `{{NAME}}`.
 
 ## Cómo funciona
 
+<!-- docref: begin src=scripts/tokens.js#applyTokens:6536bf55 -->
+
 Define la variable:
 
 ```sh
@@ -29,6 +31,8 @@ https://api.example.com/v1/widgets."
 
 El prefijo `PUBLIC_TOKEN_` se elimina para formar el nombre del marcador:
 `PUBLIC_TOKEN_SUPPORT_EMAIL` → `{{SUPPORT_EMAIL}}`.
+
+<!-- docref: end -->
 
 ## Cuándo usarlos
 

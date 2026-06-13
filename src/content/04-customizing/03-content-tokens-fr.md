@@ -11,6 +11,8 @@ marqueur `{{NAME}}`.
 
 ## Fonctionnement
 
+<!-- docref: begin src=scripts/tokens.js#applyTokens:6536bf55 -->
+
 Définissez la variable :
 
 ```sh
@@ -29,6 +31,8 @@ https://api.example.com/v1/widgets. »
 
 Le préfixe `PUBLIC_TOKEN_` est retiré pour former le nom du marqueur :
 `PUBLIC_TOKEN_SUPPORT_EMAIL` → `{{SUPPORT_EMAIL}}`.
+
+<!-- docref: end -->
 
 ## Quand l'utiliser
 

@@ -127,12 +127,31 @@ like every image.
 
 ## Feeds
 
-<!-- docref: begin src=src/hooks.server.ts#atomFeed:e1fcac5f -->
+<!-- docref: begin src=src/lib/server/feed.ts#buildAtomFeed:2ed9f5ab -->
 Every blog section serves an Atom feed at `/<section>/feed.xml`
-(per language too: `/de/blog/feed.xml`). Set `PUBLIC_SITE_URL` so
-entries carry absolute links. Blog pages advertise the feed with a
-`<link rel="alternate">`, and the blog index's `h1` carries a
-copy-feed-URL button next to the usual copy-page-link button.
+(per language too: `/de/blog/feed.xml`). Each entry carries the
+**full article** in `<content type="html">` next to the short `<summary>`,
+so dev.to/Forem, Medium, and feed readers import the whole post rather
+than a one-line stub.
+
+The body is rendered from the same Markdoc source the page uses, through a
+separate **feed profile** rather than scraped from the page HTML. Headings
+are plain text, the copy-link icons and `data-pagefind` weights are gone,
+and the outer layout wrapper is dropped. Blocks that need JavaScript fall
+back to static markup: galleries become plain figures, a hero, avatar, or
+screenshot becomes a plain `<img>`, and a mermaid diagram becomes its
+source in a code block.
+
+Set `PUBLIC_SITE_URL` so every feed and entry `id`, the `rel="self"` link,
+and each entry link is **absolute**, body images included; language
+prefixes and `BASE_PATH` are handled. dev.to reads an entry's link as its
+`canonical_url`, and many readers reject relative ids. Without
+`PUBLIC_SITE_URL` the feed still serves, but its links stay relative and
+the server logs a warning at startup.
+
+Blog pages advertise the feed with a `<link rel="alternate">`, and the
+blog index's `h1` carries a copy-feed-URL button next to the usual
+copy-page-link button.
 <!-- docref: end -->
 
 {% callout type="info" title="Multiple blogs per site" %}

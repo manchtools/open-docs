@@ -11,3 +11,10 @@ Hello world. This post has exactly enough words to read.
 
 {% hero src="/screenshots/exists.png" alt="cover" title="First Post" /%}
 {% avatar src="/screenshots/exists.png" name="Paul" description="Builds manchtools." /%}
+
+A second paragraph, plus a fenced code block so the feed carries real
+body markup (multiple paragraphs and code), not just a one-line summary:
+
+```ts
+export const answer = 42;
+```

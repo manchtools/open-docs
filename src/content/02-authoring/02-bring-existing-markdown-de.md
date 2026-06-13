@@ -6,6 +6,8 @@ description: Was funktioniert, wenn Sie open-docs auf Markdown richten, das für
 
 # Vorhandenes Markdown mitbringen
 
+<!-- docref: begin src=src/lib/server/markdown.ts:097d96d1 -->
+
 Ein Ordner mit Markdown, das für GitHub, VSCode oder einen anderen
 Generator geschrieben wurde, rendert ohne Umschreiben. Die Konventionen,
 auf die sich diese Werkzeuge stützen, gelten weiterhin:
@@ -34,6 +36,8 @@ Alles andere kommt automatisch dazu: Navigation aus dem Ordnerbaum,
 Suche, Überschriften-Anker und das Inhaltsverzeichnis, SEO-Dateien und
 der Dark Mode.
 
+<!-- docref: end -->
+
 ## Bewusste Grenzen
 
 Zwei Dinge bleiben mit Absicht abgeschaltet, nicht aus Versäumnis:
@@ -51,7 +55,9 @@ verwandelt. Ob etwas klickbar ist, entscheidet der Autor: Schreiben Sie
 `[example](https://example.com)` oder `<https://example.com>`.
 {% /callout %}
 
+<!-- docref: begin src=src/lib/server/markdown.ts#stripHtmlComments:41367d9c -->
 Setext-Überschriften (unterstrichen mit `===` oder `---`) erhalten keine
 Anker-IDs; verwenden Sie `#`-Überschriften. HTML-Kommentare
 (`<!-- … -->`) werden entfernt, damit Review-Notizen nie bei den Lesern
 ankommen.
+<!-- docref: end -->

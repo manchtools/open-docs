@@ -10,6 +10,8 @@ beginnt, wird als Platzhalter `{{NAME}}` bereitgestellt.
 
 ## So funktioniert es
 
+<!-- docref: begin src=scripts/tokens.js#applyTokens:6536bf55 -->
+
 Setzen Sie die Variable:
 
 ```sh
@@ -27,6 +29,8 @@ gerenderte Seite „Send requests to https://api.example.com/v1/widgets." lautet
 
 Das Präfix `PUBLIC_TOKEN_` entfällt, um den Platzhalternamen zu bilden:
 `PUBLIC_TOKEN_SUPPORT_EMAIL` → `{{SUPPORT_EMAIL}}`.
+
+<!-- docref: end -->
 
 ## Wann Sie es verwenden
 

@@ -44,6 +44,8 @@ flowchart TD
 
 ## Anidamiento
 
+<!-- docref: begin src=src/lib/server/content-store.ts#MAX_SECTION_DEPTH:ed5a3edd -->
+
 Las carpetas pueden anidarse, y la barra lateral también, hasta tres
 niveles de profundidad (el nivel 1 es una carpeta de nivel superior, el
 nivel 3 es una carpeta a tres de profundidad):
@@ -63,6 +65,8 @@ quede anidado más allá de tres niveles se aplana dentro de la sección de
 tercer nivel. La página conserva su URL completa y la barra lateral deja
 de sangrar.
 
+<!-- docref: end -->
+
 {% callout type="info" title="Estás viendo el nivel 1" %}
 Cada grupo de esta barra lateral es una carpeta de nivel superior. Añade
 una subcarpeta y se convierte en una subsección plegable bajo su carpeta
@@ -71,9 +75,13 @@ padre.
 
 ## Títulos
 
+<!-- docref: begin src=src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 Por defecto, el título se deriva del nombre del archivo: `quick-start.md`
 se convierte en "Quick start". Puedes anularlo en cada página con el
 frontmatter. Consulta [Orden y títulos](/es/navigation/ordering-and-titles).
+
+<!-- docref: end -->
 
 ## La página de inicio
 

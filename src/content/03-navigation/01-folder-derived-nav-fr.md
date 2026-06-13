@@ -44,6 +44,8 @@ flowchart TD
 
 ## Imbrication
 
+<!-- docref: begin src=src/lib/server/content-store.ts#MAX_SECTION_DEPTH:ed5a3edd -->
+
 Les dossiers peuvent s'imbriquer, et la barre latérale aussi, jusqu'à
 trois niveaux de profondeur (le niveau 1 est un dossier de premier niveau,
 le niveau 3 un dossier à trois niveaux de profondeur) :
@@ -63,6 +65,8 @@ est imbriqué au-delà de trois niveaux est aplati dans la section de
 troisième niveau. La page conserve son URL complète, et la barre latérale
 cesse d'indenter.
 
+<!-- docref: end -->
+
 {% callout type="info" title="Vous êtes au niveau 1" %}
 Chaque groupe de cette barre latérale est un dossier de premier niveau.
 Ajoutez un sous-dossier et il devient une sous-section repliable sous son
@@ -71,10 +75,14 @@ parent.
 
 ## Titres
 
+<!-- docref: begin src=src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 Par défaut, un titre est dérivé du nom de fichier : `quick-start.md`
 devient « Quick start ». Vous pouvez le remplacer page par page via le
 frontmatter. Voir
 [Ordre et titres](/fr/navigation/ordering-and-titles).
+
+<!-- docref: end -->
 
 ## La page d'accueil
 

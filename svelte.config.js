@@ -39,7 +39,9 @@ const config = {
 			}
 		},
 		paths: {
+			// docref: begin base-path
 			base: process.env.BASE_PATH || ''
+			// docref: end base-path
 		}
 	}
 };

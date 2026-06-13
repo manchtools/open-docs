@@ -30,6 +30,8 @@ Esto produce:
 
 ## Las reglas
 
+<!-- docref: begin src=src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 - **Los archivos se convierten en páginas.** `reference/api.md` → `/reference/api`.
 - **Las carpetas de primer nivel se convierten en grupos de la barra lateral.**
   Los archivos que contienen se convierten en los elementos de ese grupo.
@@ -41,6 +43,8 @@ Esto produce:
 - **Los prefijos numéricos iniciales** como `01-` establecen el orden y se
   eliminan de la URL y del título. Consulta
   [Orden y títulos](/es/navigation/ordering-and-titles).
+
+<!-- docref: end -->
 
 {% callout type="info" title="La página de inicio" %}
 La página principal del sitio (`/`) es un hero generado que lista tus secciones

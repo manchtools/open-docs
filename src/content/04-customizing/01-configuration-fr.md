@@ -12,6 +12,8 @@ modifier le code source.
 
 ## Habillage du site
 
+<!-- docref: begin src=src/lib/server/site.ts#siteConfig:c0130420 -->
+
 | Variable | Valeur par défaut | Effet |
 |---|---|---|
 | `PUBLIC_BRAND_NAME` | `open-docs` | Texte de la marque dans la barre supérieure. |
@@ -20,6 +22,8 @@ modifier le code source.
 | `PUBLIC_SITE_TITLE` | `open-docs` | Titre de l'onglet du navigateur et `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _texte générique_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(vide)_ | Si définie, affiche un lien GitHub dans la navigation et le pied de page. |
+
+<!-- docref: end -->
 
 ```sh
 docker run --rm -p 3000:3000 \

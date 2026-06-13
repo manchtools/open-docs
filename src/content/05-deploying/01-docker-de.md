@@ -13,6 +13,7 @@ Sie zur Laufzeit.
 docker run --rm -p 3000:3000 \
   -v ./content:/content:ro \
   -v ./static:/static:ro \
+  -e PUBLIC_SITE_URL="https://docs.example.com" \
   -e PUBLIC_BRAND_NAME="My Project" \
   -e PUBLIC_SITE_TITLE="My Project Docs" \
   -e PUBLIC_REPO_URL="https://github.com/me/my-project" \
@@ -20,6 +21,45 @@ docker run --rm -p 3000:3000 \
 ```
 
 Rufen Sie `http://localhost:3000` auf.
+
+{% callout type="warn" title="PUBLIC_SITE_URL immer setzen" %}
+`PUBLIC_SITE_URL` ist die vollständige öffentliche Basis-URL Ihrer Website
+(z. B. `https://docs.example.com`). Setzen Sie sie bei **jedem**
+Deployment. Ohne sie greifen kanonische Links, `sitemap.xml`,
+`robots.txt`, `llms.txt` und die **Atom-Feeds** des Blogs auf relative
+URLs zurück — Suchmaschinen und Feed-Importer (dev.to, Medium) können
+Ihre Seiten dann nicht auflösen, und der Server gibt beim Start eine
+Warnung aus. Es kostet nichts und löst keinen Rebuild aus, es gibt also
+keinen Grund, sie wegzulassen.
+{% /callout %}
+
+## Docker Compose
+
+Dieselbe Konfiguration als `compose.yaml`. Halten Sie `PUBLIC_SITE_URL`
+oben in `environment:`, damit sie nie vergessen wird:
+
+```yaml
+services:
+  docs:
+    image: ghcr.io/manchtools/open-docs:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # ERFORDERLICH in Produktion — die vollständige öffentliche Basis-URL.
+      # Aktiviert absolute kanonische Links, sitemap.xml, robots.txt,
+      # llms.txt und syndizierungsfähige Atom-Feeds. Ohne sie bleiben all
+      # diese relativ (der Server warnt beim Start).
+      PUBLIC_SITE_URL: "https://docs.example.com"
+      PUBLIC_BRAND_NAME: "My Project"
+      PUBLIC_SITE_TITLE: "My Project Docs"
+      PUBLIC_REPO_URL: "https://github.com/me/my-project"
+    volumes:
+      - ./content:/content:ro
+      - ./static:/static:ro
+    restart: unless-stopped
+```
+
+Starten Sie es mit `docker compose up -d`.
 
 ## Mounts
 

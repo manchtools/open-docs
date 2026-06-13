@@ -12,6 +12,7 @@ generic image serves any docset; you provide the content at run time.
 docker run --rm -p 3000:3000 \
   -v ./content:/content:ro \
   -v ./static:/static:ro \
+  -e PUBLIC_SITE_URL="https://docs.example.com" \
   -e PUBLIC_BRAND_NAME="My Project" \
   -e PUBLIC_SITE_TITLE="My Project Docs" \
   -e PUBLIC_REPO_URL="https://github.com/me/my-project" \
@@ -19,6 +20,43 @@ docker run --rm -p 3000:3000 \
 ```
 
 Visit `http://localhost:3000`.
+
+{% callout type="warn" title="Always set PUBLIC_SITE_URL" %}
+`PUBLIC_SITE_URL` is the full public base URL of your site (for example
+`https://docs.example.com`). Set it on **every** deployment. Without it,
+canonical links, `sitemap.xml`, `robots.txt`, `llms.txt`, and the blog
+**Atom feeds** all fall back to relative URLs, which search engines and
+feed importers (dev.to, Medium) can't resolve; the server logs a warning
+at start. It's read at runtime, so setting it never triggers a rebuild.
+{% /callout %}
+
+## Docker Compose
+
+The same configuration as a `compose.yaml`. Keep `PUBLIC_SITE_URL` at the
+top of `environment:` so it's never dropped:
+
+```yaml
+services:
+  docs:
+    image: ghcr.io/manchtools/open-docs:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # REQUIRED in production — your site's full public base URL.
+      # Turns on absolute canonical links, sitemap.xml, robots.txt,
+      # llms.txt, and syndication-ready Atom feeds. Leave it out and all
+      # of those emit relative URLs (the server warns at start).
+      PUBLIC_SITE_URL: "https://docs.example.com"
+      PUBLIC_BRAND_NAME: "My Project"
+      PUBLIC_SITE_TITLE: "My Project Docs"
+      PUBLIC_REPO_URL: "https://github.com/me/my-project"
+    volumes:
+      - ./content:/content:ro
+      - ./static:/static:ro
+    restart: unless-stopped
+```
+
+Start it with `docker compose up -d`.
 
 ## Mounts
 

@@ -43,6 +43,8 @@ flowchart TD
 
 ## Verschachtelung
 
+<!-- docref: begin src=src/lib/server/content-store.ts#MAX_SECTION_DEPTH:ed5a3edd -->
+
 Ordner lassen sich verschachteln, und die Seitenleiste tut das ebenfalls, bis
 zu drei Ebenen tief (Ebene 1 ist ein Ordner auf oberster Ebene, Ebene 3 ein
 Ordner drei Stufen tiefer):
@@ -62,6 +64,8 @@ Alles, was tiefer als drei Ebenen verschachtelt ist, wird in den Abschnitt der
 dritten Ebene zusammengeführt. Die Seite behält ihre vollständige URL, und die
 Seitenleiste rückt nicht weiter ein.
 
+<!-- docref: end -->
+
 {% callout type="info" title="Sie sehen gerade Ebene 1" %}
 Jede Gruppe in dieser Seitenleiste ist ein Ordner auf oberster Ebene. Fügen
 Sie einen Unterordner hinzu, und er wird zum einklappbaren Unterabschnitt
@@ -70,9 +74,13 @@ unter seinem übergeordneten Ordner.
 
 ## Titel
 
+<!-- docref: begin src=src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 Standardmäßig wird ein Titel aus dem Dateinamen abgeleitet: `quick-start.md`
 wird zu „Quick start". Überschreiben Sie ihn pro Seite über das Frontmatter.
 Siehe [Reihenfolge & Titel](/de/navigation/ordering-and-titles).
+
+<!-- docref: end -->
 
 ## Die Startseite
 

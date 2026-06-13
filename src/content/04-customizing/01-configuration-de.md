@@ -11,6 +11,8 @@ oder in Ihrer Shell. Nichts davon erfordert das Bearbeiten des Quellcodes.
 
 ## Rahmen der Website
 
+<!-- docref: begin src=src/lib/server/site.ts#siteConfig:c0130420 -->
+
 | Variable | Standard | Wirkung |
 |---|---|---|
 | `PUBLIC_BRAND_NAME` | `open-docs` | Markentext in der oberen Leiste. |
@@ -19,6 +21,8 @@ oder in Ihrer Shell. Nichts davon erfordert das Bearbeiten des Quellcodes.
 | `PUBLIC_SITE_TITLE` | `open-docs` | Titel des Browser-Tabs und `og:title`. |
 | `PUBLIC_SITE_DESCRIPTION` | _generischer Text_ | Meta + `og:description`. |
 | `PUBLIC_REPO_URL` | _(leer)_ | Wenn gesetzt, zeigt einen GitHub-Link in Navigation und Footer. |
+
+<!-- docref: end -->
 
 ```sh
 docker run --rm -p 3000:3000 \

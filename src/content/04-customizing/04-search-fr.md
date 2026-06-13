@@ -25,6 +25,8 @@ laissé de côté pour ne pas polluer les résultats :
 
 ## Comment les résultats sont classés
 
+<!-- docref: begin src=src/lib/components/search.svelte#@ranking:a5413ce0,src/lib/markdoc/components/Heading.svelte:43feb92a -->
+
 open-docs règle Pagefind pour la documentation par défaut ; il n'y a rien à
 configurer :
 
@@ -42,12 +44,18 @@ configurer :
 Si vous forkez open-docs, ces réglages se trouvent dans
 `src/lib/components/search.svelte`.
 
+<!-- docref: end -->
+
 ## Remonter un passage
+
+<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props:b07730c2 -->
 
 Lorsque la pondération des titres ne suffit pas, par exemple pour une
 définition clé située au milieu d'une longue page, encadrez-la dans un bloc
 `{% boost %}` pour lui donner plus de poids dans l'index. Le rendu reste
 inchangé et seule la recherche est affectée.
+
+<!-- docref: end -->
 
 ```markdown
 {% boost weight=8 %}

@@ -4,6 +4,8 @@ title: Thématisation
 
 # Thématisation
 
+<!-- docref: begin src=src/routes/theme.css/+server.ts#GET:5578a8e6 -->
+
 Placez un **`theme.css`** à la racine de votre contenu et open-docs le
 charge après sa propre feuille de style, de sorte que vos règles
 l'emportent toujours. Vous n'avez pas besoin de forker le projet ni de
@@ -19,6 +21,8 @@ reconstruire l'image.
 
 Sous Docker, le fichier est récupéré depuis votre montage de contenu ; il
 n'y a rien de plus à configurer.
+
+<!-- docref: end -->
 
 ## Deux couches à surcharger
 
@@ -41,14 +45,18 @@ sombre.
 ```
 {% /code %}
 
+<!-- docref: begin src=src/app.css#@design-tokens:e02aec08 -->
 Jetons courants : `--primary`, `--background`, `--foreground`,
 `--sidebar`, `--sidebar-accent`, `--muted`, `--border`, `--radius` et
 `--font-sans`. Les couleurs utilisent `oklch()` pour s'accorder au thème
 fourni, mais toute couleur CSS valide convient.
+<!-- docref: end -->
 
+<!-- docref: begin src=src/lib/components/theme-color.svelte:5dd34a8d -->
 L'habillage du navigateur mobile (la teinte `<meta name="theme-color">`)
 suit `--primary`, et s'accorde donc à votre couleur d'accentuation dans
 les deux modes. Il n'y a pas de couleur distincte à définir.
+<!-- docref: end -->
 
 ### Classes de composants
 
@@ -65,10 +73,14 @@ donc sur les valeurs par défaut à spécificité égale.
 
 ## Mode sombre
 
+<!-- docref: begin src=src/lib/components/theme-toggle.svelte:c9b875a9 -->
+
 Le clair/sombre est piloté par une classe `.dark` activée sur `<html>` par
 le commutateur de thème dans la barre supérieure. Placez les surcharges du
 mode sombre sous un sélecteur `.dark { … }`, comme ci-dessus. Il n'y a rien
 d'autre à brancher.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Partez de l'exemple" %}
 Le dépôt fournit un `theme.example.css` commenté. Copiez-le à la racine de

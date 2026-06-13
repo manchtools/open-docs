@@ -32,6 +32,8 @@ Liegt die Doku unter einem Unterpfad (zum Beispiel
 
 ## Metadaten pro Seite
 
+<!-- docref: begin src=src/lib/components/seo.svelte:5453cc33,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+
 Jede Seite gibt ihren eigenen `<title>`, `<meta name="description">`, den
 kanonischen Link sowie Open Graph- / Twitter-Card-Tags aus. Die Werte
 stammen aus dem Frontmatter der Seite:
@@ -54,6 +56,8 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 `brandName`, der Website-Titel und die Standardbeschreibung stammen aus den
 Umgebungsvariablen der [Konfiguration](/de/customizing/configuration).
 
+<!-- docref: end -->
+
 ## Blogbeiträge und Feeds
 
 Beiträge in einem [Blog-Abschnitt](/de/authoring/blogging) tragen
@@ -65,21 +69,31 @@ angekündigt, sodass Feed-Reader ihn automatisch entdecken.
 
 ## sitemap.xml
 
+<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:f1e7500f -->
+
 `/sitemap.xml` listet die Startseite sowie jede Inhalts- und Rechtsseite.
 Sie wird aus demselben Ordnerbaum aufgebaut, den auch die Navigation nutzt,
 sodass eine neue Markdown-Datei ohne weiteren Schritt in der Sitemap landet.
 
+<!-- docref: end -->
+
 ## robots.txt
+
+<!-- docref: begin src=src/routes/robots.txt/+server.ts:dc592638 -->
 
 `/robots.txt` erlaubt allen Crawlern den Zugriff und verweist sie auf die
 Sitemap (sofern `PUBLIC_SITE_URL` gesetzt ist). Ersetzen Sie sie, indem Sie
 Ihre eigene `robots.txt` in die statischen Assets der Website legen.
 
+<!-- docref: end -->
+
 ## llms.txt
 
+<!-- docref: begin src=src/routes/llms.txt/+server.ts:a1589926 -->
 `/llms.txt` ist ein [llms.txt](https://llmstxt.org)-Index für KI-Assistenten
 und -Crawler: der Website-Titel, eine einzeilige Zusammenfassung, dann jede
 Seite nach Abschnitt gruppiert, mit Beschreibung und Link. Er gibt einem
 Modell die gesamte Karte Ihrer Doku in einer kleinen, link-orientierten
 Datei. Wie die Sitemap wird er aus Ihren Inhalten erzeugt und veraltet
 daher nie.
+<!-- docref: end -->

@@ -41,7 +41,11 @@ export type PostMeta = {
 
 export type PostListItem = {
 	title: string;
+	/** Public (localized) href — language-prefixed for non-default langs. */
 	href: string;
+	/** Canonical, language-agnostic slug — the key into getPage(), used by
+	 *  the feed builder to render each post's body. */
+	slug: string;
 	description?: string;
 } & PostMeta;
 
@@ -69,6 +73,9 @@ export type ContentStore = {
 	localizedHref(lang: string, slug: string): string;
 	/** Is this slug a `blog: true` section index? */
 	isBlogSection(slug: string): boolean;
+	/** Slugs of every `blog: true` section — one Atom feed is built per
+	 *  section (per language) at startup. */
+	blogSections(): string[];
 	/** Posts of a blog section, newest first, localized. */
 	postsFor(lang: string, section: string): PostListItem[];
 	/** Posts of a section carrying the given tag slug, newest first. */
@@ -778,6 +785,7 @@ export function createContentStore(opts: Options): ContentStore {
 			.map(([slug, m]) => ({
 				...m,
 				...pageMetaFor(lang, slug),
+				slug,
 				href: localizedHref(lang, slug)
 			}));
 	}
@@ -949,6 +957,7 @@ export function createContentStore(opts: Options): ContentStore {
 		listPaths,
 		localizedHref,
 		isBlogSection: (slug: string) => blogSections.has(slug),
+		blogSections: () => [...blogSections],
 		postsFor,
 		postsByTag,
 		chronoFor

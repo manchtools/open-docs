@@ -5,6 +5,8 @@ description: Traduce páginas añadiendo un sufijo de idioma al nombre de archiv
 
 # Multiidioma
 
+<!-- docref: begin src=src/lib/i18n.ts#pickLanguages:cee45a25 -->
+
 Traduce una página añadiendo un sufijo de idioma a su nombre de archivo. La
 versión alemana de `01-introduction.md` es `01-introduction-de.md`. Esa es toda
 la configuración: los idiomas se descubren a partir de los sufijos cuando se
@@ -15,15 +17,21 @@ Esta misma página tiene una versión alemana
 ([Inhaltsstruktur](/de/getting-started/content-layout) es otra), así que el
 selector de idioma de la barra superior está activo en este sitio.
 
+<!-- docref: end -->
+
 ## URLs
 
 El **idioma por defecto se queda sin prefijo** y todos los demás idiomas reciben
 un prefijo `/<lang>`:
 
+<!-- docref: begin src=src/lib/i18n.ts#slugLang:ebe3829f,src/lib/i18n.ts#hrefFor:bcfbc809 -->
+
 | Archivo | URL |
 |---|---|
 | `getting-started/intro.md` | `/getting-started/intro` |
 | `getting-started/intro-de.md` | `/de/getting-started/intro` |
+
+<!-- docref: end -->
 
 Así, los enlaces existentes siguen funcionando, y un sitio de un solo idioma no
 tiene ningún prefijo. El sitio se mantiene en un solo idioma (y sin prefijos)
@@ -49,6 +57,8 @@ tantas páginas como quieras e ir completando el resto con el tiempo.
 
 ## Qué obtienes
 
+<!-- docref: begin src=src/lib/i18n.ts#switchTo:8863925a -->
+
 - Un **selector de idioma** en la barra superior (se muestra solo cuando existe
   más de un idioma). Te mantiene en la misma página al cambiar.
 - Una **barra lateral y enlaces anterior/siguiente localizados**: títulos
@@ -58,6 +68,8 @@ tantas páginas como quieras e ir completando el resto con el tiempo.
 - **Alternativas `hreflang`** y un `sitemap.xml` multiidioma, para que los
   motores de búsqueda sirvan el idioma correcto. Define `PUBLIC_SITE_URL` para
   ello; consulta [SEO y búsqueda con IA](/es/customizing/seo).
+
+<!-- docref: end -->
 
 ## Ejemplo
 
@@ -69,10 +81,14 @@ content/
     02-install.md       → /getting-started/install     (en only; /de falls back)
 ```
 
+<!-- docref: begin src=src/lib/i18n.ts#langOfPath:9d401249,src/lib/i18n.ts#ISO_639_1:80e98caa -->
+
 El sufijo de idioma va después de cualquier prefijo de orden `NN-` y antes de la
 extensión. Usa códigos [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 (`de`, `fr`, `ja`, …); una terminación de dos letras que no sea un código real
 (como `setup-ci.md`) se trata como un nombre de archivo normal, no como un idioma.
+
+<!-- docref: end -->
 
 {% callout type="info" title="Qué se mantiene en el idioma por defecto" %}
 Casi todo se localiza: el contenido de las páginas, la navegación y la

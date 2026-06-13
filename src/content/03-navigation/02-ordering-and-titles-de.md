@@ -11,9 +11,13 @@ nicht im Spiel.
 
 ## Zahlenpräfixe
 
+<!-- docref: begin src=src/lib/slug.ts#stripPrefix:b2742e12,src/lib/slug.ts#cleanSlug:9c51ef45,src/lib/slug.ts#titleFromSegment:d11d1ecd -->
+
 Stellen Sie einer Datei oder einem Ordner `NN-` voran (auch `NN_` oder `NN.`).
 Die Zahl legt die Sortierposition fest und wird aus URL und Titel
 **entfernt**.
+
+<!-- docref: end -->
 
 ```
 content/
@@ -34,8 +38,12 @@ Siehe [Blogging](/de/authoring/blogging).
 
 ## Frontmatter
 
+<!-- docref: begin src=src/lib/server/content-store.ts#orderOf:1c460e59,src/lib/server/content-store.ts#metaTitle:0ac7aeab -->
+
 Für feinere Kontrolle setzen Sie Schlüssel im Frontmatter einer Seite. Das
 Frontmatter sticht den Dateinamen.
+
+<!-- docref: end -->
 
 ```markdown
 ---

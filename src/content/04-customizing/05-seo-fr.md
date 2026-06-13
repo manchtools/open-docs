@@ -31,6 +31,8 @@ Si la documentation se trouve sous un sous-chemin (par exemple
 
 ## Métadonnées par page
 
+<!-- docref: begin src=src/lib/components/seo.svelte:5453cc33,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+
 Chaque page émet ses propres balises `<title>`, `<meta name="description">`,
 lien canonique et cartes Open Graph / Twitter. Les valeurs proviennent du
 frontmatter de la page :
@@ -53,6 +55,8 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 `brandName`, le titre du site et la description par défaut proviennent des
 variables d'environnement de [configuration](/fr/customizing/configuration).
 
+<!-- docref: end -->
+
 ## Articles de blog et flux
 
 Les articles d'une [section blog](/fr/authoring/blogging) portent des
@@ -64,22 +68,32 @@ lecteurs de flux le découvrent automatiquement.
 
 ## sitemap.xml
 
+<!-- docref: begin src=src/routes/sitemap.xml/+server.ts:f1e7500f -->
+
 `/sitemap.xml` répertorie la page d'accueil ainsi que chaque page de contenu et
 page légale. Il est reconstruit à partir de la même arborescence de dossiers que
 celle utilisée par la navigation, de sorte qu'ajouter un fichier Markdown
 l'ajoute au sitemap sans étape supplémentaire.
 
+<!-- docref: end -->
+
 ## robots.txt
+
+<!-- docref: begin src=src/routes/robots.txt/+server.ts:dc592638 -->
 
 `/robots.txt` autorise tous les robots et les dirige vers le sitemap (lorsque
 `PUBLIC_SITE_URL` est défini). Remplacez-le en déposant votre propre
 `robots.txt` dans les assets statiques du site.
 
+<!-- docref: end -->
+
 ## llms.txt
 
+<!-- docref: begin src=src/routes/llms.txt/+server.ts:a1589926 -->
 `/llms.txt` est un index [llms.txt](https://llmstxt.org) destiné aux assistants
 et robots d'IA : le titre du site, un résumé d'une ligne, puis chaque page
 groupée par section avec sa description et son lien. Il donne à un modèle la
 carte complète de votre documentation dans un seul petit fichier, axé sur les
 liens. Comme le sitemap, il est généré à partir de votre contenu et ne se
 périme donc jamais.
+<!-- docref: end -->

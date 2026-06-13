@@ -26,6 +26,8 @@ lo rodean quedan fuera para que no contaminen los resultados:
 
 ## Cómo se clasifican los resultados
 
+<!-- docref: begin src=src/lib/components/search.svelte#@ranking:a5413ce0,src/lib/markdoc/components/Heading.svelte:43feb92a -->
+
 open-docs ajusta Pagefind para documentación por defecto; no hay nada que
 configurar:
 
@@ -42,12 +44,18 @@ configurar:
 Si haces un fork de open-docs, estos ajustes están en
 `src/lib/components/search.svelte`.
 
+<!-- docref: end -->
+
 ## Subir un pasaje en el ranking
+
+<!-- docref: begin src=src/lib/markdoc/components/Boost.svelte#@props:b07730c2 -->
 
 Cuando el peso de los encabezados no basta, por ejemplo una definición
 clave situada en mitad de una página larga, envuélvela en un bloque
 `{% boost %}` para darle más peso en el índice. Se renderiza sin cambios y
 solo afecta a la búsqueda.
+
+<!-- docref: end -->
 
 ```markdown
 {% boost weight=8 %}

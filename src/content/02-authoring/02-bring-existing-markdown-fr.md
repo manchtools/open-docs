@@ -6,6 +6,8 @@ description: Ce qui fonctionne quand vous pointez open-docs vers du Markdown éc
 
 # Apporter du Markdown existant
 
+<!-- docref: begin src=src/lib/server/markdown.ts:097d96d1 -->
+
 Un dossier de Markdown écrit pour GitHub, VSCode ou un autre générateur
 s'affiche sans réécriture. Les conventions sur lesquelles ces outils
 s'appuient restent valables :
@@ -37,6 +39,8 @@ Tout le reste vient automatiquement : la navigation issue de
 l'arborescence des dossiers, la recherche, les ancres de titres et la
 table des matières, les fichiers SEO et le mode sombre.
 
+<!-- docref: end -->
+
 ## Des limites assumées
 
 Deux choses restent désactivées à dessein, et non par oubli :
@@ -55,7 +59,9 @@ Rendre quelque chose cliquable est une décision de l'auteur : écrivez
 `[example](https://example.com)` ou `<https://example.com>`.
 {% /callout %}
 
+<!-- docref: begin src=src/lib/server/markdown.ts#stripHtmlComments:41367d9c -->
 Les titres Setext (soulignés avec `===` ou `---`) ne reçoivent pas
 d'identifiant d'ancre ; utilisez des titres `#`. Les commentaires HTML
 (`<!-- … -->`) sont supprimés, de sorte que les notes de relecture
 n'atteignent jamais les lecteurs.
+<!-- docref: end -->
