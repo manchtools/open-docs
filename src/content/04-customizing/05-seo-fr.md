@@ -7,8 +7,8 @@ description: Comment open-docs rend le site généré repérable par les moteurs
 
 Chaque page est rendue sur le serveur, de sorte que les moteurs de
 recherche et les robots d'IA obtiennent le contenu complet sans exécuter de
-JavaScript. En plus de cela, open-docs génère des métadonnées par page et les
-fichiers de découverte standard.
+JavaScript. En plus de cela, open-docs génère des métadonnées par page, des
+données structurées Schema.org et les fichiers de découverte standard.
 
 ## Définissez l'URL de votre site
 
@@ -31,7 +31,7 @@ Si la documentation se trouve sous un sous-chemin (par exemple
 
 ## Métadonnées par page
 
-<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:67c301ca,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 
 Chaque page émet ses propres balises `<title>`, `<meta name="description">`,
 lien canonique et cartes Open Graph / Twitter. Les valeurs proviennent du
@@ -55,6 +55,22 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 `brandName`, le titre du site et la description par défaut proviennent des
 variables d'environnement de [configuration](/fr/customizing/configuration).
 
+<!-- docref: end -->
+
+## Données structurées (JSON-LD)
+
+<!-- docref: begin src=src/lib/structured-data.ts#buildJsonLd:a4a4d9cf -->
+Chaque page porte aussi un graphe Schema.org dans un unique
+`<script type="application/ld+json">` : une `Organization` et un `WebSite`
+sur chaque page, plus un `BlogPosting` sur un article daté — son titre, son
+auteur, sa date de publication et son image de couverture. C'est ce qui
+permet d'obtenir des résultats enrichis (vignettes d'article avec auteur et
+date, et une identité de site plus nette) au-delà des balises de base.
+
+Il n'est émis que lorsque `PUBLIC_SITE_URL` est défini, afin que chaque
+nœud ait un id absolu. Le texte d'auteur est échappé pour une insertion
+sûre et, comme un bloc `ld+json` est une donnée et non un script
+exécutable, il ne nécessite aucune exception de Content-Security-Policy.
 <!-- docref: end -->
 
 ## Articles de blog et flux

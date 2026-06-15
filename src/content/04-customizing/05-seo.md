@@ -7,7 +7,8 @@ description: How open-docs makes the generated site discoverable by search engin
 
 Every page is rendered on the server, so search engines and AI
 crawlers get the full content without running JavaScript. On top of that,
-open-docs generates per-page metadata and the standard discovery files.
+open-docs generates per-page metadata, Schema.org structured data, and the
+standard discovery files.
 
 ## Set your site URL
 
@@ -29,7 +30,7 @@ include that sub-path in `PUBLIC_SITE_URL`.
 
 ## Per-page metadata
 
-<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:67c301ca,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 Each page emits its own `<title>`, `<meta name="description">`, canonical
 link, and Open Graph / Twitter card tags. The values come from the page's
 frontmatter:
@@ -51,6 +52,22 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 
 `brandName`, the site title, and the default description come from the
 [configuration](/customizing/configuration) environment variables.
+
+## Structured data (JSON-LD)
+
+<!-- docref: begin src=src/lib/structured-data.ts#buildJsonLd:a4a4d9cf -->
+Each page also carries a Schema.org graph in a single
+`<script type="application/ld+json">`: an `Organization` and a `WebSite`
+on every page, plus a `BlogPosting` on a dated post — its headline, author,
+publish date, and cover image. This is what earns rich results (article
+cards with author and date, and a clearer site identity) beyond the basic
+tags.
+
+It is emitted only when `PUBLIC_SITE_URL` is set, so every node has an
+absolute id. Author-supplied text is escaped for safe embedding, and
+because a `ld+json` block is data rather than executable script it needs no
+Content-Security-Policy exception.
+<!-- docref: end -->
 
 ## Blog posts and feeds
 

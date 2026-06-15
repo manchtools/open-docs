@@ -7,8 +7,8 @@ description: "Wie open-docs die erzeugte Website für Suchmaschinen auffindbar u
 
 Jede Seite wird auf dem Server gerendert, sodass Suchmaschinen
 und KI-Crawler den vollständigen Inhalt erhalten, ohne JavaScript
-auszuführen. Darüber hinaus erzeugt open-docs Metadaten pro Seite sowie die
-üblichen Discovery-Dateien.
+auszuführen. Darüber hinaus erzeugt open-docs Metadaten pro Seite,
+Schema.org-strukturierte Daten sowie die üblichen Discovery-Dateien.
 
 ## Website-URL setzen
 
@@ -32,7 +32,7 @@ Liegt die Doku unter einem Unterpfad (zum Beispiel
 
 ## Metadaten pro Seite
 
-<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:67c301ca,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 
 Jede Seite gibt ihren eigenen `<title>`, `<meta name="description">`, den
 kanonischen Link sowie Open Graph- / Twitter-Card-Tags aus. Die Werte
@@ -56,6 +56,22 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 `brandName`, der Website-Titel und die Standardbeschreibung stammen aus den
 Umgebungsvariablen der [Konfiguration](/de/customizing/configuration).
 
+<!-- docref: end -->
+
+## Strukturierte Daten (JSON-LD)
+
+<!-- docref: begin src=src/lib/structured-data.ts#buildJsonLd:a4a4d9cf -->
+Jede Seite trägt außerdem einen Schema.org-Graphen in einem einzelnen
+`<script type="application/ld+json">`: eine `Organization` und eine
+`WebSite` auf jeder Seite sowie ein `BlogPosting` auf einem datierten
+Beitrag – mit Überschrift, Autor, Veröffentlichungsdatum und Cover-Bild.
+Das bringt Rich Results (Artikelkarten mit Autor und Datum sowie eine
+klarere Website-Identität), die über die einfachen Tags hinausgehen.
+
+Er wird nur ausgegeben, wenn `PUBLIC_SITE_URL` gesetzt ist, damit jeder
+Knoten eine absolute ID hat. Autorentext wird für die sichere Einbettung
+escaped, und da ein `ld+json`-Block Daten und kein ausführbares Skript ist,
+braucht er keine Content-Security-Policy-Ausnahme.
 <!-- docref: end -->
 
 ## Blogbeiträge und Feeds

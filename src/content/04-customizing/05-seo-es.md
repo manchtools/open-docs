@@ -7,8 +7,8 @@ description: "Cómo open-docs hace que el sitio generado sea descubrible por los
 
 Cada página se renderiza en el servidor, así que los motores de
 búsqueda y los rastreadores de IA obtienen el contenido completo sin
-ejecutar JavaScript. Además, open-docs genera metadatos por página y los
-archivos de descubrimiento estándar.
+ejecutar JavaScript. Además, open-docs genera metadatos por página, datos
+estructurados de Schema.org y los archivos de descubrimiento estándar.
 
 ## Define la URL de tu sitio
 
@@ -31,7 +31,7 @@ Si los docs viven bajo una subruta (por ejemplo
 
 ## Metadatos por página
 
-<!-- docref: begin src=src/lib/components/seo.svelte:ebed62ae,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
+<!-- docref: begin src=src/lib/components/seo.svelte:67c301ca,src/lib/server/content-store.ts#firstParagraph:d52ff1f7 -->
 
 Cada página emite su propio `<title>`, `<meta name="description">`,
 enlace canónico y etiquetas de tarjeta de Open Graph / Twitter. Los
@@ -55,6 +55,22 @@ description: Install the command-line tool on macOS, Linux, and Windows.
 `brandName`, el título del sitio y la descripción por defecto provienen
 de las variables de entorno de [configuración](/es/customizing/configuration).
 
+<!-- docref: end -->
+
+## Datos estructurados (JSON-LD)
+
+<!-- docref: begin src=src/lib/structured-data.ts#buildJsonLd:a4a4d9cf -->
+Cada página incluye además un grafo de Schema.org en un único
+`<script type="application/ld+json">`: una `Organization` y un `WebSite`
+en cada página, y un `BlogPosting` en una entrada con fecha —con su titular,
+autor, fecha de publicación e imagen de portada—. Eso es lo que consigue
+resultados enriquecidos (tarjetas de artículo con autor y fecha, y una
+identidad de sitio más clara) más allá de las etiquetas básicas.
+
+Solo se emite cuando `PUBLIC_SITE_URL` está definida, de modo que cada nodo
+tiene un id absoluto. El texto del autor se escapa para una inserción
+segura y, como un bloque `ld+json` son datos y no un script ejecutable, no
+necesita ninguna excepción en la Content-Security-Policy.
 <!-- docref: end -->
 
 ## Entradas de blog y feeds
