@@ -1,19 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { hrefFor } from '$lib/i18n';
+	import { jsonLdScript } from '$lib/structured-data';
 	import type { SiteConfig } from '$lib/site';
 
 	// Per-page document head: title, meta description, canonical, Open Graph,
-	// Twitter card, and (when multilingual) hreflang alternates. One
-	// component owns all of it so there are no duplicate tags (app.html
-	// intentionally carries none of these). The landing page passes no
-	// title/description and falls back to siteConfig.
+	// Twitter card, JSON-LD (Schema.org), and (when multilingual) hreflang
+	// alternates. One component owns all of it so there are no duplicate tags
+	// (app.html intentionally carries none of these). The landing page passes
+	// no title/description and falls back to siteConfig.
 	//
-	// JSON-LD is deliberately omitted: the production CSP emits a per-page
-	// nonce, which makes the browser ignore 'unsafe-inline', so an inline
-	// <script type="application/ld+json"> injected here (without that nonce)
-	// would be blocked. Canonical + Open Graph + sitemap.xml + llms.txt
-	// cover search-engine and AI-crawler needs without it.
+	// JSON-LD ships as an `application/ld+json` data block (built and
+	// XSS-escaped in $lib/structured-data, emitted only when PUBLIC_SITE_URL
+	// gives absolute @ids). A data block is never executed, so `script-src`
+	// and the CSP nonce don't apply to it — the escaping is what keeps author
+	// text from breaking out of the <script>.
 	type Props = {
 		/** Page title without the brand suffix. Omit on the landing page. */
 		title?: string;
@@ -38,6 +39,7 @@
 		description,
 		path = '/',
 		type = 'article',
+		lang,
 		slug,
 		published = undefined,
 		authorName = undefined,
@@ -89,6 +91,27 @@
 			? siteConfig.siteUrl + localizedHref(defaultLang, slug)
 			: undefined
 	);
+
+	// JSON-LD (Schema.org): Organization + WebSite always, plus a BlogPosting
+	// on a dated post. Built and XSS-escaped in the pure core; null (nothing
+	// emitted) when there is no origin to anchor absolute @ids.
+	const jsonLd = $derived(
+		jsonLdScript({
+			siteUrl: siteConfig.siteUrl,
+			brandName: siteConfig.brandName,
+			siteTitle: siteConfig.siteTitle,
+			siteDescription: siteConfig.siteDescription,
+			logoSrc: siteConfig.logoSrc,
+			canonical,
+			title,
+			description: desc,
+			type,
+			lang: lang ?? defaultLang,
+			published,
+			authorName,
+			image: socialImage
+		})
+	);
 </script>
 
 <svelte:head>
@@ -122,4 +145,9 @@
 		<link rel="alternate" hreflang={a.lang} href={a.href} />
 	{/each}
 	{#if xDefault}<link rel="alternate" hreflang="x-default" href={xDefault} />{/if}
+
+	<!-- JSON-LD structured data. The string is a fully-formed, XSS-escaped
+	     <script type="application/ld+json"> from $lib/structured-data; @html
+	     emits it verbatim (escaping done at the source, not by Svelte). -->
+	{#if jsonLd}{@html jsonLd}{/if}
 </svelte:head>
